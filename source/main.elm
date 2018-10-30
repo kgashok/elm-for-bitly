@@ -35,10 +35,10 @@ add x y = x + y
 init : Model
 init = 
   { val = 0
-  , needle = "NEEDLE"
-  , hay = [ "Hay containsNEEDLE in it!"
-          , "Hay has no NEEDLE"
-          , "Another one"
+  , needle = "rawgit"
+  , hay = [ "http://rawgit.com"
+          , "http://google.com"
+          , "http://junk.com"
           ]
   , match = "No"}
 
@@ -73,7 +73,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        
+    
         [ div [] [ text "Counter" ]
         , button [ onClick Decrement ] [ text "-" ]
         , div [] [ text (String.fromInt model.val) ]
@@ -94,6 +94,7 @@ view model =
 
 
 gitRepo = "https://github.com/kgashok/elm-for-bitly"
+
 
 
 footer : Html Msg

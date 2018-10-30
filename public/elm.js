@@ -4367,9 +4367,9 @@ var elm$core$Set$toList = function (_n0) {
 };
 var author$project$Main$init = {
 	hay: _List_fromArray(
-		['Hay containsNEEDLE in it!', 'Hay has no NEEDLE', 'Another one']),
+		['http://rawgit.com', 'http://google.com', 'http://junk.com']),
 	match: 'No',
-	needle: 'NEEDLE',
+	needle: 'rawgit',
 	val: 0
 };
 var elm$core$Maybe$Just = function (a) {
