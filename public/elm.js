@@ -4285,11 +4285,6 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$Main$init = {hay: 'Hay containsNEEDLE in it!', match: 'No', needle: 'NEEDLE', val: 0};
-var elm$core$Maybe$Just = function (a) {
-	return {$: 'Just', a: a};
-};
-var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var elm$core$Basics$EQ = {$: 'EQ'};
 var elm$core$Basics$LT = {$: 'LT'};
 var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
@@ -4370,6 +4365,17 @@ var elm$core$Set$toList = function (_n0) {
 	var dict = _n0.a;
 	return elm$core$Dict$keys(dict);
 };
+var author$project$Main$init = {
+	hay: _List_fromArray(
+		['Hay containsNEEDLE in it!', 'Hay has no NEEDLE', 'Another one']),
+	match: 'No',
+	needle: 'NEEDLE',
+	val: 0
+};
+var elm$core$Maybe$Just = function (a) {
+	return {$: 'Just', a: a};
+};
+var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var elm$core$String$contains = _String_contains;
 var author$project$Main$checkForMatch = F2(
 	function (needle, hay) {
@@ -4380,6 +4386,30 @@ var author$project$Main$checkForMatch = F2(
 			return 'No';
 		}
 	});
+var elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return elm$core$Maybe$Just(x);
+	} else {
+		return elm$core$Maybe$Nothing;
+	}
+};
+var elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var author$project$Main$getFirst = function (slist) {
+	return A2(
+		elm$core$Maybe$withDefault,
+		'NA',
+		elm$core$List$head(slist));
+};
 var elm$core$Basics$add = _Basics_add;
 var elm$core$Basics$sub = _Basics_sub;
 var author$project$Main$update = F2(
@@ -4398,7 +4428,10 @@ var author$project$Main$update = F2(
 				return _Utils_update(
 					model,
 					{
-						match: A2(author$project$Main$checkForMatch, s, model.hay),
+						match: A2(
+							author$project$Main$checkForMatch,
+							s,
+							author$project$Main$getFirst(model.hay)),
 						needle: s
 					});
 			default:
@@ -4406,20 +4439,19 @@ var author$project$Main$update = F2(
 				return _Utils_update(
 					model,
 					{
-						hay: h,
+						hay: _List_fromArray(
+							[h]),
 						match: A2(author$project$Main$checkForMatch, model.needle, h)
 					});
 		}
 	});
 var author$project$Main$Decrement = {$: 'Decrement'};
 var author$project$Main$Increment = {$: 'Increment'};
-var author$project$Main$StoreHay = function (a) {
-	return {$: 'StoreHay', a: a};
-};
 var author$project$Main$StoreNeedle = function (a) {
 	return {$: 'StoreNeedle', a: a};
 };
-var elm$core$String$fromInt = _String_fromNumber;
+var author$project$Main$gitRepo = 'https://github.com/kgashok/elm-for-bitly';
+var elm$core$Basics$append = _Utils_append;
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
@@ -4623,7 +4655,6 @@ var elm$json$Json$Decode$OneOf = function (a) {
 	return {$: 'OneOf', a: a};
 };
 var elm$core$Basics$and = _Basics_and;
-var elm$core$Basics$append = _Utils_append;
 var elm$core$Basics$or = _Basics_or;
 var elm$core$Char$toCode = _Char_toCode;
 var elm$core$Char$isLower = function (_char) {
@@ -4688,6 +4719,7 @@ var elm$core$List$indexedMap = F2(
 			xs);
 	});
 var elm$core$String$all = _String_all;
+var elm$core$String$fromInt = _String_fromNumber;
 var elm$core$String$join = F2(
 	function (sep, chunks) {
 		return A2(
@@ -4826,11 +4858,8 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 			return 3;
 	}
 };
-var elm$html$Html$br = _VirtualDom_node('br');
-var elm$html$Html$button = _VirtualDom_node('button');
+var elm$html$Html$a = _VirtualDom_node('a');
 var elm$html$Html$div = _VirtualDom_node('div');
-var elm$html$Html$hr = _VirtualDom_node('hr');
-var elm$html$Html$input = _VirtualDom_node('input');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
 var elm$json$Json$Encode$string = _Json_wrap;
@@ -4841,30 +4870,48 @@ var elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			elm$json$Json$Encode$string(string));
 	});
-var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
-var elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			elm$virtual_dom$VirtualDom$on,
-			event,
-			elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var elm$html$Html$Events$onClick = function (msg) {
+var elm$html$Html$Attributes$href = function (url) {
 	return A2(
-		elm$html$Html$Events$on,
-		'click',
-		elm$json$Json$Decode$succeed(msg));
+		elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
 };
+var elm$html$Html$Attributes$id = elm$html$Html$Attributes$stringProperty('id');
+var elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
+var elm$html$Html$Attributes$target = elm$html$Html$Attributes$stringProperty('target');
+var author$project$Main$footer = A2(
+	elm$html$Html$div,
+	_List_fromArray(
+		[
+			elm$html$Html$Attributes$id('footer')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			elm$html$Html$a,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$href(author$project$Main$gitRepo + '/issues/new'),
+					elm$html$Html$Attributes$target('_blank'),
+					elm$html$Html$Attributes$rel('noopener noreferrer')
+				]),
+			_List_fromArray(
+				[
+					elm$html$Html$text('No Versioning')
+				]))
+		]));
+var author$project$Main$StoreHay = function (a) {
+	return {$: 'StoreHay', a: a};
+};
+var elm$html$Html$input = _VirtualDom_node('input');
+var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
 var elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
 var elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
 	return {$: 'MayStopPropagation', a: a};
 };
+var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
 var elm$html$Html$Events$stopPropagationOn = F2(
 	function (event, decoder) {
 		return A2(
@@ -4947,6 +4994,60 @@ var elm$html$Html$Events$onInput = function (tagger) {
 			elm$html$Html$Events$alwaysStop,
 			A2(elm$json$Json$Decode$map, tagger, elm$html$Html$Events$targetValue)));
 };
+var author$project$Main$viewInput = function (p) {
+	return A2(
+		elm$html$Html$input,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$placeholder(p),
+				elm$html$Html$Events$onInput(author$project$Main$StoreHay)
+			]),
+		_List_Nil);
+};
+var elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
+	});
+var elm$html$Html$ul = _VirtualDom_node('ul');
+var author$project$Main$generateListView = function (slist) {
+	var items = A2(elm$core$List$map, author$project$Main$viewInput, slist);
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(elm$html$Html$ul, _List_Nil, items)
+			]));
+};
+var elm$html$Html$br = _VirtualDom_node('br');
+var elm$html$Html$button = _VirtualDom_node('button');
+var elm$html$Html$hr = _VirtualDom_node('hr');
+var elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			elm$virtual_dom$VirtualDom$on,
+			event,
+			elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		elm$html$Html$Events$on,
+		'click',
+		elm$json$Json$Decode$succeed(msg));
+};
 var author$project$Main$view = function (model) {
 	return A2(
 		elm$html$Html$div,
@@ -5010,17 +5111,11 @@ var author$project$Main$view = function (model) {
 				_List_fromArray(
 					[
 						elm$html$Html$text('Hay '),
-						A2(
-						elm$html$Html$input,
-						_List_fromArray(
-							[
-								elm$html$Html$Attributes$placeholder(model.hay),
-								elm$html$Html$Events$onInput(author$project$Main$StoreHay)
-							]),
-						_List_Nil)
+						author$project$Main$generateListView(model.hay)
 					])),
 				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
-				elm$html$Html$text(model.match)
+				elm$html$Html$text(model.match),
+				author$project$Main$footer
 			]));
 };
 var elm$core$Platform$Cmd$batch = _Platform_batch;
@@ -5050,20 +5145,6 @@ var elm$core$Task$Perform = function (a) {
 };
 var elm$core$Task$succeed = _Scheduler_succeed;
 var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
-var elm$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return A2(
-						elm$core$List$cons,
-						f(x),
-						acc);
-				}),
-			_List_Nil,
-			xs);
-	});
 var elm$core$Task$andThen = _Scheduler_andThen;
 var elm$core$Task$map = F2(
 	function (func, taskA) {
