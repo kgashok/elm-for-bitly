@@ -21,11 +21,13 @@ import Html.Events exposing (onClick, onInput)
 type alias Model = 
   { val: Int
   , needle: String
-  , hay: List String
-  , match: String 
+  , hay: List HayString
   }
 
-
+type alias HayString = 
+  { hay : String
+  , match: String
+  }
 
 -- from https://elm-lang.org/docs/syntax#comments
 {-}
@@ -36,11 +38,11 @@ init : Model
 init = 
   { val = 0
   , needle = "rawgit"
-  , hay = [ "http://rawgit.com"
-          , "http://google.com"
-          , "http://junk.com"
+  , hay = [ HayString "http://rawgit.com" "No"
+          , HayString "http://google.com" "No"
+          , HayString "http://junk.com" "No"
           ]
-  , match = "No"}
+  }
 
 main =
     Browser.sandbox { init = init, view = view, update = update }
@@ -64,11 +66,11 @@ update msg model =
             {model|val = model.val - 1}
         
         StoreNeedle s -> 
-            {model|needle = s, match = checkForMatch s (getFirst model.hay)}
+            {model|needle = s, hay = checkForMatches s model.hay}
         
         StoreHay h -> 
-            {model|hay = [h], match = checkForMatch model.needle h}
-            
+            -- {model|hay = [h], match = checkForMatch model.needle h}
+            model
 
 view : Model -> Html Msg
 view model =
@@ -87,7 +89,6 @@ view model =
                  , generateListView model.hay
                  ]
         , hr [] []
-        , text model.match
         , footer
         ]
 
@@ -109,7 +110,7 @@ footer =
         ]
 
 
-generateListView: List String -> Html Msg 
+generateListView: List HayString -> Html Msg 
 generateListView slist = 
   let 
     items = List.map viewInput slist 
@@ -118,18 +119,27 @@ generateListView slist =
   
   
 viewInput p =
-      input [ placeholder p, onInput StoreHay ] [] 
+      div [] 
+        [ input [ placeholder p.hay, onInput StoreHay ] []
+        , text p.match
+        ]
     
 
 --viewInput : String -> String -> String -> (String -> msg) -> Html msg
 --viewInput t p v toMsg =
   --input [ type_ t, placeholder p, value v, onInput toMsg ] []
 
-checkForMatch: String -> String -> String 
-checkForMatch needle hay = 
-  case String.contains needle hay of 
-    True -> "Yes!"
-    False -> "No"
+checkForMatch: String -> HayString -> HayString 
+checkForMatch needle hays = 
+  case String.contains needle hays.hay of 
+    True -> HayString hays.hay "Yes!"
+    False -> HayString hays.hay "No"
+
+
+checkForMatches: String -> List HayString -> List HayString 
+checkForMatches needle haylist = 
+  haylist |>
+    List.map (checkForMatch needle)
     
     
 getFirst: List String -> String

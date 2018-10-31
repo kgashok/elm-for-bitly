@@ -4285,6 +4285,10 @@ function _Browser_load(url)
 		}
 	}));
 }
+var author$project$Main$HayString = F2(
+	function (hay, match) {
+		return {hay: hay, match: match};
+	});
 var elm$core$Basics$EQ = {$: 'EQ'};
 var elm$core$Basics$LT = {$: 'LT'};
 var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
@@ -4367,8 +4371,11 @@ var elm$core$Set$toList = function (_n0) {
 };
 var author$project$Main$init = {
 	hay: _List_fromArray(
-		['http://rawgit.com', 'http://google.com', 'http://junk.com']),
-	match: 'No',
+		[
+			A2(author$project$Main$HayString, 'http://rawgit.com', 'No'),
+			A2(author$project$Main$HayString, 'http://google.com', 'No'),
+			A2(author$project$Main$HayString, 'http://junk.com', 'No')
+		]),
 	needle: 'rawgit',
 	val: 0
 };
@@ -4378,39 +4385,118 @@ var elm$core$Maybe$Just = function (a) {
 var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var elm$core$String$contains = _String_contains;
 var author$project$Main$checkForMatch = F2(
-	function (needle, hay) {
-		var _n0 = A2(elm$core$String$contains, needle, hay);
+	function (needle, hays) {
+		var _n0 = A2(elm$core$String$contains, needle, hays.hay);
 		if (_n0) {
-			return 'Yes!';
+			return A2(author$project$Main$HayString, hays.hay, 'Yes!');
 		} else {
-			return 'No';
+			return A2(author$project$Main$HayString, hays.hay, 'No');
 		}
 	});
-var elm$core$List$head = function (list) {
-	if (list.b) {
-		var x = list.a;
-		var xs = list.b;
-		return elm$core$Maybe$Just(x);
-	} else {
-		return elm$core$Maybe$Nothing;
-	}
-};
-var elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
+var elm$core$Basics$apR = F2(
+	function (x, f) {
+		return f(x);
 	});
-var author$project$Main$getFirst = function (slist) {
-	return A2(
-		elm$core$Maybe$withDefault,
-		'NA',
-		elm$core$List$head(slist));
-};
 var elm$core$Basics$add = _Basics_add;
+var elm$core$Basics$gt = _Utils_gt;
+var elm$core$List$foldl = F3(
+	function (func, acc, list) {
+		foldl:
+		while (true) {
+			if (!list.b) {
+				return acc;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				var $temp$func = func,
+					$temp$acc = A2(func, x, acc),
+					$temp$list = xs;
+				func = $temp$func;
+				acc = $temp$acc;
+				list = $temp$list;
+				continue foldl;
+			}
+		}
+	});
+var elm$core$List$reverse = function (list) {
+	return A3(elm$core$List$foldl, elm$core$List$cons, _List_Nil, list);
+};
+var elm$core$List$foldrHelper = F4(
+	function (fn, acc, ctr, ls) {
+		if (!ls.b) {
+			return acc;
+		} else {
+			var a = ls.a;
+			var r1 = ls.b;
+			if (!r1.b) {
+				return A2(fn, a, acc);
+			} else {
+				var b = r1.a;
+				var r2 = r1.b;
+				if (!r2.b) {
+					return A2(
+						fn,
+						a,
+						A2(fn, b, acc));
+				} else {
+					var c = r2.a;
+					var r3 = r2.b;
+					if (!r3.b) {
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(fn, c, acc)));
+					} else {
+						var d = r3.a;
+						var r4 = r3.b;
+						var res = (ctr > 500) ? A3(
+							elm$core$List$foldl,
+							fn,
+							acc,
+							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(
+									fn,
+									c,
+									A2(fn, d, res))));
+					}
+				}
+			}
+		}
+	});
+var elm$core$List$foldr = F3(
+	function (fn, acc, ls) {
+		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
+	});
+var elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
+	});
+var author$project$Main$checkForMatches = F2(
+	function (needle, haylist) {
+		return A2(
+			elm$core$List$map,
+			author$project$Main$checkForMatch(needle),
+			haylist);
+	});
 var elm$core$Basics$sub = _Basics_sub;
 var author$project$Main$update = F2(
 	function (msg, model) {
@@ -4428,21 +4514,12 @@ var author$project$Main$update = F2(
 				return _Utils_update(
 					model,
 					{
-						match: A2(
-							author$project$Main$checkForMatch,
-							s,
-							author$project$Main$getFirst(model.hay)),
+						hay: A2(author$project$Main$checkForMatches, s, model.hay),
 						needle: s
 					});
 			default:
 				var h = msg.a;
-				return _Utils_update(
-					model,
-					{
-						hay: _List_fromArray(
-							[h]),
-						match: A2(author$project$Main$checkForMatch, model.needle, h)
-					});
+				return model;
 		}
 	});
 var author$project$Main$Decrement = {$: 'Decrement'};
@@ -4487,28 +4564,6 @@ var elm$core$Array$SubTree = function (a) {
 	return {$: 'SubTree', a: a};
 };
 var elm$core$Elm$JsArray$initializeFromList = _JsArray_initializeFromList;
-var elm$core$List$foldl = F3(
-	function (func, acc, list) {
-		foldl:
-		while (true) {
-			if (!list.b) {
-				return acc;
-			} else {
-				var x = list.a;
-				var xs = list.b;
-				var $temp$func = func,
-					$temp$acc = A2(func, x, acc),
-					$temp$list = xs;
-				func = $temp$func;
-				acc = $temp$acc;
-				list = $temp$list;
-				continue foldl;
-			}
-		}
-	});
-var elm$core$List$reverse = function (list) {
-	return A3(elm$core$List$foldl, elm$core$List$cons, _List_Nil, list);
-};
 var elm$core$Array$compressNodes = F2(
 	function (nodes, acc) {
 		compressNodes:
@@ -4530,10 +4585,6 @@ var elm$core$Array$compressNodes = F2(
 				continue compressNodes;
 			}
 		}
-	});
-var elm$core$Basics$apR = F2(
-	function (x, f) {
-		return f(x);
 	});
 var elm$core$Basics$eq = _Utils_equal;
 var elm$core$Tuple$first = function (_n0) {
@@ -4561,7 +4612,6 @@ var elm$core$Basics$apL = F2(
 		return f(x);
 	});
 var elm$core$Basics$floor = _Basics_floor;
-var elm$core$Basics$gt = _Utils_gt;
 var elm$core$Basics$max = F2(
 	function (x, y) {
 		return (_Utils_cmp(x, y) > 0) ? x : y;
@@ -4919,61 +4969,6 @@ var elm$html$Html$Events$stopPropagationOn = F2(
 			event,
 			elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
 	});
-var elm$core$List$foldrHelper = F4(
-	function (fn, acc, ctr, ls) {
-		if (!ls.b) {
-			return acc;
-		} else {
-			var a = ls.a;
-			var r1 = ls.b;
-			if (!r1.b) {
-				return A2(fn, a, acc);
-			} else {
-				var b = r1.a;
-				var r2 = r1.b;
-				if (!r2.b) {
-					return A2(
-						fn,
-						a,
-						A2(fn, b, acc));
-				} else {
-					var c = r2.a;
-					var r3 = r2.b;
-					if (!r3.b) {
-						return A2(
-							fn,
-							a,
-							A2(
-								fn,
-								b,
-								A2(fn, c, acc)));
-					} else {
-						var d = r3.a;
-						var r4 = r3.b;
-						var res = (ctr > 500) ? A3(
-							elm$core$List$foldl,
-							fn,
-							acc,
-							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
-						return A2(
-							fn,
-							a,
-							A2(
-								fn,
-								b,
-								A2(
-									fn,
-									c,
-									A2(fn, d, res))));
-					}
-				}
-			}
-		}
-	});
-var elm$core$List$foldr = F3(
-	function (fn, acc, ls) {
-		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
-	});
 var elm$json$Json$Decode$field = _Json_decodeField;
 var elm$json$Json$Decode$at = F2(
 	function (fields, decoder) {
@@ -4996,28 +4991,21 @@ var elm$html$Html$Events$onInput = function (tagger) {
 };
 var author$project$Main$viewInput = function (p) {
 	return A2(
-		elm$html$Html$input,
+		elm$html$Html$div,
+		_List_Nil,
 		_List_fromArray(
 			[
-				elm$html$Html$Attributes$placeholder(p),
-				elm$html$Html$Events$onInput(author$project$Main$StoreHay)
-			]),
-		_List_Nil);
+				A2(
+				elm$html$Html$input,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$placeholder(p.hay),
+						elm$html$Html$Events$onInput(author$project$Main$StoreHay)
+					]),
+				_List_Nil),
+				elm$html$Html$text(p.match)
+			]));
 };
-var elm$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return A2(
-						elm$core$List$cons,
-						f(x),
-						acc);
-				}),
-			_List_Nil,
-			xs);
-	});
 var elm$html$Html$ul = _VirtualDom_node('ul');
 var author$project$Main$generateListView = function (slist) {
 	var items = A2(elm$core$List$map, author$project$Main$viewInput, slist);
@@ -5114,7 +5102,6 @@ var author$project$Main$view = function (model) {
 						author$project$Main$generateListView(model.hay)
 					])),
 				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
-				elm$html$Html$text(model.match),
 				author$project$Main$footer
 			]));
 };
