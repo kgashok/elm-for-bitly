@@ -10,3 +10,7 @@
 #footer a {
   color: inherit;
 }
+
+.matched {
+  background-color: darkorange;
+}

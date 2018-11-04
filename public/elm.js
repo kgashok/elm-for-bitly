@@ -4372,7 +4372,7 @@ var elm$core$Set$toList = function (_n0) {
 var author$project$Main$init = {
 	hay: _List_fromArray(
 		[
-			A2(author$project$Main$HayString, 'http://rawgit.com', 'No'),
+			A2(author$project$Main$HayString, 'http://rawgit.com', 'Yes'),
 			A2(author$project$Main$HayString, 'http://google.com', 'No'),
 			A2(author$project$Main$HayString, 'http://junk.com', 'No')
 		]),
@@ -4953,6 +4953,41 @@ var author$project$Main$footer = A2(
 var author$project$Main$StoreHay = function (a) {
 	return {$: 'StoreHay', a: a};
 };
+var elm$core$List$filter = F2(
+	function (isGood, list) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, xs) {
+					return isGood(x) ? A2(elm$core$List$cons, x, xs) : xs;
+				}),
+			_List_Nil,
+			list);
+	});
+var elm$core$Tuple$second = function (_n0) {
+	var y = _n0.b;
+	return y;
+};
+var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
+var elm$html$Html$Attributes$classList = function (classes) {
+	return elm$html$Html$Attributes$class(
+		A2(
+			elm$core$String$join,
+			' ',
+			A2(
+				elm$core$List$map,
+				elm$core$Tuple$first,
+				A2(elm$core$List$filter, elm$core$Tuple$second, classes))));
+};
+var author$project$Main$hayBackGround = function (val) {
+	return elm$html$Html$Attributes$classList(
+		_List_fromArray(
+			[
+				_Utils_Tuple2(
+				'matched',
+				A2(elm$core$String$contains, val, 'Yes!'))
+			]));
+};
 var elm$html$Html$input = _VirtualDom_node('input');
 var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
 var elm$html$Html$Events$alwaysStop = function (x) {
@@ -4989,7 +5024,7 @@ var elm$html$Html$Events$onInput = function (tagger) {
 			elm$html$Html$Events$alwaysStop,
 			A2(elm$json$Json$Decode$map, tagger, elm$html$Html$Events$targetValue)));
 };
-var author$project$Main$viewInput = function (p) {
+var author$project$Main$viewInput = function (hs) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
@@ -4999,11 +5034,12 @@ var author$project$Main$viewInput = function (p) {
 				elm$html$Html$input,
 				_List_fromArray(
 					[
-						elm$html$Html$Attributes$placeholder(p.hay),
+						author$project$Main$hayBackGround(hs.match),
+						elm$html$Html$Attributes$placeholder(hs.hay),
 						elm$html$Html$Events$onInput(author$project$Main$StoreHay)
 					]),
 				_List_Nil),
-				elm$html$Html$text(p.match)
+				elm$html$Html$text(hs.match)
 			]));
 };
 var elm$html$Html$ul = _VirtualDom_node('ul');

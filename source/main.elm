@@ -38,7 +38,7 @@ init : Model
 init = 
   { val = 0
   , needle = "rawgit"
-  , hay = [ HayString "http://rawgit.com" "No"
+  , hay = [ HayString "http://rawgit.com" "Yes"
           , HayString "http://google.com" "No"
           , HayString "http://junk.com" "No"
           ]
@@ -118,12 +118,20 @@ generateListView slist =
     div [] [ ul [] items] 
   
   
-viewInput p =
-      div [] 
-        [ input [ placeholder p.hay, onInput StoreHay ] []
-        , text p.match
+viewInput hs =
+      div []
+        [ input [ (hayBackGround hs.match), placeholder hs.hay, onInput StoreHay] []
+        , text hs.match
         ]
     
+  
+hayBackGround: String -> Attribute msg
+hayBackGround val = 
+  {-case val of 
+    "Yes" -> classList [("matched", True)]
+    _ -> classList [("matched", False) ]
+  -}
+  classList[("matched", String.contains val "Yes!")]
 
 --viewInput : String -> String -> String -> (String -> msg) -> Html msg
 --viewInput t p v toMsg =
