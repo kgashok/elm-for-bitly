@@ -4402,7 +4402,7 @@ var author$project$Main$checkForMatch = F2(
 			if (_n1) {
 				return A2(author$project$Main$HayString, hays.hay, ' Yes! ');
 			} else {
-				return A2(author$project$Main$HayString, hays.hay, ' - ');
+				return A2(author$project$Main$HayString, hays.hay, ' No ');
 			}
 		}
 	});

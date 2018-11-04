@@ -151,7 +151,7 @@ checkForMatch needle hays =
     _ -> 
       case String.contains (String.toLower needle) hays.hay of 
         True -> HayString hays.hay " Yes! "
-        _ -> HayString hays.hay " - "
+        _ -> HayString hays.hay " No "
 
 
 checkForMatches: String -> List HayString -> List HayString 
