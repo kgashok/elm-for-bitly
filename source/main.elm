@@ -82,7 +82,7 @@ view model =
         , div [] [ text "Needle " 
                  , input [ placeholder model.needle, onInput StoreNeedle ] []
                  ]
-        , div [] [ text "Hay "
+        , div [] [ text "Hay (a list of URLs strings stored in bitly)"
                  --, input [ placeholder (getFirst model.hay), onInput StoreHay ][]
                  , generateListView model.hay
                  ]
