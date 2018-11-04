@@ -146,10 +146,12 @@ hayBackGround val =
 
 checkForMatch: String -> HayString -> HayString 
 checkForMatch needle hays = 
-  case (String.isEmpty needle, String.contains (String.toLower needle) hays.hay) of 
-    (False, True) -> HayString hays.hay " Yes! "
-    (False, False) -> HayString hays.hay " No "
-    (_, _) -> HayString hays.hay " - "
+  case (String.isEmpty needle) of 
+    True -> HayString hays.hay " - " 
+    _ -> 
+      case String.contains (String.toLower needle) hays.hay of 
+        True -> HayString hays.hay " Yes! "
+        _ -> HayString hays.hay " - "
 
 
 checkForMatches: String -> List HayString -> List HayString 

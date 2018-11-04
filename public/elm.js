@@ -4391,20 +4391,19 @@ var elm$core$String$isEmpty = function (string) {
 var elm$core$String$toLower = _String_toLower;
 var author$project$Main$checkForMatch = F2(
 	function (needle, hays) {
-		var _n0 = _Utils_Tuple2(
-			elm$core$String$isEmpty(needle),
-			A2(
+		var _n0 = elm$core$String$isEmpty(needle);
+		if (_n0) {
+			return A2(author$project$Main$HayString, hays.hay, ' - ');
+		} else {
+			var _n1 = A2(
 				elm$core$String$contains,
 				elm$core$String$toLower(needle),
-				hays.hay));
-		if (!_n0.a) {
-			if (_n0.b) {
+				hays.hay);
+			if (_n1) {
 				return A2(author$project$Main$HayString, hays.hay, ' Yes! ');
 			} else {
-				return A2(author$project$Main$HayString, hays.hay, ' No ');
+				return A2(author$project$Main$HayString, hays.hay, ' - ');
 			}
-		} else {
-			return A2(author$project$Main$HayString, hays.hay, ' - ');
 		}
 	});
 var elm$core$Basics$apR = F2(
