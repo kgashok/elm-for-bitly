@@ -12,5 +12,10 @@
 }
 
 .matched {
-  background-color: darkorange;
+  background-color: gold;
+}
+
+#title { 
+  text-align: center;
+  background-color: beige;
 }

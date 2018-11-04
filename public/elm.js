@@ -4384,13 +4384,27 @@ var elm$core$Maybe$Just = function (a) {
 };
 var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var elm$core$String$contains = _String_contains;
+var elm$core$Basics$eq = _Utils_equal;
+var elm$core$String$isEmpty = function (string) {
+	return string === '';
+};
+var elm$core$String$toLower = _String_toLower;
 var author$project$Main$checkForMatch = F2(
 	function (needle, hays) {
-		var _n0 = A2(elm$core$String$contains, needle, hays.hay);
-		if (_n0) {
-			return A2(author$project$Main$HayString, hays.hay, 'Yes!');
+		var _n0 = _Utils_Tuple2(
+			elm$core$String$isEmpty(needle),
+			A2(
+				elm$core$String$contains,
+				elm$core$String$toLower(needle),
+				hays.hay));
+		if (!_n0.a) {
+			if (_n0.b) {
+				return A2(author$project$Main$HayString, hays.hay, ' Yes! ');
+			} else {
+				return A2(author$project$Main$HayString, hays.hay, ' No ');
+			}
 		} else {
-			return A2(author$project$Main$HayString, hays.hay, 'No');
+			return A2(author$project$Main$HayString, hays.hay, ' - ');
 		}
 	});
 var elm$core$Basics$apR = F2(
@@ -4584,7 +4598,6 @@ var elm$core$Array$compressNodes = F2(
 			}
 		}
 	});
-var elm$core$Basics$eq = _Utils_equal;
 var elm$core$Tuple$first = function (_n0) {
 	var x = _n0.a;
 	return x;
@@ -4945,7 +4958,7 @@ var author$project$Main$footer = A2(
 				]),
 			_List_fromArray(
 				[
-					elm$html$Html$text('No Versioning')
+					elm$html$Html$text('Provide feedback?')
 				]))
 		]));
 var author$project$Main$StoreHay = function (a) {
@@ -4983,7 +4996,7 @@ var author$project$Main$hayBackGround = function (val) {
 			[
 				_Utils_Tuple2(
 				'matched',
-				A2(elm$core$String$contains, val, 'Yes!'))
+				A2(elm$core$String$contains, 'Yes', val))
 			]));
 };
 var elm$html$Html$input = _VirtualDom_node('input');
@@ -5060,7 +5073,10 @@ var author$project$Main$view = function (model) {
 			[
 				A2(
 				elm$html$Html$div,
-				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$id('title')
+					]),
 				_List_fromArray(
 					[
 						elm$html$Html$text('Elm App in Glitch')
@@ -5208,9 +5224,6 @@ var elm$core$String$startsWith = _String_startsWith;
 var elm$url$Url$Http = {$: 'Http'};
 var elm$url$Url$Https = {$: 'Https'};
 var elm$core$String$indexes = _String_indexes;
-var elm$core$String$isEmpty = function (string) {
-	return string === '';
-};
 var elm$core$String$left = F2(
 	function (n, string) {
 		return (n < 1) ? '' : A3(elm$core$String$slice, 0, n, string);

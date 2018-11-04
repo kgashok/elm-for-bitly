@@ -76,7 +76,7 @@ view : Model -> Html Msg
 view model =
     div []
     
-        [ div [] [text "Elm App in Glitch"] 
+        [ div [id "title"] [text "Elm App in Glitch"] 
         -- , buttonDisplay model
         , hr [] []
         , div [] [ text "Needle " 
@@ -113,7 +113,7 @@ footer =
             , target "_blank"
             , rel "noopener noreferrer"
             ]
-            [ text "No Versioning" ]
+            [ text "Provide feedback?" ]
         ]
 
 
@@ -138,7 +138,7 @@ hayBackGround val =
     "Yes" -> classList [("matched", True)]
     _ -> classList [("matched", False) ]
   -}
-  classList[("matched", String.contains val "Yes!")]
+  classList[("matched", String.contains "Yes" val)]
 
 --viewInput : String -> String -> String -> (String -> msg) -> Html msg
 --viewInput t p v toMsg =
@@ -146,9 +146,10 @@ hayBackGround val =
 
 checkForMatch: String -> HayString -> HayString 
 checkForMatch needle hays = 
-  case String.contains needle hays.hay of 
-    True -> HayString hays.hay "Yes!"
-    False -> HayString hays.hay "No"
+  case (String.isEmpty needle, String.contains (String.toLower needle) hays.hay) of 
+    (False, True) -> HayString hays.hay " Yes! "
+    (False, False) -> HayString hays.hay " No "
+    (_, _) -> HayString hays.hay " - "
 
 
 checkForMatches: String -> List HayString -> List HayString 
