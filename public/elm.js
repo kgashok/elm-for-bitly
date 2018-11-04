@@ -4382,6 +4382,10 @@ var author$project$Main$init = {
 	val: 0
 };
 var author$project$Main$NA = {$: 'NA'};
+var elm$core$Basics$apR = F2(
+	function (x, f) {
+		return f(x);
+	});
 var elm$core$Maybe$Just = function (a) {
 	return {$: 'Just', a: a};
 };
@@ -4392,26 +4396,22 @@ var elm$core$String$isEmpty = function (string) {
 	return string === '';
 };
 var elm$core$String$toLower = _String_toLower;
+var elm$core$String$trim = _String_trim;
 var author$project$Main$checkForMatch = F2(
 	function (needle, hays) {
-		var _n0 = elm$core$String$isEmpty(needle);
-		if (_n0) {
+		var needle_ = elm$core$String$toLower(
+			elm$core$String$trim(needle));
+		var emptyNeedle = elm$core$String$isEmpty(needle_);
+		if (emptyNeedle) {
 			return A2(author$project$Main$HayString, hays.hay, author$project$Main$NA);
 		} else {
-			var _n1 = A2(
-				elm$core$String$contains,
-				elm$core$String$toLower(needle),
-				hays.hay);
+			var _n1 = A2(elm$core$String$contains, needle_, hays.hay);
 			if (_n1) {
 				return A2(author$project$Main$HayString, hays.hay, author$project$Main$Yes);
 			} else {
 				return A2(author$project$Main$HayString, hays.hay, author$project$Main$No);
 			}
 		}
-	});
-var elm$core$Basics$apR = F2(
-	function (x, f) {
-		return f(x);
 	});
 var elm$core$Basics$add = _Basics_add;
 var elm$core$Basics$gt = _Utils_gt;

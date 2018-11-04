@@ -1,41 +1,19 @@
 module Main exposing (Msg(..), main, update, view)
 
 import Browser
-
-{-
-import Css exposing (..)
-import Html
-import Html.Styled exposing (..)
-import Html.Styled.Attributes exposing (placeholder, css, href, src)
-import Html.Styled.Events exposing (onClick, onInput)
--}
-
---import Html exposing (Html, a, button, div, img, text, input, hr, br, span)
---import Html.Attributes exposing (alt, href, src, placeholder, value)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 
+
 -- Boolean blindness in Elm 
 -- https://discourse.elm-lang.org/t/fixing-boolean-blindness-in-elm/776
-type alias Model = 
-  { val: Int
-  , needle: String
-  , hay: List HayString
-  }
-
-type alias HayString = 
-  { hay : String
-  , match: Match
-  }
-  
 
 type Match 
   = Yes 
   | No 
   | NA
-  
-  
+
 matchString: Match -> String   
 matchString m = 
   case m of 
@@ -44,11 +22,17 @@ matchString m =
     NA ->  " - " 
 
 
--- from https://elm-lang.org/docs/syntax#comments
--- Remove/add the } below and toggle between commented and uncommented
-{--}
-add x y = x + y
---}
+type alias HayString = 
+  { hay : String
+  , match: Match
+  }
+
+type alias Model = 
+  { val: Int
+  , needle: String
+  , hay: List HayString
+  }
+  
 
 init : Model
 init = 
@@ -87,6 +71,7 @@ update msg model =
         StoreHay h -> 
             -- {model|hay = [h], match = checkForMatch model.needle h}
             model
+            
 
 view : Model -> Html Msg
 view model =
@@ -162,12 +147,22 @@ hayBackGround val =
 
 checkForMatch: String -> HayString -> HayString 
 checkForMatch needle hays = 
-  case (String.isEmpty needle) of 
-    True -> HayString hays.hay NA 
-    _ -> 
-      case String.contains (String.toLower needle) hays.hay of 
-        True -> HayString hays.hay Yes
-        _ -> HayString hays.hay No
+  let 
+    needle_ = 
+      needle 
+        |> String.trim
+        |> String.toLower
+        
+  in 
+    let 
+      emptyNeedle = String.isEmpty needle_
+    in 
+      case emptyNeedle of 
+        True -> HayString hays.hay NA 
+        _ -> 
+          case String.contains needle_ hays.hay of 
+            True -> HayString hays.hay Yes
+            _ -> HayString hays.hay No
 
 
 checkForMatches: String -> List HayString -> List HayString 
@@ -179,3 +174,9 @@ checkForMatches needle haylist =
 getFirst: List String -> String
 getFirst slist = 
   Maybe.withDefault "NA" (List.head slist)
+
+-- from https://elm-lang.org/docs/syntax#comments
+-- Remove/add the } below and toggle between commented and uncommented
+{--}
+add x y = x + y
+--}
