@@ -26,11 +26,26 @@ type alias Model =
 
 type alias HayString = 
   { hay : String
-  , match: String
+  , match: Match
   }
+  
+
+type Match 
+  = Yes 
+  | No 
+  | NA
+  
+  
+matchString: Match -> String   
+matchString m = 
+  case m of 
+    Yes -> " Yes! "
+    No ->  " No " 
+    NA ->  " - " 
+
 
 -- from https://elm-lang.org/docs/syntax#comments
-{-}
+{--
 add x y = x + y
 --}
 
@@ -38,9 +53,9 @@ init : Model
 init = 
   { val = 0
   , needle = "rawgit"
-  , hay = [ HayString "http://rawgit.com" "Yes"
-          , HayString "http://google.com" "No"
-          , HayString "http://junk.com" "No"
+  , hay = [ HayString "http://rawgit.com" Yes
+          , HayString "http://google.com" No
+          , HayString "http://junk.com" No
           ]
   }
 
@@ -128,17 +143,17 @@ generateListView slist =
 viewInput hs =
       div []
         [ input [ (hayBackGround hs.match), placeholder hs.hay, onInput StoreHay] []
-        , text hs.match
+        , text (matchString hs.match)
         ]
     
   
-hayBackGround: String -> Attribute msg
+hayBackGround: Match -> Attribute msg
 hayBackGround val = 
   {-case val of 
     "Yes" -> classList [("matched", True)]
     _ -> classList [("matched", False) ]
   -}
-  classList[("matched", String.contains "Yes" val)]
+  classList[("matched", val == Yes)]
 
 --viewInput : String -> String -> String -> (String -> msg) -> Html msg
 --viewInput t p v toMsg =
@@ -147,11 +162,11 @@ hayBackGround val =
 checkForMatch: String -> HayString -> HayString 
 checkForMatch needle hays = 
   case (String.isEmpty needle) of 
-    True -> HayString hays.hay " - " 
+    True -> HayString hays.hay NA 
     _ -> 
       case String.contains (String.toLower needle) hays.hay of 
-        True -> HayString hays.hay " Yes! "
-        _ -> HayString hays.hay " No "
+        True -> HayString hays.hay Yes
+        _ -> HayString hays.hay No
 
 
 checkForMatches: String -> List HayString -> List HayString 

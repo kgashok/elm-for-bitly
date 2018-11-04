@@ -4289,6 +4289,8 @@ var author$project$Main$HayString = F2(
 	function (hay, match) {
 		return {hay: hay, match: match};
 	});
+var author$project$Main$No = {$: 'No'};
+var author$project$Main$Yes = {$: 'Yes'};
 var elm$core$Basics$EQ = {$: 'EQ'};
 var elm$core$Basics$LT = {$: 'LT'};
 var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
@@ -4372,13 +4374,14 @@ var elm$core$Set$toList = function (_n0) {
 var author$project$Main$init = {
 	hay: _List_fromArray(
 		[
-			A2(author$project$Main$HayString, 'http://rawgit.com', 'Yes'),
-			A2(author$project$Main$HayString, 'http://google.com', 'No'),
-			A2(author$project$Main$HayString, 'http://junk.com', 'No')
+			A2(author$project$Main$HayString, 'http://rawgit.com', author$project$Main$Yes),
+			A2(author$project$Main$HayString, 'http://google.com', author$project$Main$No),
+			A2(author$project$Main$HayString, 'http://junk.com', author$project$Main$No)
 		]),
 	needle: 'rawgit',
 	val: 0
 };
+var author$project$Main$NA = {$: 'NA'};
 var elm$core$Maybe$Just = function (a) {
 	return {$: 'Just', a: a};
 };
@@ -4393,16 +4396,16 @@ var author$project$Main$checkForMatch = F2(
 	function (needle, hays) {
 		var _n0 = elm$core$String$isEmpty(needle);
 		if (_n0) {
-			return A2(author$project$Main$HayString, hays.hay, ' - ');
+			return A2(author$project$Main$HayString, hays.hay, author$project$Main$NA);
 		} else {
 			var _n1 = A2(
 				elm$core$String$contains,
 				elm$core$String$toLower(needle),
 				hays.hay);
 			if (_n1) {
-				return A2(author$project$Main$HayString, hays.hay, ' Yes! ');
+				return A2(author$project$Main$HayString, hays.hay, author$project$Main$Yes);
 			} else {
-				return A2(author$project$Main$HayString, hays.hay, ' No ');
+				return A2(author$project$Main$HayString, hays.hay, author$project$Main$No);
 			}
 		}
 	});
@@ -4995,8 +4998,18 @@ var author$project$Main$hayBackGround = function (val) {
 			[
 				_Utils_Tuple2(
 				'matched',
-				A2(elm$core$String$contains, 'Yes', val))
+				_Utils_eq(val, author$project$Main$Yes))
 			]));
+};
+var author$project$Main$matchString = function (m) {
+	switch (m.$) {
+		case 'Yes':
+			return ' Yes! ';
+		case 'No':
+			return ' No ';
+		default:
+			return ' - ';
+	}
 };
 var elm$html$Html$input = _VirtualDom_node('input');
 var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
@@ -5049,7 +5062,8 @@ var author$project$Main$viewInput = function (hs) {
 						elm$html$Html$Events$onInput(author$project$Main$StoreHay)
 					]),
 				_List_Nil),
-				elm$html$Html$text(hs.match)
+				elm$html$Html$text(
+				author$project$Main$matchString(hs.match))
 			]));
 };
 var elm$html$Html$ul = _VirtualDom_node('ul');
