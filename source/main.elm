@@ -45,7 +45,8 @@ matchString m =
 
 
 -- from https://elm-lang.org/docs/syntax#comments
-{--
+-- Remove/add the } below and toggle between commented and uncommented
+{--}
 add x y = x + y
 --}
 
