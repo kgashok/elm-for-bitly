@@ -4522,8 +4522,6 @@ var author$project$Main$update = F2(
 				return model;
 		}
 	});
-var author$project$Main$Decrement = {$: 'Decrement'};
-var author$project$Main$Increment = {$: 'Increment'};
 var author$project$Main$StoreNeedle = function (a) {
 	return {$: 'StoreNeedle', a: a};
 };
@@ -5053,25 +5051,7 @@ var author$project$Main$generateListView = function (slist) {
 				A2(elm$html$Html$ul, _List_Nil, items)
 			]));
 };
-var elm$html$Html$br = _VirtualDom_node('br');
-var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$hr = _VirtualDom_node('hr');
-var elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			elm$virtual_dom$VirtualDom$on,
-			event,
-			elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		elm$html$Html$Events$on,
-		'click',
-		elm$json$Json$Decode$succeed(msg));
-};
 var author$project$Main$view = function (model) {
 	return A2(
 		elm$html$Html$div,
@@ -5083,37 +5063,9 @@ var author$project$Main$view = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						elm$html$Html$text('Counter')
+						elm$html$Html$text('Elm App in Glitch')
 					])),
-				A2(
-				elm$html$Html$button,
-				_List_fromArray(
-					[
-						elm$html$Html$Events$onClick(author$project$Main$Decrement)
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text('-')
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$String$fromInt(model.val))
-					])),
-				A2(
-				elm$html$Html$button,
-				_List_fromArray(
-					[
-						elm$html$Html$Events$onClick(author$project$Main$Increment)
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text('+')
-					])),
-				A2(elm$html$Html$br, _List_Nil, _List_Nil),
+				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
 				A2(
 				elm$html$Html$div,
 				_List_Nil,

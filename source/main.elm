@@ -76,11 +76,9 @@ view : Model -> Html Msg
 view model =
     div []
     
-        [ div [] [ text "Counter" ]
-        , button [ onClick Decrement ] [ text "-" ]
-        , div [] [ text (String.fromInt model.val) ]
-        , button [ onClick Increment ] [ text "+" ]
-        , br [] []
+        [ div [] [text "Elm App in Glitch"] 
+        -- , buttonDisplay model
+        , hr [] []
         , div [] [ text "Needle " 
                  , input [ placeholder model.needle, onInput StoreNeedle ] []
                  ]
@@ -92,6 +90,15 @@ view model =
         , footer
         ]
 
+
+buttonDisplay : Model -> Html Msg 
+buttonDisplay model = 
+    div [] 
+        [ div [] [ text "Counter" ]
+        , button [ onClick Decrement ] [ text "-" ]
+        , div [] [ text (String.fromInt model.val) ]
+        , button [ onClick Increment ] [ text "+" ]
+        ]
 
 
 gitRepo = "https://github.com/kgashok/elm-for-bitly"
