@@ -51,6 +51,7 @@ init =
         [ HayString "http://rawgit.com" Yes
         , HayString "http://google.com" No
         , HayString "http://junk.com" No
+        , HayString "http://abcde.org" No
         ]
     }
 
@@ -87,17 +88,13 @@ view : Model -> Html Msg
 view model =
     div []
         [ div [ id "title" ] [ text "Elm App in Glitch" ]
-
         -- , buttonDisplay model
-        , hr [] []
         , div []
             [ text "Needle "
             , input [ placeholder model.needle, onInput StoreNeedle ] []
             ]
         , div []
             [ text "Hay (a list of URLs strings stored in bitly)"
-
-            --, input [ placeholder (getFirst model.hay), onInput StoreHay ][]
             , generateListView model.hay
             ]
         , hr [] []
@@ -112,6 +109,7 @@ buttonDisplay model =
         , button [ onClick Decrement ] [ text "-" ]
         , div [] [ text (String.fromInt model.val) ]
         , button [ onClick Increment ] [ text "+" ]
+        , hr [] []
         ]
 
 
@@ -150,12 +148,6 @@ viewInput hs =
 hayBackGround : Match -> Attribute msg
 hayBackGround val =
     classList [ ( "matched", val == Yes ) ]
-
-
-
---viewInput : String -> String -> String -> (String -> msg) -> Html msg
---viewInput t p v toMsg =
---input [ type_ t, placeholder p, value v, onInput toMsg ] []
 
 
 checkForMatch : String -> HayString -> HayString

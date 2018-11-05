@@ -4376,7 +4376,8 @@ var author$project$Main$init = {
 		[
 			A2(author$project$Main$HayString, 'http://rawgit.com', author$project$Main$Yes),
 			A2(author$project$Main$HayString, 'http://google.com', author$project$Main$No),
-			A2(author$project$Main$HayString, 'http://junk.com', author$project$Main$No)
+			A2(author$project$Main$HayString, 'http://junk.com', author$project$Main$No),
+			A2(author$project$Main$HayString, 'http://abcde.org', author$project$Main$No)
 		]),
 	needle: 'rawgit',
 	val: 0
@@ -5094,7 +5095,6 @@ var author$project$Main$view = function (model) {
 					[
 						elm$html$Html$text('Elm App in Glitch')
 					])),
-				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
 				A2(
 				elm$html$Html$div,
 				_List_Nil,
