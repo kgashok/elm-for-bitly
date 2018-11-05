@@ -14,7 +14,7 @@ import Html.Events exposing (onClick, onInput)
 type Match
     = Yes
     | No
-    | NA
+    | NA -- needle is empty and therefore 'not applicable'
 
 
 matchString : Match -> String
@@ -88,6 +88,7 @@ view : Model -> Html Msg
 view model =
     div []
         [ div [ id "title" ] [ text "Elm App in Glitch" ]
+
         -- , buttonDisplay model
         , div []
             [ text "Needle "
@@ -152,27 +153,23 @@ hayBackGround val =
 
 checkForMatch : String -> HayString -> HayString
 checkForMatch needle hays =
-    let
-        needle_ =
-            needle
-                |> String.trim
-                |> String.toLower
-    in
-    let
-        emptyNeedle =
-            String.isEmpty needle_
-    in
-    case emptyNeedle of
+    case not (String.isEmpty needle_) of
         True ->
-            HayString hays.hay NA
-
-        _ ->
+            let
+                needle_ =
+                    needle
+                        |> String.trim
+                        |> String.toLower
+            in
             case String.contains needle_ hays.hay of
                 True ->
                     HayString hays.hay Yes
 
                 _ ->
                     HayString hays.hay No
+
+        False ->
+            HayString hays.hay NA
 
 
 checkForMatches : String -> List HayString -> List HayString
