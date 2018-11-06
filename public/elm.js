@@ -4958,7 +4958,7 @@ var author$project$Main$init = function (_n0) {
 				[
 					A2(
 					author$project$Main$HayString,
-					'http://rawgit.com zee',
+					'http://rawgit.com',
 					elm$core$Maybe$Just(author$project$Main$Yes)),
 					A2(
 					author$project$Main$HayString,
@@ -4966,7 +4966,7 @@ var author$project$Main$init = function (_n0) {
 					elm$core$Maybe$Just(author$project$Main$No)),
 					A2(
 					author$project$Main$HayString,
-					'http://junk.com tez',
+					'http://junk.com',
 					elm$core$Maybe$Just(author$project$Main$No)),
 					A2(
 					author$project$Main$HayString,
@@ -5105,14 +5105,29 @@ var author$project$Main$createErrorMessage = function (httpError) {
 var author$project$Main$DataReceived = function (a) {
 	return {$: 'DataReceived', a: a};
 };
+var author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
+var author$project$Main$Link = F2(
+	function (title, long_url) {
+		return {long_url: long_url, title: title};
+	});
 var elm$json$Json$Decode$field = _Json_decodeField;
-var elm$json$Json$Decode$list = _Json_decodeList;
+var elm$json$Json$Decode$map2 = _Json_map2;
 var elm$json$Json$Decode$string = _Json_decodeString;
-var author$project$Main$nicknamesDecoder = A2(
-	elm$json$Json$Decode$field,
-	'nicknames',
-	elm$json$Json$Decode$list(elm$json$Json$Decode$string));
-var author$project$Main$testJson = 'https://api.myjson.com/bins/19yily';
+var author$project$Main$linkDecoder = A3(
+	elm$json$Json$Decode$map2,
+	author$project$Main$Link,
+	A2(elm$json$Json$Decode$field, 'title', elm$json$Json$Decode$string),
+	A2(elm$json$Json$Decode$field, 'long_url', elm$json$Json$Decode$string));
+var elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3(elm$core$List$foldr, elm$json$Json$Decode$field, decoder, fields);
+	});
+var elm$json$Json$Decode$list = _Json_decodeList;
+var author$project$Main$urlsDecoder = A2(
+	elm$json$Json$Decode$at,
+	_List_fromArray(
+		['data', 'link_history']),
+	elm$json$Json$Decode$list(author$project$Main$linkDecoder));
 var elm$http$Http$Internal$EmptyBody = {$: 'EmptyBody'};
 var elm$http$Http$emptyBody = elm$http$Http$Internal$EmptyBody;
 var elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
@@ -5817,18 +5832,18 @@ var elm$http$Http$send = F2(
 var author$project$Main$httpCommand = A2(
 	elm$http$Http$send,
 	author$project$Main$DataReceived,
-	A2(elm$http$Http$get, author$project$Main$testJson, author$project$Main$nicknamesDecoder));
-var author$project$Main$makeHayFromNames = F2(
-	function (needle, names) {
+	A2(elm$http$Http$get, author$project$Main$testJson, author$project$Main$urlsDecoder));
+var author$project$Main$makeHayFromUrls = F2(
+	function (needle, urls) {
 		return A2(
 			author$project$Main$checkForMatches,
 			needle,
 			A2(
 				elm$core$List$map,
 				function (x) {
-					return A2(author$project$Main$HayString, x, elm$core$Maybe$Nothing);
+					return A2(author$project$Main$HayString, x.long_url, elm$core$Maybe$Nothing);
 				},
-				names));
+				urls));
 	});
 var author$project$Main$update = F2(
 	function (msg, model) {
@@ -5862,13 +5877,13 @@ var author$project$Main$update = F2(
 				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
 			default:
 				if (msg.a.$ === 'Ok') {
-					var nicknames = msg.a.a;
+					var urls = msg.a.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{
 								errorMessage: elm$core$Maybe$Nothing,
-								hay: A2(author$project$Main$makeHayFromNames, model.needle, nicknames)
+								hay: A2(author$project$Main$makeHayFromUrls, model.needle, urls)
 							}),
 						elm$core$Platform$Cmd$none);
 				} else {
@@ -5890,7 +5905,6 @@ var author$project$Main$StoreNeedle = function (a) {
 };
 var author$project$Main$gitRepo = 'https://github.com/kgashok/elm-for-bitly';
 var elm$json$Json$Decode$map = _Json_map1;
-var elm$json$Json$Decode$map2 = _Json_map2;
 var elm$json$Json$Decode$succeed = _Json_succeed;
 var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 	switch (handler.$) {
@@ -6020,10 +6034,6 @@ var elm$html$Html$Events$stopPropagationOn = F2(
 			event,
 			elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
 	});
-var elm$json$Json$Decode$at = F2(
-	function (fields, decoder) {
-		return A3(elm$core$List$foldr, elm$json$Json$Decode$field, decoder, fields);
-	});
 var elm$html$Html$Events$targetValue = A2(
 	elm$json$Json$Decode$at,
 	_List_fromArray(
@@ -6126,14 +6136,6 @@ var author$project$Main$view = function (model) {
 							]),
 						_List_Nil)
 					])),
-				A2(
-				elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text('Hay (a list of URLs strings stored in bitly)'),
-						author$project$Main$generateListView(model.hay)
-					])),
 				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
 				A2(
 				elm$html$Html$button,
@@ -6156,7 +6158,16 @@ var author$project$Main$view = function (model) {
 						elm$html$Html$text(
 						A2(elm$core$Maybe$withDefault, 'status: Ok', model.errorMessage))
 					])),
-				author$project$Main$footer
+				author$project$Main$footer,
+				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
+				A2(
+				elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text('Hay (a list of URLs strings stored in bitly)'),
+						author$project$Main$generateListView(model.hay)
+					]))
 			]));
 };
 var elm$browser$Browser$External = function (a) {
