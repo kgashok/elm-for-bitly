@@ -4473,6 +4473,9 @@ var author$project$Main$HayString = F2(
 	});
 var author$project$Main$No = {$: 'No'};
 var author$project$Main$Yes = {$: 'Yes'};
+var elm$core$Maybe$Just = function (a) {
+	return {$: 'Just', a: a};
+};
 var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var elm$core$Basics$False = {$: 'False'};
 var elm$core$Basics$True = {$: 'True'};
@@ -4734,9 +4737,6 @@ var elm$core$Array$initialize = F2(
 			return A5(elm$core$Array$initializeHelp, fn, initialFromIndex, len, _List_Nil, tail);
 		}
 	});
-var elm$core$Maybe$Just = function (a) {
-	return {$: 'Just', a: a};
-};
 var elm$core$Result$Err = function (a) {
 	return {$: 'Err', a: a};
 };
@@ -4956,17 +4956,28 @@ var author$project$Main$init = function (_n0) {
 			errorMessage: elm$core$Maybe$Nothing,
 			hay: _List_fromArray(
 				[
-					A2(author$project$Main$HayString, 'http://rawgit.com zee', author$project$Main$Yes),
-					A2(author$project$Main$HayString, 'http://google.com', author$project$Main$No),
-					A2(author$project$Main$HayString, 'http://junk.com tez', author$project$Main$No),
-					A2(author$project$Main$HayString, 'http://abcde.org', author$project$Main$No)
+					A2(
+					author$project$Main$HayString,
+					'http://rawgit.com zee',
+					elm$core$Maybe$Just(author$project$Main$Yes)),
+					A2(
+					author$project$Main$HayString,
+					'http://google.com',
+					elm$core$Maybe$Just(author$project$Main$No)),
+					A2(
+					author$project$Main$HayString,
+					'http://junk.com tez',
+					elm$core$Maybe$Just(author$project$Main$No)),
+					A2(
+					author$project$Main$HayString,
+					'http://abcde.org',
+					elm$core$Maybe$Just(author$project$Main$No))
 				]),
 			needle: 'rawgit',
 			val: 0
 		},
 		elm$core$Platform$Cmd$none);
 };
-var author$project$Main$NA = {$: 'NA'};
 var elm$core$Basics$not = _Basics_not;
 var elm$core$String$contains = _String_contains;
 var elm$core$String$isEmpty = function (string) {
@@ -4983,12 +4994,18 @@ var author$project$Main$checkForMatch = F2(
 			var hay_ = elm$core$String$toLower(hays.hay);
 			var _n1 = A2(elm$core$String$contains, needle_, hay_);
 			if (_n1) {
-				return A2(author$project$Main$HayString, hays.hay, author$project$Main$Yes);
+				return A2(
+					author$project$Main$HayString,
+					hays.hay,
+					elm$core$Maybe$Just(author$project$Main$Yes));
 			} else {
-				return A2(author$project$Main$HayString, hays.hay, author$project$Main$No);
+				return A2(
+					author$project$Main$HayString,
+					hays.hay,
+					elm$core$Maybe$Just(author$project$Main$No));
 			}
 		} else {
-			return A2(author$project$Main$HayString, hays.hay, author$project$Main$NA);
+			return A2(author$project$Main$HayString, hays.hay, elm$core$Maybe$Nothing);
 		}
 	});
 var elm$core$List$foldrHelper = F4(
@@ -5809,7 +5826,7 @@ var author$project$Main$makeHayFromNames = F2(
 			A2(
 				elm$core$List$map,
 				function (x) {
-					return A2(author$project$Main$HayString, x, author$project$Main$NA);
+					return A2(author$project$Main$HayString, x, elm$core$Maybe$Nothing);
 				},
 				names));
 	});
@@ -5959,22 +5976,32 @@ var elm$html$Html$Attributes$classList = function (classes) {
 				A2(elm$core$List$filter, elm$core$Tuple$second, classes))));
 };
 var author$project$Main$hayBackGround = function (val) {
-	return elm$html$Html$Attributes$classList(
-		_List_fromArray(
-			[
-				_Utils_Tuple2(
-				'matched',
-				_Utils_eq(val, author$project$Main$Yes))
-			]));
+	if ((val.$ === 'Just') && (val.a.$ === 'Yes')) {
+		var _n1 = val.a;
+		return elm$html$Html$Attributes$classList(
+			_List_fromArray(
+				[
+					_Utils_Tuple2('matched', true)
+				]));
+	} else {
+		return elm$html$Html$Attributes$classList(
+			_List_fromArray(
+				[
+					_Utils_Tuple2('matched', false)
+				]));
+	}
 };
 var author$project$Main$matchString = function (m) {
-	switch (m.$) {
-		case 'Yes':
+	if (m.$ === 'Just') {
+		if (m.a.$ === 'Yes') {
+			var _n1 = m.a;
 			return ' Yes! ';
-		case 'No':
+		} else {
+			var _n2 = m.a;
 			return ' No ';
-		default:
-			return ' - ';
+		}
+	} else {
+		return ' - ';
 	}
 };
 var elm$html$Html$input = _VirtualDom_node('input');

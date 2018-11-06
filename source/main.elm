@@ -45,7 +45,6 @@ httpCommand =
 type Match
     = Yes
     | No
-    | NA -- needle is empty and therefore 'not applicable'
 
 
 -- Boolean blindness in Elm
@@ -53,7 +52,7 @@ type Match
 
 type alias HayString =
     { hay : String
-    , match : Match  -- why not Bool? Because Elm is Boolean Blind?
+    , match : Maybe Match  -- why not Bool? Because Elm is Boolean Blind?
     }
 
 
@@ -70,10 +69,10 @@ init _ =
     ( { val = 0
     , needle = "rawgit"
     , hay =
-        [ HayString "http://rawgit.com zee" Yes
-        , HayString "http://google.com" No
-        , HayString "http://junk.com tez" No
-        , HayString "http://abcde.org" No
+        [ HayString "http://rawgit.com zee" (Just Yes)
+        , HayString "http://google.com" (Just No)
+        , HayString "http://junk.com tez" (Just No)
+        , HayString "http://abcde.org" (Just No)
         ]
     , errorMessage = Nothing
     }, Cmd.none)
@@ -139,7 +138,7 @@ update msg model =
             
 makeHayFromNames needle names = 
   names
-    |> List.map (\x -> HayString x NA) 
+    |> List.map (\x -> HayString x Nothing) 
     |> checkForMatches needle
     
 
@@ -226,9 +225,14 @@ viewInput hs =
         ]
 
 
-hayBackGround : Match -> Attribute msg
+hayBackGround : Maybe Match -> Attribute msg
 hayBackGround val =
-    classList [ ( "matched", val == Yes ) ]
+  case val of
+    Just Yes -> 
+      classList [ ( "matched", True ) ]
+      
+    _ ->
+      classList [ ( "matched", False ) ]
 
 
 checkForMatch : String -> HayString -> HayString
@@ -246,13 +250,13 @@ checkForMatch needle hays =
             in
             case String.contains needle_ hay_ of
                 True ->
-                    HayString hays.hay Yes
+                    HayString hays.hay (Just Yes)
 
                 _ ->
-                    HayString hays.hay No
+                    HayString hays.hay (Just No)
 
         False ->
-            HayString hays.hay NA
+            HayString hays.hay Nothing
 
 
 checkForMatches : String -> List HayString -> List HayString
@@ -261,16 +265,16 @@ checkForMatches needle haylist =
         |> List.map (checkForMatch needle)
 
 
-matchString : Match -> String
+matchString : Maybe Match -> String
 matchString m =
     case m of
-        Yes ->
+        Just Yes ->
             " Yes! "
 
-        No ->
+        Just No ->
             " No "
 
-        NA ->
+        Nothing ->
             " - "
 
 
