@@ -4,12 +4,43 @@ import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
+import Http
+import Json.Decode exposing (field, string, list, decodeString, Decoder)
+
+testJson : String
+testJson =
+    "https://api.myjson.com/bins/19yily"  -- nicknames
+    --"https://api.myjson.com/bins/skw8e"  -- 100 links from bitly
+    --"https://api.myjson.com/bins/wz9me"
+    
+{--
+linkDecoder : Decoder Link
+linkDecoder =
+    Json.Decode.object2
+        User
+        ("title" := Decode.string)
+        ("long_url" := Decode.string)
+ -} 
+
+nicknamesDecoder : Decoder (List String)
+nicknamesDecoder = 
+  field "nicknames" (list string) 
 
 
+type alias Link = 
+  { title : String
+  -- , keyworld_link: Maybe String
+  , long_url : String 
+  }
 
--- Boolean blindness in Elm
--- https://discourse.elm-lang.org/t/fixing-boolean-blindness-in-elm/776
+  
 
+httpCommand : Cmd Msg
+httpCommand =
+    nicknamesDecoder
+        |> Http.get testJson
+        |> Http.send DataReceived
+        
 
 type Match
     = Yes
@@ -17,22 +48,12 @@ type Match
     | NA -- needle is empty and therefore 'not applicable'
 
 
-matchString : Match -> String
-matchString m =
-    case m of
-        Yes ->
-            " Yes! "
-
-        No ->
-            " No "
-
-        NA ->
-            " - "
-
+-- Boolean blindness in Elm
+-- https://discourse.elm-lang.org/t/fixing-boolean-blindness-in-elm/776
 
 type alias HayString =
     { hay : String
-    , match : Match
+    , match : Match  -- why not Bool? Because Elm is Boolean Blind?
     }
 
 
@@ -40,24 +61,36 @@ type alias Model =
     { val : Int
     , needle : String
     , hay : List HayString
+    , errorMessage : Maybe String
     }
 
 
-init : Model
-init =
-    { val = 0
+init : () -> (Model, Cmd Msg)
+init _ =
+    ( { val = 0
     , needle = "rawgit"
     , hay =
-        [ HayString "http://rawgit.com" Yes
+        [ HayString "http://rawgit.com zee" Yes
         , HayString "http://google.com" No
-        , HayString "http://junk.com" No
+        , HayString "http://junk.com tez" No
         , HayString "http://abcde.org" No
         ]
-    }
+    , errorMessage = Nothing
+    }, Cmd.none)
 
 
+{--
 main =
     Browser.sandbox { init = init, view = view, update = update }
+--}
+
+main =
+    Browser.element
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = \_ -> Sub.none
+        }
 
 
 type Msg
@@ -65,23 +98,68 @@ type Msg
     | Decrement
     | StoreNeedle String
     | StoreHay String
+    | SendHttpRequest
+    | DataReceived (Result Http.Error (List String))
+    
 
-
-update : Msg -> Model -> Model
+--update : Msg -> Model -> Model
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        SendHttpRequest -> 
+            ( model, httpCommand )
+            
         Increment ->
-            { model | val = model.val + 1 }
+            ({ model | val = model.val + 1 }, Cmd.none)
 
         Decrement ->
-            { model | val = model.val - 1 }
+            ({ model | val = model.val - 1 }, Cmd.none)
 
         StoreNeedle s ->
-            { model | needle = s, hay = checkForMatches s model.hay }
+            ({ model | needle = s, hay = checkForMatches s model.hay }, Cmd.none)
 
         StoreHay h ->
             -- {model|hay = [h], match = checkForMatch model.needle h}
-            model
+            (model, Cmd.none)
+        
+        DataReceived (Ok nicknames) ->
+              -- ( { model | hay = nicknames }, Cmd.none)
+            ( {model 
+                | hay = makeHayFromNames model.needle nicknames
+                , errorMessage = Nothing 
+              }
+            , Cmd.none)
+            
+        DataReceived (Err httpError) ->      
+            ( { model
+                | errorMessage = Just (createErrorMessage httpError)
+              }
+            , Cmd.none
+            )
+            
+makeHayFromNames needle names = 
+  names
+    |> List.map (\x -> HayString x NA) 
+    |> checkForMatches needle
+    
+
+createErrorMessage : Http.Error -> String
+createErrorMessage httpError =
+    case httpError of
+        Http.BadUrl message ->
+            message
+
+        Http.Timeout ->
+            "Server is taking too long to respond. Please try again later."
+
+        Http.NetworkError ->
+            "It appears you don't have an Internet connection right now."
+
+        Http.BadStatus response ->
+            response.status.message
+
+        Http.BadPayload message response ->
+            message
 
 
 view : Model -> Html Msg
@@ -99,6 +177,8 @@ view model =
             , generateListView model.hay
             ]
         , hr [] []
+        , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
+        , div [ id "error"] [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
         , footer
         ]
 
@@ -153,15 +233,18 @@ hayBackGround val =
 
 checkForMatch : String -> HayString -> HayString
 checkForMatch needle hays =
-    case not (String.isEmpty needle_) of
+    case not (String.isEmpty needle) of
         True ->
             let
                 needle_ =
                     needle
                         |> String.trim
                         |> String.toLower
+                        
+                hay_ = String.toLower hays.hay
+                
             in
-            case String.contains needle_ hays.hay of
+            case String.contains needle_ hay_ of
                 True ->
                     HayString hays.hay Yes
 
@@ -178,6 +261,19 @@ checkForMatches needle haylist =
         |> List.map (checkForMatch needle)
 
 
+matchString : Match -> String
+matchString m =
+    case m of
+        Yes ->
+            " Yes! "
+
+        No ->
+            " No "
+
+        NA ->
+            " - "
+
+
 getFirst : List String -> String
 getFirst slist =
     Maybe.withDefault "NA" (List.head slist)
@@ -192,3 +288,4 @@ getFirst slist =
 add x y =
     x + y
 --}
+
