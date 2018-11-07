@@ -20,3 +20,22 @@
   text-align: center;
   background-color: beige;
 }
+
+.hayTitle { 
+  font-size: 9px;
+}
+
+.matched .hayTitle { 
+  font-style: oblique;
+  font-size: 12px;
+}
+
+.hayKey { 
+  font-style: italic; 
+  font-size: 8px;
+}
+
+.matched .hayKey { 
+  font-size: 12px; 
+  background-color: yellow;
+}

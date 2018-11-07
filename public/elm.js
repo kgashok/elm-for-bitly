@@ -4467,9 +4467,9 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$Main$HayString = F2(
-	function (hay, match) {
-		return {hay: hay, match: match};
+var author$project$Main$HayString = F4(
+	function (hay, title, _short, match) {
+		return {hay: hay, match: match, _short: _short, title: title};
 	});
 var author$project$Main$No = {$: 'No'};
 var author$project$Main$Yes = {$: 'Yes'};
@@ -4956,21 +4956,29 @@ var author$project$Main$init = function (_n0) {
 			errorMessage: elm$core$Maybe$Nothing,
 			hay: _List_fromArray(
 				[
-					A2(
+					A4(
 					author$project$Main$HayString,
 					'http://rawgit.com',
+					'',
+					elm$core$Maybe$Nothing,
 					elm$core$Maybe$Just(author$project$Main$Yes)),
-					A2(
+					A4(
 					author$project$Main$HayString,
 					'http://google.com',
+					'',
+					elm$core$Maybe$Nothing,
 					elm$core$Maybe$Just(author$project$Main$No)),
-					A2(
+					A4(
 					author$project$Main$HayString,
 					'http://junk.com',
+					'',
+					elm$core$Maybe$Nothing,
 					elm$core$Maybe$Just(author$project$Main$No)),
-					A2(
+					A4(
 					author$project$Main$HayString,
 					'http://abcde.org',
+					'',
+					elm$core$Maybe$Nothing,
 					elm$core$Maybe$Just(author$project$Main$No))
 				]),
 			needle: 'rawgit',
@@ -4994,18 +5002,22 @@ var author$project$Main$checkForMatch = F2(
 			var hay_ = elm$core$String$toLower(hays.hay);
 			var _n1 = A2(elm$core$String$contains, needle_, hay_);
 			if (_n1) {
-				return A2(
+				return A4(
 					author$project$Main$HayString,
 					hays.hay,
+					hays.title,
+					hays._short,
 					elm$core$Maybe$Just(author$project$Main$Yes));
 			} else {
-				return A2(
+				return A4(
 					author$project$Main$HayString,
 					hays.hay,
+					hays.title,
+					hays._short,
 					elm$core$Maybe$Just(author$project$Main$No));
 			}
 		} else {
-			return A2(author$project$Main$HayString, hays.hay, elm$core$Maybe$Nothing);
+			return A4(author$project$Main$HayString, hays.hay, hays.title, hays._short, elm$core$Maybe$Nothing);
 		}
 	});
 var elm$core$List$foldrHelper = F4(
@@ -5106,17 +5118,30 @@ var author$project$Main$DataReceived = function (a) {
 	return {$: 'DataReceived', a: a};
 };
 var author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
-var author$project$Main$Link = F2(
-	function (title, long_url) {
-		return {long_url: long_url, title: title};
+var author$project$Main$Link = F3(
+	function (title, keyword_link, long_url) {
+		return {keyword_link: keyword_link, long_url: long_url, title: title};
 	});
 var elm$json$Json$Decode$field = _Json_decodeField;
-var elm$json$Json$Decode$map2 = _Json_map2;
+var elm$json$Json$Decode$map3 = _Json_map3;
+var elm$json$Json$Decode$map = _Json_map1;
+var elm$json$Json$Decode$oneOf = _Json_oneOf;
+var elm$json$Json$Decode$succeed = _Json_succeed;
+var elm$json$Json$Decode$maybe = function (decoder) {
+	return elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				A2(elm$json$Json$Decode$map, elm$core$Maybe$Just, decoder),
+				elm$json$Json$Decode$succeed(elm$core$Maybe$Nothing)
+			]));
+};
 var elm$json$Json$Decode$string = _Json_decodeString;
-var author$project$Main$linkDecoder = A3(
-	elm$json$Json$Decode$map2,
+var author$project$Main$linkDecoder = A4(
+	elm$json$Json$Decode$map3,
 	author$project$Main$Link,
 	A2(elm$json$Json$Decode$field, 'title', elm$json$Json$Decode$string),
+	elm$json$Json$Decode$maybe(
+		A2(elm$json$Json$Decode$field, 'keyword_link', elm$json$Json$Decode$string)),
 	A2(elm$json$Json$Decode$field, 'long_url', elm$json$Json$Decode$string));
 var elm$json$Json$Decode$at = F2(
 	function (fields, decoder) {
@@ -5841,7 +5866,7 @@ var author$project$Main$makeHayFromUrls = F2(
 			A2(
 				elm$core$List$map,
 				function (x) {
-					return A2(author$project$Main$HayString, x.long_url, elm$core$Maybe$Nothing);
+					return A4(author$project$Main$HayString, x.long_url, x.title, x.keyword_link, elm$core$Maybe$Nothing);
 				},
 				urls));
 	});
@@ -5904,8 +5929,7 @@ var author$project$Main$StoreNeedle = function (a) {
 	return {$: 'StoreNeedle', a: a};
 };
 var author$project$Main$gitRepo = 'https://github.com/kgashok/elm-for-bitly';
-var elm$json$Json$Decode$map = _Json_map1;
-var elm$json$Json$Decode$succeed = _Json_succeed;
+var elm$json$Json$Decode$map2 = _Json_map2;
 var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 	switch (handler.$) {
 		case 'Normal':
@@ -5960,9 +5984,6 @@ var author$project$Main$footer = A2(
 					elm$html$Html$text('Provide feedback?')
 				]))
 		]));
-var author$project$Main$StoreHay = function (a) {
-	return {$: 'StoreHay', a: a};
-};
 var elm$core$List$filter = F2(
 	function (isGood, list) {
 		return A3(
@@ -6005,28 +6026,100 @@ var author$project$Main$hayBackGround = function (val) {
 				]));
 	}
 };
-var author$project$Main$matchString = function (m) {
-	if (m.$ === 'Just') {
-		if (m.a.$ === 'Yes') {
-			var _n1 = m.a;
-			return ' Yes! ';
+var elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
 		} else {
-			var _n2 = m.a;
-			return ' No ';
+			return _default;
 		}
-	} else {
-		return ' - ';
-	}
+	});
+var author$project$Main$viewInput = function (hs) {
+	return A2(
+		elm$html$Html$div,
+		_List_fromArray(
+			[
+				author$project$Main$hayBackGround(hs.match)
+			]),
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(hs.hay)
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('hayTitle', true)
+							]))
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text(hs.title)
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('hayKey', true)
+							]))
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						A2(elm$core$Maybe$withDefault, '', hs._short))
+					]))
+			]));
 };
+var elm$html$Html$ul = _VirtualDom_node('ul');
+var author$project$Main$generateListView = function (slist) {
+	var items = A2(elm$core$List$map, author$project$Main$viewInput, slist);
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(elm$html$Html$ul, _List_Nil, items)
+			]));
+};
+var elm$html$Html$button = _VirtualDom_node('button');
+var elm$html$Html$hr = _VirtualDom_node('hr');
 var elm$html$Html$input = _VirtualDom_node('input');
 var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
+var elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			elm$virtual_dom$VirtualDom$on,
+			event,
+			elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		elm$html$Html$Events$on,
+		'click',
+		elm$json$Json$Decode$succeed(msg));
+};
 var elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
 var elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
 	return {$: 'MayStopPropagation', a: a};
 };
-var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
 var elm$html$Html$Events$stopPropagationOn = F2(
 	function (event, decoder) {
 		return A2(
@@ -6048,63 +6141,6 @@ var elm$html$Html$Events$onInput = function (tagger) {
 			elm$html$Html$Events$alwaysStop,
 			A2(elm$json$Json$Decode$map, tagger, elm$html$Html$Events$targetValue)));
 };
-var author$project$Main$viewInput = function (hs) {
-	return A2(
-		elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$input,
-				_List_fromArray(
-					[
-						author$project$Main$hayBackGround(hs.match),
-						elm$html$Html$Attributes$placeholder(hs.hay),
-						elm$html$Html$Events$onInput(author$project$Main$StoreHay)
-					]),
-				_List_Nil),
-				elm$html$Html$text(
-				author$project$Main$matchString(hs.match))
-			]));
-};
-var elm$html$Html$ul = _VirtualDom_node('ul');
-var author$project$Main$generateListView = function (slist) {
-	var items = A2(elm$core$List$map, author$project$Main$viewInput, slist);
-	return A2(
-		elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(elm$html$Html$ul, _List_Nil, items)
-			]));
-};
-var elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
-var elm$html$Html$button = _VirtualDom_node('button');
-var elm$html$Html$hr = _VirtualDom_node('hr');
-var elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			elm$virtual_dom$VirtualDom$on,
-			event,
-			elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		elm$html$Html$Events$on,
-		'click',
-		elm$json$Json$Decode$succeed(msg));
-};
 var author$project$Main$view = function (model) {
 	return A2(
 		elm$html$Html$div,
@@ -6121,21 +6157,7 @@ var author$project$Main$view = function (model) {
 					[
 						elm$html$Html$text('Elm App in Glitch')
 					])),
-				A2(
-				elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text('Needle '),
-						A2(
-						elm$html$Html$input,
-						_List_fromArray(
-							[
-								elm$html$Html$Attributes$placeholder(model.needle),
-								elm$html$Html$Events$onInput(author$project$Main$StoreNeedle)
-							]),
-						_List_Nil)
-					])),
+				author$project$Main$footer,
 				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
 				A2(
 				elm$html$Html$button,
@@ -6158,7 +6180,22 @@ var author$project$Main$view = function (model) {
 						elm$html$Html$text(
 						A2(elm$core$Maybe$withDefault, 'status: Ok', model.errorMessage))
 					])),
-				author$project$Main$footer,
+				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
+				A2(
+				elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text('Needle '),
+						A2(
+						elm$html$Html$input,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$placeholder(model.needle),
+								elm$html$Html$Events$onInput(author$project$Main$StoreNeedle)
+							]),
+						_List_Nil)
+					])),
 				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
 				A2(
 				elm$html$Html$div,

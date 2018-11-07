@@ -5,7 +5,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Http
-import Json.Decode exposing (Decoder, decodeString, field, list, map2, string)
+import Json.Decode exposing (Decoder, decodeString, field, list, map2, maybe, string)
 
 
 testJson : String
@@ -15,6 +15,7 @@ testJson =
 
 
 
+-- 100 URLs
 -- 100 links from bitly
 --"https://api.myjson.com/bins/wz9me"
 
@@ -27,9 +28,10 @@ urlsDecoder =
 
 linkDecoder : Decoder Link
 linkDecoder =
-    Json.Decode.map2
+    Json.Decode.map3
         Link
         (field "title" string)
+        (maybe (field "keyword_link" string))
         (field "long_url" string)
 --}
 
@@ -41,15 +43,13 @@ nicknamesDecoder =
 
 type alias Link =
     { title : String
-
-    --, keyword_link: Maybe String
+    , keyword_link : Maybe String
     , long_url : String
     }
 
 
 httpCommand : Cmd Msg
 httpCommand =
-    --nicknamesDecoder
     urlsDecoder
         |> Http.get testJson
         |> Http.send DataReceived
@@ -67,6 +67,8 @@ type Match
 
 type alias HayString =
     { hay : String
+    , title : String
+    , short : Maybe String
     , match : Maybe Match -- why not Bool? Because Elm is Boolean Blind?
     }
 
@@ -84,10 +86,10 @@ init _ =
     ( { val = 0
       , needle = "rawgit"
       , hay =
-            [ HayString "http://rawgit.com" (Just Yes)
-            , HayString "http://google.com" (Just No)
-            , HayString "http://junk.com" (Just No)
-            , HayString "http://abcde.org" (Just No)
+            [ HayString "http://rawgit.com" "" Nothing (Just Yes)
+            , HayString "http://google.com" "" Nothing (Just No)
+            , HayString "http://junk.com" "" Nothing (Just No)
+            , HayString "http://abcde.org" "" Nothing (Just No)
             ]
       , errorMessage = Nothing
       }
@@ -144,7 +146,6 @@ update msg model =
             ( model, Cmd.none )
 
         DataReceived (Ok urls) ->
-            -- ( { model | hay = nicknames }, Cmd.none)
             ( { model
                 | hay = makeHayFromUrls model.needle urls
                 , errorMessage = Nothing
@@ -162,13 +163,13 @@ update msg model =
 
 makeHayFromUrls needle urls =
     urls
-        |> List.map (\x -> HayString x.long_url Nothing)
+        |> List.map (\x -> HayString x.long_url x.title x.keyword_link Nothing)
         |> checkForMatches needle
 
 
 makeHayFromNames needle names =
     names
-        |> List.map (\x -> HayString x Nothing)
+        |> List.map (\x -> HayString x "" Nothing Nothing)
         |> checkForMatches needle
 
 
@@ -195,16 +196,17 @@ view : Model -> Html Msg
 view model =
     div []
         [ div [ id "title" ] [ text "Elm App in Glitch" ]
+        , footer
+        , hr [] []
+        , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
+        , div [ id "error" ] [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
+        , hr [] []
 
         -- , buttonDisplay model
         , div []
             [ text "Needle "
             , input [ placeholder model.needle, onInput StoreNeedle ] []
             ]
-        , hr [] []
-        , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
-        , div [ id "error" ] [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
-        , footer
         , hr [] []
         , div []
             [ text "Hay (a list of URLs strings stored in bitly)"
@@ -250,10 +252,16 @@ generateListView slist =
 
 
 viewInput hs =
-    div []
-        [ input [ hayBackGround hs.match, placeholder hs.hay, onInput StoreHay ] []
-        , text (matchString hs.match)
+    div [ hayBackGround hs.match ]
+        [ div [] [ text hs.hay ]
+        , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
+        , div [ classList [ ( "hayKey", True ) ] ] [ text (Maybe.withDefault "" hs.short) ]
         ]
+
+
+
+-- , [ input [ hayBackGround hs.match, placeholder hs.hay, onInput StoreHay ] []
+--, text (matchString hs.match)
 
 
 hayBackGround : Maybe Match -> Attribute msg
@@ -281,13 +289,13 @@ checkForMatch needle hays =
             in
             case String.contains needle_ hay_ of
                 True ->
-                    HayString hays.hay (Just Yes)
+                    HayString hays.hay hays.title hays.short (Just Yes)
 
                 _ ->
-                    HayString hays.hay (Just No)
+                    HayString hays.hay hays.title hays.short (Just No)
 
         False ->
-            HayString hays.hay Nothing
+            HayString hays.hay hays.title hays.short Nothing
 
 
 checkForMatches : String -> List HayString -> List HayString
