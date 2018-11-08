@@ -173,23 +173,21 @@ update msg model =
         StoreHay h ->
             -- {model|hay = [h], match = checkForMatch model.needle h}
             ( model, Cmd.none )
-            
-        NamesReceived (Ok nicknames) -> 
+
+        NamesReceived (Ok nicknames) ->
             ( { model
-                  | hay = makeHayFromNames model.needle nicknames
+                | hay = makeHayFromNames model.needle nicknames
               }
             , Cmd.none
             )
-            
-            
-        NamesReceived (Err httpError) -> 
+
+        NamesReceived (Err httpError) ->
             ( { model
                 | errorMessage = Just (createErrorMessage httpError)
               }
             , Cmd.none
             )
-            
-            
+
         DataReceived (Ok urls) ->
             ( { model
                 | hay = makeHayFromUrls model.needle urls
@@ -262,8 +260,7 @@ view model =
         , hr [] []
         , div [ id "apiString" ] [ text model.dataAPI ]
         , viewPicker
-            [ 
-              ( "Nicknames", model.data == SimpleList, SwitchTo SimpleList )
+            [ ( "Nicknames", model.data == SimpleList, SwitchTo SimpleList )
             , ( "use Test data", model.data == Test, SwitchTo Test )
             , ( "Access bitly API", model.data == Production, SwitchTo Production )
             ]
