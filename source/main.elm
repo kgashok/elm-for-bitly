@@ -21,31 +21,6 @@ testJson =
     "https://api.myjson.com/bins/skw8e"
 
 
-nicknamesJson : String
-nicknamesJson =
-    "https://api.myjson.com/bins/19yily"
-
-
-nicknamesDecoder : Decoder (List String)
-nicknamesDecoder =
-    field "nicknames" (list string)
-
-
-urlsDecoder : Decoder (List Link)
-urlsDecoder =
-    Json.Decode.at [ "data", "link_history" ] (list linkDecoder)
-
-
-linkDecoder : Decoder Link
-linkDecoder =
-    Json.Decode.map3
-        Link
-        (field "title" string)
-        (maybe (field "keyword_link" string))
-        (field "long_url" string)
---}
-
-
 type alias Link =
     { title : String
     , keyword_link : Maybe String
@@ -127,11 +102,10 @@ type Msg
     = Increment
     | Decrement
     | StoreNeedle String
-    | StoreHay String
-    | SendHttpRequest
-    | NamesReceived (Result Http.Error (List String))
-    | DataReceived (Result Http.Error (List Link))
     | SwitchTo DataSource
+    | SendHttpRequest
+    | DataReceived (Result Http.Error (List Link))
+    | NamesReceived (Result Http.Error (List String))
 
 
 
@@ -156,18 +130,8 @@ update msg model =
             in
             ( { model | needle = needle_ }, httpCommand model.dataAPI )
 
-        Increment ->
-            ( { model | val = model.val + 1 }, Cmd.none )
-
-        Decrement ->
-            ( { model | val = model.val - 1 }, Cmd.none )
-
         StoreNeedle s ->
             ( { model | needle = s, hay = checkForMatches s model.hay }, Cmd.none )
-
-        StoreHay h ->
-            -- {model|hay = [h], match = checkForMatch model.needle h}
-            ( model, Cmd.none )
 
         NamesReceived (Ok nicknames) ->
             ( { model
@@ -219,6 +183,13 @@ update msg model =
               }
             , Cmd.none
             )
+
+        -- irrelevant message types, to be removed eventually
+        Increment ->
+            ( { model | val = model.val + 1 }, Cmd.none )
+
+        Decrement ->
+            ( { model | val = model.val - 1 }, Cmd.none )
 
 
 httpCommand : String -> Cmd Msg
@@ -279,8 +250,8 @@ view model =
             , ( "Access bitly API", model.data == Production, SwitchTo Production )
             ]
         , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
-        , div [ id "error", classList [("failed", model.errorStatus == True)] ] 
-              [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
+        , div [ id "error", classList [ ( "failed", model.errorStatus == True ) ] ]
+            [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
         , hr [] []
 
         -- , buttonDisplay model
@@ -338,7 +309,8 @@ footer =
         [ a
             [ href (gitRepo ++ "/issues/new")
             , target "_blank"
-            , rel "noopener noreferrer"
+
+            -- , rel "noopener noreferrer"
             ]
             [ text "Provide feedback?" ]
         ]
@@ -395,7 +367,12 @@ checkForMatch needle hays =
                         |> String.toLower
 
                 hay_ =
-                    String.toLower hays.hay
+                    hays.hay
+                        ++ hays.title
+                        ++ Maybe.withDefault "" (parseKeyword hays.short)
+                        |> String.toLower
+
+                -- String.toLower hays.hay
             in
             case String.contains needle_ hay_ of
                 True ->
@@ -408,6 +385,14 @@ checkForMatch needle hays =
             { hays | match = Nothing }
 
 
+parseKeyword : Maybe String -> Maybe String 
+parseKeyword short = 
+  let 
+    tlist = String.split "/" (Maybe.withDefault "" short)
+  in
+    List.head (List.reverse tlist)
+      
+  
 checkForMatches : String -> List HayString -> List HayString
 checkForMatches needle haylist =
     haylist
@@ -425,6 +410,39 @@ matchString m =
 
         Nothing ->
             " - "
+
+
+
+-- DECODERS for Json data accessed from various data sources
+
+
+nicknamesJson : String
+nicknamesJson =
+    "https://api.myjson.com/bins/19yily"
+
+
+nicknamesDecoder : Decoder (List String)
+nicknamesDecoder =
+    field "nicknames" (list string)
+
+
+urlsDecoder : Decoder (List Link)
+urlsDecoder =
+    Json.Decode.at [ "data", "link_history" ] (list linkDecoder)
+
+
+linkDecoder : Decoder Link
+linkDecoder =
+    Json.Decode.map3
+        Link
+        (field "title" string)
+        (maybe (field "keyword_link" string))
+        (field "long_url" string)
+--}
+
+
+
+--  SCRATCH section for hacking other ideas
 
 
 getFirst : List String -> String
