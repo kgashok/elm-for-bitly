@@ -26,11 +26,11 @@ nicknamesJson =
     "https://api.myjson.com/bins/19yily"
 
 
+nicknamesDecoder : Decoder (List String)
+nicknamesDecoder =
+    field "nicknames" (list string)
 
--- nicknames
 
-
-{--}
 urlsDecoder : Decoder (List Link)
 urlsDecoder =
     Json.Decode.at [ "data", "link_history" ] (list linkDecoder)
@@ -46,30 +46,11 @@ linkDecoder =
 --}
 
 
-nicknamesDecoder : Decoder (List String)
-nicknamesDecoder =
-    field "nicknames" (list string)
-
-
 type alias Link =
     { title : String
     , keyword_link : Maybe String
     , long_url : String
     }
-
-
-httpCommand : String -> Cmd Msg
-httpCommand dataURL =
-    case dataURL of
-        "https://api.myjson.com/bins/19yily" ->
-            nicknamesDecoder
-                |> Http.get dataURL
-                |> Http.send NamesReceived
-
-        _ ->
-            urlsDecoder
-                |> Http.get dataURL
-                |> Http.send DataReceived
 
 
 type Match
@@ -159,17 +140,19 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SendHttpRequest ->
-          let
-            needle_ = 
-              case model.data of 
-                SimpleList -> 
-                  "God"
-                Test -> 
-                  "color" 
-                _ -> 
-                  "share" 
-          in
-          ( {model | needle = needle_}, httpCommand model.dataAPI )
+            let
+                needle_ =
+                    case model.data of
+                        SimpleList ->
+                            "God"
+
+                        Test ->
+                            "color"
+
+                        _ ->
+                            "share"
+            in
+            ( { model | needle = needle_ }, httpCommand model.dataAPI )
 
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
@@ -229,6 +212,20 @@ update msg model =
               }
             , Cmd.none
             )
+
+
+httpCommand : String -> Cmd Msg
+httpCommand dataURL =
+    case dataURL of
+        "https://api.myjson.com/bins/19yily" ->
+            nicknamesDecoder
+                |> Http.get dataURL
+                |> Http.send NamesReceived
+
+        _ ->
+            urlsDecoder
+                |> Http.get dataURL
+                |> Http.send DataReceived
 
 
 makeHayFromUrls needle urls =
