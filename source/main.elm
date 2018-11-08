@@ -82,6 +82,7 @@ type alias Model =
     , needle : String
     , hay : List HayString
     , errorMessage : Maybe String
+    , errorStatus : Bool
     , dataAPI : String
     , data : DataSource
     }
@@ -98,6 +99,7 @@ init _ =
             , HayString "http://abcde.org" "" Nothing (Just No)
             ]
       , errorMessage = Nothing
+      , errorStatus = False
       , dataAPI = testJson
       , data = Test
       }
@@ -170,6 +172,8 @@ update msg model =
         NamesReceived (Ok nicknames) ->
             ( { model
                 | hay = makeHayFromNames model.needle nicknames
+                , errorMessage = Nothing
+                , errorStatus = False
               }
             , Cmd.none
             )
@@ -177,6 +181,7 @@ update msg model =
         NamesReceived (Err httpError) ->
             ( { model
                 | errorMessage = Just (createErrorMessage httpError)
+                , errorStatus = True
               }
             , Cmd.none
             )
@@ -185,6 +190,7 @@ update msg model =
             ( { model
                 | hay = makeHayFromUrls model.needle urls
                 , errorMessage = Nothing
+                , errorStatus = False
               }
             , Cmd.none
             )
@@ -192,6 +198,7 @@ update msg model =
         DataReceived (Err httpError) ->
             ( { model
                 | errorMessage = Just (createErrorMessage httpError)
+                , errorStatus = True
               }
             , Cmd.none
             )
@@ -272,7 +279,8 @@ view model =
             , ( "Access bitly API", model.data == Production, SwitchTo Production )
             ]
         , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
-        , div [ id "error" ] [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
+        , div [ id "error", classList [("failed", model.errorStatus == True)] ] 
+              [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
         , hr [] []
 
         -- , buttonDisplay model

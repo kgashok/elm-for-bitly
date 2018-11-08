@@ -4475,11 +4475,11 @@ var author$project$Main$No = {$: 'No'};
 var author$project$Main$Test = {$: 'Test'};
 var author$project$Main$Yes = {$: 'Yes'};
 var author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
+var elm$core$Basics$False = {$: 'False'};
 var elm$core$Maybe$Just = function (a) {
 	return {$: 'Just', a: a};
 };
 var elm$core$Maybe$Nothing = {$: 'Nothing'};
-var elm$core$Basics$False = {$: 'False'};
 var elm$core$Basics$True = {$: 'True'};
 var elm$core$Result$isOk = function (result) {
 	if (result.$ === 'Ok') {
@@ -4958,6 +4958,7 @@ var author$project$Main$init = function (_n0) {
 			data: author$project$Main$Test,
 			dataAPI: author$project$Main$testJson,
 			errorMessage: elm$core$Maybe$Nothing,
+			errorStatus: false,
 			hay: _List_fromArray(
 				[
 					A4(
@@ -5956,6 +5957,8 @@ var author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
+								errorMessage: elm$core$Maybe$Nothing,
+								errorStatus: false,
 								hay: A2(author$project$Main$makeHayFromNames, model.needle, nicknames)
 							}),
 						elm$core$Platform$Cmd$none);
@@ -5966,7 +5969,8 @@ var author$project$Main$update = F2(
 							model,
 							{
 								errorMessage: elm$core$Maybe$Just(
-									author$project$Main$createErrorMessage(httpError))
+									author$project$Main$createErrorMessage(httpError)),
+								errorStatus: true
 							}),
 						elm$core$Platform$Cmd$none);
 				}
@@ -5978,6 +5982,7 @@ var author$project$Main$update = F2(
 							model,
 							{
 								errorMessage: elm$core$Maybe$Nothing,
+								errorStatus: false,
 								hay: A2(author$project$Main$makeHayFromUrls, model.needle, urls)
 							}),
 						elm$core$Platform$Cmd$none);
@@ -5988,7 +5993,8 @@ var author$project$Main$update = F2(
 							model,
 							{
 								errorMessage: elm$core$Maybe$Just(
-									author$project$Main$createErrorMessage(httpError))
+									author$project$Main$createErrorMessage(httpError)),
+								errorStatus: true
 							}),
 						elm$core$Platform$Cmd$none);
 				}
@@ -6344,7 +6350,12 @@ var author$project$Main$view = function (model) {
 				elm$html$Html$div,
 				_List_fromArray(
 					[
-						elm$html$Html$Attributes$id('error')
+						elm$html$Html$Attributes$id('error'),
+						elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('failed', model.errorStatus)
+							]))
 					]),
 				_List_fromArray(
 					[

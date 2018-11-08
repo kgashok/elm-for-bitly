@@ -43,3 +43,11 @@
 #apiString { 
   font-size: 10px;
 }
+
+#error { 
+  background-color: papayawhip;
+}
+
+#error.failed { 
+  background-color: darkorange;
+}
