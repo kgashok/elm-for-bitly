@@ -298,16 +298,27 @@ generateListView : List HayString -> Html Msg
 generateListView slist =
     let
         items =
-            List.map viewInput slist
+            List.map displayURL slist
     in
     div [] [ ul [] items ]
 
 
-viewInput hs =
+displayURL hs =
+    let 
+      shortener = Maybe.withDefault "" hs.short
+    in
     li [ hayBackGround hs.match ]
         [ div [] [ text hs.hay ]
         , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
-        , div [ classList [ ( "hayKey", True ) ] ] [ text (Maybe.withDefault "" hs.short) ]
+        -- , div [ classList [ ( "hayKey", True ) ] ] [ text shortener ]
+        , div [ classList [ ( "hayKey", True ) ] ] 
+          [ a
+            [ href shortener
+            , target "_blank"
+            , rel "noopener noreferrer"
+            ]
+            [ text shortener ]
+          ]
         ]
 
 

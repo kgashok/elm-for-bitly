@@ -6065,7 +6065,8 @@ var elm$core$Maybe$withDefault = F2(
 		}
 	});
 var elm$html$Html$li = _VirtualDom_node('li');
-var author$project$Main$viewInput = function (hs) {
+var author$project$Main$displayURL = function (hs) {
+	var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
 	return A2(
 		elm$html$Html$li,
 		_List_fromArray(
@@ -6107,14 +6108,24 @@ var author$project$Main$viewInput = function (hs) {
 					]),
 				_List_fromArray(
 					[
-						elm$html$Html$text(
-						A2(elm$core$Maybe$withDefault, '', hs._short))
+						A2(
+						elm$html$Html$a,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$href(shortener),
+								elm$html$Html$Attributes$target('_blank'),
+								elm$html$Html$Attributes$rel('noopener noreferrer')
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text(shortener)
+							]))
 					]))
 			]));
 };
 var elm$html$Html$ul = _VirtualDom_node('ul');
 var author$project$Main$generateListView = function (slist) {
-	var items = A2(elm$core$List$map, author$project$Main$viewInput, slist);
+	var items = A2(elm$core$List$map, author$project$Main$displayURL, slist);
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
