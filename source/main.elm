@@ -18,8 +18,16 @@ bitlyAPI =
 
 testJson : String
 testJson =
-    --"https://api.myjson.com/bins/19yily"  -- nicknames
     "https://api.myjson.com/bins/skw8e"
+
+
+nicknamesJson : String
+nicknamesJson =
+    "https://api.myjson.com/bins/19yily"
+
+
+
+-- nicknames
 
 
 {--}
@@ -52,9 +60,16 @@ type alias Link =
 
 httpCommand : String -> Cmd Msg
 httpCommand dataURL =
-    urlsDecoder
-        |> Http.get dataURL
-        |> Http.send DataReceived
+    case dataURL of
+        "https://api.myjson.com/bins/19yily" ->
+            nicknamesDecoder
+                |> Http.get dataURL
+                |> Http.send NamesReceived
+
+        _ ->
+            urlsDecoder
+                |> Http.get dataURL
+                |> Http.send DataReceived
 
 
 type Match
@@ -76,7 +91,8 @@ type alias HayString =
 
 
 type DataSource
-    = Test
+    = SimpleList
+    | Test
     | Production
 
 
@@ -130,6 +146,7 @@ type Msg
     | StoreNeedle String
     | StoreHay String
     | SendHttpRequest
+    | NamesReceived (Result Http.Error (List String))
     | DataReceived (Result Http.Error (List Link))
     | SwitchTo DataSource
 
@@ -156,7 +173,23 @@ update msg model =
         StoreHay h ->
             -- {model|hay = [h], match = checkForMatch model.needle h}
             ( model, Cmd.none )
-
+            
+        NamesReceived (Ok nicknames) -> 
+            ( { model
+                  | hay = makeHayFromNames model.needle nicknames
+              }
+            , Cmd.none
+            )
+            
+            
+        NamesReceived (Err httpError) -> 
+            ( { model
+                | errorMessage = Just (createErrorMessage httpError)
+              }
+            , Cmd.none
+            )
+            
+            
         DataReceived (Ok urls) ->
             ( { model
                 | hay = makeHayFromUrls model.needle urls
@@ -177,6 +210,9 @@ update msg model =
                 | data = d
                 , dataAPI =
                     case d of
+                        SimpleList ->
+                            nicknamesJson
+
                         Test ->
                             testJson
 
@@ -226,7 +262,9 @@ view model =
         , hr [] []
         , div [ id "apiString" ] [ text model.dataAPI ]
         , viewPicker
-            [ ( "use Test data", model.data == Test, SwitchTo Test )
+            [ 
+              ( "Nicknames", model.data == SimpleList, SwitchTo SimpleList )
+            , ( "use Test data", model.data == Test, SwitchTo Test )
             , ( "Access bitly API", model.data == Production, SwitchTo Production )
             ]
         , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
@@ -304,21 +342,23 @@ generateListView slist =
 
 
 displayURL hs =
-    let 
-      shortener = Maybe.withDefault "" hs.short
+    let
+        shortener =
+            Maybe.withDefault "" hs.short
     in
     li [ hayBackGround hs.match ]
         [ div [] [ text hs.hay ]
         , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
+
         -- , div [ classList [ ( "hayKey", True ) ] ] [ text shortener ]
-        , div [ classList [ ( "hayKey", True ) ] ] 
-          [ a
-            [ href shortener
-            , target "_blank"
-            , rel "noopener noreferrer"
+        , div [ classList [ ( "hayKey", True ) ] ]
+            [ a
+                [ href shortener
+                , target "_blank"
+                , rel "noopener noreferrer"
+                ]
+                [ text shortener ]
             ]
-            [ text shortener ]
-          ]
         ]
 
 

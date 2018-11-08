@@ -5123,11 +5123,20 @@ var author$project$Main$createErrorMessage = function (httpError) {
 var author$project$Main$DataReceived = function (a) {
 	return {$: 'DataReceived', a: a};
 };
+var author$project$Main$NamesReceived = function (a) {
+	return {$: 'NamesReceived', a: a};
+};
+var elm$json$Json$Decode$field = _Json_decodeField;
+var elm$json$Json$Decode$list = _Json_decodeList;
+var elm$json$Json$Decode$string = _Json_decodeString;
+var author$project$Main$nicknamesDecoder = A2(
+	elm$json$Json$Decode$field,
+	'nicknames',
+	elm$json$Json$Decode$list(elm$json$Json$Decode$string));
 var author$project$Main$Link = F3(
 	function (title, keyword_link, long_url) {
 		return {keyword_link: keyword_link, long_url: long_url, title: title};
 	});
-var elm$json$Json$Decode$field = _Json_decodeField;
 var elm$json$Json$Decode$map3 = _Json_map3;
 var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$oneOf = _Json_oneOf;
@@ -5140,7 +5149,6 @@ var elm$json$Json$Decode$maybe = function (decoder) {
 				elm$json$Json$Decode$succeed(elm$core$Maybe$Nothing)
 			]));
 };
-var elm$json$Json$Decode$string = _Json_decodeString;
 var author$project$Main$linkDecoder = A4(
 	elm$json$Json$Decode$map3,
 	author$project$Main$Link,
@@ -5152,7 +5160,6 @@ var elm$json$Json$Decode$at = F2(
 	function (fields, decoder) {
 		return A3(elm$core$List$foldr, elm$json$Json$Decode$field, decoder, fields);
 	});
-var elm$json$Json$Decode$list = _Json_decodeList;
 var author$project$Main$urlsDecoder = A2(
 	elm$json$Json$Decode$at,
 	_List_fromArray(
@@ -5860,11 +5867,30 @@ var elm$http$Http$send = F2(
 			elm$http$Http$toTask(request_));
 	});
 var author$project$Main$httpCommand = function (dataURL) {
-	return A2(
-		elm$http$Http$send,
-		author$project$Main$DataReceived,
-		A2(elm$http$Http$get, dataURL, author$project$Main$urlsDecoder));
+	if (dataURL === 'https://api.myjson.com/bins/19yily') {
+		return A2(
+			elm$http$Http$send,
+			author$project$Main$NamesReceived,
+			A2(elm$http$Http$get, dataURL, author$project$Main$nicknamesDecoder));
+	} else {
+		return A2(
+			elm$http$Http$send,
+			author$project$Main$DataReceived,
+			A2(elm$http$Http$get, dataURL, author$project$Main$urlsDecoder));
+	}
 };
+var author$project$Main$makeHayFromNames = F2(
+	function (needle, names) {
+		return A2(
+			author$project$Main$checkForMatches,
+			needle,
+			A2(
+				elm$core$List$map,
+				function (x) {
+					return A4(author$project$Main$HayString, x, '', elm$core$Maybe$Nothing, elm$core$Maybe$Nothing);
+				},
+				names));
+	});
 var author$project$Main$makeHayFromUrls = F2(
 	function (needle, urls) {
 		return A2(
@@ -5877,6 +5903,7 @@ var author$project$Main$makeHayFromUrls = F2(
 				},
 				urls));
 	});
+var author$project$Main$nicknamesJson = 'https://api.myjson.com/bins/19yily';
 var author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -5909,6 +5936,27 @@ var author$project$Main$update = F2(
 			case 'StoreHay':
 				var h = msg.a;
 				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+			case 'NamesReceived':
+				if (msg.a.$ === 'Ok') {
+					var nicknames = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								hay: A2(author$project$Main$makeHayFromNames, model.needle, nicknames)
+							}),
+						elm$core$Platform$Cmd$none);
+				} else {
+					var httpError = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								errorMessage: elm$core$Maybe$Just(
+									author$project$Main$createErrorMessage(httpError))
+							}),
+						elm$core$Platform$Cmd$none);
+				}
 			case 'DataReceived':
 				if (msg.a.$ === 'Ok') {
 					var urls = msg.a.a;
@@ -5939,10 +5987,13 @@ var author$project$Main$update = F2(
 						{
 							data: d,
 							dataAPI: function () {
-								if (d.$ === 'Test') {
-									return author$project$Main$testJson;
-								} else {
-									return author$project$Main$bitlyAPI;
+								switch (d.$) {
+									case 'SimpleList':
+										return author$project$Main$nicknamesJson;
+									case 'Test':
+										return author$project$Main$testJson;
+									default:
+										return author$project$Main$bitlyAPI;
 								}
 							}()
 						}),
@@ -5951,6 +6002,7 @@ var author$project$Main$update = F2(
 	});
 var author$project$Main$Production = {$: 'Production'};
 var author$project$Main$SendHttpRequest = {$: 'SendHttpRequest'};
+var author$project$Main$SimpleList = {$: 'SimpleList'};
 var author$project$Main$StoreNeedle = function (a) {
 	return {$: 'StoreNeedle', a: a};
 };
@@ -6252,6 +6304,10 @@ var author$project$Main$view = function (model) {
 				author$project$Main$viewPicker(
 				_List_fromArray(
 					[
+						_Utils_Tuple3(
+						'Nicknames',
+						_Utils_eq(model.data, author$project$Main$SimpleList),
+						author$project$Main$SwitchTo(author$project$Main$SimpleList)),
 						_Utils_Tuple3(
 						'use Test data',
 						_Utils_eq(model.data, author$project$Main$Test),
