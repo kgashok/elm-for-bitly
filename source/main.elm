@@ -14,12 +14,6 @@ testJson =
     "https://api.myjson.com/bins/skw8e"
 
 
-
--- 100 URLs
--- 100 links from bitly
---"https://api.myjson.com/bins/wz9me"
-
-
 {--}
 urlsDecoder : Decoder (List Link)
 urlsDecoder =
@@ -252,16 +246,11 @@ generateListView slist =
 
 
 viewInput hs =
-    div [ hayBackGround hs.match ]
+    li [ hayBackGround hs.match ]
         [ div [] [ text hs.hay ]
         , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
         , div [ classList [ ( "hayKey", True ) ] ] [ text (Maybe.withDefault "" hs.short) ]
         ]
-
-
-
--- , [ input [ hayBackGround hs.match, placeholder hs.hay, onInput StoreHay ] []
---, text (matchString hs.match)
 
 
 hayBackGround : Maybe Match -> Attribute msg
@@ -289,13 +278,13 @@ checkForMatch needle hays =
             in
             case String.contains needle_ hay_ of
                 True ->
-                    HayString hays.hay hays.title hays.short (Just Yes)
+                    { hays | match = Just Yes }
 
                 _ ->
-                    HayString hays.hay hays.title hays.short (Just No)
+                    { hays | match = Just No }
 
         False ->
-            HayString hays.hay hays.title hays.short Nothing
+            { hays | match = Nothing }
 
 
 checkForMatches : String -> List HayString -> List HayString

@@ -5002,22 +5002,22 @@ var author$project$Main$checkForMatch = F2(
 			var hay_ = elm$core$String$toLower(hays.hay);
 			var _n1 = A2(elm$core$String$contains, needle_, hay_);
 			if (_n1) {
-				return A4(
-					author$project$Main$HayString,
-					hays.hay,
-					hays.title,
-					hays._short,
-					elm$core$Maybe$Just(author$project$Main$Yes));
+				return _Utils_update(
+					hays,
+					{
+						match: elm$core$Maybe$Just(author$project$Main$Yes)
+					});
 			} else {
-				return A4(
-					author$project$Main$HayString,
-					hays.hay,
-					hays.title,
-					hays._short,
-					elm$core$Maybe$Just(author$project$Main$No));
+				return _Utils_update(
+					hays,
+					{
+						match: elm$core$Maybe$Just(author$project$Main$No)
+					});
 			}
 		} else {
-			return A4(author$project$Main$HayString, hays.hay, hays.title, hays._short, elm$core$Maybe$Nothing);
+			return _Utils_update(
+				hays,
+				{match: elm$core$Maybe$Nothing});
 		}
 	});
 var elm$core$List$foldrHelper = F4(
@@ -6035,9 +6035,10 @@ var elm$core$Maybe$withDefault = F2(
 			return _default;
 		}
 	});
+var elm$html$Html$li = _VirtualDom_node('li');
 var author$project$Main$viewInput = function (hs) {
 	return A2(
-		elm$html$Html$div,
+		elm$html$Html$li,
 		_List_fromArray(
 			[
 				author$project$Main$hayBackGround(hs.match)
