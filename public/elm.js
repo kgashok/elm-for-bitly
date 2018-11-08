@@ -5908,8 +5908,21 @@ var author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'SendHttpRequest':
+				var needle_ = function () {
+					var _n1 = model.data;
+					switch (_n1.$) {
+						case 'SimpleList':
+							return 'God';
+						case 'Test':
+							return 'color';
+						default:
+							return 'share';
+					}
+				}();
 				return _Utils_Tuple2(
-					model,
+					_Utils_update(
+						model,
+						{needle: needle_}),
 					author$project$Main$httpCommand(model.dataAPI));
 			case 'Increment':
 				return _Utils_Tuple2(

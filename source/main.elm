@@ -159,7 +159,17 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SendHttpRequest ->
-            ( model, httpCommand model.dataAPI )
+          let
+            needle_ = 
+              case model.data of 
+                SimpleList -> 
+                  "God"
+                Test -> 
+                  "color" 
+                _ -> 
+                  "share" 
+          in
+          ( {model | needle = needle_}, httpCommand model.dataAPI )
 
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
