@@ -8,6 +8,14 @@ import Http
 import Json.Decode exposing (Decoder, decodeString, field, list, map2, maybe, string)
 
 
+apiKey =
+    "1ef1315a2efebd7557de137f776602276d833cb9"
+
+
+bitlyAPI =
+    "https://api-ssl.bitly.com/v3/user/link_history?access_token=" ++ apiKey
+
+
 testJson : String
 testJson =
     --"https://api.myjson.com/bins/19yily"  -- nicknames
@@ -42,10 +50,10 @@ type alias Link =
     }
 
 
-httpCommand : Cmd Msg
-httpCommand =
+httpCommand : String -> Cmd Msg
+httpCommand dataURL =
     urlsDecoder
-        |> Http.get testJson
+        |> Http.get dataURL
         |> Http.send DataReceived
 
 
@@ -67,11 +75,18 @@ type alias HayString =
     }
 
 
+type DataSource
+    = Test
+    | Production
+
+
 type alias Model =
     { val : Int
     , needle : String
     , hay : List HayString
     , errorMessage : Maybe String
+    , dataAPI : String
+    , data : DataSource
     }
 
 
@@ -86,6 +101,8 @@ init _ =
             , HayString "http://abcde.org" "" Nothing (Just No)
             ]
       , errorMessage = Nothing
+      , dataAPI = testJson
+      , data = Test
       }
     , Cmd.none
     )
@@ -114,6 +131,7 @@ type Msg
     | StoreHay String
     | SendHttpRequest
     | DataReceived (Result Http.Error (List Link))
+    | SwitchTo DataSource
 
 
 
@@ -124,7 +142,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SendHttpRequest ->
-            ( model, httpCommand )
+            ( model, httpCommand model.dataAPI )
 
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
@@ -150,6 +168,20 @@ update msg model =
         DataReceived (Err httpError) ->
             ( { model
                 | errorMessage = Just (createErrorMessage httpError)
+              }
+            , Cmd.none
+            )
+
+        SwitchTo d ->
+            ( { model
+                | data = d
+                , dataAPI =
+                    case d of
+                        Test ->
+                            testJson
+
+                        Production ->
+                            bitlyAPI
               }
             , Cmd.none
             )
@@ -192,6 +224,11 @@ view model =
         [ div [ id "title" ] [ text "Elm App in Glitch" ]
         , footer
         , hr [] []
+        , div [ id "apiString" ] [ text model.dataAPI ]
+        , viewPicker
+            [ ( "use Test data", model.data == Test, SwitchTo Test )
+            , ( "Access bitly API", model.data == Production, SwitchTo Production )
+            ]
         , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
         , div [ id "error" ] [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
         , hr [] []
@@ -206,6 +243,27 @@ view model =
             [ text "Hay (a list of URLs strings stored in bitly)"
             , generateListView model.hay
             ]
+        ]
+
+
+viewPicker : List ( String, Bool, msg ) -> Html msg
+viewPicker options =
+    fieldset [] (List.map radio options)
+
+
+radio : ( String, Bool, msg ) -> Html msg
+radio ( name, isChecked, msg ) =
+    label []
+        [ input [ type_ "radio", checked isChecked, onClick msg ] []
+        , text name
+        ]
+
+
+checkbox : msg -> String -> Html msg
+checkbox msg name =
+    label []
+        [ input [ type_ "checkbox", onClick msg ] []
+        , text name
         ]
 
 

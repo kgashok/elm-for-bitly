@@ -4472,7 +4472,9 @@ var author$project$Main$HayString = F4(
 		return {hay: hay, match: match, _short: _short, title: title};
 	});
 var author$project$Main$No = {$: 'No'};
+var author$project$Main$Test = {$: 'Test'};
 var author$project$Main$Yes = {$: 'Yes'};
+var author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
 var elm$core$Maybe$Just = function (a) {
 	return {$: 'Just', a: a};
 };
@@ -4953,6 +4955,8 @@ var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$Main$init = function (_n0) {
 	return _Utils_Tuple2(
 		{
+			data: author$project$Main$Test,
+			dataAPI: author$project$Main$testJson,
 			errorMessage: elm$core$Maybe$Nothing,
 			hay: _List_fromArray(
 				[
@@ -4986,6 +4990,8 @@ var author$project$Main$init = function (_n0) {
 		},
 		elm$core$Platform$Cmd$none);
 };
+var author$project$Main$apiKey = '1ef1315a2efebd7557de137f776602276d833cb9';
+var author$project$Main$bitlyAPI = 'https://api-ssl.bitly.com/v3/user/link_history?access_token=' + author$project$Main$apiKey;
 var elm$core$Basics$not = _Basics_not;
 var elm$core$String$contains = _String_contains;
 var elm$core$String$isEmpty = function (string) {
@@ -5117,7 +5123,6 @@ var author$project$Main$createErrorMessage = function (httpError) {
 var author$project$Main$DataReceived = function (a) {
 	return {$: 'DataReceived', a: a};
 };
-var author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
 var author$project$Main$Link = F3(
 	function (title, keyword_link, long_url) {
 		return {keyword_link: keyword_link, long_url: long_url, title: title};
@@ -5854,10 +5859,12 @@ var elm$http$Http$send = F2(
 			resultToMessage,
 			elm$http$Http$toTask(request_));
 	});
-var author$project$Main$httpCommand = A2(
-	elm$http$Http$send,
-	author$project$Main$DataReceived,
-	A2(elm$http$Http$get, author$project$Main$testJson, author$project$Main$urlsDecoder));
+var author$project$Main$httpCommand = function (dataURL) {
+	return A2(
+		elm$http$Http$send,
+		author$project$Main$DataReceived,
+		A2(elm$http$Http$get, dataURL, author$project$Main$urlsDecoder));
+};
 var author$project$Main$makeHayFromUrls = F2(
 	function (needle, urls) {
 		return A2(
@@ -5874,7 +5881,9 @@ var author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'SendHttpRequest':
-				return _Utils_Tuple2(model, author$project$Main$httpCommand);
+				return _Utils_Tuple2(
+					model,
+					author$project$Main$httpCommand(model.dataAPI));
 			case 'Increment':
 				return _Utils_Tuple2(
 					_Utils_update(
@@ -5900,7 +5909,7 @@ var author$project$Main$update = F2(
 			case 'StoreHay':
 				var h = msg.a;
 				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
-			default:
+			case 'DataReceived':
 				if (msg.a.$ === 'Ok') {
 					var urls = msg.a.a;
 					return _Utils_Tuple2(
@@ -5922,11 +5931,31 @@ var author$project$Main$update = F2(
 							}),
 						elm$core$Platform$Cmd$none);
 				}
+			default:
+				var d = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							data: d,
+							dataAPI: function () {
+								if (d.$ === 'Test') {
+									return author$project$Main$testJson;
+								} else {
+									return author$project$Main$bitlyAPI;
+								}
+							}()
+						}),
+					elm$core$Platform$Cmd$none);
 		}
 	});
+var author$project$Main$Production = {$: 'Production'};
 var author$project$Main$SendHttpRequest = {$: 'SendHttpRequest'};
 var author$project$Main$StoreNeedle = function (a) {
 	return {$: 'StoreNeedle', a: a};
+};
+var author$project$Main$SwitchTo = function (a) {
+	return {$: 'SwitchTo', a: a};
 };
 var author$project$Main$gitRepo = 'https://github.com/kgashok/elm-for-bitly';
 var elm$json$Json$Decode$map2 = _Json_map2;
@@ -6094,10 +6123,18 @@ var author$project$Main$generateListView = function (slist) {
 				A2(elm$html$Html$ul, _List_Nil, items)
 			]));
 };
-var elm$html$Html$button = _VirtualDom_node('button');
-var elm$html$Html$hr = _VirtualDom_node('hr');
 var elm$html$Html$input = _VirtualDom_node('input');
-var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
+var elm$html$Html$label = _VirtualDom_node('label');
+var elm$json$Json$Encode$bool = _Json_wrap;
+var elm$html$Html$Attributes$boolProperty = F2(
+	function (key, bool) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			elm$json$Json$Encode$bool(bool));
+	});
+var elm$html$Html$Attributes$checked = elm$html$Html$Attributes$boolProperty('checked');
+var elm$html$Html$Attributes$type_ = elm$html$Html$Attributes$stringProperty('type');
 var elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -6115,6 +6152,37 @@ var elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		elm$json$Json$Decode$succeed(msg));
 };
+var author$project$Main$radio = function (_n0) {
+	var name = _n0.a;
+	var isChecked = _n0.b;
+	var msg = _n0.c;
+	return A2(
+		elm$html$Html$label,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$input,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$type_('radio'),
+						elm$html$Html$Attributes$checked(isChecked),
+						elm$html$Html$Events$onClick(msg)
+					]),
+				_List_Nil),
+				elm$html$Html$text(name)
+			]));
+};
+var elm$html$Html$fieldset = _VirtualDom_node('fieldset');
+var author$project$Main$viewPicker = function (options) {
+	return A2(
+		elm$html$Html$fieldset,
+		_List_Nil,
+		A2(elm$core$List$map, author$project$Main$radio, options));
+};
+var elm$html$Html$button = _VirtualDom_node('button');
+var elm$html$Html$hr = _VirtualDom_node('hr');
+var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
 var elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
@@ -6160,6 +6228,28 @@ var author$project$Main$view = function (model) {
 					])),
 				author$project$Main$footer,
 				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$id('apiString')
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text(model.dataAPI)
+					])),
+				author$project$Main$viewPicker(
+				_List_fromArray(
+					[
+						_Utils_Tuple3(
+						'use Test data',
+						_Utils_eq(model.data, author$project$Main$Test),
+						author$project$Main$SwitchTo(author$project$Main$Test)),
+						_Utils_Tuple3(
+						'Access bitly API',
+						_Utils_eq(model.data, author$project$Main$Production),
+						author$project$Main$SwitchTo(author$project$Main$Production))
+					])),
 				A2(
 				elm$html$Html$button,
 				_List_fromArray(
