@@ -138,22 +138,24 @@ update msg model =
 
                         _ ->
                             "rawgit"
-                model_ = 
-                  { model 
-                    | needle = needle_
-                    , hay = []
-                    , viewMode = ShowMatchedOnly
-                    , errorMessage = Just "Launching requests..."
-                  }
+
+                model_ =
+                    { model
+                        | needle = needle_
+                        , hay = []
+                        , viewMode = ShowMatchedOnly
+                        , errorMessage = Just "Launching requests..."
+                    }
             in
             case model.data of
-              Production ->
-                ( model_
-                , Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
-                )
-              _ ->
-                ( model_, httpCommand model.dataAPI )
-            
+                Production ->
+                    ( model_
+                    , Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
+                    )
+
+                _ ->
+                    ( model_, httpCommand model.dataAPI )
+
         StoreNeedle s ->
             ( { model | needle = s, hay = checkForMatches s model.hay }, Cmd.none )
 
@@ -219,13 +221,13 @@ update msg model =
             , Cmd.none
             )
 
-        UpdateLinkCount c -> 
-            ( { model 
+        UpdateLinkCount c ->
+            ( { model
                 | linkcount = Maybe.withDefault 10 (String.toInt c)
               }
             , Cmd.none
             )
-            
+
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
@@ -325,9 +327,9 @@ view model =
             ]
         , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
         , div []
-          [ text " limited to "
-          , input [ placeholder (String.fromInt model.linkcount), onInput UpdateLinkCount ] []
-          ]
+            [ text " limited to "
+            , input [ placeholder (String.fromInt model.linkcount), onInput UpdateLinkCount ] []
+            ]
         , div [ id "error", classList [ ( "failed", model.errorStatus == True ) ] ]
             [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
         , hr [] []
