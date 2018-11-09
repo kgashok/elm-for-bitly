@@ -109,10 +109,11 @@ type Msg
     | Decrement
     | StoreNeedle String
     | SwitchTo DataSource
+    | ChangeViewTo ViewMode
     | SendHttpRequest
     | DataReceived (Result Http.Error (List Link))
     | NamesReceived (Result Http.Error (List String))
-
+    
 
 
 --update : Msg -> Model -> Model
@@ -189,6 +190,15 @@ update msg model =
               }
             , Cmd.none
             )
+            
+            
+        ChangeViewTo v -> 
+          ( { model
+              | viewMode = v
+            }
+          , Cmd.none
+          )
+          
 
         -- irrelevant message types, to be removed eventually
         Increment ->
