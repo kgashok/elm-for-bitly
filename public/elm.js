@@ -1841,9 +1841,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.cl,
+		impl.cm,
+		impl.cA,
 		impl.cz,
-		impl.cy,
 		function() { return function() {} }
 	);
 });
@@ -2320,16 +2320,16 @@ var _Http_toTask = F2(function(request, maybeProgress)
 
 		try
 		{
-			xhr.open(request.bc, request.cB, true);
+			xhr.open(request.bc, request.cC, true);
 		}
 		catch (e)
 		{
-			return callback(_Scheduler_fail(elm$http$Http$BadUrl(request.cB)));
+			return callback(_Scheduler_fail(elm$http$Http$BadUrl(request.cC)));
 		}
 
 		_Http_configureRequest(xhr, request);
 
-		var body = request.b8;
+		var body = request.b9;
 		xhr.send(elm$http$Http$Internal$isStringBody(body)
 			? (xhr.setRequestHeader('Content-Type', body.a), body.b)
 			: body.a
@@ -2352,8 +2352,8 @@ function _Http_configureProgress(xhr, maybeProgress)
 			return;
 		}
 		_Scheduler_rawSpawn(maybeProgress.a({
-			b9: event.loaded,
-			ca: event.total
+			ca: event.loaded,
+			cb: event.total
 		}));
 	});
 }
@@ -2400,10 +2400,10 @@ function _Http_handleResponse(xhr, responseToResult)
 function _Http_toResponse(xhr)
 {
 	return {
-		cB: xhr.responseURL,
-		cx: { cc: xhr.status, cn: xhr.statusText },
+		cC: xhr.responseURL,
+		cy: { cd: xhr.status, co: xhr.statusText },
 		aW: _Http_parseHeaders(xhr.getAllResponseHeaders()),
-		b8: xhr.response
+		b9: xhr.response
 	};
 }
 
@@ -2825,7 +2825,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		cn: func(record.cn),
+		co: func(record.co),
 		bj: record.bj,
 		bg: record.bg
 	}
@@ -3095,7 +3095,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.cn;
+		var message = !tag ? value : tag < 3 ? value.a : value.co;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.bj;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -4045,11 +4045,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.cl,
+		impl.cm,
+		impl.cA,
 		impl.cz,
-		impl.cy,
 		function(sendToApp, initialModel) {
-			var view = impl.cC;
+			var view = impl.cD;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -4081,12 +4081,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.cl,
+		impl.cm,
+		impl.cA,
 		impl.cz,
-		impl.cy,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.aH && impl.aH(sendToApp)
-			var view = impl.cC;
+			var view = impl.cD;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -4094,7 +4094,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.b8);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.b9);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
@@ -4150,8 +4150,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.cq;
-	var onUrlRequest = impl.cr;
+	var onUrlChange = impl.cr;
+	var onUrlRequest = impl.cs;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4181,13 +4181,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		cl: function(flags)
+		cm: function(flags)
 		{
-			return A3(impl.cl, flags, _Browser_getUrl(), key);
+			return A3(impl.cm, flags, _Browser_getUrl(), key);
 		},
-		cC: impl.cC,
-		cz: impl.cz,
-		cy: impl.cy
+		cD: impl.cD,
+		cA: impl.cA,
+		cz: impl.cz
 	});
 }
 
@@ -4253,17 +4253,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { ci: 'hidden', ax: 'visibilitychange' }
+		? { cj: 'hidden', ax: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { ci: 'mozHidden', ax: 'mozvisibilitychange' }
+		? { cj: 'mozHidden', ax: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { ci: 'msHidden', ax: 'msvisibilitychange' }
+		? { cj: 'msHidden', ax: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { ci: 'webkitHidden', ax: 'webkitvisibilitychange' }
-		: { ci: 'hidden', ax: 'visibilitychange' };
+		? { cj: 'webkitHidden', ax: 'webkitvisibilitychange' }
+		: { cj: 'hidden', ax: 'visibilitychange' };
 }
 
 
@@ -4345,7 +4345,7 @@ function _Browser_getViewport()
 {
 	return {
 		bY: _Browser_getScene(),
-		b3: {
+		b4: {
 			a4: _Browser_window.pageXOffset,
 			a5: _Browser_window.pageYOffset,
 			as: _Browser_doc.documentElement.clientWidth,
@@ -4387,7 +4387,7 @@ function _Browser_getViewportOf(id)
 				as: node.scrollWidth,
 				ae: node.scrollHeight
 			},
-			b3: {
+			b4: {
 				a4: node.scrollLeft,
 				a5: node.scrollTop,
 				as: node.clientWidth,
@@ -4422,13 +4422,13 @@ function _Browser_getElement(id)
 		var y = _Browser_window.pageYOffset;
 		return {
 			bY: _Browser_getScene(),
-			b3: {
+			b4: {
 				a4: x,
 				a5: y,
 				as: _Browser_doc.documentElement.clientWidth,
 				ae: _Browser_doc.documentElement.clientHeight
 			},
-			cf: {
+			cg: {
 				a4: x + rect.left,
 				a5: y + rect.top,
 				as: rect.width,
@@ -4472,6 +4472,7 @@ var author$project$Main$HayString = F4(
 		return {p: hay, aD: match, bh: _short, aK: title};
 	});
 var author$project$Main$No = 1;
+var author$project$Main$ShowMatchedOnly = 1;
 var author$project$Main$Test = 1;
 var author$project$Main$Yes = 0;
 var author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
@@ -4987,7 +4988,8 @@ var author$project$Main$init = function (_n0) {
 					elm$core$Maybe$Just(1))
 				]),
 			P: 'rawgit',
-			U: 0
+			U: 0,
+			b3: 1
 		},
 		elm$core$Platform$Cmd$none);
 };
@@ -5148,7 +5150,7 @@ var author$project$Main$createErrorMessage = function (httpError) {
 			return 'It appears you don\'t have an Internet connection right now.';
 		case 3:
 			var response = httpError.a;
-			return response.cx.cn;
+			return response.cy.co;
 		default:
 			var message = httpError.a;
 			var response = httpError.b;
@@ -5762,7 +5764,7 @@ var elm$json$Json$Decode$decodeString = _Json_runOnString;
 var elm$http$Http$expectJson = function (decoder) {
 	return elm$http$Http$expectStringResponse(
 		function (response) {
-			var _n0 = A2(elm$json$Json$Decode$decodeString, decoder, response.b8);
+			var _n0 = A2(elm$json$Json$Decode$decodeString, decoder, response.b9);
 			if (_n0.$ === 1) {
 				var decodeError = _n0.a;
 				return elm$core$Result$Err(
@@ -5782,12 +5784,12 @@ var elm$http$Http$get = F2(
 	function (url, decoder) {
 		return elm$http$Http$request(
 			{
-				b8: elm$http$Http$emptyBody,
+				b9: elm$http$Http$emptyBody,
 				a7: elm$http$Http$expectJson(decoder),
 				aW: _List_Nil,
 				bc: 'GET',
 				bl: elm$core$Maybe$Nothing,
-				cB: url,
+				cC: url,
 				bm: false
 			});
 	});
@@ -6553,12 +6555,12 @@ var elm$core$Platform$Sub$batch = _Platform_batch;
 var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
 var author$project$Main$main = elm$browser$Browser$element(
 	{
-		cl: author$project$Main$init,
-		cy: function (_n0) {
+		cm: author$project$Main$init,
+		cz: function (_n0) {
 			return elm$core$Platform$Sub$none;
 		},
-		cz: author$project$Main$update,
-		cC: author$project$Main$view
+		cA: author$project$Main$update,
+		cD: author$project$Main$view
 	});
 _Platform_export({'Main':{'init':author$project$Main$main(
 	elm$json$Json$Decode$succeed(0))(0)}});}(this));

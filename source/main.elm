@@ -50,6 +50,10 @@ type DataSource
     = SimpleList
     | Test
     | Production
+    
+type ViewMode
+    = ShowAll
+    | ShowMatchedOnly
 
 
 type alias Model =
@@ -60,6 +64,7 @@ type alias Model =
     , errorStatus : Bool
     , dataAPI : String
     , data : DataSource
+    , viewMode : ViewMode
     }
 
 
@@ -77,6 +82,7 @@ init _ =
       , errorStatus = False
       , dataAPI = testJson
       , data = Test
+      , viewMode = ShowMatchedOnly
       }
     , Cmd.none
     )
@@ -333,12 +339,13 @@ displayURL hs =
     li [ hayBackGround hs.match ]
         [ div [] [ text hs.hay ]
         , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
-        
+
         -- , div [ classList [ ( "hayKey", True ) ] ] [ text shortener ]
         , div [ classList [ ( "hayKey", True ) ] ]
             [ a
                 [ href shortener
                 , target "_blank"
+
                 --, rel "noopener noreferrer"
                 ]
                 [ text shortener ]
@@ -385,14 +392,15 @@ checkForMatch needle hays =
             { hays | match = Nothing }
 
 
-parseKeyword : Maybe String -> Maybe String 
-parseKeyword short = 
-  let 
-    tlist = String.split "/" (Maybe.withDefault "" short)
-  in
+parseKeyword : Maybe String -> Maybe String
+parseKeyword short =
+    let
+        tlist =
+            String.split "/" (Maybe.withDefault "" short)
+    in
     List.head (List.reverse tlist)
-      
-  
+
+
 checkForMatches : String -> List HayString -> List HayString
 checkForMatches needle haylist =
     haylist
