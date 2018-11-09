@@ -278,6 +278,10 @@ view model =
         , hr [] []
         , div []
             [ text "Hay (a list of URLs strings stored in bitly)"
+            , viewPicker 
+              [ ( "Matched Only", model.viewMode == ShowMatchedOnly, ChangeViewTo ShowMatchedOnly)
+              , ( "Show All", model.viewMode == ShowAll, ChangeViewTo ShowAll)
+              ]
             , generateListView model.hay
             ]
         ]

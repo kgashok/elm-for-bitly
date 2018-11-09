@@ -770,11 +770,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.bi.aC === region.bB.aC)
+	if (region.bj.aC === region.bB.aC)
 	{
-		return 'on line ' + region.bi.aC;
+		return 'on line ' + region.bj.aC;
 	}
-	return 'on lines ' + region.bi.aC + ' through ' + region.bB.aC;
+	return 'on lines ' + region.bj.aC + ' through ' + region.bB.aC;
 }
 
 
@@ -2315,12 +2315,12 @@ var _Http_toTask = F2(function(request, maybeProgress)
 			callback(_Scheduler_fail(elm$http$Http$Timeout));
 		});
 		xhr.addEventListener('load', function() {
-			callback(_Http_handleResponse(xhr, request.a7.a));
+			callback(_Http_handleResponse(xhr, request.a8.a));
 		});
 
 		try
 		{
-			xhr.open(request.bc, request.cC, true);
+			xhr.open(request.bd, request.cC, true);
 		}
 		catch (e)
 		{
@@ -2360,15 +2360,15 @@ function _Http_configureProgress(xhr, maybeProgress)
 
 function _Http_configureRequest(xhr, request)
 {
-	for (var headers = request.aW; headers.b; headers = headers.b) // WHILE_CONS
+	for (var headers = request.aX; headers.b; headers = headers.b) // WHILE_CONS
 	{
 		xhr.setRequestHeader(headers.a.a, headers.a.b);
 	}
 
-	xhr.responseType = request.a7.b;
+	xhr.responseType = request.a8.b;
 	xhr.withCredentials = request.bn;
 
-	elm$core$Maybe$isJust(request.bl) && (xhr.timeout = request.bl.a);
+	elm$core$Maybe$isJust(request.bm) && (xhr.timeout = request.bm.a);
 }
 
 
@@ -2402,7 +2402,7 @@ function _Http_toResponse(xhr)
 	return {
 		cC: xhr.responseURL,
 		cy: { cd: xhr.status, co: xhr.statusText },
-		aW: _Http_parseHeaders(xhr.getAllResponseHeaders()),
+		aX: _Http_parseHeaders(xhr.getAllResponseHeaders()),
 		b9: xhr.response
 	};
 }
@@ -2826,8 +2826,8 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
 		co: func(record.co),
-		bj: record.bj,
-		bg: record.bg
+		bk: record.bk,
+		bh: record.bh
 	}
 });
 
@@ -3096,10 +3096,10 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 
 		var value = result.a;
 		var message = !tag ? value : tag < 3 ? value.a : value.co;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.bj;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.bk;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.bg) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.bh) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -4346,8 +4346,8 @@ function _Browser_getViewport()
 	return {
 		bZ: _Browser_getScene(),
 		b4: {
-			a4: _Browser_window.pageXOffset,
-			a5: _Browser_window.pageYOffset,
+			a5: _Browser_window.pageXOffset,
+			a6: _Browser_window.pageYOffset,
 			as: _Browser_doc.documentElement.clientWidth,
 			ae: _Browser_doc.documentElement.clientHeight
 		}
@@ -4388,8 +4388,8 @@ function _Browser_getViewportOf(id)
 				ae: node.scrollHeight
 			},
 			b4: {
-				a4: node.scrollLeft,
-				a5: node.scrollTop,
+				a5: node.scrollLeft,
+				a6: node.scrollTop,
 				as: node.clientWidth,
 				ae: node.clientHeight
 			}
@@ -4423,14 +4423,14 @@ function _Browser_getElement(id)
 		return {
 			bZ: _Browser_getScene(),
 			b4: {
-				a4: x,
-				a5: y,
+				a5: x,
+				a6: y,
 				as: _Browser_doc.documentElement.clientWidth,
 				ae: _Browser_doc.documentElement.clientHeight
 			},
 			cg: {
-				a4: x + rect.left,
-				a5: y + rect.top,
+				a5: x + rect.left,
+				a6: y + rect.top,
 				as: rect.width,
 				ae: rect.height
 			}
@@ -4469,7 +4469,7 @@ function _Browser_load(url)
 }
 var author$project$Main$HayString = F4(
 	function (hay, title, _short, match) {
-		return {p: hay, aD: match, bh: _short, aK: title};
+		return {p: hay, aD: match, bi: _short, aK: title};
 	});
 var author$project$Main$No = 1;
 var author$project$Main$ShowMatchedOnly = 1;
@@ -4989,7 +4989,7 @@ var author$project$Main$init = function (_n0) {
 				]),
 			P: 'rawgit',
 			U: 0,
-			bm: 1
+			aQ: 1
 		},
 		elm$core$Platform$Cmd$none);
 };
@@ -5042,7 +5042,7 @@ var author$project$Main$checkForMatch = F2(
 						A2(
 							elm$core$Maybe$withDefault,
 							'',
-							author$project$Main$parseKeyword(hays.bh)))));
+							author$project$Main$parseKeyword(hays.bi)))));
 			var _n1 = A2(elm$core$String$contains, needle_, hay_);
 			if (_n1) {
 				return _Utils_update(
@@ -5785,10 +5785,10 @@ var elm$http$Http$get = F2(
 		return elm$http$Http$request(
 			{
 				b9: elm$http$Http$emptyBody,
-				a7: elm$http$Http$expectJson(decoder),
-				aW: _List_Nil,
-				bc: 'GET',
-				bl: elm$core$Maybe$Nothing,
+				a8: elm$http$Http$expectJson(decoder),
+				aX: _List_Nil,
+				bd: 'GET',
+				bm: elm$core$Maybe$Nothing,
 				cC: url,
 				bn: false
 			});
@@ -6037,7 +6037,7 @@ var author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{bm: v}),
+						{aQ: v}),
 					elm$core$Platform$Cmd$none);
 			case 0:
 				return _Utils_Tuple2(
@@ -6053,8 +6053,12 @@ var author$project$Main$update = F2(
 					elm$core$Platform$Cmd$none);
 		}
 	});
+var author$project$Main$ChangeViewTo = function (a) {
+	return {$: 4, a: a};
+};
 var author$project$Main$Production = 2;
 var author$project$Main$SendHttpRequest = {$: 5};
+var author$project$Main$ShowAll = 0;
 var author$project$Main$SimpleList = 0;
 var author$project$Main$StoreNeedle = function (a) {
 	return {$: 2, a: a};
@@ -6160,7 +6164,7 @@ var author$project$Main$hayBackGround = function (val) {
 };
 var elm$html$Html$li = _VirtualDom_node('li');
 var author$project$Main$displayURL = function (hs) {
-	var shortener = A2(elm$core$Maybe$withDefault, '', hs.bh);
+	var shortener = A2(elm$core$Maybe$withDefault, '', hs.bi);
 	return A2(
 		elm$html$Html$li,
 		_List_fromArray(
@@ -6407,6 +6411,18 @@ var author$project$Main$view = function (model) {
 				_List_fromArray(
 					[
 						elm$html$Html$text('Hay (a list of URLs strings stored in bitly)'),
+						author$project$Main$viewPicker(
+						_List_fromArray(
+							[
+								_Utils_Tuple3(
+								'Matched Only',
+								model.aQ === 1,
+								author$project$Main$ChangeViewTo(1)),
+								_Utils_Tuple3(
+								'Show All',
+								!model.aQ,
+								author$project$Main$ChangeViewTo(0))
+							])),
 						author$project$Main$generateListView(model.p)
 					]))
 			]));
