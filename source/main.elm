@@ -66,6 +66,7 @@ type alias Model =
     , dataAPI : String
     , data : DataSource
     , viewMode : ViewMode
+    , linkcount : Int
     }
 
 
@@ -84,6 +85,7 @@ init _ =
       , dataAPI = testJson
       , data = Test
       , viewMode = ShowMatchedOnly
+      , linkcount = 1000
       }
     , Cmd.none
     )
@@ -136,8 +138,17 @@ update msg model =
                         _ ->
                             "share"
             in
-            ( { model | needle = needle_ }, httpCommand model.dataAPI )
-
+            --( { model | needle = needle_ }, httpCommand model.dataAPI )
+            {--}
+            ( { model 
+                | needle = needle_
+                , hay = []
+                , errorMessage = Just "Launching requests..."
+              }
+            , Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount ) 
+            )
+            --}
+            
         StoreNeedle s ->
             ( { model | needle = s, hay = checkForMatches s model.hay }, Cmd.none )
 
@@ -159,8 +170,12 @@ update msg model =
             )
 
         DataReceived (Ok urls) ->
+          let 
+            previous = model.hay
+            
+          in 
             ( { model
-                | hay = makeHayFromUrls model.needle urls
+                | hay = (makeHayFromUrls model.needle urls) ++ previous
                 , errorMessage = Nothing
                 , errorStatus = False
               }
@@ -209,18 +224,37 @@ update msg model =
 
 httpCommand : String -> Cmd Msg
 httpCommand dataURL =
+    let 
+      _ = Debug.log "url: " dataURL
+    in
     case dataURL of
         "https://api.myjson.com/bins/19yily" ->
             nicknamesDecoder
                 |> Http.get dataURL
                 |> Http.send NamesReceived
-
+        
         _ ->
             urlsDecoder
                 |> Http.get dataURL
                 |> Http.send DataReceived
 
 
+
+{-| bitlyBatchRequest helps create a list of Http.gets
+to get all the URLS for a specific user
+    -- uses skipList and skipUrl to generate a list
+    -- of Http requests
+-}
+bitlyBatchRequest : String -> Int -> List (Cmd Msg)
+bitlyBatchRequest dataURL count =
+    let        
+        skipUrl url offset = url ++ "&limit=50&offset=" ++ String.fromInt offset
+    in
+        skipList count
+            |> List.map (skipUrl dataURL)
+            |> List.map httpCommand
+            
+            
 
 {-| skipList returns a list of numbers in intervals of 30.
     -- this is required for parallel dispatch of ~30 requests
