@@ -5976,8 +5976,8 @@ var author$project$Main$update = F2(
 		switch (msg.$) {
 			case 'SendHttpRequest':
 				var needle_ = function () {
-					var _n1 = model.data;
-					switch (_n1.$) {
+					var _n2 = model.data;
+					switch (_n2.$) {
 						case 'SimpleList':
 							return 'God';
 						case 'Test':
@@ -5986,16 +5986,24 @@ var author$project$Main$update = F2(
 							return 'share';
 					}
 				}();
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							errorMessage: elm$core$Maybe$Just('Launching requests...'),
-							hay: _List_Nil,
-							needle: needle_
-						}),
-					elm$core$Platform$Cmd$batch(
-						A2(author$project$Main$bitlyBatchRequest, model.dataAPI, model.linkcount)));
+				var model_ = _Utils_update(
+					model,
+					{
+						errorMessage: elm$core$Maybe$Just('Launching requests...'),
+						hay: _List_Nil,
+						needle: needle_
+					});
+				var _n1 = model.data;
+				if (_n1.$ === 'Production') {
+					return _Utils_Tuple2(
+						model_,
+						elm$core$Platform$Cmd$batch(
+							A2(author$project$Main$bitlyBatchRequest, model.dataAPI, model.linkcount)));
+				} else {
+					return _Utils_Tuple2(
+						model_,
+						author$project$Main$httpCommand(model.dataAPI));
+				}
 			case 'StoreNeedle':
 				var s = msg.a;
 				return _Utils_Tuple2(

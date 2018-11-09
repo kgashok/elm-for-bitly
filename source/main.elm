@@ -138,18 +138,21 @@ update msg model =
 
                         _ ->
                             "share"
+                model_ = 
+                  { model 
+                    | needle = needle_
+                    , hay = []
+                    , errorMessage = Just "Launching requests..."
+                  }
             in
-            --( { model | needle = needle_ }, httpCommand model.dataAPI )
-            {--}
-            ( { model
-                | needle = needle_
-                , hay = []
-                , errorMessage = Just "Launching requests..."
-              }
-            , Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
-            )
-
-        --}
+            case model.data of
+              Production ->
+                ( model_
+                , Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
+                )
+              _ ->
+                ( model_, httpCommand model.dataAPI )
+            
         StoreNeedle s ->
             ( { model | needle = s, hay = checkForMatches s model.hay }, Cmd.none )
 
