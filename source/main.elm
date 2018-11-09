@@ -116,6 +116,7 @@ type Msg
     | SendHttpRequest
     | DataReceived (Result Http.Error (List Link))
     | NamesReceived (Result Http.Error (List String))
+    | UpdateLinkCount String
 
 
 
@@ -140,15 +141,15 @@ update msg model =
             in
             --( { model | needle = needle_ }, httpCommand model.dataAPI )
             {--}
-            ( { model 
+            ( { model
                 | needle = needle_
                 , hay = []
                 , errorMessage = Just "Launching requests..."
               }
-            , Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount ) 
+            , Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
             )
-            --}
-            
+
+        --}
         StoreNeedle s ->
             ( { model | needle = s, hay = checkForMatches s model.hay }, Cmd.none )
 
@@ -170,12 +171,12 @@ update msg model =
             )
 
         DataReceived (Ok urls) ->
-          let 
-            previous = model.hay
-            
-          in 
+            let
+                previous =
+                    model.hay
+            in
             ( { model
-                | hay = (makeHayFromUrls model.needle urls) ++ previous
+                | hay = makeHayFromUrls model.needle urls ++ previous
                 , errorMessage = Nothing
                 , errorStatus = False
               }
@@ -214,6 +215,13 @@ update msg model =
             , Cmd.none
             )
 
+        UpdateLinkCount c -> 
+            ( { model 
+                | linkcount = Maybe.withDefault 10 (String.toInt c)
+              }
+            , Cmd.none
+            )
+            
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
@@ -224,50 +232,48 @@ update msg model =
 
 httpCommand : String -> Cmd Msg
 httpCommand dataURL =
-    let 
-      _ = Debug.log "url: " dataURL
+    let
+        _ =
+            Debug.log "url: " dataURL
     in
     case dataURL of
         "https://api.myjson.com/bins/19yily" ->
             nicknamesDecoder
                 |> Http.get dataURL
                 |> Http.send NamesReceived
-        
+
         _ ->
             urlsDecoder
                 |> Http.get dataURL
                 |> Http.send DataReceived
 
 
-
 {-| bitlyBatchRequest helps create a list of Http.gets
 to get all the URLS for a specific user
-    -- uses skipList and skipUrl to generate a list
-    -- of Http requests
+-- uses skipList and skipUrl to generate a list
+-- of Http requests
 -}
 bitlyBatchRequest : String -> Int -> List (Cmd Msg)
 bitlyBatchRequest dataURL count =
-    let        
-        skipUrl url offset = url ++ "&limit=50&offset=" ++ String.fromInt offset
+    let
+        skipUrl url offset =
+            url ++ "&limit=50&offset=" ++ String.fromInt offset
     in
-        skipList count
-            |> List.map (skipUrl dataURL)
-            |> List.map httpCommand
-            
-            
+    skipList count
+        |> List.map (skipUrl dataURL)
+        |> List.map httpCommand
+
 
 {-| skipList returns a list of numbers in intervals of 30.
-    -- this is required for parallel dispatch of ~30 requests
-    skipList 120
-    --> [0, 30, 60, 90, 120]
-    skipList 170
-    --> [0, 30, 60, 90, 120, 150, 180]
+-- this is required for parallel dispatch of ~30 requests
+skipList 120
+--> [0, 30, 60, 90, 120]
+skipList 170
+--> [0, 30, 60, 90, 120, 150, 180]
 -}
 skipList : Int -> List Int
 skipList userCount =
-    List.map (\x -> x * 50) (List.range 0 (round ((toFloat userCount) / 50)))
-    
-    
+    List.map (\x -> x * 50) (List.range 0 (round (toFloat userCount / 50)))
 
 
 makeHayFromUrls needle urls =
@@ -313,7 +319,11 @@ view model =
             , ( "use Test data", model.data == Test, SwitchTo Test )
             , ( "Access bitly API", model.data == Production, SwitchTo Production )
             ]
-        , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
+        , span [] 
+            [
+              button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
+            , input [ placeholder (String.fromInt model.linkcount), onInput UpdateLinkCount ] []  
+            ]
         , div [ id "error", classList [ ( "failed", model.errorStatus == True ) ] ]
             [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
         , hr [] []

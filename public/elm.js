@@ -5970,6 +5970,7 @@ var author$project$Main$makeHayFromUrls = F2(
 				urls));
 	});
 var author$project$Main$nicknamesJson = 'https://api.myjson.com/bins/19yily';
+var elm$core$String$toInt = _String_toInt;
 var author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -6082,6 +6083,18 @@ var author$project$Main$update = F2(
 						model,
 						{viewMode: v}),
 					elm$core$Platform$Cmd$none);
+			case 'UpdateLinkCount':
+				var c = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							linkcount: A2(
+								elm$core$Maybe$withDefault,
+								10,
+								elm$core$String$toInt(c))
+						}),
+					elm$core$Platform$Cmd$none);
 			case 'Increment':
 				return _Utils_Tuple2(
 					_Utils_update(
@@ -6108,6 +6121,9 @@ var author$project$Main$StoreNeedle = function (a) {
 };
 var author$project$Main$SwitchTo = function (a) {
 	return {$: 'SwitchTo', a: a};
+};
+var author$project$Main$UpdateLinkCount = function (a) {
+	return {$: 'UpdateLinkCount', a: a};
 };
 var author$project$Main$gitRepo = 'https://github.com/kgashok/elm-for-bitly';
 var elm$json$Json$Decode$map2 = _Json_map2;
@@ -6344,6 +6360,7 @@ var author$project$Main$viewPicker = function (options) {
 };
 var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$hr = _VirtualDom_node('hr');
+var elm$html$Html$span = _VirtualDom_node('span');
 var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
 var elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
@@ -6417,14 +6434,29 @@ var author$project$Main$view = function (model) {
 						author$project$Main$SwitchTo(author$project$Main$Production))
 					])),
 				A2(
-				elm$html$Html$button,
+				elm$html$Html$span,
+				_List_Nil,
 				_List_fromArray(
 					[
-						elm$html$Html$Events$onClick(author$project$Main$SendHttpRequest)
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text('Fetch URLs')
+						A2(
+						elm$html$Html$button,
+						_List_fromArray(
+							[
+								elm$html$Html$Events$onClick(author$project$Main$SendHttpRequest)
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text('Fetch URLs')
+							])),
+						A2(
+						elm$html$Html$input,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$placeholder(
+								elm$core$String$fromInt(model.linkcount)),
+								elm$html$Html$Events$onInput(author$project$Main$UpdateLinkCount)
+							]),
+						_List_Nil)
 					])),
 				A2(
 				elm$html$Html$div,
@@ -6523,7 +6555,6 @@ var elm$core$String$left = F2(
 	function (n, string) {
 		return (n < 1) ? '' : A3(elm$core$String$slice, 0, n, string);
 	});
-var elm$core$String$toInt = _String_toInt;
 var elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
 		return {fragment: fragment, host: host, path: path, port_: port_, protocol: protocol, query: query};
