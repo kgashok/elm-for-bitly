@@ -6167,6 +6167,7 @@ var elm$html$Html$Attributes$href = function (url) {
 		_VirtualDom_noJavaScriptUri(url));
 };
 var elm$html$Html$Attributes$id = elm$html$Html$Attributes$stringProperty('id');
+var elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
 var elm$html$Html$Attributes$target = elm$html$Html$Attributes$stringProperty('target');
 var author$project$Main$footer = A2(
 	elm$html$Html$div,
@@ -6181,7 +6182,8 @@ var author$project$Main$footer = A2(
 			_List_fromArray(
 				[
 					elm$html$Html$Attributes$href(author$project$Main$gitRepo + '/issues/new'),
-					elm$html$Html$Attributes$target('_blank')
+					elm$html$Html$Attributes$target('_blank'),
+					elm$html$Html$Attributes$rel('noopener noreferrer')
 				]),
 			_List_fromArray(
 				[

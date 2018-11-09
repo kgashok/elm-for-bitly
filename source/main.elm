@@ -108,16 +108,16 @@ main =
 
 
 type Msg
-    = Increment
-    | Decrement
-    | StoreNeedle String
+    = StoreNeedle String
     | SwitchTo DataSource
     | ChangeViewTo ViewMode
     | SendHttpRequest
     | DataReceived (Result Http.Error (List Link))
     | NamesReceived (Result Http.Error (List String))
     | UpdateLinkCount String
-
+    | Increment
+    | Decrement
+    
 
 
 --update : Msg -> Model -> Model
@@ -394,7 +394,7 @@ footer =
             [ href (gitRepo ++ "/issues/new")
             , target "_blank"
 
-            -- , rel "noopener noreferrer"
+            , rel "noopener noreferrer"
             ]
             [ text "Provide feedback?" ]
         ]
