@@ -130,7 +130,7 @@ update msg model =
                             "God"
 
                         Test ->
-                            "color"
+                            "deep"
 
                         _ ->
                             "share"
@@ -282,7 +282,7 @@ view model =
               [ ( "Matched Only", model.viewMode == ShowMatchedOnly, ChangeViewTo ShowMatchedOnly)
               , ( "Show All", model.viewMode == ShowAll, ChangeViewTo ShowAll)
               ]
-            , generateListView model.hay
+            , generateListView model.viewMode model.hay
             ]
         ]
 
@@ -336,35 +336,39 @@ footer =
         ]
 
 
-generateListView : List HayString -> Html Msg
-generateListView slist =
+generateListView : ViewMode -> List HayString -> Html Msg
+generateListView viewmode slist =
     let
         items =
-            List.map displayURL slist
+            slist 
+              |> List.filter (\x -> viewmode == ShowAll || x.match == Just Yes)
+              |> List.map displayURL
     in
     div [] [ ul [] items ]
 
 
+displayURL : HayString -> (Html msg)
 displayURL hs =
     let
         shortener =
             Maybe.withDefault "" hs.short
-    in
-    li [ hayBackGround hs.match ]
-        [ div [] [ text hs.hay ]
-        , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
+    in    
+        li [ hayBackGround hs.match ]
+            [ div [] [ text hs.hay ]
+            , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
 
-        -- , div [ classList [ ( "hayKey", True ) ] ] [ text shortener ]
-        , div [ classList [ ( "hayKey", True ) ] ]
-            [ a
-                [ href shortener
-                , target "_blank"
+            -- , div [ classList [ ( "hayKey", True ) ] ] [ text shortener ]
+            , div [ classList [ ( "hayKey", True ) ] ]
+                [ a
+                    [ href shortener
+                    , target "_blank"
 
-                --, rel "noopener noreferrer"
+                    --, rel "noopener noreferrer"
+                    ]
+                    [ text shortener ]
                 ]
-                [ text shortener ]
             ]
-        ]
+        
 
 
 hayBackGround : Maybe Match -> Attribute msg

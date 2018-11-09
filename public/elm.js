@@ -770,11 +770,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.bj.aC === region.bB.aC)
+	if (region.bj.aE === region.bB.aE)
 	{
-		return 'on line ' + region.bj.aC;
+		return 'on line ' + region.bj.aE;
 	}
-	return 'on lines ' + region.bj.aC + ' through ' + region.bB.aC;
+	return 'on lines ' + region.bj.aE + ' through ' + region.bB.aE;
 }
 
 
@@ -4085,7 +4085,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		impl.cA,
 		impl.cz,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.aH && impl.aH(sendToApp)
+			var divertHrefToApp = impl.aI && impl.aI(sendToApp)
 			var view = impl.cD;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -4099,7 +4099,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.aK) && (_VirtualDom_doc.title = title = doc.aK);
+				(title !== doc.aL) && (_VirtualDom_doc.title = title = doc.aL);
 			});
 		}
 	);
@@ -4155,7 +4155,7 @@ function _Browser_application(impl)
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		aH: function(sendToApp)
+		aI: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4253,17 +4253,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { cj: 'hidden', ax: 'visibilitychange' }
+		? { cj: 'hidden', az: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { cj: 'mozHidden', ax: 'mozvisibilitychange' }
+		? { cj: 'mozHidden', az: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { cj: 'msHidden', ax: 'msvisibilitychange' }
+		? { cj: 'msHidden', az: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { cj: 'webkitHidden', ax: 'webkitvisibilitychange' }
-		: { cj: 'hidden', ax: 'visibilitychange' };
+		? { cj: 'webkitHidden', az: 'webkitvisibilitychange' }
+		: { cj: 'hidden', az: 'visibilitychange' };
 }
 
 
@@ -4348,7 +4348,7 @@ function _Browser_getViewport()
 		b4: {
 			a5: _Browser_window.pageXOffset,
 			a6: _Browser_window.pageYOffset,
-			as: _Browser_doc.documentElement.clientWidth,
+			au: _Browser_doc.documentElement.clientWidth,
 			ae: _Browser_doc.documentElement.clientHeight
 		}
 	};
@@ -4359,7 +4359,7 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		as: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		au: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
 		ae: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
@@ -4384,13 +4384,13 @@ function _Browser_getViewportOf(id)
 	{
 		return {
 			bZ: {
-				as: node.scrollWidth,
+				au: node.scrollWidth,
 				ae: node.scrollHeight
 			},
 			b4: {
 				a5: node.scrollLeft,
 				a6: node.scrollTop,
-				as: node.clientWidth,
+				au: node.clientWidth,
 				ae: node.clientHeight
 			}
 		};
@@ -4425,13 +4425,13 @@ function _Browser_getElement(id)
 			b4: {
 				a5: x,
 				a6: y,
-				as: _Browser_doc.documentElement.clientWidth,
+				au: _Browser_doc.documentElement.clientWidth,
 				ae: _Browser_doc.documentElement.clientHeight
 			},
 			cg: {
 				a5: x + rect.left,
 				a6: y + rect.top,
-				as: rect.width,
+				au: rect.width,
 				ae: rect.height
 			}
 		};
@@ -4469,7 +4469,7 @@ function _Browser_load(url)
 }
 var author$project$Main$HayString = F4(
 	function (hay, title, _short, match) {
-		return {p: hay, aD: match, bi: _short, aK: title};
+		return {p: hay, ai: match, bi: _short, aL: title};
 	});
 var author$project$Main$No = 1;
 var author$project$Main$ShowMatchedOnly = 1;
@@ -4957,7 +4957,7 @@ var author$project$Main$init = function (_n0) {
 	return _Utils_Tuple2(
 		{
 			H: 1,
-			ay: author$project$Main$testJson,
+			aA: author$project$Main$testJson,
 			I: elm$core$Maybe$Nothing,
 			J: false,
 			p: _List_fromArray(
@@ -4989,7 +4989,7 @@ var author$project$Main$init = function (_n0) {
 				]),
 			P: 'rawgit',
 			U: 0,
-			aQ: 1
+			at: 1
 		},
 		elm$core$Platform$Cmd$none);
 };
@@ -5038,7 +5038,7 @@ var author$project$Main$checkForMatch = F2(
 				_Utils_ap(
 					hays.p,
 					_Utils_ap(
-						hays.aK,
+						hays.aL,
 						A2(
 							elm$core$Maybe$withDefault,
 							'',
@@ -5048,19 +5048,19 @@ var author$project$Main$checkForMatch = F2(
 				return _Utils_update(
 					hays,
 					{
-						aD: elm$core$Maybe$Just(0)
+						ai: elm$core$Maybe$Just(0)
 					});
 			} else {
 				return _Utils_update(
 					hays,
 					{
-						aD: elm$core$Maybe$Just(1)
+						ai: elm$core$Maybe$Just(1)
 					});
 			}
 		} else {
 			return _Utils_update(
 				hays,
-				{aD: elm$core$Maybe$Nothing});
+				{ai: elm$core$Maybe$Nothing});
 		}
 	});
 var elm$core$List$foldrHelper = F4(
@@ -5172,7 +5172,7 @@ var author$project$Main$nicknamesDecoder = A2(
 	elm$json$Json$Decode$list(elm$json$Json$Decode$string));
 var author$project$Main$Link = F3(
 	function (title, keyword_link, long_url) {
-		return {bK: keyword_link, bL: long_url, aK: title};
+		return {bK: keyword_link, bL: long_url, aL: title};
 	});
 var elm$json$Json$Decode$map3 = _Json_map3;
 var elm$json$Json$Decode$map = _Json_map1;
@@ -5930,7 +5930,7 @@ var author$project$Main$makeHayFromUrls = F2(
 			A2(
 				elm$core$List$map,
 				function (x) {
-					return A4(author$project$Main$HayString, x.bL, x.aK, x.bK, elm$core$Maybe$Nothing);
+					return A4(author$project$Main$HayString, x.bL, x.aL, x.bK, elm$core$Maybe$Nothing);
 				},
 				urls));
 	});
@@ -5945,7 +5945,7 @@ var author$project$Main$update = F2(
 						case 0:
 							return 'God';
 						case 1:
-							return 'color';
+							return 'deep';
 						default:
 							return 'share';
 					}
@@ -5954,7 +5954,7 @@ var author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{P: needle_}),
-					author$project$Main$httpCommand(model.ay));
+					author$project$Main$httpCommand(model.aA));
 			case 2:
 				var s = msg.a;
 				return _Utils_Tuple2(
@@ -6020,7 +6020,7 @@ var author$project$Main$update = F2(
 						model,
 						{
 							H: d,
-							ay: function () {
+							aA: function () {
 								switch (d) {
 									case 0:
 										return author$project$Main$nicknamesJson;
@@ -6037,7 +6037,7 @@ var author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{aQ: v}),
+						{at: v}),
 					elm$core$Platform$Cmd$none);
 			case 0:
 				return _Utils_Tuple2(
@@ -6169,7 +6169,7 @@ var author$project$Main$displayURL = function (hs) {
 		elm$html$Html$li,
 		_List_fromArray(
 			[
-				author$project$Main$hayBackGround(hs.aD)
+				author$project$Main$hayBackGround(hs.ai)
 			]),
 		_List_fromArray(
 			[
@@ -6192,7 +6192,7 @@ var author$project$Main$displayURL = function (hs) {
 					]),
 				_List_fromArray(
 					[
-						elm$html$Html$text(hs.aK)
+						elm$html$Html$text(hs.aL)
 					])),
 				A2(
 				elm$html$Html$div,
@@ -6221,16 +6221,27 @@ var author$project$Main$displayURL = function (hs) {
 			]));
 };
 var elm$html$Html$ul = _VirtualDom_node('ul');
-var author$project$Main$generateListView = function (slist) {
-	var items = A2(elm$core$List$map, author$project$Main$displayURL, slist);
-	return A2(
-		elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(elm$html$Html$ul, _List_Nil, items)
-			]));
-};
+var author$project$Main$generateListView = F2(
+	function (viewmode, slist) {
+		var items = A2(
+			elm$core$List$map,
+			author$project$Main$displayURL,
+			A2(
+				elm$core$List$filter,
+				function (x) {
+					return (!viewmode) || _Utils_eq(
+						x.ai,
+						elm$core$Maybe$Just(0));
+				},
+				slist));
+		return A2(
+			elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					A2(elm$html$Html$ul, _List_Nil, items)
+				]));
+	});
 var elm$html$Html$input = _VirtualDom_node('input');
 var elm$html$Html$label = _VirtualDom_node('label');
 var elm$json$Json$Encode$bool = _Json_wrap;
@@ -6344,7 +6355,7 @@ var author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
-						elm$html$Html$text(model.ay)
+						elm$html$Html$text(model.aA)
 					])),
 				author$project$Main$viewPicker(
 				_List_fromArray(
@@ -6416,14 +6427,14 @@ var author$project$Main$view = function (model) {
 							[
 								_Utils_Tuple3(
 								'Matched Only',
-								model.aQ === 1,
+								model.at === 1,
 								author$project$Main$ChangeViewTo(1)),
 								_Utils_Tuple3(
 								'Show All',
-								!model.aQ,
+								!model.at,
 								author$project$Main$ChangeViewTo(0))
 							])),
-						author$project$Main$generateListView(model.p)
+						A2(author$project$Main$generateListView, model.at, model.p)
 					]))
 			]));
 };
