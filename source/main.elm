@@ -50,7 +50,8 @@ type DataSource
     = SimpleList
     | Test
     | Production
-    
+
+
 type ViewMode
     = ShowAll
     | ShowMatchedOnly
@@ -113,7 +114,7 @@ type Msg
     | SendHttpRequest
     | DataReceived (Result Http.Error (List Link))
     | NamesReceived (Result Http.Error (List String))
-    
+
 
 
 --update : Msg -> Model -> Model
@@ -190,15 +191,13 @@ update msg model =
               }
             , Cmd.none
             )
-            
-            
-        ChangeViewTo v -> 
-          ( { model
-              | viewMode = v
-            }
-          , Cmd.none
-          )
-          
+
+        ChangeViewTo v ->
+            ( { model
+                | viewMode = v
+              }
+            , Cmd.none
+            )
 
         -- irrelevant message types, to be removed eventually
         Increment ->
@@ -220,6 +219,21 @@ httpCommand dataURL =
             urlsDecoder
                 |> Http.get dataURL
                 |> Http.send DataReceived
+
+
+
+{-| skipList returns a list of numbers in intervals of 30.
+    -- this is required for parallel dispatch of ~30 requests
+    skipList 120
+    --> [0, 30, 60, 90, 120]
+    skipList 170
+    --> [0, 30, 60, 90, 120, 150, 180]
+-}
+skipList : Int -> List Int
+skipList userCount =
+    List.map (\x -> x * 50) (List.range 0 (round ((toFloat userCount) / 50)))
+    
+    
 
 
 makeHayFromUrls needle urls =
@@ -278,10 +292,10 @@ view model =
         , hr [] []
         , div []
             [ text "Hay (a list of URLs strings stored in bitly)"
-            , viewPicker 
-              [ ( "Matched Only", model.viewMode == ShowMatchedOnly, ChangeViewTo ShowMatchedOnly)
-              , ( "Show All", model.viewMode == ShowAll, ChangeViewTo ShowAll)
-              ]
+            , viewPicker
+                [ ( "Matched Only", model.viewMode == ShowMatchedOnly, ChangeViewTo ShowMatchedOnly )
+                , ( "Show All", model.viewMode == ShowAll, ChangeViewTo ShowAll )
+                ]
             , generateListView model.viewMode model.hay
             ]
         ]
@@ -340,35 +354,34 @@ generateListView : ViewMode -> List HayString -> Html Msg
 generateListView viewmode slist =
     let
         items =
-            slist 
-              |> List.filter (\x -> viewmode == ShowAll || x.match == Just Yes)
-              |> List.map displayURL
+            slist
+                |> List.filter (\x -> viewmode == ShowAll || x.match == Just Yes)
+                |> List.map displayURL
     in
     div [] [ ul [] items ]
 
 
-displayURL : HayString -> (Html msg)
+displayURL : HayString -> Html msg
 displayURL hs =
     let
         shortener =
             Maybe.withDefault "" hs.short
-    in    
-        li [ hayBackGround hs.match ]
-            [ div [] [ text hs.hay ]
-            , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
+    in
+    li [ hayBackGround hs.match ]
+        [ div [] [ text hs.hay ]
+        , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
 
-            -- , div [ classList [ ( "hayKey", True ) ] ] [ text shortener ]
-            , div [ classList [ ( "hayKey", True ) ] ]
-                [ a
-                    [ href shortener
-                    , target "_blank"
+        -- , div [ classList [ ( "hayKey", True ) ] ] [ text shortener ]
+        , div [ classList [ ( "hayKey", True ) ] ]
+            [ a
+                [ href shortener
+                , target "_blank"
 
-                    --, rel "noopener noreferrer"
-                    ]
-                    [ text shortener ]
+                --, rel "noopener noreferrer"
                 ]
+                [ text shortener ]
             ]
-        
+        ]
 
 
 hayBackGround : Maybe Match -> Attribute msg
