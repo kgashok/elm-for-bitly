@@ -4472,7 +4472,7 @@ var author$project$Main$HayString = F4(
 		return {hay: hay, match: match, _short: _short, title: title};
 	});
 var author$project$Main$No = {$: 'No'};
-var author$project$Main$ShowMatchedOnly = {$: 'ShowMatchedOnly'};
+var author$project$Main$ShowAll = {$: 'ShowAll'};
 var author$project$Main$Test = {$: 'Test'};
 var author$project$Main$Yes = {$: 'Yes'};
 var author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
@@ -4990,10 +4990,11 @@ var author$project$Main$init = function (_n0) {
 			linkcount: 1000,
 			needle: 'rawgit',
 			val: 0,
-			viewMode: author$project$Main$ShowMatchedOnly
+			viewMode: author$project$Main$ShowAll
 		},
 		elm$core$Platform$Cmd$none);
 };
+var author$project$Main$ShowMatchedOnly = {$: 'ShowMatchedOnly'};
 var author$project$Main$apiKey = '1ef1315a2efebd7557de137f776602276d833cb9';
 var author$project$Main$bitlyAPI = 'https://api-ssl.bitly.com/v3/user/link_history?access_token=' + author$project$Main$apiKey;
 var author$project$Main$DataReceived = function (a) {
@@ -5983,7 +5984,7 @@ var author$project$Main$update = F2(
 						case 'Test':
 							return 'deep';
 						default:
-							return 'share';
+							return 'rawgit';
 					}
 				}();
 				var model_ = _Utils_update(
@@ -5991,7 +5992,8 @@ var author$project$Main$update = F2(
 					{
 						errorMessage: elm$core$Maybe$Just('Launching requests...'),
 						hay: _List_Nil,
-						needle: needle_
+						needle: needle_,
+						viewMode: author$project$Main$ShowMatchedOnly
 					});
 				var _n1 = model.data;
 				if (_n1.$ === 'Production') {
@@ -6122,7 +6124,6 @@ var author$project$Main$ChangeViewTo = function (a) {
 };
 var author$project$Main$Production = {$: 'Production'};
 var author$project$Main$SendHttpRequest = {$: 'SendHttpRequest'};
-var author$project$Main$ShowAll = {$: 'ShowAll'};
 var author$project$Main$SimpleList = {$: 'SimpleList'};
 var author$project$Main$StoreNeedle = function (a) {
 	return {$: 'StoreNeedle', a: a};

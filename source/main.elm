@@ -84,7 +84,7 @@ init _ =
       , errorStatus = False
       , dataAPI = testJson
       , data = Test
-      , viewMode = ShowMatchedOnly
+      , viewMode = ShowAll
       , linkcount = 1000
       }
     , Cmd.none
@@ -137,11 +137,12 @@ update msg model =
                             "deep"
 
                         _ ->
-                            "share"
+                            "rawgit"
                 model_ = 
                   { model 
                     | needle = needle_
                     , hay = []
+                    , viewMode = ShowMatchedOnly
                     , errorMessage = Just "Launching requests..."
                   }
             in
