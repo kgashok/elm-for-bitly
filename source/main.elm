@@ -319,11 +319,11 @@ view model =
             , ( "use Test data", model.data == Test, SwitchTo Test )
             , ( "Access bitly API", model.data == Production, SwitchTo Production )
             ]
-        , span [] 
-            [
-              button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
-            , input [ placeholder (String.fromInt model.linkcount), onInput UpdateLinkCount ] []  
-            ]
+        , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
+        , div []
+          [ text " limited to "
+          , input [ placeholder (String.fromInt model.linkcount), onInput UpdateLinkCount ] []
+          ]
         , div [ id "error", classList [ ( "failed", model.errorStatus == True ) ] ]
             [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]
         , hr [] []

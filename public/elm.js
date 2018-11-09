@@ -6360,7 +6360,6 @@ var author$project$Main$viewPicker = function (options) {
 };
 var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$hr = _VirtualDom_node('hr');
-var elm$html$Html$span = _VirtualDom_node('span');
 var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
 var elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
@@ -6434,20 +6433,21 @@ var author$project$Main$view = function (model) {
 						author$project$Main$SwitchTo(author$project$Main$Production))
 					])),
 				A2(
-				elm$html$Html$span,
+				elm$html$Html$button,
+				_List_fromArray(
+					[
+						elm$html$Html$Events$onClick(author$project$Main$SendHttpRequest)
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text('Fetch URLs')
+					])),
+				A2(
+				elm$html$Html$div,
 				_List_Nil,
 				_List_fromArray(
 					[
-						A2(
-						elm$html$Html$button,
-						_List_fromArray(
-							[
-								elm$html$Html$Events$onClick(author$project$Main$SendHttpRequest)
-							]),
-						_List_fromArray(
-							[
-								elm$html$Html$text('Fetch URLs')
-							])),
+						elm$html$Html$text(' limited to '),
 						A2(
 						elm$html$Html$input,
 						_List_fromArray(
