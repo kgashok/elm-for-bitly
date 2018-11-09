@@ -333,13 +333,13 @@ displayURL hs =
     li [ hayBackGround hs.match ]
         [ div [] [ text hs.hay ]
         , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
-
+        
         -- , div [ classList [ ( "hayKey", True ) ] ] [ text shortener ]
         , div [ classList [ ( "hayKey", True ) ] ]
             [ a
                 [ href shortener
                 , target "_blank"
-                , rel "noopener noreferrer"
+                --, rel "noopener noreferrer"
                 ]
                 [ text shortener ]
             ]

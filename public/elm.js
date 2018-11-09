@@ -6150,7 +6150,6 @@ var author$project$Main$hayBackGround = function (val) {
 	}
 };
 var elm$html$Html$li = _VirtualDom_node('li');
-var elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
 var author$project$Main$displayURL = function (hs) {
 	var shortener = A2(elm$core$Maybe$withDefault, '', hs.bh);
 	return A2(
@@ -6199,8 +6198,7 @@ var author$project$Main$displayURL = function (hs) {
 						_List_fromArray(
 							[
 								elm$html$Html$Attributes$href(shortener),
-								elm$html$Html$Attributes$target('_blank'),
-								elm$html$Html$Attributes$rel('noopener noreferrer')
+								elm$html$Html$Attributes$target('_blank')
 							]),
 						_List_fromArray(
 							[
