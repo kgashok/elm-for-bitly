@@ -1,3 +1,12 @@
+
+# GEB - Glitch, Elm for Bitly 
+
+Why this? 
+
+https://rawgit.com/ - going out of service 
+
+
+
 Simple Elm Sample App
 =========================
 

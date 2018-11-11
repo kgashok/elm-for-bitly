@@ -6,8 +6,9 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Http
 import Json.Decode exposing (Decoder, decodeString, field, list, map2, maybe, string)
-import Task
 import Process
+import Task
+
 
 apiKey =
     "1ef1315a2efebd7557de137f776602276d833cb9"
@@ -148,13 +149,18 @@ update msg model =
                         , viewMode = ShowMatchedOnly
                         , errorMessage = Just "Launching requests..."
                     }
+
+                dataRequestTask =
+                    case model.linkcount > 1000 of
+                        True ->
+                            bitlySeqRequest model.dataAPI model.linkcount
+
+                        False ->
+                            Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
             in
             case model.data of
                 Production ->
-                    ( model_
-                    -- , Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
-                    , bitlySeqRequest model.dataAPI model.linkcount
-                    )
+                    ( model_, dataRequestTask )
 
                 _ ->
                     ( model_, httpCommand model.dataAPI )
@@ -303,10 +309,9 @@ httpCommand2 dataURL =
             Debug.log "Sequential url: " dataURL
     in
     urlsDecoder
-    
         |> Http.get dataURL
         |> Http.toTask
-    
+
 
 {--}
 bitlySeqRequest dataURL count =
@@ -317,7 +322,7 @@ bitlySeqRequest dataURL count =
     skipList count
         |> List.map (skipUrl dataURL)
         |> List.map httpCommand2
-        |> List.map (\requestTask -> Task.andThen (always requestTask) (Process.sleep 50))
+        |> List.map (\requestTask -> Task.andThen (always requestTask) (Process.sleep 500))
         |> Task.sequence
         |> Task.attempt DataSReceived
 --}
