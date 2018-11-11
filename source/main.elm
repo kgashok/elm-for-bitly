@@ -6,7 +6,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Http
 import Json.Decode exposing (Decoder, decodeString, field, list, map2, maybe, string)
-
+import Task
+import Process
 
 apiKey =
     "1ef1315a2efebd7557de137f776602276d833cb9"
@@ -113,11 +114,12 @@ type Msg
     | ChangeViewTo ViewMode
     | SendHttpRequest
     | DataReceived (Result Http.Error (List Link))
+    | DataSReceived (Result Http.Error (List (List Link)))
     | NamesReceived (Result Http.Error (List String))
     | UpdateLinkCount String
     | Increment
     | Decrement
-    
+
 
 
 --update : Msg -> Model -> Model
@@ -150,7 +152,8 @@ update msg model =
             case model.data of
                 Production ->
                     ( model_
-                    , Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
+                    -- , Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
+                    , bitlySeqRequest model.dataAPI model.linkcount
                     )
 
                 _ ->
@@ -197,6 +200,27 @@ update msg model =
             , Cmd.none
             )
 
+        DataSReceived (Ok listOfListUrls) ->
+            let
+                urllist =
+                    listOfListUrls |> List.concat
+            in
+            ( { model
+                | hay = makeHayFromUrls model.needle urllist
+                , errorMessage = Nothing
+                , errorStatus = False
+              }
+            , Cmd.none
+            )
+
+        DataSReceived (Err httpError) ->
+            ( { model
+                | errorMessage = Just (createErrorMessage httpError)
+                , errorStatus = True
+              }
+            , Cmd.none
+            )
+
         SwitchTo d ->
             ( { model
                 | data = d
@@ -236,7 +260,10 @@ update msg model =
             ( { model | val = model.val - 1 }, Cmd.none )
 
 
-httpCommand : String -> Cmd Msg
+
+--httpCommand : String -> Cmd Msg
+
+
 httpCommand dataURL =
     let
         _ =
@@ -270,6 +297,32 @@ bitlyBatchRequest dataURL count =
         |> List.map httpCommand
 
 
+httpCommand2 dataURL =
+    let
+        _ =
+            Debug.log "Sequential url: " dataURL
+    in
+    urlsDecoder
+    
+        |> Http.get dataURL
+        |> Http.toTask
+    
+
+{--}
+bitlySeqRequest dataURL count =
+    let
+        skipUrl url offset =
+            url ++ "&limit=100&offset=" ++ String.fromInt offset
+    in
+    skipList count
+        |> List.map (skipUrl dataURL)
+        |> List.map httpCommand2
+        |> List.map (\requestTask -> Task.andThen (always requestTask) (Process.sleep 50))
+        |> Task.sequence
+        |> Task.attempt DataSReceived
+--}
+
+
 {-| skipList returns a list of numbers in intervals of 30.
 -- this is required for parallel dispatch of ~30 requests
 skipList 120
@@ -279,7 +332,7 @@ skipList 170
 -}
 skipList : Int -> List Int
 skipList userCount =
-    List.map (\x -> x * 50) (List.range 0 (round (toFloat userCount / 50)))
+    List.map (\x -> x * 100) (List.range 0 (round (toFloat userCount / 100)))
 
 
 makeHayFromUrls needle urls =
@@ -393,7 +446,6 @@ footer =
         [ a
             [ href (gitRepo ++ "/issues/new")
             , target "_blank"
-
             , rel "noopener noreferrer"
             ]
             [ text "Provide feedback?" ]

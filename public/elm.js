@@ -4997,23 +4997,14 @@ var author$project$Main$init = function (_n0) {
 var author$project$Main$ShowMatchedOnly = {$: 'ShowMatchedOnly'};
 var author$project$Main$apiKey = '1ef1315a2efebd7557de137f776602276d833cb9';
 var author$project$Main$bitlyAPI = 'https://api-ssl.bitly.com/v3/user/link_history?access_token=' + author$project$Main$apiKey;
-var author$project$Main$DataReceived = function (a) {
-	return {$: 'DataReceived', a: a};
+var author$project$Main$DataSReceived = function (a) {
+	return {$: 'DataSReceived', a: a};
 };
-var author$project$Main$NamesReceived = function (a) {
-	return {$: 'NamesReceived', a: a};
-};
-var elm$json$Json$Decode$field = _Json_decodeField;
-var elm$json$Json$Decode$list = _Json_decodeList;
-var elm$json$Json$Decode$string = _Json_decodeString;
-var author$project$Main$nicknamesDecoder = A2(
-	elm$json$Json$Decode$field,
-	'nicknames',
-	elm$json$Json$Decode$list(elm$json$Json$Decode$string));
 var author$project$Main$Link = F3(
 	function (title, keyword_link, long_url) {
 		return {keyword_link: keyword_link, long_url: long_url, title: title};
 	});
+var elm$json$Json$Decode$field = _Json_decodeField;
 var elm$json$Json$Decode$map3 = _Json_map3;
 var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$oneOf = _Json_oneOf;
@@ -5026,6 +5017,7 @@ var elm$json$Json$Decode$maybe = function (decoder) {
 				elm$json$Json$Decode$succeed(elm$core$Maybe$Nothing)
 			]));
 };
+var elm$json$Json$Decode$string = _Json_decodeString;
 var author$project$Main$linkDecoder = A4(
 	elm$json$Json$Decode$map3,
 	author$project$Main$Link,
@@ -5092,6 +5084,7 @@ var elm$json$Json$Decode$at = F2(
 	function (fields, decoder) {
 		return A3(elm$core$List$foldr, elm$json$Json$Decode$field, decoder, fields);
 	});
+var elm$json$Json$Decode$list = _Json_decodeList;
 var author$project$Main$urlsDecoder = A2(
 	elm$json$Json$Decode$at,
 	_List_fromArray(
@@ -5691,17 +5684,16 @@ var elm$http$Http$get = F2(
 				withCredentials: false
 			});
 	});
-var elm$core$Basics$composeL = F3(
-	function (g, f, x) {
-		return g(
-			f(x));
-	});
-var elm$core$Task$Perform = function (a) {
-	return {$: 'Perform', a: a};
+var elm$http$Http$toTask = function (_n0) {
+	var request_ = _n0.a;
+	return A2(_Http_toTask, request_, elm$core$Maybe$Nothing);
 };
-var elm$core$Task$andThen = _Scheduler_andThen;
-var elm$core$Task$succeed = _Scheduler_succeed;
-var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
+var author$project$Main$httpCommand2 = function (dataURL) {
+	var _n0 = A2(elm$core$Debug$log, 'Sequential url: ', dataURL);
+	return elm$http$Http$toTask(
+		A2(elm$http$Http$get, dataURL, author$project$Main$urlsDecoder));
+};
+var elm$core$Basics$round = _Basics_round;
 var elm$core$List$map = F2(
 	function (f, xs) {
 		return A3(
@@ -5716,6 +5708,33 @@ var elm$core$List$map = F2(
 			_List_Nil,
 			xs);
 	});
+var author$project$Main$skipList = function (userCount) {
+	return A2(
+		elm$core$List$map,
+		function (x) {
+			return x * 100;
+		},
+		A2(
+			elm$core$List$range,
+			0,
+			elm$core$Basics$round(userCount / 100)));
+};
+var elm$core$Basics$always = F2(
+	function (a, _n0) {
+		return a;
+	});
+var elm$core$Process$sleep = _Process_sleep;
+var elm$core$Task$andThen = _Scheduler_andThen;
+var elm$core$Basics$composeL = F3(
+	function (g, f, x) {
+		return g(
+			f(x));
+	});
+var elm$core$Task$Perform = function (a) {
+	return {$: 'Perform', a: a};
+};
+var elm$core$Task$succeed = _Scheduler_succeed;
+var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
 var elm$core$Task$map = F2(
 	function (func, taskA) {
 		return A2(
@@ -5802,56 +5821,31 @@ var elm$core$Task$attempt = F2(
 							elm$core$Result$Ok),
 						task))));
 	});
-var elm$http$Http$toTask = function (_n0) {
-	var request_ = _n0.a;
-	return A2(_Http_toTask, request_, elm$core$Maybe$Nothing);
-};
-var elm$http$Http$send = F2(
-	function (resultToMessage, request_) {
-		return A2(
-			elm$core$Task$attempt,
-			resultToMessage,
-			elm$http$Http$toTask(request_));
-	});
-var author$project$Main$httpCommand = function (dataURL) {
-	var _n0 = A2(elm$core$Debug$log, 'url: ', dataURL);
-	if (dataURL === 'https://api.myjson.com/bins/19yily') {
-		return A2(
-			elm$http$Http$send,
-			author$project$Main$NamesReceived,
-			A2(elm$http$Http$get, dataURL, author$project$Main$nicknamesDecoder));
-	} else {
-		return A2(
-			elm$http$Http$send,
-			author$project$Main$DataReceived,
-			A2(elm$http$Http$get, dataURL, author$project$Main$urlsDecoder));
-	}
-};
-var elm$core$Basics$round = _Basics_round;
-var author$project$Main$skipList = function (userCount) {
-	return A2(
-		elm$core$List$map,
-		function (x) {
-			return x * 50;
-		},
-		A2(
-			elm$core$List$range,
-			0,
-			elm$core$Basics$round(userCount / 50)));
-};
-var author$project$Main$bitlyBatchRequest = F2(
+var author$project$Main$bitlySeqRequest = F2(
 	function (dataURL, count) {
 		var skipUrl = F2(
 			function (url, offset) {
-				return url + ('&limit=50&offset=' + elm$core$String$fromInt(offset));
+				return url + ('&limit=100&offset=' + elm$core$String$fromInt(offset));
 			});
 		return A2(
-			elm$core$List$map,
-			author$project$Main$httpCommand,
-			A2(
-				elm$core$List$map,
-				skipUrl(dataURL),
-				author$project$Main$skipList(count)));
+			elm$core$Task$attempt,
+			author$project$Main$DataSReceived,
+			elm$core$Task$sequence(
+				A2(
+					elm$core$List$map,
+					function (requestTask) {
+						return A2(
+							elm$core$Task$andThen,
+							elm$core$Basics$always(requestTask),
+							elm$core$Process$sleep(50));
+					},
+					A2(
+						elm$core$List$map,
+						author$project$Main$httpCommand2,
+						A2(
+							elm$core$List$map,
+							skipUrl(dataURL),
+							author$project$Main$skipList(count))))));
 	});
 var elm$core$List$head = function (list) {
 	if (list.b) {
@@ -5946,6 +5940,37 @@ var author$project$Main$createErrorMessage = function (httpError) {
 			return message;
 	}
 };
+var author$project$Main$DataReceived = function (a) {
+	return {$: 'DataReceived', a: a};
+};
+var author$project$Main$NamesReceived = function (a) {
+	return {$: 'NamesReceived', a: a};
+};
+var author$project$Main$nicknamesDecoder = A2(
+	elm$json$Json$Decode$field,
+	'nicknames',
+	elm$json$Json$Decode$list(elm$json$Json$Decode$string));
+var elm$http$Http$send = F2(
+	function (resultToMessage, request_) {
+		return A2(
+			elm$core$Task$attempt,
+			resultToMessage,
+			elm$http$Http$toTask(request_));
+	});
+var author$project$Main$httpCommand = function (dataURL) {
+	var _n0 = A2(elm$core$Debug$log, 'url: ', dataURL);
+	if (dataURL === 'https://api.myjson.com/bins/19yily') {
+		return A2(
+			elm$http$Http$send,
+			author$project$Main$NamesReceived,
+			A2(elm$http$Http$get, dataURL, author$project$Main$nicknamesDecoder));
+	} else {
+		return A2(
+			elm$http$Http$send,
+			author$project$Main$DataReceived,
+			A2(elm$http$Http$get, dataURL, author$project$Main$urlsDecoder));
+	}
+};
 var author$project$Main$makeHayFromNames = F2(
 	function (needle, names) {
 		return A2(
@@ -5971,6 +5996,17 @@ var author$project$Main$makeHayFromUrls = F2(
 				urls));
 	});
 var author$project$Main$nicknamesJson = 'https://api.myjson.com/bins/19yily';
+var elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3(elm$core$List$foldr, elm$core$List$cons, ys, xs);
+		}
+	});
+var elm$core$List$concat = function (lists) {
+	return A3(elm$core$List$foldr, elm$core$List$append, _List_Nil, lists);
+};
 var elm$core$String$toInt = _String_toInt;
 var author$project$Main$update = F2(
 	function (msg, model) {
@@ -5999,8 +6035,7 @@ var author$project$Main$update = F2(
 				if (_n1.$ === 'Production') {
 					return _Utils_Tuple2(
 						model_,
-						elm$core$Platform$Cmd$batch(
-							A2(author$project$Main$bitlyBatchRequest, model.dataAPI, model.linkcount)));
+						A2(author$project$Main$bitlySeqRequest, model.dataAPI, model.linkcount));
 				} else {
 					return _Utils_Tuple2(
 						model_,
@@ -6053,6 +6088,31 @@ var author$project$Main$update = F2(
 								hay: _Utils_ap(
 									A2(author$project$Main$makeHayFromUrls, model.needle, urls),
 									previous)
+							}),
+						elm$core$Platform$Cmd$none);
+				} else {
+					var httpError = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								errorMessage: elm$core$Maybe$Just(
+									author$project$Main$createErrorMessage(httpError)),
+								errorStatus: true
+							}),
+						elm$core$Platform$Cmd$none);
+				}
+			case 'DataSReceived':
+				if (msg.a.$ === 'Ok') {
+					var listOfListUrls = msg.a.a;
+					var urllist = elm$core$List$concat(listOfListUrls);
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								errorMessage: elm$core$Maybe$Nothing,
+								errorStatus: false,
+								hay: A2(author$project$Main$makeHayFromUrls, model.needle, urllist)
 							}),
 						elm$core$Platform$Cmd$none);
 				} else {
