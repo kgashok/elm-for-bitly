@@ -5011,11 +5011,11 @@ var author$project$Main$nicknamesDecoder = A2(
 	elm$json$Json$Decode$field,
 	'nicknames',
 	elm$json$Json$Decode$list(elm$json$Json$Decode$string));
-var author$project$Main$Link = F3(
-	function (title, keyword_link, long_url) {
-		return {keyword_link: keyword_link, long_url: long_url, title: title};
+var author$project$Main$Link = F4(
+	function (title, keyword_link, long_url, tags) {
+		return {keyword_link: keyword_link, long_url: long_url, tags: tags, title: title};
 	});
-var elm$json$Json$Decode$map3 = _Json_map3;
+var elm$json$Json$Decode$map4 = _Json_map4;
 var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$oneOf = _Json_oneOf;
 var elm$json$Json$Decode$succeed = _Json_succeed;
@@ -5027,13 +5027,17 @@ var elm$json$Json$Decode$maybe = function (decoder) {
 				elm$json$Json$Decode$succeed(elm$core$Maybe$Nothing)
 			]));
 };
-var author$project$Main$linkDecoder = A4(
-	elm$json$Json$Decode$map3,
+var author$project$Main$linkDecoder = A5(
+	elm$json$Json$Decode$map4,
 	author$project$Main$Link,
 	A2(elm$json$Json$Decode$field, 'title', elm$json$Json$Decode$string),
 	elm$json$Json$Decode$maybe(
 		A2(elm$json$Json$Decode$field, 'keyword_link', elm$json$Json$Decode$string)),
-	A2(elm$json$Json$Decode$field, 'long_url', elm$json$Json$Decode$string));
+	A2(elm$json$Json$Decode$field, 'long_url', elm$json$Json$Decode$string),
+	A2(
+		elm$json$Json$Decode$field,
+		'tags',
+		elm$json$Json$Decode$list(elm$json$Json$Decode$string)));
 var elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {

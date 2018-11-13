@@ -27,6 +27,7 @@ type alias Link =
     { title : String
     , keyword_link : Maybe String
     , long_url : String
+    , tags : List String
     }
 
 
@@ -632,11 +633,12 @@ urlsDecoder =
 
 linkDecoder : Decoder Link
 linkDecoder =
-    Json.Decode.map3
+    Json.Decode.map4
         Link
         (field "title" string)
         (maybe (field "keyword_link" string))
         (field "long_url" string)
+        (field "tags" (list string))
 --}
 
 
