@@ -192,8 +192,8 @@ update msg model =
 
         IncDataReceived (Ok urls) ->
             let
-                previous =
-                    model.hay
+                updatedHays =
+                    model.hay ++ makeHayFromUrls model.needle urls
 
                 incOffset =
                     case model.offset < model.linkcount of
@@ -212,7 +212,7 @@ update msg model =
                             Cmd.none
             in
             ( { model
-                | hay = makeHayFromUrls model.needle urls ++ previous
+                | hay = updatedHays
                 , errorMessage =
                     Maybe.withDefault "" model.errorMessage ++ " ." ++ String.fromInt model.offset |> Just
                 , errorStatus = False
@@ -315,6 +315,7 @@ bitlyIncRequest dataURL count offset =
     let
         skipUrl url o =
             url ++ "&limit=100&offset=" ++ String.fromInt o
+        _ = Debug.log "url offset: "  offset
     in
     urlsDecoder
         |> Http.get (skipUrl dataURL offset)

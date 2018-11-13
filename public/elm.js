@@ -5863,6 +5863,7 @@ var author$project$Main$bitlyIncRequest = F3(
 			function (url, o) {
 				return url + ('&limit=100&offset=' + elm$core$String$fromInt(o));
 			});
+		var _n0 = A2(elm$core$Debug$log, 'url offset: ', offset);
 		return A2(
 			elm$http$Http$send,
 			author$project$Main$IncDataReceived,
@@ -6079,7 +6080,9 @@ var author$project$Main$update = F2(
 			case 'IncDataReceived':
 				if (msg.a.$ === 'Ok') {
 					var urls = msg.a.a;
-					var previous = model.hay;
+					var updatedHays = _Utils_ap(
+						model.hay,
+						A2(author$project$Main$makeHayFromUrls, model.needle, urls));
 					var incOffset = function () {
 						var _n5 = _Utils_cmp(model.offset, model.linkcount) < 0;
 						if (_n5) {
@@ -6103,9 +6106,7 @@ var author$project$Main$update = F2(
 								errorMessage: elm$core$Maybe$Just(
 									A2(elm$core$Maybe$withDefault, '', model.errorMessage) + (' .' + elm$core$String$fromInt(model.offset))),
 								errorStatus: false,
-								hay: _Utils_ap(
-									A2(author$project$Main$makeHayFromUrls, model.needle, urls),
-									previous),
+								hay: updatedHays,
 								offset: incOffset
 							}),
 						nextCmd);
