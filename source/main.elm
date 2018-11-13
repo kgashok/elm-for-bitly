@@ -214,7 +214,7 @@ update msg model =
             ( { model
                 | hay = makeHayFromUrls model.needle urls ++ previous
                 , errorMessage =
-                    Maybe.withDefault "" model.errorMessage ++ ".." ++ String.fromInt model.offset |> Just
+                    Maybe.withDefault "" model.errorMessage ++ " ." ++ String.fromInt model.offset |> Just
                 , errorStatus = False
                 , offset = incOffset
               }

@@ -6101,7 +6101,7 @@ var author$project$Main$update = F2(
 							model,
 							{
 								errorMessage: elm$core$Maybe$Just(
-									A2(elm$core$Maybe$withDefault, '', model.errorMessage) + ('..' + elm$core$String$fromInt(model.offset))),
+									A2(elm$core$Maybe$withDefault, '', model.errorMessage) + (' .' + elm$core$String$fromInt(model.offset))),
 								errorStatus: false,
 								hay: _Utils_ap(
 									A2(author$project$Main$makeHayFromUrls, model.needle, urls),
