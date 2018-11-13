@@ -4987,8 +4987,9 @@ var author$project$Main$init = function (_n0) {
 					elm$core$Maybe$Nothing,
 					elm$core$Maybe$Just(author$project$Main$No))
 				]),
-			linkcount: 1000,
+			linkcount: 2000,
 			needle: 'rawgit',
+			offset: 0,
 			val: 0,
 			viewMode: author$project$Main$ShowAll
 		},
@@ -5843,7 +5844,7 @@ var author$project$Main$bitlyBatchRequest = F2(
 	function (dataURL, count) {
 		var skipUrl = F2(
 			function (url, offset) {
-				return url + ('&limit=50&offset=' + elm$core$String$fromInt(offset));
+				return url + ('&limit=100&offset=' + elm$core$String$fromInt(offset));
 			});
 		return A2(
 			elm$core$List$map,
@@ -5853,44 +5854,22 @@ var author$project$Main$bitlyBatchRequest = F2(
 				skipUrl(dataURL),
 				author$project$Main$skipList(count)));
 	});
-var author$project$Main$DataSReceived = function (a) {
-	return {$: 'DataSReceived', a: a};
+var author$project$Main$IncDataReceived = function (a) {
+	return {$: 'IncDataReceived', a: a};
 };
-var author$project$Main$httpCommand2 = function (dataURL) {
-	var _n0 = A2(elm$core$Debug$log, 'Sequential url: ', dataURL);
-	return elm$http$Http$toTask(
-		A2(elm$http$Http$get, dataURL, author$project$Main$urlsDecoder));
-};
-var elm$core$Basics$always = F2(
-	function (a, _n0) {
-		return a;
-	});
-var elm$core$Process$sleep = _Process_sleep;
-var author$project$Main$bitlySeqRequest = F2(
-	function (dataURL, count) {
+var author$project$Main$bitlyIncRequest = F3(
+	function (dataURL, count, offset) {
 		var skipUrl = F2(
-			function (url, offset) {
-				return url + ('&limit=100&offset=' + elm$core$String$fromInt(offset));
+			function (url, o) {
+				return url + ('&limit=100&offset=' + elm$core$String$fromInt(o));
 			});
 		return A2(
-			elm$core$Task$attempt,
-			author$project$Main$DataSReceived,
-			elm$core$Task$sequence(
-				A2(
-					elm$core$List$map,
-					function (requestTask) {
-						return A2(
-							elm$core$Task$andThen,
-							elm$core$Basics$always(requestTask),
-							elm$core$Process$sleep(500));
-					},
-					A2(
-						elm$core$List$map,
-						author$project$Main$httpCommand2,
-						A2(
-							elm$core$List$map,
-							skipUrl(dataURL),
-							author$project$Main$skipList(count))))));
+			elm$http$Http$send,
+			author$project$Main$IncDataReceived,
+			A2(
+				elm$http$Http$get,
+				A2(skipUrl, dataURL, offset),
+				author$project$Main$urlsDecoder));
 	});
 var elm$core$List$head = function (list) {
 	if (list.b) {
@@ -6043,12 +6022,13 @@ var author$project$Main$update = F2(
 						errorMessage: elm$core$Maybe$Just('Launching requests...'),
 						hay: _List_Nil,
 						needle: needle_,
+						offset: 0,
 						viewMode: author$project$Main$ShowMatchedOnly
 					});
 				var dataRequestTask = function () {
 					var _n2 = model.linkcount > 1000;
 					if (_n2) {
-						return A2(author$project$Main$bitlySeqRequest, model.dataAPI, model.linkcount);
+						return A3(author$project$Main$bitlyIncRequest, model.dataAPI, model.linkcount, model.offset);
 					} else {
 						return elm$core$Platform$Cmd$batch(
 							A2(author$project$Main$bitlyBatchRequest, model.dataAPI, model.linkcount));
@@ -6084,6 +6064,51 @@ var author$project$Main$update = F2(
 								hay: A2(author$project$Main$makeHayFromNames, model.needle, nicknames)
 							}),
 						elm$core$Platform$Cmd$none);
+				} else {
+					var httpError = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								errorMessage: elm$core$Maybe$Just(
+									author$project$Main$createErrorMessage(httpError)),
+								errorStatus: true
+							}),
+						elm$core$Platform$Cmd$none);
+				}
+			case 'IncDataReceived':
+				if (msg.a.$ === 'Ok') {
+					var urls = msg.a.a;
+					var previous = model.hay;
+					var incOffset = function () {
+						var _n5 = _Utils_cmp(model.offset, model.linkcount) < 0;
+						if (_n5) {
+							return model.offset + 100;
+						} else {
+							return 0;
+						}
+					}();
+					var nextCmd = function () {
+						var _n4 = _Utils_cmp(incOffset, model.linkcount) < 0;
+						if (_n4) {
+							return A3(author$project$Main$bitlyIncRequest, model.dataAPI, model.linkcount, incOffset);
+						} else {
+							return elm$core$Platform$Cmd$none;
+						}
+					}();
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								errorMessage: elm$core$Maybe$Just(
+									A2(elm$core$Maybe$withDefault, '', model.errorMessage) + ('..' + elm$core$String$fromInt(model.offset))),
+								errorStatus: false,
+								hay: _Utils_ap(
+									A2(author$project$Main$makeHayFromUrls, model.needle, urls),
+									previous),
+								offset: incOffset
+							}),
+						nextCmd);
 				} else {
 					var httpError = msg.a.a;
 					return _Utils_Tuple2(

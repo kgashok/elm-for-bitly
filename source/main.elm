@@ -69,6 +69,7 @@ type alias Model =
     , data : DataSource
     , viewMode : ViewMode
     , linkcount : Int
+    , offset : Int
     }
 
 
@@ -87,7 +88,8 @@ init _ =
       , dataAPI = testJson
       , data = Test
       , viewMode = ShowAll
-      , linkcount = 1000
+      , linkcount = 2000
+      , offset = 0
       }
     , Cmd.none
     )
@@ -116,6 +118,7 @@ type Msg
     | SendHttpRequest
     | DataReceived (Result Http.Error (List Link))
     | DataSReceived (Result Http.Error (List (List Link)))
+    | IncDataReceived (Result Http.Error (List Link))
     | NamesReceived (Result Http.Error (List String))
     | UpdateLinkCount String
     | Increment
@@ -148,12 +151,14 @@ update msg model =
                         , hay = []
                         , viewMode = ShowMatchedOnly
                         , errorMessage = Just "Launching requests..."
+                        , offset = 0
                     }
 
                 dataRequestTask =
                     case model.linkcount > 1000 of
                         True ->
-                            bitlySeqRequest model.dataAPI model.linkcount
+                            -- bitlySeqRequest model.dataAPI model.linkcount
+                            bitlyIncRequest model.dataAPI model.linkcount model.offset
 
                         False ->
                             Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
@@ -178,6 +183,45 @@ update msg model =
             )
 
         NamesReceived (Err httpError) ->
+            ( { model
+                | errorMessage = Just (createErrorMessage httpError)
+                , errorStatus = True
+              }
+            , Cmd.none
+            )
+
+        IncDataReceived (Ok urls) ->
+            let
+                previous =
+                    model.hay
+
+                incOffset =
+                    case model.offset < model.linkcount of
+                        True ->
+                            model.offset + 100
+
+                        False ->
+                            0
+
+                nextCmd =
+                    case incOffset < model.linkcount of
+                        True ->
+                            bitlyIncRequest model.dataAPI model.linkcount incOffset
+
+                        False ->
+                            Cmd.none
+            in
+            ( { model
+                | hay = makeHayFromUrls model.needle urls ++ previous
+                , errorMessage =
+                    Maybe.withDefault "" model.errorMessage ++ ".." ++ String.fromInt model.offset |> Just
+                , errorStatus = False
+                , offset = incOffset
+              }
+            , nextCmd
+            )
+
+        IncDataReceived (Err httpError) ->
             ( { model
                 | errorMessage = Just (createErrorMessage httpError)
                 , errorStatus = True
@@ -266,10 +310,18 @@ update msg model =
             ( { model | val = model.val - 1 }, Cmd.none )
 
 
+bitlyIncRequest : String -> Int -> Int -> Cmd Msg
+bitlyIncRequest dataURL count offset =
+    let
+        skipUrl url o =
+            url ++ "&limit=100&offset=" ++ String.fromInt o
+    in
+    urlsDecoder
+        |> Http.get (skipUrl dataURL offset)
+        |> Http.send IncDataReceived
 
---httpCommand : String -> Cmd Msg
 
-
+httpCommand : String -> Cmd Msg
 httpCommand dataURL =
     let
         _ =
@@ -296,7 +348,7 @@ bitlyBatchRequest : String -> Int -> List (Cmd Msg)
 bitlyBatchRequest dataURL count =
     let
         skipUrl url offset =
-            url ++ "&limit=50&offset=" ++ String.fromInt offset
+            url ++ "&limit=100&offset=" ++ String.fromInt offset
     in
     skipList count
         |> List.map (skipUrl dataURL)
