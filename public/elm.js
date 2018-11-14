@@ -6037,15 +6037,15 @@ var author$project$Main$update = F2(
 						viewMode: author$project$Main$ShowMatchedOnly
 					});
 				var dataRequestTask = function () {
-					var _n2 = model.linkcount > 1000;
+					var _n2 = model_.linkcount > 1000;
 					if (_n2) {
-						return A3(author$project$Main$bitlyIncRequest, model.dataAPI, model.linkcount, model.offset);
+						return A3(author$project$Main$bitlyIncRequest, model_.dataAPI, model_.linkcount, model_.offset);
 					} else {
 						return elm$core$Platform$Cmd$batch(
-							A2(author$project$Main$bitlyBatchRequest, model.dataAPI, model.linkcount));
+							A2(author$project$Main$bitlyBatchRequest, model_.dataAPI, model_.linkcount));
 					}
 				}();
-				var _n1 = model.data;
+				var _n1 = model_.data;
 				if (_n1.$ === 'Production') {
 					return _Utils_Tuple2(model_, dataRequestTask);
 				} else {

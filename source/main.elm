@@ -157,15 +157,15 @@ update msg model =
                     }
 
                 dataRequestTask =
-                    case model.linkcount > 1000 of
+                    case model_.linkcount > 1000 of
                         True ->
                             -- bitlySeqRequest model.dataAPI model.linkcount
-                            bitlyIncRequest model.dataAPI model.linkcount model.offset
+                            bitlyIncRequest model_.dataAPI model_.linkcount model_.offset
 
                         False ->
-                            Cmd.batch (bitlyBatchRequest model.dataAPI model.linkcount)
+                            Cmd.batch (bitlyBatchRequest model_.dataAPI model_.linkcount)
             in
-            case model.data of
+            case model_.data of
                 Production ->
                     ( model_, dataRequestTask )
 
