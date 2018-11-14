@@ -17,6 +17,7 @@ apiKey =
 bitlyAPI =
     "https://api-ssl.bitly.com/v3/user/link_history?access_token=" ++ apiKey
 
+pagesize = String.fromInt 100 
 
 testJson : String
 testJson =
@@ -315,7 +316,7 @@ bitlyIncRequest : String -> Int -> Int -> Cmd Msg
 bitlyIncRequest dataURL count offset =
     let
         skipUrl url o =
-            url ++ "&limit=100&offset=" ++ String.fromInt o
+            url ++ "&limit=" ++ pagesize ++ "&offset=" ++ String.fromInt o
         _ = Debug.log "url offset: "  offset
     in
     urlsDecoder
@@ -341,6 +342,22 @@ httpCommand dataURL =
                 |> Http.send DataReceived
 
 
+
+{-| skipList returns a list of numbers in intervals of 30.
+-- this is required for parallel dispatch of ~30 requests
+skipList 120
+--> [0, 30, 60, 90, 120]
+skipList 170
+--> [0, 30, 60, 90, 120, 150, 180]
+-}
+skipList : Int -> Maybe Int -> List Int
+skipList totalCount pageSize =
+    let 
+      size = Maybe.withDefault 30 pageSize
+    in    
+    List.map (\x -> x * size) (List.range 0 (round (toFloat totalCount / toFloat size)))
+
+
 {-| bitlyBatchRequest helps create a list of Http.gets
 to get all the URLS for a specific user
 -- uses skipList and skipUrl to generate a list
@@ -350,9 +367,9 @@ bitlyBatchRequest : String -> Int -> List (Cmd Msg)
 bitlyBatchRequest dataURL count =
     let
         skipUrl url offset =
-            url ++ "&limit=100&offset=" ++ String.fromInt offset
+            url ++ "&limit=" ++ pagesize ++ "&offset=" ++ String.fromInt offset
     in
-    skipList count
+    skipList count (String.toInt pagesize)
         |> List.map (skipUrl dataURL)
         |> List.map httpCommand
 
@@ -371,9 +388,9 @@ httpCommand2 dataURL =
 bitlySeqRequest dataURL count =
     let
         skipUrl url offset =
-            url ++ "&limit=100&offset=" ++ String.fromInt offset
+            url ++ "&limit=" ++ pagesize ++ "&offset=" ++ String.fromInt offset
     in
-    skipList count
+    skipList count (String.toInt pagesize)
         |> List.map (skipUrl dataURL)
         |> List.map httpCommand2
         |> List.map (\requestTask -> Task.andThen (always requestTask) (Process.sleep 500))
@@ -382,16 +399,6 @@ bitlySeqRequest dataURL count =
 --}
 
 
-{-| skipList returns a list of numbers in intervals of 30.
--- this is required for parallel dispatch of ~30 requests
-skipList 120
---> [0, 30, 60, 90, 120]
-skipList 170
---> [0, 30, 60, 90, 120, 150, 180]
--}
-skipList : Int -> List Int
-skipList userCount =
-    List.map (\x -> x * 100) (List.range 0 (round (toFloat userCount / 100)))
 
 
 makeHayFromUrls needle urls =

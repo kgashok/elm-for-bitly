@@ -5832,23 +5832,36 @@ var author$project$Main$httpCommand = function (dataURL) {
 			A2(elm$http$Http$get, dataURL, author$project$Main$urlsDecoder));
 	}
 };
+var author$project$Main$pagesize = elm$core$String$fromInt(100);
 var elm$core$Basics$round = _Basics_round;
-var author$project$Main$skipList = function (userCount) {
-	return A2(
-		elm$core$List$map,
-		function (x) {
-			return x * 100;
-		},
-		A2(
-			elm$core$List$range,
-			0,
-			elm$core$Basics$round(userCount / 100)));
-};
+var elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var author$project$Main$skipList = F2(
+	function (totalCount, pageSize) {
+		var size = A2(elm$core$Maybe$withDefault, 30, pageSize);
+		return A2(
+			elm$core$List$map,
+			function (x) {
+				return x * size;
+			},
+			A2(
+				elm$core$List$range,
+				0,
+				elm$core$Basics$round(totalCount / size)));
+	});
+var elm$core$String$toInt = _String_toInt;
 var author$project$Main$bitlyBatchRequest = F2(
 	function (dataURL, count) {
 		var skipUrl = F2(
 			function (url, offset) {
-				return url + ('&limit=100&offset=' + elm$core$String$fromInt(offset));
+				return url + ('&limit=' + (author$project$Main$pagesize + ('&offset=' + elm$core$String$fromInt(offset))));
 			});
 		return A2(
 			elm$core$List$map,
@@ -5856,7 +5869,10 @@ var author$project$Main$bitlyBatchRequest = F2(
 			A2(
 				elm$core$List$map,
 				skipUrl(dataURL),
-				author$project$Main$skipList(count)));
+				A2(
+					author$project$Main$skipList,
+					count,
+					elm$core$String$toInt(author$project$Main$pagesize))));
 	});
 var author$project$Main$IncDataReceived = function (a) {
 	return {$: 'IncDataReceived', a: a};
@@ -5865,7 +5881,7 @@ var author$project$Main$bitlyIncRequest = F3(
 	function (dataURL, count, offset) {
 		var skipUrl = F2(
 			function (url, o) {
-				return url + ('&limit=100&offset=' + elm$core$String$fromInt(o));
+				return url + ('&limit=' + (author$project$Main$pagesize + ('&offset=' + elm$core$String$fromInt(o))));
 			});
 		var _n0 = A2(elm$core$Debug$log, 'url offset: ', offset);
 		return A2(
@@ -5885,15 +5901,6 @@ var elm$core$List$head = function (list) {
 		return elm$core$Maybe$Nothing;
 	}
 };
-var elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
 var author$project$Main$parseKeyword = function (_short) {
 	var tlist = A2(
 		elm$core$String$split,
@@ -6005,7 +6012,6 @@ var elm$core$List$append = F2(
 var elm$core$List$concat = function (lists) {
 	return A3(elm$core$List$foldr, elm$core$List$append, _List_Nil, lists);
 };
-var elm$core$String$toInt = _String_toInt;
 var author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
