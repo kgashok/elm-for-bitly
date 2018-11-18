@@ -108,7 +108,7 @@ type alias Model =
     , data : DataSource
     , viewMode : ViewMode
     , linkcount : Int
-    , offset : Int
+    , offset : Int -- required for obtaining pages of information from API
     }
 
 
@@ -139,7 +139,6 @@ init _ =
 main =
     Browser.sandbox { init = init, view = view, update = update }
 --}
-
 
 main =
     Browser.element
@@ -596,6 +595,10 @@ hayBackGround val =
             classList [ ( "matched", False ) ]
 
 
+{-| checkForMatch is the crux of the whole app and is where all the 
+-- search action happens 
+-- Needs to be refactored very urgently! 
+-}
 checkForMatch : String -> HayString -> HayString
 checkForMatch needle hays =
     case not (String.isEmpty needle) of

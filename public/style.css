@@ -6,49 +6,45 @@
   text-align: center;
   /*line-height: 1em; */
 }
-
 #footer a {
   color: inherit;
 }
-
 .matched {
-  background-color: gold;
+  background-color: DarkGreen;
   font-size: 20px;
+  color: palegoldenrod;
 }
-
 #title { 
   text-align: center;
   background-color: beige;
 }
-
 .hayTitle { 
   font-size: 9px;
 }
-
 .matched .hayTitle { 
   font-style: oblique;
   font-size: 12px;
 }
-
 .hayKey { 
   font-style: italic; 
   font-size: 8px;
 }
-
 .matched .hayKey { 
   font-size: 12px; 
-  background-color: yellow;
+  /*background-color: yellow;*/
+  background-color: green;
+}
+.matched .hayKey a { 
+  /*background-color: yellow;*/
+  color: lemonchiffon;
 }
 
 #apiString { 
   font-size: 10px;
 }
-
 #error { 
   background-color: papayawhip;
 }
-
 #error.failed { 
   background-color: darkorange;
 }
-
