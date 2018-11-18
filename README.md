@@ -3,7 +3,13 @@
 
 Why this? 
 
-https://rawgit.com/ - going out of service 
+[Rawgit](https://rawgit.com/) - going out of service 
+
+and 
+
+[Query for rawgit](https://app.bitly.com/Bb84dvzET92/bitlinks/?query=rawgit)
+
+gives me zero links, when I actually have at least **10+ links**, some of them already not working.
 
 
 
