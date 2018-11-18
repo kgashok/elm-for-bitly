@@ -10,6 +10,8 @@ import Process
 import Task
 
 
+{-| apiKey needs to be hidden but it is okay for now
+-}
 apiKey =
     "1ef1315a2efebd7557de137f776602276d833cb9"
 
@@ -17,13 +19,28 @@ apiKey =
 bitlyAPI =
     "https://api-ssl.bitly.com/v3/user/link_history?access_token=" ++ apiKey
 
-pagesize = String.fromInt 100 
 
+{-| pagesize defines the number of links to be retrieved in
+in one http request
+-}
+pagesize =
+    String.fromInt 100
+
+
+{-| test data to check out the logic before actually going out to
+the bitly API. Quick response also ensure quicker iterations of debugging bugs
+-}
 testJson : String
 testJson =
     "https://api.myjson.com/bins/skw8e"
 
 
+{-| Link is the basic data type that is used to implement the logic
+for this program. Link is converted to HayString for some reason.
+I used HayString during the testing phase, and will need to refactor it.
+Alternatively, by leaving that in, we can convert some other type
+and search on that as well. Something to ponder...
+-}
 type alias Link =
     { title : String
     , keyword_link : Maybe String
@@ -32,37 +49,57 @@ type alias Link =
     }
 
 
+{-| Match is used instead of Bool True or False. Why?
+Two reasons
+- something to do with the language
+-- Boolean blindness in Elm
+-- <https://discourse.elm-lang.org/t/fixing-boolean-blindness-in-elm/776>
+- and probably better readability?
+-}
 type Match
     = Yes
     | No
 
 
+{-| HayString resonates with the basic problem that this app is trying to solve
+and that is to represent data that needs to be searched and whether
+the searched 'needle' was found at all
 
--- Boolean blindness in Elm
--- https://discourse.elm-lang.org/t/fixing-boolean-blindness-in-elm/776
+  - the fields have to be refactored - they now assume only Links can
+  - be morphed into HayStrings and searched. Later on, this might not necessarily be the case
 
-
+-}
 type alias HayString =
     { hay : String
     , title : String
-    , short : Maybe String
-    , match : Maybe Match -- why not Bool? Because Elm is Boolean Blind?
+    , short : Maybe String -- not every link has been customized to be easily recalled
+    , match : Maybe Match -- why not Bool? See documentation for Match type
     }
 
 
+{-| Are we using test data or actual data from Bitly?
+-- Based on the data source, sometimes we have to use different
+-- decoders to get the data into Elm variables in the Model
+-}
 type DataSource
     = SimpleList
     | Test
     | Production
 
 
+{-| ViewMode determines whether you want to show all searched haystrings or
+only those that matched?
+-}
 type ViewMode
     = ShowAll
     | ShowMatchedOnly
 
 
+{-| Model is what captures what all is required to make this app work
+It uses data types that have been defined earlier in this module above
+-}
 type alias Model =
-    { val : Int
+    { val : Int -- not relevant
     , needle : String
     , hay : List HayString
     , errorMessage : Maybe String
@@ -123,12 +160,9 @@ type Msg
     | IncDataReceived (Result Http.Error (List Link))
     | NamesReceived (Result Http.Error (List String))
     | UpdateLinkCount String
-    | Increment
-    | Decrement
+    | Increment -- not relevant; legacy
+    | Decrement -- not relevant; legacy
 
-
-
---update : Msg -> Model -> Model
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -159,7 +193,7 @@ update msg model =
                 dataRequestTask =
                     case model_.linkcount > 1000 of
                         True ->
-                            -- bitlySeqRequest model.dataAPI model.linkcount
+                            -- bitlySeqRequest model_.dataAPI model_.linkcount
                             bitlyIncRequest model_.dataAPI model_.linkcount model_.offset
 
                         False ->
@@ -317,7 +351,9 @@ bitlyIncRequest dataURL count offset =
     let
         skipUrl url o =
             url ++ "&limit=" ++ pagesize ++ "&offset=" ++ String.fromInt o
-        _ = Debug.log "url offset: "  offset
+
+        _ =
+            Debug.log "url offset: " offset
     in
     urlsDecoder
         |> Http.get (skipUrl dataURL offset)
@@ -342,7 +378,6 @@ httpCommand dataURL =
                 |> Http.send DataReceived
 
 
-
 {-| skipList returns a list of numbers in intervals of 30.
 -- this is required for parallel dispatch of ~30 requests
 skipList 120
@@ -352,9 +387,10 @@ skipList 170
 -}
 skipList : Int -> Maybe Int -> List Int
 skipList totalCount pageSize =
-    let 
-      size = Maybe.withDefault 30 pageSize
-    in    
+    let
+        size =
+            Maybe.withDefault 30 pageSize
+    in
     List.map (\x -> x * size) (List.range 0 (round (toFloat totalCount / toFloat size)))
 
 
@@ -397,8 +433,6 @@ bitlySeqRequest dataURL count =
         |> Task.sequence
         |> Task.attempt DataSReceived
 --}
-
-
 
 
 makeHayFromUrls needle urls =
