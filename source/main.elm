@@ -568,7 +568,7 @@ displayURL hs =
         shortener =
             Maybe.withDefault "" hs.short
     in
-    li [ hayBackGround hs.match ]
+    li [ classList [ ("matched", hs.match == Just Yes) ] ]
         [ div [] [ text hs.hay ]
         , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
 
@@ -585,6 +585,9 @@ displayURL hs =
         ]
 
 
+{-| hayBackGround assigns the "matched" CSS attribute 
+--  if and only if the 'match' attribute is True
+-}
 hayBackGround : Maybe Match -> Attribute msg
 hayBackGround val =
     case val of

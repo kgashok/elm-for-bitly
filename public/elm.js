@@ -6307,6 +6307,7 @@ var author$project$Main$footer = A2(
 					elm$html$Html$text('Provide feedback?')
 				]))
 		]));
+var elm$html$Html$li = _VirtualDom_node('li');
 var elm$core$List$filter = F2(
 	function (isGood, list) {
 		return A3(
@@ -6333,30 +6334,21 @@ var elm$html$Html$Attributes$classList = function (classes) {
 				elm$core$Tuple$first,
 				A2(elm$core$List$filter, elm$core$Tuple$second, classes))));
 };
-var author$project$Main$hayBackGround = function (val) {
-	if ((val.$ === 'Just') && (val.a.$ === 'Yes')) {
-		var _n1 = val.a;
-		return elm$html$Html$Attributes$classList(
-			_List_fromArray(
-				[
-					_Utils_Tuple2('matched', true)
-				]));
-	} else {
-		return elm$html$Html$Attributes$classList(
-			_List_fromArray(
-				[
-					_Utils_Tuple2('matched', false)
-				]));
-	}
-};
-var elm$html$Html$li = _VirtualDom_node('li');
 var author$project$Main$displayURL = function (hs) {
 	var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
 	return A2(
 		elm$html$Html$li,
 		_List_fromArray(
 			[
-				author$project$Main$hayBackGround(hs.match)
+				elm$html$Html$Attributes$classList(
+				_List_fromArray(
+					[
+						_Utils_Tuple2(
+						'matched',
+						_Utils_eq(
+							hs.match,
+							elm$core$Maybe$Just(author$project$Main$Yes)))
+					]))
 			]),
 		_List_fromArray(
 			[
