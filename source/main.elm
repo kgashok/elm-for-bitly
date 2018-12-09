@@ -8,6 +8,7 @@ import Http
 import Json.Decode exposing (Decoder, decodeString, field, list, map2, maybe, string)
 import Process
 import Task
+import Keyboard exposing (Key(..))
 
 
 {-| apiKey needs to be hidden but it is okay for now
