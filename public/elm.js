@@ -6114,7 +6114,7 @@ var author$project$Main$update = F2(
 							model,
 							{
 								errorMessage: elm$core$Maybe$Just(
-									A2(elm$core$Maybe$withDefault, '', model.errorMessage) + (' .' + elm$core$String$fromInt(model.offset))),
+									elm$core$String$fromInt(model.offset) + (A2(elm$core$Maybe$withDefault, '', model.errorMessage) + ' .')),
 								errorStatus: false,
 								hay: updatedHays,
 								offset: incOffset

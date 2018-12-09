@@ -249,7 +249,9 @@ update msg model =
             ( { model
                 | hay = updatedHays
                 , errorMessage =
-                    Maybe.withDefault "" model.errorMessage ++ " ." ++ String.fromInt model.offset |> Just
+                    (++) (Maybe.withDefault "" model.errorMessage) " ." 
+                    |> (++) (String.fromInt model.offset)
+                    |> Just 
                 , errorStatus = False
                 , offset = incOffset
               }
