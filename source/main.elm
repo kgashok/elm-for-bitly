@@ -8,7 +8,7 @@ import Http
 import Json.Decode exposing (Decoder, decodeString, field, list, map2, maybe, string)
 import Process
 import Task
-import Keyboard exposing (Key(..))
+import Keyboard exposing (RawKey)
 
 
 {-| apiKey needs to be hidden but it is okay for now
@@ -146,8 +146,21 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = \_ -> Sub.none
+        , subscriptions = subscriptions
         }
+
+
+{- Subscribing to keyboard events without the whole model-update -thing. -}
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.batch
+        [ Keyboard.downs KeyDown
+        , Keyboard.ups KeyUp
+
+        --, windowBlurs ClearKeys
+        ]
 
 
 type Msg
@@ -162,6 +175,8 @@ type Msg
     | UpdateLinkCount String
     | Increment -- not relevant; legacy
     | Decrement -- not relevant; legacy
+    | KeyDown RawKey
+    | KeyUp RawKey
 
 
 
@@ -340,6 +355,12 @@ update msg model =
             , Cmd.none
             )
 
+        KeyUp key ->
+            ( model, Cmd.none)
+            
+        KeyDown key ->
+            ( model, Cmd.none)        
+                  
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
