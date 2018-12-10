@@ -7201,7 +7201,10 @@ var author$project$Main$update = F2(
 						return _Utils_Tuple2(
 							_Utils_update(
 								model_,
-								{viewMode: author$project$Main$ShowMatchedOnly}),
+								{
+									errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
+									viewMode: author$project$Main$ShowMatchedOnly
+								}),
 							elm$core$Platform$Cmd$none);
 					} else {
 						return _Utils_Tuple2(

@@ -366,42 +366,48 @@ update msg model =
             )
 
         KeyboardMsg keyboardMsg ->
-          let 
-            model_ = { model | pressedKeys = Keyboard.update keyboardMsg model.pressedKeys }
-          in 
-          case (List.member Keyboard.Control model_.pressedKeys && 
-                List.member (Keyboard.Character "q") model_.pressedKeys) of
-                True -> 
+            let
+                model_ =
+                    { model | pressedKeys = Keyboard.update keyboardMsg model.pressedKeys }
+            in
+            case
+                List.member Keyboard.Control model_.pressedKeys
+                    && List.member (Keyboard.Character "q") model_.pressedKeys
+            of
+                True ->
                     case model_.viewMode of
                         ShowAll ->
-                            ( { model_ | viewMode = ShowMatchedOnly }, Cmd.none )
+                            ( { model_
+                                | viewMode = ShowMatchedOnly
+                                , errorMessage = Just "Press Ctrl-q to toggle view"
+                              }
+                            , Cmd.none
+                            )
 
                         _ ->
                             ( { model_ | viewMode = ShowAll }, Cmd.none )
 
                 False ->
-                   ( model_, Cmd.none )
-            
+                    ( model_, Cmd.none )
 
-        {- 
-        KeyDown code ->
-           let
-               _ =
-                   Debug.log "key code: " code
-           in
-           case Keyboard.characterKey code of
-               Just (Keyboard.Character "t") ->
-                   case model.viewMode of
-                       ShowAll ->
-                           ( { model | viewMode = ShowMatchedOnly }, Cmd.none )
+        {-
+           KeyDown code ->
+              let
+                  _ =
+                      Debug.log "key code: " code
+              in
+              case Keyboard.characterKey code of
+                  Just (Keyboard.Character "t") ->
+                      case model.viewMode of
+                          ShowAll ->
+                              ( { model | viewMode = ShowMatchedOnly }, Cmd.none )
 
-                       _ ->
-                           ( { model | viewMode = ShowAll }, Cmd.none )
+                          _ ->
+                              ( { model | viewMode = ShowAll }, Cmd.none )
 
-               _ ->
-                   ( model, Cmd.none )
+                  _ ->
+                      ( model, Cmd.none )
         -}
-        
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
