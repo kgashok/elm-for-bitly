@@ -6500,9 +6500,40 @@ var elm$core$List$append = F2(
 var elm$core$List$concat = function (lists) {
 	return A3(elm$core$List$foldr, elm$core$List$append, _List_Nil, lists);
 };
+var elm$core$List$any = F2(
+	function (isOkay, list) {
+		any:
+		while (true) {
+			if (!list.b) {
+				return false;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				if (isOkay(x)) {
+					return true;
+				} else {
+					var $temp$isOkay = isOkay,
+						$temp$list = xs;
+					isOkay = $temp$isOkay;
+					list = $temp$list;
+					continue any;
+				}
+			}
+		}
+	});
+var elm$core$List$member = F2(
+	function (x, xs) {
+		return A2(
+			elm$core$List$any,
+			function (a) {
+				return _Utils_eq(a, x);
+			},
+			xs);
+	});
 var ohanhi$keyboard$Keyboard$Character = function (a) {
 	return {$: 'Character', a: a};
 };
+var ohanhi$keyboard$Keyboard$Control = {$: 'Control'};
 var ohanhi$keyboard$Keyboard$characterKey = function (_n0) {
 	var value = _n0.a;
 	return (elm$core$String$length(value) === 1) ? elm$core$Maybe$Just(
@@ -6661,7 +6692,6 @@ var ohanhi$keyboard$Keyboard$mediaKey = function (_n0) {
 var ohanhi$keyboard$Keyboard$Alt = {$: 'Alt'};
 var ohanhi$keyboard$Keyboard$AltGraph = {$: 'AltGraph'};
 var ohanhi$keyboard$Keyboard$CapsLock = {$: 'CapsLock'};
-var ohanhi$keyboard$Keyboard$Control = {$: 'Control'};
 var ohanhi$keyboard$Keyboard$Fn = {$: 'Fn'};
 var ohanhi$keyboard$Keyboard$FnLock = {$: 'FnLock'};
 var ohanhi$keyboard$Keyboard$Hyper = {$: 'Hyper'};
@@ -7156,13 +7186,33 @@ var author$project$Main$update = F2(
 					elm$core$Platform$Cmd$none);
 			case 'KeyboardMsg':
 				var keyboardMsg = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							pressedKeys: A2(ohanhi$keyboard$Keyboard$update, keyboardMsg, model.pressedKeys)
-						}),
-					elm$core$Platform$Cmd$none);
+				var model_ = _Utils_update(
+					model,
+					{
+						pressedKeys: A2(ohanhi$keyboard$Keyboard$update, keyboardMsg, model.pressedKeys)
+					});
+				var _n7 = A2(elm$core$List$member, ohanhi$keyboard$Keyboard$Control, model_.pressedKeys) && A2(
+					elm$core$List$member,
+					ohanhi$keyboard$Keyboard$Character('q'),
+					model_.pressedKeys);
+				if (_n7) {
+					var _n8 = model_.viewMode;
+					if (_n8.$ === 'ShowAll') {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model_,
+								{viewMode: author$project$Main$ShowMatchedOnly}),
+							elm$core$Platform$Cmd$none);
+					} else {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model_,
+								{viewMode: author$project$Main$ShowAll}),
+							elm$core$Platform$Cmd$none);
+					}
+				} else {
+					return _Utils_Tuple2(model_, elm$core$Platform$Cmd$none);
+				}
 			case 'Increment':
 				return _Utils_Tuple2(
 					_Utils_update(

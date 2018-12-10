@@ -366,11 +366,25 @@ update msg model =
             )
 
         KeyboardMsg keyboardMsg ->
-            ( { model | pressedKeys = Keyboard.update keyboardMsg model.pressedKeys }
-            , Cmd.none
-            )
+          let 
+            model_ = { model | pressedKeys = Keyboard.update keyboardMsg model.pressedKeys }
+          in 
+          case (List.member Keyboard.Control model_.pressedKeys && 
+                List.member (Keyboard.Character "q") model_.pressedKeys) of
+                True -> 
+                    case model_.viewMode of
+                        ShowAll ->
+                            ( { model_ | viewMode = ShowMatchedOnly }, Cmd.none )
 
-        {- KeyDown code ->
+                        _ ->
+                            ( { model_ | viewMode = ShowAll }, Cmd.none )
+
+                False ->
+                   ( model_, Cmd.none )
+            
+
+        {- 
+        KeyDown code ->
            let
                _ =
                    Debug.log "key code: " code
@@ -387,6 +401,7 @@ update msg model =
                _ ->
                    ( model, Cmd.none )
         -}
+        
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
