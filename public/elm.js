@@ -4996,10 +4996,17 @@ var author$project$Main$init = function (_n0) {
 		},
 		elm$core$Platform$Cmd$none);
 };
-var author$project$Main$KeyDown = function (a) {
-	return {$: 'KeyDown', a: a};
+var author$project$Main$KeyboardMsg = function (a) {
+	return {$: 'KeyboardMsg', a: a};
 };
+var elm$core$Platform$Sub$map = _Platform_map;
 var elm$core$Platform$Sub$batch = _Platform_batch;
+var ohanhi$keyboard$Keyboard$Down = function (a) {
+	return {$: 'Down', a: a};
+};
+var ohanhi$keyboard$Keyboard$Up = function (a) {
+	return {$: 'Up', a: a};
+};
 var elm$browser$Browser$Events$Document = {$: 'Document'};
 var elm$browser$Browser$Events$MySub = F3(
 	function (a, b, c) {
@@ -5727,12 +5734,19 @@ var ohanhi$keyboard$Keyboard$downs = function (toMsg) {
 	return elm$browser$Browser$Events$onKeyDown(
 		A2(elm$json$Json$Decode$map, toMsg, ohanhi$keyboard$Keyboard$eventKeyDecoder));
 };
+var elm$browser$Browser$Events$onKeyUp = A2(elm$browser$Browser$Events$on, elm$browser$Browser$Events$Document, 'keyup');
+var ohanhi$keyboard$Keyboard$ups = function (toMsg) {
+	return elm$browser$Browser$Events$onKeyUp(
+		A2(elm$json$Json$Decode$map, toMsg, ohanhi$keyboard$Keyboard$eventKeyDecoder));
+};
+var ohanhi$keyboard$Keyboard$subscriptions = elm$core$Platform$Sub$batch(
+	_List_fromArray(
+		[
+			ohanhi$keyboard$Keyboard$downs(ohanhi$keyboard$Keyboard$Down),
+			ohanhi$keyboard$Keyboard$ups(ohanhi$keyboard$Keyboard$Up)
+		]));
 var author$project$Main$subscriptions = function (model) {
-	return elm$core$Platform$Sub$batch(
-		_List_fromArray(
-			[
-				ohanhi$keyboard$Keyboard$downs(author$project$Main$KeyDown)
-			]));
+	return A2(elm$core$Platform$Sub$map, author$project$Main$KeyboardMsg, ohanhi$keyboard$Keyboard$subscriptions);
 };
 var author$project$Main$ShowMatchedOnly = {$: 'ShowMatchedOnly'};
 var author$project$Main$apiKey = '1ef1315a2efebd7557de137f776602276d833cb9';
@@ -6494,6 +6508,437 @@ var ohanhi$keyboard$Keyboard$characterKey = function (_n0) {
 	return (elm$core$String$length(value) === 1) ? elm$core$Maybe$Just(
 		ohanhi$keyboard$Keyboard$Character(value)) : elm$core$Maybe$Nothing;
 };
+var ohanhi$keyboard$Keyboard$Backspace = {$: 'Backspace'};
+var ohanhi$keyboard$Keyboard$Clear = {$: 'Clear'};
+var ohanhi$keyboard$Keyboard$Copy = {$: 'Copy'};
+var ohanhi$keyboard$Keyboard$CrSel = {$: 'CrSel'};
+var ohanhi$keyboard$Keyboard$Cut = {$: 'Cut'};
+var ohanhi$keyboard$Keyboard$Delete = {$: 'Delete'};
+var ohanhi$keyboard$Keyboard$EraseEof = {$: 'EraseEof'};
+var ohanhi$keyboard$Keyboard$ExSel = {$: 'ExSel'};
+var ohanhi$keyboard$Keyboard$Insert = {$: 'Insert'};
+var ohanhi$keyboard$Keyboard$Paste = {$: 'Paste'};
+var ohanhi$keyboard$Keyboard$Redo = {$: 'Redo'};
+var ohanhi$keyboard$Keyboard$Undo = {$: 'Undo'};
+var ohanhi$keyboard$Keyboard$editingKey = function (_n0) {
+	var value = _n0.a;
+	switch (value) {
+		case 'Backspace':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Backspace);
+		case 'Clear':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Clear);
+		case 'Copy':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Copy);
+		case 'CrSel':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$CrSel);
+		case 'Cut':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Cut);
+		case 'Delete':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Delete);
+		case 'EraseEof':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$EraseEof);
+		case 'ExSel':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ExSel);
+		case 'Insert':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Insert);
+		case 'Paste':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Paste);
+		case 'Redo':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Redo);
+		case 'Undo':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Undo);
+		default:
+			return elm$core$Maybe$Nothing;
+	}
+};
+var ohanhi$keyboard$Keyboard$F1 = {$: 'F1'};
+var ohanhi$keyboard$Keyboard$F10 = {$: 'F10'};
+var ohanhi$keyboard$Keyboard$F11 = {$: 'F11'};
+var ohanhi$keyboard$Keyboard$F12 = {$: 'F12'};
+var ohanhi$keyboard$Keyboard$F13 = {$: 'F13'};
+var ohanhi$keyboard$Keyboard$F14 = {$: 'F14'};
+var ohanhi$keyboard$Keyboard$F15 = {$: 'F15'};
+var ohanhi$keyboard$Keyboard$F16 = {$: 'F16'};
+var ohanhi$keyboard$Keyboard$F17 = {$: 'F17'};
+var ohanhi$keyboard$Keyboard$F18 = {$: 'F18'};
+var ohanhi$keyboard$Keyboard$F19 = {$: 'F19'};
+var ohanhi$keyboard$Keyboard$F2 = {$: 'F2'};
+var ohanhi$keyboard$Keyboard$F20 = {$: 'F20'};
+var ohanhi$keyboard$Keyboard$F3 = {$: 'F3'};
+var ohanhi$keyboard$Keyboard$F4 = {$: 'F4'};
+var ohanhi$keyboard$Keyboard$F5 = {$: 'F5'};
+var ohanhi$keyboard$Keyboard$F6 = {$: 'F6'};
+var ohanhi$keyboard$Keyboard$F7 = {$: 'F7'};
+var ohanhi$keyboard$Keyboard$F8 = {$: 'F8'};
+var ohanhi$keyboard$Keyboard$F9 = {$: 'F9'};
+var ohanhi$keyboard$Keyboard$functionKey = function (_n0) {
+	var value = _n0.a;
+	switch (value) {
+		case 'F1':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F1);
+		case 'F2':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F2);
+		case 'F3':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F3);
+		case 'F4':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F4);
+		case 'F5':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F5);
+		case 'F6':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F6);
+		case 'F7':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F7);
+		case 'F8':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F8);
+		case 'F9':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F9);
+		case 'F10':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F10);
+		case 'F11':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F11);
+		case 'F12':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F12);
+		case 'F13':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F13);
+		case 'F14':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F14);
+		case 'F15':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F15);
+		case 'F16':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F16);
+		case 'F17':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F17);
+		case 'F18':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F18);
+		case 'F19':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F19);
+		case 'F20':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$F20);
+		default:
+			return elm$core$Maybe$Nothing;
+	}
+};
+var ohanhi$keyboard$Keyboard$ChannelDown = {$: 'ChannelDown'};
+var ohanhi$keyboard$Keyboard$ChannelUp = {$: 'ChannelUp'};
+var ohanhi$keyboard$Keyboard$MediaFastForward = {$: 'MediaFastForward'};
+var ohanhi$keyboard$Keyboard$MediaPause = {$: 'MediaPause'};
+var ohanhi$keyboard$Keyboard$MediaPlay = {$: 'MediaPlay'};
+var ohanhi$keyboard$Keyboard$MediaPlayPause = {$: 'MediaPlayPause'};
+var ohanhi$keyboard$Keyboard$MediaRecord = {$: 'MediaRecord'};
+var ohanhi$keyboard$Keyboard$MediaRewind = {$: 'MediaRewind'};
+var ohanhi$keyboard$Keyboard$MediaStop = {$: 'MediaStop'};
+var ohanhi$keyboard$Keyboard$MediaTrackNext = {$: 'MediaTrackNext'};
+var ohanhi$keyboard$Keyboard$MediaTrackPrevious = {$: 'MediaTrackPrevious'};
+var ohanhi$keyboard$Keyboard$mediaKey = function (_n0) {
+	var value = _n0.a;
+	switch (value) {
+		case 'ChannelDown':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ChannelDown);
+		case 'ChannelUp':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ChannelUp);
+		case 'MediaFastForward':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$MediaFastForward);
+		case 'MediaPause':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$MediaPause);
+		case 'MediaPlay':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$MediaPlay);
+		case 'MediaPlayPause':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$MediaPlayPause);
+		case 'MediaRecord':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$MediaRecord);
+		case 'MediaRewind':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$MediaRewind);
+		case 'MediaStop':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$MediaStop);
+		case 'MediaTrackNext':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$MediaTrackNext);
+		case 'MediaTrackPrevious':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$MediaTrackPrevious);
+		default:
+			return elm$core$Maybe$Nothing;
+	}
+};
+var ohanhi$keyboard$Keyboard$Alt = {$: 'Alt'};
+var ohanhi$keyboard$Keyboard$AltGraph = {$: 'AltGraph'};
+var ohanhi$keyboard$Keyboard$CapsLock = {$: 'CapsLock'};
+var ohanhi$keyboard$Keyboard$Control = {$: 'Control'};
+var ohanhi$keyboard$Keyboard$Fn = {$: 'Fn'};
+var ohanhi$keyboard$Keyboard$FnLock = {$: 'FnLock'};
+var ohanhi$keyboard$Keyboard$Hyper = {$: 'Hyper'};
+var ohanhi$keyboard$Keyboard$Meta = {$: 'Meta'};
+var ohanhi$keyboard$Keyboard$NumLock = {$: 'NumLock'};
+var ohanhi$keyboard$Keyboard$ScrollLock = {$: 'ScrollLock'};
+var ohanhi$keyboard$Keyboard$Shift = {$: 'Shift'};
+var ohanhi$keyboard$Keyboard$Super = {$: 'Super'};
+var ohanhi$keyboard$Keyboard$Symbol = {$: 'Symbol'};
+var ohanhi$keyboard$Keyboard$SymbolLock = {$: 'SymbolLock'};
+var ohanhi$keyboard$Keyboard$modifierKey = function (_n0) {
+	var value = _n0.a;
+	switch (value) {
+		case 'Alt':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Alt);
+		case 'AltGraph':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$AltGraph);
+		case 'CapsLock':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$CapsLock);
+		case 'Control':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Control);
+		case 'Fn':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Fn);
+		case 'FnLock':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$FnLock);
+		case 'Hyper':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Hyper);
+		case 'Meta':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Meta);
+		case 'NumLock':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$NumLock);
+		case 'ScrollLock':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ScrollLock);
+		case 'Shift':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Shift);
+		case 'Super':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Super);
+		case 'OS':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Super);
+		case 'Symbol':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Symbol);
+		case 'SymbolLock':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$SymbolLock);
+		default:
+			return elm$core$Maybe$Nothing;
+	}
+};
+var ohanhi$keyboard$Keyboard$ArrowDown = {$: 'ArrowDown'};
+var ohanhi$keyboard$Keyboard$ArrowLeft = {$: 'ArrowLeft'};
+var ohanhi$keyboard$Keyboard$ArrowRight = {$: 'ArrowRight'};
+var ohanhi$keyboard$Keyboard$ArrowUp = {$: 'ArrowUp'};
+var ohanhi$keyboard$Keyboard$End = {$: 'End'};
+var ohanhi$keyboard$Keyboard$Home = {$: 'Home'};
+var ohanhi$keyboard$Keyboard$PageDown = {$: 'PageDown'};
+var ohanhi$keyboard$Keyboard$PageUp = {$: 'PageUp'};
+var ohanhi$keyboard$Keyboard$navigationKey = function (_n0) {
+	var value = _n0.a;
+	switch (value) {
+		case 'ArrowDown':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ArrowDown);
+		case 'ArrowLeft':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ArrowLeft);
+		case 'ArrowRight':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ArrowRight);
+		case 'ArrowUp':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ArrowUp);
+		case 'Down':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ArrowDown);
+		case 'Left':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ArrowLeft);
+		case 'Right':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ArrowRight);
+		case 'Up':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ArrowUp);
+		case 'End':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$End);
+		case 'Home':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Home);
+		case 'PageDown':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$PageDown);
+		case 'PageUp':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$PageUp);
+		default:
+			return elm$core$Maybe$Nothing;
+	}
+};
+var ohanhi$keyboard$Keyboard$oneOf = F2(
+	function (fns, key) {
+		oneOf:
+		while (true) {
+			if (!fns.b) {
+				return elm$core$Maybe$Nothing;
+			} else {
+				var fn = fns.a;
+				var rest = fns.b;
+				var _n1 = fn(key);
+				if (_n1.$ === 'Just') {
+					var a = _n1.a;
+					return elm$core$Maybe$Just(a);
+				} else {
+					var $temp$fns = rest,
+						$temp$key = key;
+					fns = $temp$fns;
+					key = $temp$key;
+					continue oneOf;
+				}
+			}
+		}
+	});
+var ohanhi$keyboard$Keyboard$AppSwitch = {$: 'AppSwitch'};
+var ohanhi$keyboard$Keyboard$Call = {$: 'Call'};
+var ohanhi$keyboard$Keyboard$Camera = {$: 'Camera'};
+var ohanhi$keyboard$Keyboard$CameraFocus = {$: 'CameraFocus'};
+var ohanhi$keyboard$Keyboard$EndCall = {$: 'EndCall'};
+var ohanhi$keyboard$Keyboard$GoBack = {$: 'GoBack'};
+var ohanhi$keyboard$Keyboard$GoHome = {$: 'GoHome'};
+var ohanhi$keyboard$Keyboard$HeadsetHook = {$: 'HeadsetHook'};
+var ohanhi$keyboard$Keyboard$LastNumberRedial = {$: 'LastNumberRedial'};
+var ohanhi$keyboard$Keyboard$MannerMode = {$: 'MannerMode'};
+var ohanhi$keyboard$Keyboard$Notification = {$: 'Notification'};
+var ohanhi$keyboard$Keyboard$VoiceDial = {$: 'VoiceDial'};
+var ohanhi$keyboard$Keyboard$phoneKey = function (_n0) {
+	var value = _n0.a;
+	switch (value) {
+		case 'AppSwitch':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$AppSwitch);
+		case 'Call':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Call);
+		case 'Camera':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Camera);
+		case 'CameraFocus':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$CameraFocus);
+		case 'EndCall':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$EndCall);
+		case 'GoBack':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$GoBack);
+		case 'GoHome':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$GoHome);
+		case 'HeadsetHook':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$HeadsetHook);
+		case 'LastNumberRedial':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$LastNumberRedial);
+		case 'Notification':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Notification);
+		case 'MannerMode':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$MannerMode);
+		case 'VoiceDial':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$VoiceDial);
+		default:
+			return elm$core$Maybe$Nothing;
+	}
+};
+var ohanhi$keyboard$Keyboard$Again = {$: 'Again'};
+var ohanhi$keyboard$Keyboard$Attn = {$: 'Attn'};
+var ohanhi$keyboard$Keyboard$Cancel = {$: 'Cancel'};
+var ohanhi$keyboard$Keyboard$ContextMenu = {$: 'ContextMenu'};
+var ohanhi$keyboard$Keyboard$Escape = {$: 'Escape'};
+var ohanhi$keyboard$Keyboard$Execute = {$: 'Execute'};
+var ohanhi$keyboard$Keyboard$Find = {$: 'Find'};
+var ohanhi$keyboard$Keyboard$Finish = {$: 'Finish'};
+var ohanhi$keyboard$Keyboard$Help = {$: 'Help'};
+var ohanhi$keyboard$Keyboard$Pause = {$: 'Pause'};
+var ohanhi$keyboard$Keyboard$Play = {$: 'Play'};
+var ohanhi$keyboard$Keyboard$Props = {$: 'Props'};
+var ohanhi$keyboard$Keyboard$Select = {$: 'Select'};
+var ohanhi$keyboard$Keyboard$ZoomIn = {$: 'ZoomIn'};
+var ohanhi$keyboard$Keyboard$ZoomOut = {$: 'ZoomOut'};
+var ohanhi$keyboard$Keyboard$uiKey = function (_n0) {
+	var value = _n0.a;
+	switch (value) {
+		case 'Again':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Again);
+		case 'Attn':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Attn);
+		case 'Cancel':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Cancel);
+		case 'ContextMenu':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ContextMenu);
+		case 'Escape':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Escape);
+		case 'Execute':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Execute);
+		case 'Find':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Find);
+		case 'Finish':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Finish);
+		case 'Help':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Help);
+		case 'Pause':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Pause);
+		case 'Play':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Play);
+		case 'Props':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Props);
+		case 'Select':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Select);
+		case 'ZoomIn':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ZoomIn);
+		case 'ZoomOut':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$ZoomOut);
+		default:
+			return elm$core$Maybe$Nothing;
+	}
+};
+var ohanhi$keyboard$Keyboard$Enter = {$: 'Enter'};
+var ohanhi$keyboard$Keyboard$Spacebar = {$: 'Spacebar'};
+var ohanhi$keyboard$Keyboard$Tab = {$: 'Tab'};
+var ohanhi$keyboard$Keyboard$whitespaceKey = function (_n0) {
+	var value = _n0.a;
+	switch (value) {
+		case 'Enter':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Enter);
+		case 'Tab':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Tab);
+		case 'Spacebar':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Spacebar);
+		case ' ':
+			return elm$core$Maybe$Just(ohanhi$keyboard$Keyboard$Spacebar);
+		default:
+			return elm$core$Maybe$Nothing;
+	}
+};
+var ohanhi$keyboard$Keyboard$anyKey = ohanhi$keyboard$Keyboard$oneOf(
+	_List_fromArray(
+		[ohanhi$keyboard$Keyboard$characterKey, ohanhi$keyboard$Keyboard$modifierKey, ohanhi$keyboard$Keyboard$whitespaceKey, ohanhi$keyboard$Keyboard$navigationKey, ohanhi$keyboard$Keyboard$editingKey, ohanhi$keyboard$Keyboard$functionKey, ohanhi$keyboard$Keyboard$uiKey, ohanhi$keyboard$Keyboard$phoneKey, ohanhi$keyboard$Keyboard$mediaKey]));
+var elm$core$Basics$neq = _Utils_notEqual;
+var elm$core$List$filter = F2(
+	function (isGood, list) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, xs) {
+					return isGood(x) ? A2(elm$core$List$cons, x, xs) : xs;
+				}),
+			_List_Nil,
+			list);
+	});
+var ohanhi$keyboard$Keyboard$insert = F3(
+	function (keyParser, rawKey, list) {
+		var _n0 = keyParser(rawKey);
+		if (_n0.$ === 'Just') {
+			var key = _n0.a;
+			return A2(
+				elm$core$List$cons,
+				key,
+				A2(
+					elm$core$List$filter,
+					elm$core$Basics$neq(key),
+					list));
+		} else {
+			return list;
+		}
+	});
+var ohanhi$keyboard$Keyboard$remove = F3(
+	function (keyParser, rawKey, list) {
+		var _n0 = keyParser(rawKey);
+		if (_n0.$ === 'Just') {
+			var key = _n0.a;
+			return A2(
+				elm$core$List$filter,
+				elm$core$Basics$neq(key),
+				list);
+		} else {
+			return list;
+		}
+	});
+var ohanhi$keyboard$Keyboard$updateWithParser = F3(
+	function (keyParser, msg, state) {
+		if (msg.$ === 'Down') {
+			var key = msg.a;
+			return A3(ohanhi$keyboard$Keyboard$insert, keyParser, key, state);
+		} else {
+			var key = msg.a;
+			return A3(ohanhi$keyboard$Keyboard$remove, keyParser, key, state);
+		}
+	});
+var ohanhi$keyboard$Keyboard$update = ohanhi$keyboard$Keyboard$updateWithParser(ohanhi$keyboard$Keyboard$anyKey);
 var author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -6709,28 +7154,15 @@ var author$project$Main$update = F2(
 								elm$core$String$toInt(c))
 						}),
 					elm$core$Platform$Cmd$none);
-			case 'KeyDown':
-				var code = msg.a;
-				var _n7 = A2(elm$core$Debug$log, 'key code: ', code);
-				var _n8 = ohanhi$keyboard$Keyboard$characterKey(code);
-				if (((_n8.$ === 'Just') && (_n8.a.$ === 'Character')) && (_n8.a.a === 't')) {
-					var _n9 = model.viewMode;
-					if (_n9.$ === 'ShowAll') {
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{viewMode: author$project$Main$ShowMatchedOnly}),
-							elm$core$Platform$Cmd$none);
-					} else {
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{viewMode: author$project$Main$ShowAll}),
-							elm$core$Platform$Cmd$none);
-					}
-				} else {
-					return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
-				}
+			case 'KeyboardMsg':
+				var keyboardMsg = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							pressedKeys: A2(ohanhi$keyboard$Keyboard$update, keyboardMsg, model.pressedKeys)
+						}),
+					elm$core$Platform$Cmd$none);
 			case 'Increment':
 				return _Utils_Tuple2(
 					_Utils_update(
@@ -6804,17 +7236,6 @@ var author$project$Main$footer = A2(
 				]))
 		]));
 var elm$html$Html$li = _VirtualDom_node('li');
-var elm$core$List$filter = F2(
-	function (isGood, list) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, xs) {
-					return isGood(x) ? A2(elm$core$List$cons, x, xs) : xs;
-				}),
-			_List_Nil,
-			list);
-	});
 var elm$core$Tuple$second = function (_n0) {
 	var y = _n0.b;
 	return y;

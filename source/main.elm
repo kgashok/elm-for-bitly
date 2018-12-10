@@ -156,17 +156,22 @@ main =
 
 
 
-{- Subscribing to keyboard events without the whole model-update -thing. -}
+{-
+   subscriptions : Model -> Sub Msg
+   subscriptions model =
+       Sub.batch
+           [ Keyboard.downs KeyDown
+
+           -- , Keyboard.ups KeyUp
+           -- , windowBlurs ClearKeys
+           ]
+-}
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.batch
-        [ Keyboard.downs KeyDown
-
-        -- , Keyboard.ups KeyUp
-        -- , windowBlurs ClearKeys
-        ]
+    Keyboard.subscriptions
+        |> Sub.map KeyboardMsg
 
 
 type Msg
@@ -179,7 +184,8 @@ type Msg
     | IncDataReceived (Result Http.Error (List Link))
     | NamesReceived (Result Http.Error (List String))
     | UpdateLinkCount String
-    | KeyDown RawKey
+      -- | KeyDown RawKey
+    | KeyboardMsg Keyboard.Msg
     | Increment -- not relevant; legacy
     | Decrement -- not relevant; legacy
 
@@ -359,23 +365,28 @@ update msg model =
             , Cmd.none
             )
 
-        KeyDown code ->
-            let
-                _ =
-                    Debug.log "key code: " code
-            in
-            case Keyboard.characterKey code of
-                Just (Keyboard.Character "t") ->
-                    case model.viewMode of
-                        ShowAll ->
-                            ( { model | viewMode = ShowMatchedOnly }, Cmd.none )
+        KeyboardMsg keyboardMsg ->
+            ( { model | pressedKeys = Keyboard.update keyboardMsg model.pressedKeys }
+            , Cmd.none
+            )
 
-                        _ ->
-                            ( { model | viewMode = ShowAll }, Cmd.none )
+        {- KeyDown code ->
+           let
+               _ =
+                   Debug.log "key code: " code
+           in
+           case Keyboard.characterKey code of
+               Just (Keyboard.Character "t") ->
+                   case model.viewMode of
+                       ShowAll ->
+                           ( { model | viewMode = ShowMatchedOnly }, Cmd.none )
 
-                _ ->
-                    ( model, Cmd.none )
+                       _ ->
+                           ( { model | viewMode = ShowAll }, Cmd.none )
 
+               _ ->
+                   ( model, Cmd.none )
+        -}
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
