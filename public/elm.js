@@ -4990,6 +4990,7 @@ var author$project$Main$init = function (_n0) {
 			linkcount: 2000,
 			needle: 'rawgit',
 			offset: 0,
+			pressedKeys: _List_Nil,
 			val: 0,
 			viewMode: author$project$Main$ShowAll
 		},

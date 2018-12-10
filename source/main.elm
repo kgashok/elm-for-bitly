@@ -112,6 +112,7 @@ type alias Model =
     , viewMode : ViewMode
     , linkcount : Int
     , offset : Int -- required for obtaining pages of information from API
+    , pressedKeys : List Keyboard.Key
     }
 
 
@@ -132,6 +133,7 @@ init _ =
       , viewMode = ShowAll
       , linkcount = 2000
       , offset = 0
+      , pressedKeys = []
       }
     , Cmd.none
     )
