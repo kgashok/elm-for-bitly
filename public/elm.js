@@ -4998,9 +4998,6 @@ var author$project$Main$init = function (_n0) {
 var author$project$Main$KeyDown = function (a) {
 	return {$: 'KeyDown', a: a};
 };
-var author$project$Main$KeyUp = function (a) {
-	return {$: 'KeyUp', a: a};
-};
 var elm$core$Platform$Sub$batch = _Platform_batch;
 var elm$browser$Browser$Events$Document = {$: 'Document'};
 var elm$browser$Browser$Events$MySub = F3(
@@ -5729,17 +5726,11 @@ var ohanhi$keyboard$Keyboard$downs = function (toMsg) {
 	return elm$browser$Browser$Events$onKeyDown(
 		A2(elm$json$Json$Decode$map, toMsg, ohanhi$keyboard$Keyboard$eventKeyDecoder));
 };
-var elm$browser$Browser$Events$onKeyUp = A2(elm$browser$Browser$Events$on, elm$browser$Browser$Events$Document, 'keyup');
-var ohanhi$keyboard$Keyboard$ups = function (toMsg) {
-	return elm$browser$Browser$Events$onKeyUp(
-		A2(elm$json$Json$Decode$map, toMsg, ohanhi$keyboard$Keyboard$eventKeyDecoder));
-};
 var author$project$Main$subscriptions = function (model) {
 	return elm$core$Platform$Sub$batch(
 		_List_fromArray(
 			[
-				ohanhi$keyboard$Keyboard$downs(author$project$Main$KeyDown),
-				ohanhi$keyboard$Keyboard$ups(author$project$Main$KeyUp)
+				ohanhi$keyboard$Keyboard$downs(author$project$Main$KeyDown)
 			]));
 };
 var author$project$Main$ShowMatchedOnly = {$: 'ShowMatchedOnly'};
@@ -6494,6 +6485,14 @@ var elm$core$List$append = F2(
 var elm$core$List$concat = function (lists) {
 	return A3(elm$core$List$foldr, elm$core$List$append, _List_Nil, lists);
 };
+var ohanhi$keyboard$Keyboard$Character = function (a) {
+	return {$: 'Character', a: a};
+};
+var ohanhi$keyboard$Keyboard$characterKey = function (_n0) {
+	var value = _n0.a;
+	return (elm$core$String$length(value) === 1) ? elm$core$Maybe$Just(
+		ohanhi$keyboard$Keyboard$Character(value)) : elm$core$Maybe$Nothing;
+};
 var author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -6704,12 +6703,27 @@ var author$project$Main$update = F2(
 								elm$core$String$toInt(c))
 						}),
 					elm$core$Platform$Cmd$none);
-			case 'KeyUp':
-				var key = msg.a;
-				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
 			case 'KeyDown':
-				var key = msg.a;
-				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+				var code = msg.a;
+				var _n7 = ohanhi$keyboard$Keyboard$characterKey(code);
+				if (((_n7.$ === 'Just') && (_n7.a.$ === 'Character')) && (_n7.a.a === 't')) {
+					var _n8 = model.viewMode;
+					if (_n8.$ === 'ShowAll') {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{viewMode: author$project$Main$ShowMatchedOnly}),
+							elm$core$Platform$Cmd$none);
+					} else {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{viewMode: author$project$Main$ShowAll}),
+							elm$core$Platform$Cmd$none);
+					}
+				} else {
+					return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+				}
 			case 'Increment':
 				return _Utils_Tuple2(
 					_Utils_update(

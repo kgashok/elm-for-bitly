@@ -157,9 +157,8 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Keyboard.downs KeyDown
-        , Keyboard.ups KeyUp
-
-        --, windowBlurs ClearKeys
+        -- , Keyboard.ups KeyUp
+        -- , windowBlurs ClearKeys
         ]
 
 
@@ -173,10 +172,9 @@ type Msg
     | IncDataReceived (Result Http.Error (List Link))
     | NamesReceived (Result Http.Error (List String))
     | UpdateLinkCount String
+    | KeyDown RawKey
     | Increment -- not relevant; legacy
     | Decrement -- not relevant; legacy
-    | KeyDown RawKey
-    | KeyUp RawKey
 
 
 
@@ -355,12 +353,20 @@ update msg model =
             , Cmd.none
             )
 
-        KeyUp key ->
-            ( model, Cmd.none)
-            
-        KeyDown key ->
-            ( model, Cmd.none)        
-                  
+        KeyDown code ->
+              case (Keyboard.characterKey code) of
+                Just (Keyboard.Character "t") -> 
+                  case model.viewMode of  
+                    ShowAll -> 
+                      ({model | viewMode = ShowMatchedOnly}, Cmd.none)
+                      
+                    _ ->  
+                      ({model | viewMode = ShowAll}, Cmd.none)                  
+                _ -> 
+                  (model, Cmd.none)
+      
+
+
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
