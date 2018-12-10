@@ -6,9 +6,9 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Http
 import Json.Decode exposing (Decoder, decodeString, field, list, map2, maybe, string)
+import Keyboard exposing (RawKey)
 import Process
 import Task
-import Keyboard exposing (RawKey)
 
 
 {-| apiKey needs to be hidden but it is okay for now
@@ -52,10 +52,12 @@ type alias Link =
 
 {-| Match is used instead of Bool True or False. Why?
 Two reasons
-- something to do with the language
--- Boolean blindness in Elm
--- <https://discourse.elm-lang.org/t/fixing-boolean-blindness-in-elm/776>
-- and probably better readability?
+
+  - something to do with the language
+    -- Boolean blindness in Elm
+    -- <https://discourse.elm-lang.org/t/fixing-boolean-blindness-in-elm/776>
+  - and probably better readability?
+
 -}
 type Match
     = Yes
@@ -141,6 +143,7 @@ main =
     Browser.sandbox { init = init, view = view, update = update }
 --}
 
+
 main =
     Browser.element
         { init = init
@@ -150,6 +153,7 @@ main =
         }
 
 
+
 {- Subscribing to keyboard events without the whole model-update -thing. -}
 
 
@@ -157,6 +161,7 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Keyboard.downs KeyDown
+
         -- , Keyboard.ups KeyUp
         -- , windowBlurs ClearKeys
         ]
@@ -175,7 +180,6 @@ type Msg
     | KeyDown RawKey
     | Increment -- not relevant; legacy
     | Decrement -- not relevant; legacy
-
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -263,9 +267,9 @@ update msg model =
             ( { model
                 | hay = updatedHays
                 , errorMessage =
-                    (++) (Maybe.withDefault "" model.errorMessage) " ." 
-                    |> (++) (String.fromInt model.offset)
-                    |> Just 
+                    (++) (Maybe.withDefault "" model.errorMessage) " ."
+                        |> (++) (String.fromInt model.offset)
+                        |> Just
                 , errorStatus = False
                 , offset = incOffset
               }
@@ -354,18 +358,17 @@ update msg model =
             )
 
         KeyDown code ->
-              case (Keyboard.characterKey code) of
-                Just (Keyboard.Character "t") -> 
-                  case model.viewMode of  
-                    ShowAll -> 
-                      ({model | viewMode = ShowMatchedOnly}, Cmd.none)
-                      
-                    _ ->  
-                      ({model | viewMode = ShowAll}, Cmd.none)                  
-                _ -> 
-                  (model, Cmd.none)
-      
+            case Keyboard.characterKey code of
+                Just (Keyboard.Character "t") ->
+                    case model.viewMode of
+                        ShowAll ->
+                            ( { model | viewMode = ShowMatchedOnly }, Cmd.none )
 
+                        _ ->
+                            ( { model | viewMode = ShowAll }, Cmd.none )
+
+                _ ->
+                    ( model, Cmd.none )
 
         -- irrelevant message types, to be removed eventually
         Increment ->
@@ -598,7 +601,7 @@ displayURL hs =
         shortener =
             Maybe.withDefault "" hs.short
     in
-    li [ classList [ ("matched", hs.match == Just Yes) ] ]
+    li [ classList [ ( "matched", hs.match == Just Yes ) ] ]
         [ div [] [ text hs.hay ]
         , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
 
@@ -615,8 +618,8 @@ displayURL hs =
         ]
 
 
-{-| hayBackGround assigns the "matched" CSS attribute 
---  if and only if the 'match' attribute is True
+{-| hayBackGround assigns the "matched" CSS attribute
+-- if and only if the 'match' attribute is True
 -}
 hayBackGround : Maybe Match -> Attribute msg
 hayBackGround val =
@@ -628,9 +631,9 @@ hayBackGround val =
             classList [ ( "matched", False ) ]
 
 
-{-| checkForMatch is the crux of the whole app and is where all the 
--- search action happens 
--- Needs to be refactored very urgently! 
+{-| checkForMatch is the crux of the whole app and is where all the
+-- search action happens
+-- Needs to be refactored very urgently!
 -}
 checkForMatch : String -> HayString -> HayString
 checkForMatch needle hays =
