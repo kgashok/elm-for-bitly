@@ -6595,7 +6595,12 @@ var author$project$Main$update = F2(
 							model,
 							{
 								errorMessage: elm$core$Maybe$Just(
-									' .' + (elm$core$String$fromInt(model.offset) + (A2(elm$core$Maybe$withDefault, '', model.errorMessage) + ' .'))),
+									function (message) {
+										return _Utils_ap(
+											message,
+											elm$core$String$fromInt(model.offset));
+									}(
+										A2(elm$core$Maybe$withDefault, '', model.errorMessage) + ' .')),
 								errorStatus: false,
 								hay: updatedHays,
 								offset: incOffset
@@ -6705,10 +6710,11 @@ var author$project$Main$update = F2(
 					elm$core$Platform$Cmd$none);
 			case 'KeyDown':
 				var code = msg.a;
-				var _n7 = ohanhi$keyboard$Keyboard$characterKey(code);
-				if (((_n7.$ === 'Just') && (_n7.a.$ === 'Character')) && (_n7.a.a === 't')) {
-					var _n8 = model.viewMode;
-					if (_n8.$ === 'ShowAll') {
+				var _n7 = A2(elm$core$Debug$log, 'key code: ', code);
+				var _n8 = ohanhi$keyboard$Keyboard$characterKey(code);
+				if (((_n8.$ === 'Just') && (_n8.a.$ === 'Character')) && (_n8.a.a === 't')) {
+					var _n9 = model.viewMode;
+					if (_n9.$ === 'ShowAll') {
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
