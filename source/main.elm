@@ -76,7 +76,8 @@ type alias HayString =
     { hay : String
     , title : String
     , short : Maybe String -- not every link has been customized to be easily recalled
-    , tags : Maybe String
+    , tags : List String
+    , dump : String -- dump of everything in the above fields
     , match : Maybe Match -- why not Bool? See documentation for Match type
     }
 
@@ -122,10 +123,10 @@ init _ =
     ( { val = 0
       , needle = "rawgit"
       , hay =
-            [ HayString "http://rawgit.com" "" Nothing Nothing (Just Yes)
-            , HayString "http://google.com" "" Nothing Nothing (Just No)
-            , HayString "http://junk.com" "" Nothing Nothing (Just No)
-            , HayString "http://abcde.org" "" Nothing Nothing (Just No)
+            [ HayString "http://rawgit.com" "" Nothing [] "" (Just Yes)
+            , HayString "http://google.com" "" Nothing [ "search" ] "" (Just No)
+            , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "" (Just No)
+            , HayString "http://abcde.org" "" Nothing [] "" (Just No)
             ]
       , errorMessage = Nothing
       , errorStatus = False
@@ -525,13 +526,8 @@ parseKeyword short =
 
 checkForMatches : String -> List HayString -> List HayString
 checkForMatches needle haylist =
-    let 
-      isMatchInHay needle_ hs = 
-        {hs | match = isMatch needle_ hs.hay} 
-    in
     haylist
-        |> List.map (isMatchInHay needle)
-
+        |> List.map (\hs -> { hs | match = isMatch needle hs.dump })
 
 
 {-| isMatch is the crux of the whole app and is where all the
@@ -573,41 +569,30 @@ isMatch needle hay =
 makeHayFromUrls : String -> List Link -> List HayString
 makeHayFromUrls needle urls =
     let
-        buildTagString tagList =
-            case List.isEmpty tagList of
-                True ->
-                    Nothing
-
-                _ ->
-                    Just (String.join " " tagList)
-
         makeHay link =
-            {--let
-                _ =
-                    Debug.log "link is " link
-            in
-            --}
             link.long_url
                 ++ link.title
                 ++ Maybe.withDefault "" (parseKeyword link.keyword_link)
-                ++ Maybe.withDefault "" (buildTagString link.tags)
+                ++ String.join " " link.tags
 
         linkToHay l =
             HayString
                 l.long_url
                 l.title
                 l.keyword_link
-                (buildTagString l.tags)
-                (isMatch needle (makeHay l))
+                l.tags
+                (makeHay l)
+                -- dump
+                Nothing
+                |> (\hs -> { hs | match = isMatch needle hs.dump })
     in
     urls
         |> List.map linkToHay
 
 
-
 makeHayFromNames needle names =
     names
-        |> List.map (\x -> HayString x "" Nothing Nothing Nothing)
+        |> List.map (\x -> HayString x "" Nothing [] x Nothing)
         |> checkForMatches needle
 
 
@@ -737,11 +722,11 @@ displayURL hs =
             Maybe.withDefault "" hs.short
 
         tagString =
-            if hs.tags == Nothing then
+            if List.isEmpty hs.tags then
                 ""
 
             else
-                (++) "tags: " <| Maybe.withDefault "" hs.tags
+                (++) "tags: " <| String.join ", " hs.tags
     in
     li [ classList [ ( "matched", hs.match == Just Yes ) ] ]
         [ div [] [ text hs.hay ]
