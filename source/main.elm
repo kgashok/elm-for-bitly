@@ -76,6 +76,7 @@ type alias HayString =
     { hay : String
     , title : String
     , short : Maybe String -- not every link has been customized to be easily recalled
+    , tags : List String
     , match : Maybe Match -- why not Bool? See documentation for Match type
     }
 
@@ -121,17 +122,17 @@ init _ =
     ( { val = 0
       , needle = "rawgit"
       , hay =
-            [ HayString "http://rawgit.com" "" Nothing (Just Yes)
-            , HayString "http://google.com" "" Nothing (Just No)
-            , HayString "http://junk.com" "" Nothing (Just No)
-            , HayString "http://abcde.org" "" Nothing (Just No)
+            [ HayString "http://rawgit.com" "" Nothing [] (Just Yes)
+            , HayString "http://google.com" "" Nothing [] (Just No)
+            , HayString "http://junk.com" "" Nothing [] (Just No)
+            , HayString "http://abcde.org" "" Nothing [] (Just No)
             ]
       , errorMessage = Nothing
       , errorStatus = False
       , dataAPI = testJson
       , data = Test
       , viewMode = ShowAll
-      , linkcount = 2000
+      , linkcount = 1000
       , offset = 0
       , pressedKeys = []
       }
@@ -204,7 +205,7 @@ update msg model =
                             "deep"
 
                         _ ->
-                            "rawgit"
+                            "DEFERRED"
 
                 model_ =
                     { model
@@ -276,7 +277,8 @@ update msg model =
                 | hay = updatedHays
                 , errorMessage =
                     (++) (Maybe.withDefault "" model.errorMessage) " ."
-                        |> (\message -> (++) message (String.fromInt model.offset))
+                        |> flip (++) (String.fromInt model.offset)
+                        -- |> (\message -> (++) message (String.fromInt model.offset))
                         |> Just
                 , errorStatus = False
                 , offset = incOffset
@@ -416,6 +418,10 @@ update msg model =
             ( { model | val = model.val - 1 }, Cmd.none )
 
 
+flip func first second =
+    func second first
+
+
 bitlyIncRequest : String -> Int -> Int -> Cmd Msg
 bitlyIncRequest dataURL count offset =
     let
@@ -507,13 +513,13 @@ bitlySeqRequest dataURL count =
 
 makeHayFromUrls needle urls =
     urls
-        |> List.map (\x -> HayString x.long_url x.title x.keyword_link Nothing)
+        |> List.map (\x -> HayString x.long_url x.title x.keyword_link x.tags Nothing)
         |> checkForMatches needle
 
 
 makeHayFromNames needle names =
     names
-        |> List.map (\x -> HayString x "" Nothing Nothing)
+        |> List.map (\x -> HayString x "" Nothing [] Nothing)
         |> checkForMatches needle
 
 
@@ -633,6 +639,9 @@ generateListView viewmode slist =
     div [] [ ul [] items ]
 
 
+{-| displayURL returns the HTML list item corresponding to a HayString
+-- defines how the attributes of a haystring is to be displayed in the view
+-}
 displayURL : HayString -> Html msg
 displayURL hs =
     let
@@ -652,6 +661,14 @@ displayURL hs =
                 --, rel "noopener noreferrer"
                 ]
                 [ text shortener ]
+            ]
+        , div [ classList [ ( "hayKey", True ) ] ]
+            [ case List.length hs.tags of
+                0 ->
+                    text ""
+
+                _ ->
+                    text <| (++) "tags: " <| String.join ", " hs.tags
             ]
         ]
 

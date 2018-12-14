@@ -4467,9 +4467,9 @@ function _Http_multipart(parts)
 
 	return elm$http$Http$Internal$FormDataBody(formData);
 }
-var author$project$Main$HayString = F4(
-	function (hay, title, _short, match) {
-		return {hay: hay, match: match, _short: _short, title: title};
+var author$project$Main$HayString = F5(
+	function (hay, title, _short, tags, match) {
+		return {hay: hay, match: match, _short: _short, tags: tags, title: title};
 	});
 var author$project$Main$No = {$: 'No'};
 var author$project$Main$ShowAll = {$: 'ShowAll'};
@@ -4962,32 +4962,36 @@ var author$project$Main$init = function (_n0) {
 			errorStatus: false,
 			hay: _List_fromArray(
 				[
-					A4(
+					A5(
 					author$project$Main$HayString,
 					'http://rawgit.com',
 					'',
 					elm$core$Maybe$Nothing,
+					_List_Nil,
 					elm$core$Maybe$Just(author$project$Main$Yes)),
-					A4(
+					A5(
 					author$project$Main$HayString,
 					'http://google.com',
 					'',
 					elm$core$Maybe$Nothing,
+					_List_Nil,
 					elm$core$Maybe$Just(author$project$Main$No)),
-					A4(
+					A5(
 					author$project$Main$HayString,
 					'http://junk.com',
 					'',
 					elm$core$Maybe$Nothing,
+					_List_Nil,
 					elm$core$Maybe$Just(author$project$Main$No)),
-					A4(
+					A5(
 					author$project$Main$HayString,
 					'http://abcde.org',
 					'',
 					elm$core$Maybe$Nothing,
+					_List_Nil,
 					elm$core$Maybe$Just(author$project$Main$No))
 				]),
-			linkcount: 2000,
+			linkcount: 1000,
 			needle: 'rawgit',
 			offset: 0,
 			pressedKeys: _List_Nil,
@@ -6464,6 +6468,10 @@ var author$project$Main$createErrorMessage = function (httpError) {
 			return message;
 	}
 };
+var author$project$Main$flip = F3(
+	function (func, first, second) {
+		return A2(func, second, first);
+	});
 var author$project$Main$makeHayFromNames = F2(
 	function (needle, names) {
 		return A2(
@@ -6472,7 +6480,7 @@ var author$project$Main$makeHayFromNames = F2(
 			A2(
 				elm$core$List$map,
 				function (x) {
-					return A4(author$project$Main$HayString, x, '', elm$core$Maybe$Nothing, elm$core$Maybe$Nothing);
+					return A5(author$project$Main$HayString, x, '', elm$core$Maybe$Nothing, _List_Nil, elm$core$Maybe$Nothing);
 				},
 				names));
 	});
@@ -6484,7 +6492,7 @@ var author$project$Main$makeHayFromUrls = F2(
 			A2(
 				elm$core$List$map,
 				function (x) {
-					return A4(author$project$Main$HayString, x.long_url, x.title, x.keyword_link, elm$core$Maybe$Nothing);
+					return A5(author$project$Main$HayString, x.long_url, x.title, x.keyword_link, x.tags, elm$core$Maybe$Nothing);
 				},
 				urls));
 	});
@@ -6981,7 +6989,7 @@ var author$project$Main$update = F2(
 						case 'Test':
 							return 'deep';
 						default:
-							return 'rawgit';
+							return 'DEFERRED';
 					}
 				}();
 				var model_ = _Utils_update(
@@ -7071,11 +7079,10 @@ var author$project$Main$update = F2(
 							model,
 							{
 								errorMessage: elm$core$Maybe$Just(
-									function (message) {
-										return _Utils_ap(
-											message,
-											elm$core$String$fromInt(model.offset));
-									}(
+									A3(
+										author$project$Main$flip,
+										elm$core$Basics$append,
+										elm$core$String$fromInt(model.offset),
 										A2(elm$core$Maybe$withDefault, '', model.errorMessage) + ' .')),
 								errorStatus: false,
 								hay: updatedHays,
@@ -7366,6 +7373,28 @@ var author$project$Main$displayURL = function (hs) {
 							[
 								elm$html$Html$text(shortener)
 							]))
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('hayKey', true)
+							]))
+					]),
+				_List_fromArray(
+					[
+						function () {
+						var _n0 = elm$core$List$length(hs.tags);
+						if (!_n0) {
+							return elm$html$Html$text('');
+						} else {
+							return elm$html$Html$text(
+								'tags: ' + A2(elm$core$String$join, ', ', hs.tags));
+						}
+					}()
 					]))
 			]));
 };
