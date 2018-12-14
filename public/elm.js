@@ -6419,10 +6419,12 @@ var author$project$Main$checkForMatch = F2(
 					hays.hay,
 					_Utils_ap(
 						hays.title,
-						A2(
-							elm$core$Maybe$withDefault,
-							'',
-							author$project$Main$parseKeyword(hays._short)))));
+						_Utils_ap(
+							A2(
+								elm$core$Maybe$withDefault,
+								'',
+								author$project$Main$parseKeyword(hays._short)),
+							A2(elm$core$String$join, '', hays.tags)))));
 			var _n1 = A2(elm$core$String$contains, needle_, hay_);
 			if (_n1) {
 				return _Utils_update(
@@ -6989,7 +6991,7 @@ var author$project$Main$update = F2(
 						case 'Test':
 							return 'deep';
 						default:
-							return 'DEFERRED';
+							return 'cs3003';
 					}
 				}();
 				var model_ = _Utils_update(

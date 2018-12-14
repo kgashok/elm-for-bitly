@@ -205,7 +205,7 @@ update msg model =
                             "deep"
 
                         _ ->
-                            "DEFERRED"
+                            "cs3003"
 
                 model_ =
                     { model
@@ -704,6 +704,7 @@ checkForMatch needle hays =
                     hays.hay
                         ++ hays.title
                         ++ Maybe.withDefault "" (parseKeyword hays.short)
+                        ++ String.join "" hays.tags
                         |> String.toLower
 
                 -- String.toLower hays.hay
