@@ -4,7 +4,7 @@
   "description": "Using Elm to retrieve custom links from Bitly",
   "main": "server.js",
   "scripts": {
-    "prestart": "elm make source/main.elm --output public/elm.js",
+    "prestart": "elm make source/main.elm --optimize --output public/elm.js; uglifyjs public/elm.js --compress 'pure_funcs=\"F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9\",pure_getters,keep_fargs=false,unsafe_comps,unsafe' | uglifyjs --mangle --output=public/elm.min.js",
     "start": "npm run prestart && node server.js"
   },
   "dependencies": {
@@ -12,7 +12,8 @@
     "elm": "0.19.0-bugfix2",
     "elm-upgrade": "0.19.2",
     "elm-format": "^0.8.0",
-    "json-server": "^0.14.0"
+    "json-server": "^0.14.0",
+    "uglify-js": "^3.4.9"
   },
   "engines": {
     "node": "8.x"

@@ -132,7 +132,7 @@ init _ =
       , dataAPI = testJson
       , data = Test
       , viewMode = ShowAll
-      , linkcount = 1000
+      , linkcount = 1700
       , offset = 0
       , pressedKeys = []
       }
@@ -205,7 +205,7 @@ update msg model =
                             "deep"
 
                         _ ->
-                            "cs3003"
+                            "twoPoints"
 
                 model_ =
                     { model
@@ -217,7 +217,7 @@ update msg model =
                     }
 
                 dataRequestTask =
-                    case model_.linkcount > 1000 of
+                    case model_.linkcount > 1700 of
                         True ->
                             -- bitlySeqRequest model_.dataAPI model_.linkcount
                             bitlyIncRequest model_.dataAPI model_.linkcount model_.offset
@@ -428,8 +428,9 @@ bitlyIncRequest dataURL count offset =
         skipUrl url o =
             url ++ "&limit=" ++ pagesize ++ "&offset=" ++ String.fromInt o
 
-        _ =
+        {--_ =
             Debug.log "url offset: " offset
+    --}
     in
     urlsDecoder
         |> Http.get (skipUrl dataURL offset)
@@ -438,10 +439,11 @@ bitlyIncRequest dataURL count offset =
 
 httpCommand : String -> Cmd Msg
 httpCommand dataURL =
-    let
+    {--let
         _ =
             Debug.log "url: " dataURL
     in
+    --}
     case dataURL of
         "https://api.myjson.com/bins/19yily" ->
             nicknamesDecoder
@@ -487,10 +489,11 @@ bitlyBatchRequest dataURL count =
 
 
 httpCommand2 dataURL =
-    let
+    {--let
         _ =
             Debug.log "Sequential url: " dataURL
     in
+    --}
     urlsDecoder
         |> Http.get dataURL
         |> Http.toTask
@@ -511,23 +514,138 @@ bitlySeqRequest dataURL count =
 --}
 
 
-{-| makeHayFromUrls converts a Link object into a Haystring object
+{-| checkForMatch is the crux of the whole app and is where all the
+-- search action happens
+-- Needs to be refactored very urgently!
+-}
+checkForMatch : String -> HayString -> HayString
+checkForMatch needle hays =
+    case not (String.isEmpty needle) of
+        True ->
+            let
+                needle_ =
+                    needle
+                        |> String.trim
+                        |> String.toLower
+
+                hay_ =
+                    hays.hay
+                        ++ hays.title
+                        ++ Maybe.withDefault "" (parseKeyword hays.short)
+                        ++ Maybe.withDefault "" hays.tags
+                        |> String.toLower
+
+                -- String.toLower hays.hay
+            in
+            case String.contains needle_ hay_ of
+                True ->
+                    { hays | match = Just Yes }
+
+                _ ->
+                    { hays | match = Just No }
+
+        False ->
+            { hays | match = Nothing }
+
+
+parseKeyword : Maybe String -> Maybe String
+parseKeyword short =
+    let
+        tlist =
+            String.split "/" (Maybe.withDefault "" short)
+    in
+    List.head (List.reverse tlist)
+
+
+checkForMatches : String -> List HayString -> List HayString
+checkForMatches needle haylist =
+    haylist
+        |> List.map (checkForMatch needle)
+
+
+matchString : Maybe Match -> String
+matchString m =
+    case m of
+        Just Yes ->
+            " Yes! "
+
+        Just No ->
+            " No "
+
+        Nothing ->
+            " - "
+
+
+isMatch : String -> String -> Maybe Match
+isMatch needle hay =
+    {--let
+        _ =
+            Debug.log "needle and hay: " (needle ++ ":" ++ hay)
+    in
+    --}
+    case not (String.isEmpty needle) of
+        True ->
+            let
+                needle_ =
+                    needle
+                        |> String.trim
+                        |> String.toLower
+
+                hay_ =
+                    hay |> String.toLower
+            in
+            case String.contains needle_ hay_ of
+                True ->
+                    Just Yes
+
+                _ ->
+                    Just No
+
+        False ->
+            Nothing
+
+
+{-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
 -- The 'match' attribute is set if there is match with the needle
 -- conversion from tag list to tag string for efficient display and matching
 -}
+makeHayFromUrls : String -> List Link -> List HayString
 makeHayFromUrls needle urls =
     let
-        buildString tagList =
+        buildTagString tagList =
             case List.isEmpty tagList of
                 True ->
                     Nothing
 
                 _ ->
                     Just (String.join " " tagList)
+
+        makeHay link =
+            {--let
+                _ =
+                    Debug.log "link is " link
+            in
+            --}
+            link.long_url
+                ++ link.title
+                ++ Maybe.withDefault "" (parseKeyword link.keyword_link)
+                ++ Maybe.withDefault "" (buildTagString link.tags)
+
+        linkToHay l =
+            HayString
+                l.long_url
+                l.title
+                l.keyword_link
+                (buildTagString l.tags)
+                (isMatch needle (makeHay l))
     in
     urls
-        |> List.map (\x -> HayString x.long_url x.title x.keyword_link (buildString x.tags) Nothing)
-        |> checkForMatches needle
+        |> List.map linkToHay
+
+
+
+-- |> List.map (\x -> HayString x.long_url x.title x.keyword_link (buildString x.tags) Nothing)
+-- |> checkForMatches needle
 
 
 makeHayFromNames needle names =
@@ -698,68 +816,6 @@ hayBackGround val =
 
         _ ->
             classList [ ( "matched", False ) ]
-
-
-{-| checkForMatch is the crux of the whole app and is where all the
--- search action happens
--- Needs to be refactored very urgently!
--}
-checkForMatch : String -> HayString -> HayString
-checkForMatch needle hays =
-    case not (String.isEmpty needle) of
-        True ->
-            let
-                needle_ =
-                    needle
-                        |> String.trim
-                        |> String.toLower
-
-                hay_ =
-                    hays.hay
-                        ++ hays.title
-                        ++ Maybe.withDefault "" (parseKeyword hays.short)
-                        ++ Maybe.withDefault "" hays.tags
-                        |> String.toLower
-
-                -- String.toLower hays.hay
-            in
-            case String.contains needle_ hay_ of
-                True ->
-                    { hays | match = Just Yes }
-
-                _ ->
-                    { hays | match = Just No }
-
-        False ->
-            { hays | match = Nothing }
-
-
-parseKeyword : Maybe String -> Maybe String
-parseKeyword short =
-    let
-        tlist =
-            String.split "/" (Maybe.withDefault "" short)
-    in
-    List.head (List.reverse tlist)
-
-
-checkForMatches : String -> List HayString -> List HayString
-checkForMatches needle haylist =
-    haylist
-        |> List.map (checkForMatch needle)
-
-
-matchString : Maybe Match -> String
-matchString m =
-    case m of
-        Just Yes ->
-            " Yes! "
-
-        Just No ->
-            " No "
-
-        Nothing ->
-            " - "
 
 
 
