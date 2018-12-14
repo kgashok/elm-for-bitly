@@ -76,7 +76,7 @@ type alias HayString =
     { hay : String
     , title : String
     , short : Maybe String -- not every link has been customized to be easily recalled
-    , tags : List String
+    , tags : Maybe String
     , match : Maybe Match -- why not Bool? See documentation for Match type
     }
 
@@ -122,10 +122,10 @@ init _ =
     ( { val = 0
       , needle = "rawgit"
       , hay =
-            [ HayString "http://rawgit.com" "" Nothing [] (Just Yes)
-            , HayString "http://google.com" "" Nothing [] (Just No)
-            , HayString "http://junk.com" "" Nothing [] (Just No)
-            , HayString "http://abcde.org" "" Nothing [] (Just No)
+            [ HayString "http://rawgit.com" "" Nothing Nothing (Just Yes)
+            , HayString "http://google.com" "" Nothing Nothing (Just No)
+            , HayString "http://junk.com" "" Nothing Nothing (Just No)
+            , HayString "http://abcde.org" "" Nothing Nothing (Just No)
             ]
       , errorMessage = Nothing
       , errorStatus = False
@@ -511,15 +511,28 @@ bitlySeqRequest dataURL count =
 --}
 
 
+{-| makeHayFromUrls converts a Link object into a Haystring object
+-- The 'match' attribute is set if there is match with the needle
+-- conversion from tag list to tag string for efficient display and matching
+-}
 makeHayFromUrls needle urls =
+    let
+        buildString tagList =
+            case List.isEmpty tagList of
+                True ->
+                    Nothing
+
+                _ ->
+                    Just (String.join " " tagList)
+    in
     urls
-        |> List.map (\x -> HayString x.long_url x.title x.keyword_link x.tags Nothing)
+        |> List.map (\x -> HayString x.long_url x.title x.keyword_link (buildString x.tags) Nothing)
         |> checkForMatches needle
 
 
 makeHayFromNames needle names =
     names
-        |> List.map (\x -> HayString x "" Nothing [] Nothing)
+        |> List.map (\x -> HayString x "" Nothing Nothing Nothing)
         |> checkForMatches needle
 
 
@@ -647,6 +660,13 @@ displayURL hs =
     let
         shortener =
             Maybe.withDefault "" hs.short
+
+        tagString =
+            if hs.tags == Nothing then
+                ""
+
+            else
+                (++) "tags: " <| Maybe.withDefault "" hs.tags
     in
     li [ classList [ ( "matched", hs.match == Just Yes ) ] ]
         [ div [] [ text hs.hay ]
@@ -663,13 +683,7 @@ displayURL hs =
                 [ text shortener ]
             ]
         , div [ classList [ ( "hayKey", True ) ] ]
-            [ case List.length hs.tags of
-                0 ->
-                    text ""
-
-                _ ->
-                    text <| (++) "tags: " <| String.join ", " hs.tags
-            ]
+            [ text tagString ]
         ]
 
 
@@ -704,7 +718,7 @@ checkForMatch needle hays =
                     hays.hay
                         ++ hays.title
                         ++ Maybe.withDefault "" (parseKeyword hays.short)
-                        ++ String.join "" hays.tags
+                        ++ Maybe.withDefault "" hays.tags
                         |> String.toLower
 
                 -- String.toLower hays.hay

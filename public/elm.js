@@ -4967,28 +4967,28 @@ var author$project$Main$init = function (_n0) {
 					'http://rawgit.com',
 					'',
 					elm$core$Maybe$Nothing,
-					_List_Nil,
+					elm$core$Maybe$Nothing,
 					elm$core$Maybe$Just(author$project$Main$Yes)),
 					A5(
 					author$project$Main$HayString,
 					'http://google.com',
 					'',
 					elm$core$Maybe$Nothing,
-					_List_Nil,
+					elm$core$Maybe$Nothing,
 					elm$core$Maybe$Just(author$project$Main$No)),
 					A5(
 					author$project$Main$HayString,
 					'http://junk.com',
 					'',
 					elm$core$Maybe$Nothing,
-					_List_Nil,
+					elm$core$Maybe$Nothing,
 					elm$core$Maybe$Just(author$project$Main$No)),
 					A5(
 					author$project$Main$HayString,
 					'http://abcde.org',
 					'',
 					elm$core$Maybe$Nothing,
-					_List_Nil,
+					elm$core$Maybe$Nothing,
 					elm$core$Maybe$Just(author$project$Main$No))
 				]),
 			linkcount: 1000,
@@ -6424,7 +6424,7 @@ var author$project$Main$checkForMatch = F2(
 								elm$core$Maybe$withDefault,
 								'',
 								author$project$Main$parseKeyword(hays._short)),
-							A2(elm$core$String$join, '', hays.tags)))));
+							A2(elm$core$Maybe$withDefault, '', hays.tags)))));
 			var _n1 = A2(elm$core$String$contains, needle_, hay_);
 			if (_n1) {
 				return _Utils_update(
@@ -6482,19 +6482,41 @@ var author$project$Main$makeHayFromNames = F2(
 			A2(
 				elm$core$List$map,
 				function (x) {
-					return A5(author$project$Main$HayString, x, '', elm$core$Maybe$Nothing, _List_Nil, elm$core$Maybe$Nothing);
+					return A5(author$project$Main$HayString, x, '', elm$core$Maybe$Nothing, elm$core$Maybe$Nothing, elm$core$Maybe$Nothing);
 				},
 				names));
 	});
+var elm$core$List$isEmpty = function (xs) {
+	if (!xs.b) {
+		return true;
+	} else {
+		return false;
+	}
+};
 var author$project$Main$makeHayFromUrls = F2(
 	function (needle, urls) {
+		var buildString = function (tagList) {
+			var _n0 = elm$core$List$isEmpty(tagList);
+			if (_n0) {
+				return elm$core$Maybe$Nothing;
+			} else {
+				return elm$core$Maybe$Just(
+					A2(elm$core$String$join, ' ', tagList));
+			}
+		};
 		return A2(
 			author$project$Main$checkForMatches,
 			needle,
 			A2(
 				elm$core$List$map,
 				function (x) {
-					return A5(author$project$Main$HayString, x.long_url, x.title, x.keyword_link, x.tags, elm$core$Maybe$Nothing);
+					return A5(
+						author$project$Main$HayString,
+						x.long_url,
+						x.title,
+						x.keyword_link,
+						buildString(x.tags),
+						elm$core$Maybe$Nothing);
 				},
 				urls));
 	});
@@ -7314,6 +7336,7 @@ var elm$html$Html$Attributes$classList = function (classes) {
 				A2(elm$core$List$filter, elm$core$Tuple$second, classes))));
 };
 var author$project$Main$displayURL = function (hs) {
+	var tagString = _Utils_eq(hs.tags, elm$core$Maybe$Nothing) ? '' : ('tags: ' + A2(elm$core$Maybe$withDefault, '', hs.tags));
 	var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
 	return A2(
 		elm$html$Html$li,
@@ -7388,15 +7411,7 @@ var author$project$Main$displayURL = function (hs) {
 					]),
 				_List_fromArray(
 					[
-						function () {
-						var _n0 = elm$core$List$length(hs.tags);
-						if (!_n0) {
-							return elm$html$Html$text('');
-						} else {
-							return elm$html$Html$text(
-								'tags: ' + A2(elm$core$String$join, ', ', hs.tags));
-						}
-					}()
+						elm$html$Html$text(tagString)
 					]))
 			]));
 };
