@@ -7387,7 +7387,8 @@ var author$project$Main$displayURL = function (hs) {
 						_List_fromArray(
 							[
 								elm$html$Html$Attributes$href(shortener),
-								elm$html$Html$Attributes$target('_blank')
+								elm$html$Html$Attributes$target('_blank'),
+								elm$html$Html$Attributes$rel('noopener noreferrer')
 							]),
 						_List_fromArray(
 							[

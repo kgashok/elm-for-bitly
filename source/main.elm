@@ -419,6 +419,9 @@ update msg model =
             ( { model | val = model.val - 1 }, Cmd.none )
 
 
+{-| flip is now deprecated in Elm 0.19
+-- Available here for practice
+-}
 flip func first second =
     func second first
 
@@ -429,9 +432,10 @@ bitlyIncRequest dataURL count offset =
         skipUrl url o =
             url ++ "&limit=" ++ pagesize ++ "&offset=" ++ String.fromInt o
 
-        {--_ =
+        {--
+        _ =
             Debug.log "url offset: " offset
-    --}
+        --}
     in
     urlsDecoder
         |> Http.get (skipUrl dataURL offset)
@@ -440,7 +444,8 @@ bitlyIncRequest dataURL count offset =
 
 httpCommand : String -> Cmd Msg
 httpCommand dataURL =
-    {--let
+    {--
+    let
         _ =
             Debug.log "url: " dataURL
     in
@@ -564,7 +569,7 @@ isMatch needle hay =
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
 -- The 'match' attribute is set if there is match with the needle
--- conversion from tag list to tag string for efficient display and matching
+-- The dump is a concatenation of all strings from all fields
 -}
 makeHayFromUrls : String -> List Link -> List HayString
 makeHayFromUrls needle urls =
@@ -731,14 +736,11 @@ displayURL hs =
     li [ classList [ ( "matched", hs.match == Just Yes ) ] ]
         [ div [] [ text hs.hay ]
         , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
-
-        -- , div [ classList [ ( "hayKey", True ) ] ] [ text shortener ]
         , div [ classList [ ( "hayKey", True ) ] ]
             [ a
                 [ href shortener
                 , target "_blank"
-
-                --, rel "noopener noreferrer"
+                , rel "noopener noreferrer"
                 ]
                 [ text shortener ]
             ]
@@ -787,7 +789,7 @@ linkDecoder =
         (maybe (field "keyword_link" string))
         (field "long_url" string)
         (field "tags" (list string))
---}
+
 
 
 
