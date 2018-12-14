@@ -514,40 +514,6 @@ bitlySeqRequest dataURL count =
 --}
 
 
-{-| checkForMatch is the crux of the whole app and is where all the
--- search action happens
--- Needs to be refactored very urgently!
--}
-checkForMatch : String -> HayString -> HayString
-checkForMatch needle hays =
-    case not (String.isEmpty needle) of
-        True ->
-            let
-                needle_ =
-                    needle
-                        |> String.trim
-                        |> String.toLower
-
-                hay_ =
-                    hays.hay
-                        ++ hays.title
-                        ++ Maybe.withDefault "" (parseKeyword hays.short)
-                        ++ Maybe.withDefault "" hays.tags
-                        |> String.toLower
-
-                -- String.toLower hays.hay
-            in
-            case String.contains needle_ hay_ of
-                True ->
-                    { hays | match = Just Yes }
-
-                _ ->
-                    { hays | match = Just No }
-
-        False ->
-            { hays | match = Nothing }
-
-
 parseKeyword : Maybe String -> Maybe String
 parseKeyword short =
     let
@@ -559,23 +525,18 @@ parseKeyword short =
 
 checkForMatches : String -> List HayString -> List HayString
 checkForMatches needle haylist =
+    let 
+      isMatchInHay needle_ hs = 
+        {hs | match = isMatch needle_ hs.hay} 
+    in
     haylist
-        |> List.map (checkForMatch needle)
+        |> List.map (isMatchInHay needle)
 
 
-matchString : Maybe Match -> String
-matchString m =
-    case m of
-        Just Yes ->
-            " Yes! "
 
-        Just No ->
-            " No "
-
-        Nothing ->
-            " - "
-
-
+{-| isMatch is the crux of the whole app and is where all the
+-- search action happens
+-}
 isMatch : String -> String -> Maybe Match
 isMatch needle hay =
     {--let
@@ -642,10 +603,6 @@ makeHayFromUrls needle urls =
     urls
         |> List.map linkToHay
 
-
-
--- |> List.map (\x -> HayString x.long_url x.title x.keyword_link (buildString x.tags) Nothing)
--- |> checkForMatches needle
 
 
 makeHayFromNames needle names =
