@@ -5806,6 +5806,7 @@ var author$project$Main$urlsDecoder = A2(
 	_List_fromArray(
 		['data', 'link_history']),
 	elm$json$Json$Decode$list(author$project$Main$linkDecoder));
+var elm$core$Debug$log = _Debug_log;
 var elm$http$Http$Internal$EmptyBody = {$: 'EmptyBody'};
 var elm$http$Http$emptyBody = elm$http$Http$Internal$EmptyBody;
 var elm$core$Dict$get = F2(
@@ -6321,6 +6322,7 @@ var elm$http$Http$send = F2(
 			elm$http$Http$toTask(request_));
 	});
 var author$project$Main$httpCommand = function (dataURL) {
+	var _n0 = A2(elm$core$Debug$log, 'url: ', dataURL);
 	if (dataURL === 'https://api.myjson.com/bins/19yily') {
 		return A2(
 			elm$http$Http$send,

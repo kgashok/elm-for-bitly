@@ -2,8 +2,8 @@
 
 set -e
 
-js="elm.js"
-min="elm.min.js"
+js="public/elm.js"
+min="public/elm.min.js"
 
 elm make --optimize --output=$js $@
 

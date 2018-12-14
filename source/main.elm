@@ -444,7 +444,7 @@ bitlyIncRequest dataURL count offset =
 
 httpCommand : String -> Cmd Msg
 httpCommand dataURL =
-    {--
+    {--}
     let
         _ =
             Debug.log "url: " dataURL
