@@ -584,14 +584,7 @@ makeHayFromUrls needle urls =
                 ++ String.join " " link.tags
 
         linkToHay l =
-            HayString
-                l.long_url
-                l.title
-                l.keyword_link
-                l.tags
-                (makeHay l)
-                -- dump
-                Nothing
+            HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing
                 |> (\hs -> { hs | match = isMatch needle hs.dump })
     in
     urls
@@ -792,7 +785,6 @@ linkDecoder =
         (maybe (field "keyword_link" string))
         (field "long_url" string)
         (field "tags" (list string))
-
 
 
 
