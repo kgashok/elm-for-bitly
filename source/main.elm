@@ -537,6 +537,9 @@ checkForMatches needle haylist =
 
 {-| isMatch is the crux of the whole app and is where all the
 -- search action happens
+-- If 'needle' is empty, then function returns 'Nothing'
+-- If 'needle' is present and matched, the function returns a Match object 'Yes'
+-- If 'needle' is present and not matched, the function returns a Match object 'No'
 -}
 isMatch : String -> String -> Maybe Match
 isMatch needle hay =
