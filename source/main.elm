@@ -67,10 +67,6 @@ type Match
 {-| HayString resonates with the basic problem that this app is trying to solve
 and that is to represent data that needs to be searched and whether
 the searched 'needle' was found at all
-
-  - the fields have to be refactored - they now assume only Links can
-  - be morphed into HayStrings and searched. Later on, this might not necessarily be the case
-
 -}
 type alias HayString =
     { hay : String
@@ -97,10 +93,10 @@ only those that matched?
 -}
 type ViewMode
     = ShowAll
-    | ShowMatchedOnly
+    | ShowMatched
 
 
-{-| Model is what captures what all is required to make this app work
+{-| Model is what captures what all that is required to make this app work
 It uses data types that have been defined earlier in this module above
 -}
 type alias Model =
@@ -212,7 +208,7 @@ update msg model =
                     { model
                         | needle = needle_
                         , hay = []
-                        , viewMode = ShowMatchedOnly
+                        , viewMode = ShowMatched
                         , errorMessage = Just "Launching requests..."
                         , offset = 0
                     }
@@ -381,7 +377,7 @@ update msg model =
                     case model_.viewMode of
                         ShowAll ->
                             ( { model_
-                                | viewMode = ShowMatchedOnly
+                                | viewMode = ShowMatched
                                 , errorMessage = Just "Press Ctrl-q to toggle view"
                               }
                             , Cmd.none
@@ -403,7 +399,7 @@ update msg model =
                   Just (Keyboard.Character "t") ->
                       case model.viewMode of
                           ShowAll ->
-                              ( { model | viewMode = ShowMatchedOnly }, Cmd.none )
+                              ( { model | viewMode = ShowMatched }, Cmd.none )
 
                           _ ->
                               ( { model | viewMode = ShowAll }, Cmd.none )
@@ -430,7 +426,11 @@ bitlyIncRequest : String -> Int -> Int -> Cmd Msg
 bitlyIncRequest dataURL count offset =
     let
         skipUrl url o =
-            url ++ "&limit=" ++ pagesize ++ "&offset=" ++ String.fromInt o
+            String.fromInt o
+                |> (++) "&offset="
+                |> (++) pagesize
+                |> (++) "&limit="
+                |> (++) url
 
         {--
         _ =
@@ -474,8 +474,14 @@ skipList totalCount pageSize =
     let
         size =
             Maybe.withDefault 30 pageSize
+
+        rangeLimit = 
+            round (toFloat totalCount / toFloat size)
+
+        fsize =
+            toFloat size
     in
-    List.map (\x -> x * size) (List.range 0 (round (toFloat totalCount / toFloat size)))
+    List.map (\x -> x * size) (List.range 0 rangeLimit)
 
 
 {-| bitlyBatchRequest helps create a list of Http.gets
@@ -646,7 +652,7 @@ view model =
         , div []
             [ text "Hay (a list of URLs strings stored in bitly)"
             , viewPicker
-                [ ( "Matched Only", model.viewMode == ShowMatchedOnly, ChangeViewTo ShowMatchedOnly )
+                [ ( "Matched Only", model.viewMode == ShowMatched, ChangeViewTo ShowMatched )
                 , ( "Show All", model.viewMode == ShowAll, ChangeViewTo ShowAll )
                 ]
             , generateListView model.viewMode model.hay

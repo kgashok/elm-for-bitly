@@ -5758,7 +5758,7 @@ var ohanhi$keyboard$Keyboard$subscriptions = elm$core$Platform$Sub$batch(
 var author$project$Main$subscriptions = function (model) {
 	return A2(elm$core$Platform$Sub$map, author$project$Main$KeyboardMsg, ohanhi$keyboard$Keyboard$subscriptions);
 };
-var author$project$Main$ShowMatchedOnly = {$: 'ShowMatchedOnly'};
+var author$project$Main$ShowMatched = {$: 'ShowMatched'};
 var author$project$Main$apiKey = '1ef1315a2efebd7557de137f776602276d833cb9';
 var author$project$Main$bitlyAPI = 'https://api-ssl.bitly.com/v3/user/link_history?access_token=' + author$project$Main$apiKey;
 var author$project$Main$DataReceived = function (a) {
@@ -6349,15 +6349,14 @@ var elm$core$Maybe$withDefault = F2(
 var author$project$Main$skipList = F2(
 	function (totalCount, pageSize) {
 		var size = A2(elm$core$Maybe$withDefault, 30, pageSize);
+		var rangeLimit = elm$core$Basics$round(totalCount / size);
+		var fsize = size;
 		return A2(
 			elm$core$List$map,
 			function (x) {
 				return x * size;
 			},
-			A2(
-				elm$core$List$range,
-				0,
-				elm$core$Basics$round(totalCount / size)));
+			A2(elm$core$List$range, 0, rangeLimit));
 	});
 var author$project$Main$bitlyBatchRequest = F2(
 	function (dataURL, count) {
@@ -6383,7 +6382,11 @@ var author$project$Main$bitlyIncRequest = F3(
 	function (dataURL, count, offset) {
 		var skipUrl = F2(
 			function (url, o) {
-				return url + ('&limit=' + (author$project$Main$pagesize + ('&offset=' + elm$core$String$fromInt(o))));
+				return _Utils_ap(
+					url,
+					'&limit=' + _Utils_ap(
+						author$project$Main$pagesize,
+						'&offset=' + elm$core$String$fromInt(o)));
 			});
 		return A2(
 			elm$http$Http$send,
@@ -7013,7 +7016,7 @@ var author$project$Main$update = F2(
 						hay: _List_Nil,
 						needle: needle_,
 						offset: 0,
-						viewMode: author$project$Main$ShowMatchedOnly
+						viewMode: author$project$Main$ShowMatched
 					});
 				var dataRequestTask = function () {
 					var _n2 = model_.linkcount > 1700;
@@ -7224,7 +7227,7 @@ var author$project$Main$update = F2(
 								model_,
 								{
 									errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
-									viewMode: author$project$Main$ShowMatchedOnly
+									viewMode: author$project$Main$ShowMatched
 								}),
 							elm$core$Platform$Cmd$none);
 					} else {
@@ -7636,8 +7639,8 @@ var author$project$Main$view = function (model) {
 							[
 								_Utils_Tuple3(
 								'Matched Only',
-								_Utils_eq(model.viewMode, author$project$Main$ShowMatchedOnly),
-								author$project$Main$ChangeViewTo(author$project$Main$ShowMatchedOnly)),
+								_Utils_eq(model.viewMode, author$project$Main$ShowMatched),
+								author$project$Main$ChangeViewTo(author$project$Main$ShowMatched)),
 								_Utils_Tuple3(
 								'Show All',
 								_Utils_eq(model.viewMode, author$project$Main$ShowAll),
