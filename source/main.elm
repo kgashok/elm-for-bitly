@@ -556,12 +556,10 @@ isMatch needle hay =
         True ->
             let
                 needle_ =
-                    needle
-                        |> String.trim
-                        |> String.toLower
+                    String.toLower <| String.trim needle
 
                 hay_ =
-                    hay |> String.toLower
+                    String.toLower hay
             in
             case String.contains needle_ hay_ of
                 True ->
