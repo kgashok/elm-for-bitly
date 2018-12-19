@@ -4471,9 +4471,9 @@ var author$project$Main$HayString = F6(
 	function (hay, title, _short, tags, dump, match) {
 		return {dump: dump, hay: hay, match: match, _short: _short, tags: tags, title: title};
 	});
-var author$project$Main$No = {$: 'No'};
 var author$project$Main$ShowAll = {$: 'ShowAll'};
 var author$project$Main$Test = {$: 'Test'};
+var author$project$Main$No = {$: 'No'};
 var author$project$Main$Yes = {$: 'Yes'};
 var elm$core$Basics$apL = F2(
 	function (f, x) {
@@ -5075,14 +5075,7 @@ var author$project$Main$init = function (_n0) {
 				errorStatus: false,
 				hay: _List_fromArray(
 					[
-						A6(
-						author$project$Main$HayString,
-						'http://rawgit.com',
-						'',
-						elm$core$Maybe$Nothing,
-						_List_Nil,
-						'http://rawgit.com',
-						elm$core$Maybe$Just(author$project$Main$Yes)),
+						A6(author$project$Main$HayString, 'http://rawgit.com', '', elm$core$Maybe$Nothing, _List_Nil, 'http://rawgit.com', elm$core$Maybe$Nothing),
 						A6(
 						author$project$Main$HayString,
 						'http://google.com',
@@ -5091,7 +5084,7 @@ var author$project$Main$init = function (_n0) {
 						_List_fromArray(
 							['search']),
 						'http://google.com',
-						elm$core$Maybe$Just(author$project$Main$No)),
+						elm$core$Maybe$Nothing),
 						A6(
 						author$project$Main$HayString,
 						'http://junk.com',
@@ -5100,15 +5093,8 @@ var author$project$Main$init = function (_n0) {
 						_List_fromArray(
 							['junk', 'archive']),
 						'http://junk.com',
-						elm$core$Maybe$Just(author$project$Main$No)),
-						A6(
-						author$project$Main$HayString,
-						'http://abcde.org',
-						'',
-						elm$core$Maybe$Nothing,
-						_List_Nil,
-						'http://abcde.org',
-						elm$core$Maybe$Just(author$project$Main$No))
+						elm$core$Maybe$Nothing),
+						A6(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing)
 					]),
 				linkcount: 1700,
 				needle: 'rawgit',
@@ -5119,17 +5105,14 @@ var author$project$Main$init = function (_n0) {
 			}),
 		elm$core$Platform$Cmd$none);
 };
+var author$project$Main$KeyDown = function (a) {
+	return {$: 'KeyDown', a: a};
+};
 var author$project$Main$KeyboardMsg = function (a) {
 	return {$: 'KeyboardMsg', a: a};
 };
-var elm$core$Platform$Sub$map = _Platform_map;
 var elm$core$Platform$Sub$batch = _Platform_batch;
-var ohanhi$keyboard$Keyboard$Down = function (a) {
-	return {$: 'Down', a: a};
-};
-var ohanhi$keyboard$Keyboard$Up = function (a) {
-	return {$: 'Up', a: a};
-};
+var elm$core$Platform$Sub$map = _Platform_map;
 var elm$browser$Browser$Events$Document = {$: 'Document'};
 var elm$browser$Browser$Events$MySub = F3(
 	function (a, b, c) {
@@ -5784,6 +5767,12 @@ var ohanhi$keyboard$Keyboard$downs = function (toMsg) {
 	return elm$browser$Browser$Events$onKeyDown(
 		A2(elm$json$Json$Decode$map, toMsg, ohanhi$keyboard$Keyboard$eventKeyDecoder));
 };
+var ohanhi$keyboard$Keyboard$Down = function (a) {
+	return {$: 'Down', a: a};
+};
+var ohanhi$keyboard$Keyboard$Up = function (a) {
+	return {$: 'Up', a: a};
+};
 var elm$browser$Browser$Events$onKeyUp = A2(elm$browser$Browser$Events$on, elm$browser$Browser$Events$Document, 'keyup');
 var ohanhi$keyboard$Keyboard$ups = function (toMsg) {
 	return elm$browser$Browser$Events$onKeyUp(
@@ -5796,7 +5785,12 @@ var ohanhi$keyboard$Keyboard$subscriptions = elm$core$Platform$Sub$batch(
 			ohanhi$keyboard$Keyboard$ups(ohanhi$keyboard$Keyboard$Up)
 		]));
 var author$project$Main$subscriptions = function (model) {
-	return A2(elm$core$Platform$Sub$map, author$project$Main$KeyboardMsg, ohanhi$keyboard$Keyboard$subscriptions);
+	return elm$core$Platform$Sub$batch(
+		_List_fromArray(
+			[
+				A2(elm$core$Platform$Sub$map, author$project$Main$KeyboardMsg, ohanhi$keyboard$Keyboard$subscriptions),
+				ohanhi$keyboard$Keyboard$downs(author$project$Main$KeyDown)
+			]));
 };
 var author$project$Main$ShowMatched = {$: 'ShowMatched'};
 var author$project$Main$apiKey = '1ef1315a2efebd7557de137f776602276d833cb9';
@@ -7046,10 +7040,7 @@ var author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{
-							hay: A2(author$project$Main$checkForMatches, s, model.hay),
-							needle: s
-						}),
+						{needle: s}),
 					elm$core$Platform$Cmd$none);
 			case 'NamesReceived':
 				if (msg.a.$ === 'Ok') {
@@ -7245,6 +7236,21 @@ var author$project$Main$update = F2(
 					}
 				} else {
 					return _Utils_Tuple2(model_, elm$core$Platform$Cmd$none);
+				}
+			case 'KeyDown':
+				var code = msg.a;
+				var _n9 = A2(elm$core$Debug$log, 'key code: ', code);
+				var _n10 = ohanhi$keyboard$Keyboard$characterKey(code);
+				if (((_n10.$ === 'Just') && (_n10.a.$ === 'Character')) && (_n10.a.a === ' ')) {
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								hay: A2(author$project$Main$checkForMatches, model.needle, model.hay)
+							}),
+						elm$core$Platform$Cmd$none);
+				} else {
+					return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
 				}
 			case 'Increment':
 				return _Utils_Tuple2(

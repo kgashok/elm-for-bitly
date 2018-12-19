@@ -119,10 +119,10 @@ init _ =
     ( { val = 0
       , needle = "rawgit"
       , hay =
-            [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" (Just Yes)
-            , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" (Just No)
-            , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "http://junk.com" (Just No)
-            , HayString "http://abcde.org" "" Nothing [] "http://abcde.org" (Just No)
+            [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" Nothing
+            , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" Nothing
+            , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "http://junk.com" Nothing
+            , HayString "http://abcde.org" "" Nothing [] "http://abcde.org" Nothing
             ]
       , errorMessage = Nothing
       , errorStatus = False
@@ -132,10 +132,10 @@ init _ =
       , linkcount = 1700
       , offset = 0
       , pressedKeys = []
-      } 
-        |> (\model -> {model | hay = checkForMatches model.needle model.hay})
-    -- , Task.perform (always StoreNeedle "rawgit")
-      , Cmd.none
+      }
+        |> (\model -> { model | hay = checkForMatches model.needle model.hay })
+      -- , Task.perform (always StoreNeedle "rawgit")
+    , Cmd.none
     )
 
 
@@ -169,9 +169,12 @@ main =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
-    Keyboard.subscriptions
-        |> Sub.map KeyboardMsg
+subscriptions model = 
+    Sub.batch 
+        [ Sub.map KeyboardMsg Keyboard.subscriptions
+        , Keyboard.downs KeyDown
+        ]
+    -- Keyboard.subscriptions |> Sub.map KeyboardMsg
 
 
 type Msg
@@ -184,7 +187,7 @@ type Msg
     | IncDataReceived (Result Http.Error (List Link))
     | NamesReceived (Result Http.Error (List String))
     | UpdateLinkCount String
-      -- | KeyDown RawKey
+    | KeyDown RawKey
     | KeyboardMsg Keyboard.Msg
     | Increment -- not relevant; legacy
     | Decrement -- not relevant; legacy
@@ -232,7 +235,10 @@ update msg model =
                     ( model_, httpCommand model.dataAPI )
 
         StoreNeedle s ->
-            ( { model | needle = s, hay = checkForMatches s model.hay }, Cmd.none )
+            ( { model 
+                  | needle = s
+                  -- , hay = checkForMatches s model.hay 
+              }, Cmd.none )
 
         NamesReceived (Ok nicknames) ->
             ( { model
@@ -391,24 +397,26 @@ update msg model =
                 False ->
                     ( model_, Cmd.none )
 
-        {-
-           KeyDown code ->
-              let
-                  _ =
-                      Debug.log "key code: " code
-              in
-              case Keyboard.characterKey code of
-                  Just (Keyboard.Character "t") ->
-                      case model.viewMode of
-                          ShowAll ->
-                              ( { model | viewMode = ShowMatched }, Cmd.none )
+        KeyDown code ->
+            let
+                _ =
+                    Debug.log "key code: " code
+            in
+            case Keyboard.characterKey code of
+                Just (Keyboard.Character " ") ->
+                    ( {model | hay = checkForMatches model.needle model.hay}
+                    , Cmd.none
+                    )
+                {--
+                Just (Keyboard.Character " ") ->
+                            ( { model | viewMode = ShowMatched }, Cmd.none )
 
-                          _ ->
-                              ( { model | viewMode = ShowAll }, Cmd.none )
+                        _ ->
+                            ( { model | viewMode = ShowAll }, Cmd.none )
+                --}
+                _ ->
+                    ( model, Cmd.none )
 
-                  _ ->
-                      ( model, Cmd.none )
-        -}
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
@@ -477,9 +485,8 @@ skipList totalCount pageSize =
         size =
             Maybe.withDefault 30 pageSize
 
-        rangeLimit = 
+        rangeLimit =
             round (toFloat totalCount / toFloat size)
-
     in
     List.map (\x -> x * size) (List.range 0 rangeLimit)
 
