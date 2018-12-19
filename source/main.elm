@@ -478,8 +478,6 @@ skipList totalCount pageSize =
         rangeLimit = 
             round (toFloat totalCount / toFloat size)
 
-        fsize =
-            toFloat size
     in
     List.map (\x -> x * size) (List.range 0 rangeLimit)
 

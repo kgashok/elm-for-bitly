@@ -6350,7 +6350,6 @@ var author$project$Main$skipList = F2(
 	function (totalCount, pageSize) {
 		var size = A2(elm$core$Maybe$withDefault, 30, pageSize);
 		var rangeLimit = elm$core$Basics$round(totalCount / size);
-		var fsize = size;
 		return A2(
 			elm$core$List$map,
 			function (x) {
