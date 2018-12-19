@@ -4,6 +4,7 @@ import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
+import Html.Lazy exposing (lazy, lazy2)
 import Http
 import Json.Decode exposing (Decoder, decodeString, field, list, map2, maybe, string)
 import Keyboard exposing (RawKey)
@@ -126,8 +127,8 @@ init _ =
             ]
       , errorMessage = Nothing
       , errorStatus = False
-      , dataAPI = testJson
-      , data = Test
+      , dataAPI = bitlyAPI
+      , data = Production
       , viewMode = ShowAll
       , linkcount = 1700
       , offset = 0
@@ -173,12 +174,13 @@ subscriptions model =
     Sub.batch 
         [ Sub.map KeyboardMsg Keyboard.subscriptions
         , Keyboard.downs KeyDown
+        -- , Keyboard.ups KeyUp
         ]
-    -- Keyboard.subscriptions |> Sub.map KeyboardMsg
 
 
 type Msg
     = StoreNeedle String
+    | SearchNeedle 
     | SwitchTo DataSource
     | ChangeViewTo ViewMode
     | SendHttpRequest
@@ -239,6 +241,12 @@ update msg model =
                   | needle = s
                   -- , hay = checkForMatches s model.hay 
               }, Cmd.none )
+        
+        SearchNeedle -> 
+            ( { model 
+                  | hay = checkForMatches model.needle model.hay 
+              }, Cmd.none )
+        
 
         NamesReceived (Ok nicknames) ->
             ( { model
@@ -396,27 +404,22 @@ update msg model =
 
                 False ->
                     ( model_, Cmd.none )
-
+        
         KeyDown code ->
+            {--
             let
                 _ =
                     Debug.log "key code: " code
             in
+            --}
             case Keyboard.characterKey code of
                 Just (Keyboard.Character " ") ->
                     ( {model | hay = checkForMatches model.needle model.hay}
                     , Cmd.none
                     )
-                {--
-                Just (Keyboard.Character " ") ->
-                            ( { model | viewMode = ShowMatched }, Cmd.none )
-
-                        _ ->
-                            ( { model | viewMode = ShowAll }, Cmd.none )
-                --}
                 _ ->
                     ( model, Cmd.none )
-
+        
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
@@ -454,7 +457,7 @@ bitlyIncRequest dataURL count offset =
 
 httpCommand : String -> Cmd Msg
 httpCommand dataURL =
-    {--}
+    {--
     let
         _ =
             Debug.log "url: " dataURL
@@ -652,7 +655,9 @@ view model =
         , div []
             [ text "Needle "
             , input [ placeholder "search", value model.needle, onInput StoreNeedle ] []
+            , button [ onClick SearchNeedle ] [ text "Search!" ]
             , text (" " ++ model.needle)
+            
             ]
         , hr [] []
         , div []
@@ -661,7 +666,7 @@ view model =
                 [ ( "Matched Only", model.viewMode == ShowMatched, ChangeViewTo ShowMatched )
                 , ( "Show All", model.viewMode == ShowAll, ChangeViewTo ShowAll )
                 ]
-            , generateListView model.viewMode model.hay
+            , lazy2 generateListView model.viewMode model.hay
             ]
         ]
 
