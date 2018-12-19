@@ -132,7 +132,8 @@ init _ =
       , linkcount = 1700
       , offset = 0
       , pressedKeys = []
-      }
+      } 
+        |> (\model -> {model | hay = checkForMatches model.needle model.hay})
     -- , Task.perform (always StoreNeedle "rawgit")
       , Cmd.none
     )
