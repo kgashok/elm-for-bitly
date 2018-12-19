@@ -119,10 +119,10 @@ init _ =
     ( { val = 0
       , needle = "rawgit"
       , hay =
-            [ HayString "http://rawgit.com" "" Nothing [] "" (Just Yes)
-            , HayString "http://google.com" "" Nothing [ "search" ] "" (Just No)
-            , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "" (Just No)
-            , HayString "http://abcde.org" "" Nothing [] "" (Just No)
+            [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" (Just Yes)
+            , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" (Just No)
+            , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "http://junk.com" (Just No)
+            , HayString "http://abcde.org" "" Nothing [] "http://abcde.org" (Just No)
             ]
       , errorMessage = Nothing
       , errorStatus = False
@@ -621,7 +621,7 @@ createErrorMessage httpError =
 view : Model -> Html Msg
 view model =
     div []
-        [ div [ id "title" ] [ text "Elm App in Glitch" ]
+        [ div [ id "title" ] [ text "Elm for Bitly" ]
         , footer
         , hr [] []
         , div [ id "apiString" ] [ text model.dataAPI ]
@@ -642,7 +642,8 @@ view model =
         -- , buttonDisplay model
         , div []
             [ text "Needle "
-            , input [ placeholder model.needle, onInput StoreNeedle ] []
+            , input [ placeholder "search", value model.needle, onInput StoreNeedle ] []
+            , text (" " ++ model.needle)
             ]
         , hr [] []
         , div []

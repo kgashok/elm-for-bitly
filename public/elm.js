@@ -4968,7 +4968,7 @@ var author$project$Main$init = function (_n0) {
 					'',
 					elm$core$Maybe$Nothing,
 					_List_Nil,
-					'',
+					'http://rawgit.com',
 					elm$core$Maybe$Just(author$project$Main$Yes)),
 					A6(
 					author$project$Main$HayString,
@@ -4977,7 +4977,7 @@ var author$project$Main$init = function (_n0) {
 					elm$core$Maybe$Nothing,
 					_List_fromArray(
 						['search']),
-					'',
+					'http://google.com',
 					elm$core$Maybe$Just(author$project$Main$No)),
 					A6(
 					author$project$Main$HayString,
@@ -4986,7 +4986,7 @@ var author$project$Main$init = function (_n0) {
 					elm$core$Maybe$Nothing,
 					_List_fromArray(
 						['junk', 'archive']),
-					'',
+					'http://junk.com',
 					elm$core$Maybe$Just(author$project$Main$No)),
 					A6(
 					author$project$Main$HayString,
@@ -4994,7 +4994,7 @@ var author$project$Main$init = function (_n0) {
 					'',
 					elm$core$Maybe$Nothing,
 					_List_Nil,
-					'',
+					'http://abcde.org',
 					elm$core$Maybe$Just(author$project$Main$No))
 				]),
 			linkcount: 1700,
@@ -7497,6 +7497,7 @@ var author$project$Main$viewPicker = function (options) {
 var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$hr = _VirtualDom_node('hr');
 var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
+var elm$html$Html$Attributes$value = elm$html$Html$Attributes$stringProperty('value');
 var elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
@@ -7538,7 +7539,7 @@ var author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
-						elm$html$Html$text('Elm App in Glitch')
+						elm$html$Html$text('Elm for Bitly')
 					])),
 				author$project$Main$footer,
 				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
@@ -7621,10 +7622,12 @@ var author$project$Main$view = function (model) {
 						elm$html$Html$input,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$placeholder(model.needle),
+								elm$html$Html$Attributes$placeholder('search'),
+								elm$html$Html$Attributes$value(model.needle),
 								elm$html$Html$Events$onInput(author$project$Main$StoreNeedle)
 							]),
-						_List_Nil)
+						_List_Nil),
+						elm$html$Html$text(' ' + model.needle)
 					])),
 				A2(elm$html$Html$hr, _List_Nil, _List_Nil),
 				A2(
