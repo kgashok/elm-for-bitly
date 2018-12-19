@@ -133,7 +133,8 @@ init _ =
       , offset = 0
       , pressedKeys = []
       }
-    , Cmd.none
+    -- , Task.perform (always StoreNeedle "rawgit")
+      , Cmd.none
     )
 
 
@@ -518,7 +519,7 @@ bitlySeqRequest dataURL count =
     skipList count (String.toInt pagesize)
         |> List.map (skipUrl dataURL)
         |> List.map httpCommand2
-        |> List.map (\requestTask -> Task.andThen (always requestTask) (Process.sleep 500))
+        |> List.map (\requestTask -> Task.andThen (always requestTask) (Process.sleep 300))
         |> Task.sequence
         |> Task.attempt DataSReceived
 --}
