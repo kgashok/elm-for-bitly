@@ -4701,8 +4701,8 @@ var elm$core$String$split = F2(
 var author$project$Main$listMatch = F3(
 	function (matchmode, needle, hay) {
 		var resultOf = F2(
-			function (a, b) {
-				var _n0 = _Utils_Tuple2(a, b);
+			function (x, accumulator) {
+				var _n0 = _Utils_Tuple2(x, accumulator);
 				if (_n0.a.$ === 'Just') {
 					if (_n0.a.a.$ === 'No') {
 						var _n1 = _n0.a.a;
@@ -5141,7 +5141,7 @@ var author$project$Main$init = function (_n0) {
 						A6(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing)
 					]),
 				linkcount: 1700,
-				needle: 'rawgit',
+				needle: 'com junk',
 				offset: 0,
 				pressedKeys: _List_Nil,
 				val: 0,
@@ -7041,9 +7041,9 @@ var author$project$Main$update = F2(
 						case 'SimpleList':
 							return 'God';
 						case 'Test':
-							return 'deep';
+							return 'deep docs';
 						default:
-							return 'twoPoints';
+							return 'twoPoints cloudcoder';
 					}
 				}();
 				var model_ = _Utils_update(

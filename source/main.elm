@@ -65,10 +65,10 @@ type Match
     | No
 
 
-type MatchMode 
+type MatchMode
     = AllNeedles
     | AnyOneNeedle
-    
+
 
 {-| HayString resonates with the basic problem that this app is trying to solve
 and that is to represent data that needs to be searched and whether
@@ -123,7 +123,7 @@ type alias Model =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( { val = 0
-      , needle = "rawgit"
+      , needle = "com junk"
       , hay =
             [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" Nothing
             , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" Nothing
@@ -212,10 +212,10 @@ update msg model =
                             "God"
 
                         Test ->
-                            "deep"
+                            "deep docs"
 
                         _ ->
-                            "twoPoints"
+                            "twoPoints cloudcoder"
 
                 model_ =
                     { model
@@ -568,10 +568,10 @@ checkForMatches needle haylist =
 -- If 'needle' is empty, then function returns 'Nothing'
 -- If 'needle' is present and matched, the function returns a Match object 'Yes'
 -- If 'needle' is present and not matched, the function returns a Match object 'No'
--- What if needle contains multiple words? 
---   - can use String.split to create a list of words and 
---   - Therefore, better to place the needle as the 
---   - second argument? 
+-- What if needle contains multiple words?
+-- - can use String.split to create a list of words and
+-- - Therefore, better to place the needle as the
+-- - second argument?
 -}
 isMatch : String -> String -> Maybe Match
 isMatch needle hay =
@@ -599,57 +599,41 @@ isMatch needle hay =
         False ->
             Nothing
 
-{-| listMatch checks for match of any or all of tokens in a list 
--- Depending upon the MatchMode, the function will 
--- return the appropriate value 
-listMatch True "two points" "one two three main points"
---> True 
-listMatch False "two points" "one two three..."
---> True 
+
+{-| listMatch checks for match of any or all of tokens in a list
+-- Depending upon the MatchMode, the function will
+-- return the appropriate value
+listMatch AllNeedles "two points" "one two three main points"
+--> True
+listMatch AllNeedles "two points" "one two three..."
+--> True
 -}
-listMatch: MatchMode -> String -> String -> Maybe Match
-listMatch matchmode needle hay = 
-  let 
-      needlelist = String.split " " needle 
-      -- _ = Debug.log "needlelist" needlelist 
-      
-      resultOf a b = 
-        {--
-        let 
-            _ = Debug.log "hay" hay 
-            _ = Debug.log "a " a 
-            _ = Debug.log "b " b
-        in
-        --}
-        case (a, b) of 
-          (Just No, _) -> 
-            Just No 
-          (Just Yes, Just No) -> 
-            Just No
-          (Just Yes, _) -> 
-            Just Yes 
-          (_, Just Yes) -> 
-            Just Yes 
-          (_, _) -> 
-            Nothing 
-          
-      {--
-      resList = List.map (flip isMatch hay) needlelist
-      
-      _ = Debug.log "inside listmatch" resList 
-      
-      result = List.foldr resultOf Nothing resList 
-      
-      _ = Debug.log "result" result 
-      --}
-      
-  in 
-      {--}
-      needlelist 
-        |> List.map  (flip isMatch hay) 
+listMatch : MatchMode -> String -> String -> Maybe Match
+listMatch matchmode needle hay =
+    let
+        needlelist =
+            String.split " " needle
+
+        resultOf x accumulator =
+            case ( x, accumulator ) of
+                ( Just No, _ ) ->
+                    Just No
+
+                ( Just Yes, Just No ) ->
+                    Just No
+
+                ( Just Yes, _ ) ->
+                    Just Yes
+
+                ( _, Just Yes ) ->
+                    Just Yes
+
+                ( _, _ ) ->
+                    Nothing
+    in
+    needlelist
+        |> List.map (flip isMatch hay)
         |> List.foldl resultOf Nothing
-      --}
-      -- result
 
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
@@ -664,7 +648,6 @@ makeHayFromUrls needle urls =
                 ++ link.title
                 ++ Maybe.withDefault "" (parseKeyword link.keyword_link)
                 ++ String.join " " link.tags
-        
 
         linkToHay l =
             HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing
