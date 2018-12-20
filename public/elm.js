@@ -4556,8 +4556,13 @@ var elm$core$Set$toList = function (_n0) {
 };
 var elm$core$Basics$append = _Utils_append;
 var author$project$Main$bitlyAPI = 'https://api-ssl.bitly.com/v3/user/link_history?access_token=' + author$project$Main$apiKey;
+var author$project$Main$AllNeedles = {$: 'AllNeedles'};
 var author$project$Main$No = {$: 'No'};
 var author$project$Main$Yes = {$: 'Yes'};
+var author$project$Main$flip = F3(
+	function (func, first, second) {
+		return A2(func, second, first);
+	});
 var elm$core$Basics$apL = F2(
 	function (f, x) {
 		return f(x);
@@ -4595,8 +4600,6 @@ var elm$core$Basics$apR = F2(
 	function (x, f) {
 		return f(x);
 	});
-var elm$core$Basics$add = _Basics_add;
-var elm$core$Basics$gt = _Utils_gt;
 var elm$core$List$foldl = F3(
 	function (func, acc, list) {
 		foldl:
@@ -4616,6 +4619,8 @@ var elm$core$List$foldl = F3(
 			}
 		}
 	});
+var elm$core$Basics$add = _Basics_add;
+var elm$core$Basics$gt = _Utils_gt;
 var elm$core$List$reverse = function (list) {
 	return A3(elm$core$List$foldl, elm$core$List$cons, _List_Nil, list);
 };
@@ -4688,6 +4693,49 @@ var elm$core$List$map = F2(
 			_List_Nil,
 			xs);
 	});
+var elm$core$String$split = F2(
+	function (sep, string) {
+		return _List_fromArray(
+			A2(_String_split, sep, string));
+	});
+var author$project$Main$listMatch = F3(
+	function (matchmode, needle, hay) {
+		var resultOf = F2(
+			function (a, b) {
+				var _n0 = _Utils_Tuple2(a, b);
+				if (_n0.a.$ === 'Just') {
+					if (_n0.a.a.$ === 'No') {
+						var _n1 = _n0.a.a;
+						return elm$core$Maybe$Just(author$project$Main$No);
+					} else {
+						if ((_n0.b.$ === 'Just') && (_n0.b.a.$ === 'No')) {
+							var _n2 = _n0.a.a;
+							var _n3 = _n0.b.a;
+							return elm$core$Maybe$Just(author$project$Main$No);
+						} else {
+							var _n4 = _n0.a.a;
+							return elm$core$Maybe$Just(author$project$Main$Yes);
+						}
+					}
+				} else {
+					if ((_n0.b.$ === 'Just') && (_n0.b.a.$ === 'Yes')) {
+						var _n5 = _n0.b.a;
+						return elm$core$Maybe$Just(author$project$Main$Yes);
+					} else {
+						return elm$core$Maybe$Nothing;
+					}
+				}
+			});
+		var needlelist = A2(elm$core$String$split, ' ', needle);
+		return A3(
+			elm$core$List$foldl,
+			resultOf,
+			elm$core$Maybe$Nothing,
+			A2(
+				elm$core$List$map,
+				A2(author$project$Main$flip, author$project$Main$isMatch, hay),
+				needlelist));
+	});
 var author$project$Main$checkForMatches = F2(
 	function (needle, haylist) {
 		return A2(
@@ -4696,7 +4744,7 @@ var author$project$Main$checkForMatches = F2(
 				return _Utils_update(
 					hs,
 					{
-						match: A2(author$project$Main$isMatch, needle, hs.dump)
+						match: A3(author$project$Main$listMatch, author$project$Main$AllNeedles, needle, hs.dump)
 					});
 			},
 			haylist);
@@ -4943,11 +4991,6 @@ var elm$core$String$join = F2(
 			_List_toArray(chunks));
 	});
 var elm$core$String$uncons = _String_uncons;
-var elm$core$String$split = F2(
-	function (sep, string) {
-		return _List_fromArray(
-			A2(_String_split, sep, string));
-	});
 var elm$json$Json$Decode$indent = function (str) {
 	return A2(
 		elm$core$String$join,
@@ -6444,10 +6487,6 @@ var author$project$Main$createErrorMessage = function (httpError) {
 			return message;
 	}
 };
-var author$project$Main$flip = F3(
-	function (func, first, second) {
-		return A2(func, second, first);
-	});
 var author$project$Main$makeHayFromNames = F2(
 	function (needle, names) {
 		return A2(
@@ -6496,7 +6535,7 @@ var author$project$Main$makeHayFromUrls = F2(
 				return _Utils_update(
 					hs,
 					{
-						match: A2(author$project$Main$isMatch, needle, hs.dump)
+						match: A3(author$project$Main$listMatch, author$project$Main$AllNeedles, needle, hs.dump)
 					});
 			}(
 				A6(

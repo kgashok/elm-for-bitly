@@ -559,7 +559,8 @@ parseKeyword short =
 checkForMatches : String -> List HayString -> List HayString
 checkForMatches needle haylist =
     haylist
-        |> List.map (\hs -> { hs | match = isMatch needle hs.dump })
+        -- |> List.map (\hs -> { hs | match = isMatch needle hs.dump })
+        |> List.map (\hs -> { hs | match = listMatch AllNeedles needle hs.dump })
 
 
 {-| isMatch is the crux of the whole app and is where all the
@@ -609,22 +610,46 @@ listMatch False "two points" "one two three..."
 listMatch: MatchMode -> String -> String -> Maybe Match
 listMatch matchmode needle hay = 
   let 
-      needelist = String.split " " needle 
+      needlelist = String.split " " needle 
+      -- _ = Debug.log "needlelist" needlelist 
       
       resultOf a b = 
+        {--
+        let 
+            _ = Debug.log "hay" hay 
+            _ = Debug.log "a " a 
+            _ = Debug.log "b " b
+        in
+        --}
         case (a, b) of 
-          (Nothing, Just Yes) -> 
-            Just Yes 
-          (Nothing, Just No) -> 
+          (Just No, _) -> 
             Just No 
+          (Just Yes, Just No) -> 
+            Just No
+          (Just Yes, _) -> 
+            Just Yes 
+          (_, Just Yes) -> 
+            Just Yes 
           (_, _) -> 
             Nothing 
-            
+          
+      {--
+      resList = List.map (flip isMatch hay) needlelist
+      
+      _ = Debug.log "inside listmatch" resList 
+      
+      result = List.foldr resultOf Nothing resList 
+      
+      _ = Debug.log "result" result 
+      --}
+      
   in 
-      needelist 
+      {--}
+      needlelist 
         |> List.map  (flip isMatch hay) 
         |> List.foldl resultOf Nothing
-
+      --}
+      -- result
 
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
@@ -643,7 +668,8 @@ makeHayFromUrls needle urls =
 
         linkToHay l =
             HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing
-                |> (\hs -> { hs | match = isMatch needle hs.dump })
+                -- |> (\hs -> { hs | match = isMatch needle hs.dump })
+                |> (\hs -> { hs | match = listMatch AllNeedles needle hs.dump })
     in
     urls
         |> List.map linkToHay
