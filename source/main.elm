@@ -4,7 +4,7 @@ import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
-import Html.Lazy exposing (lazy, lazy2)
+import Html.Lazy exposing (lazy2)
 import Http
 import Json.Decode exposing (Decoder, decodeString, field, list, map2, maybe, string)
 import Keyboard exposing (RawKey)
@@ -64,6 +64,11 @@ type Match
     = Yes
     | No
 
+
+type MatchMode 
+    = AllNeedles
+    | AnyOneNeedle
+    
 
 {-| HayString resonates with the basic problem that this app is trying to solve
 and that is to represent data that needs to be searched and whether
@@ -170,17 +175,18 @@ main =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions model = 
-    Sub.batch 
+subscriptions model =
+    Sub.batch
         [ Sub.map KeyboardMsg Keyboard.subscriptions
         , Keyboard.downs KeyDown
+
         -- , Keyboard.ups KeyUp
         ]
 
 
 type Msg
     = StoreNeedle String
-    | SearchNeedle 
+    | SearchNeedle
     | SwitchTo DataSource
     | ChangeViewTo ViewMode
     | SendHttpRequest
@@ -237,16 +243,20 @@ update msg model =
                     ( model_, httpCommand model.dataAPI )
 
         StoreNeedle s ->
-            ( { model 
-                  | needle = s
-                  -- , hay = checkForMatches s model.hay 
-              }, Cmd.none )
-        
-        SearchNeedle -> 
-            ( { model 
-                  | hay = checkForMatches model.needle model.hay 
-              }, Cmd.none )
-        
+            ( { model
+                | needle = s
+
+                -- , hay = checkForMatches s model.hay
+              }
+            , Cmd.none
+            )
+
+        SearchNeedle ->
+            ( { model
+                | hay = checkForMatches model.needle model.hay
+              }
+            , Cmd.none
+            )
 
         NamesReceived (Ok nicknames) ->
             ( { model
@@ -404,7 +414,7 @@ update msg model =
 
                 False ->
                     ( model_, Cmd.none )
-        
+
         KeyDown code ->
             {--
             let
@@ -414,12 +424,13 @@ update msg model =
             --}
             case Keyboard.characterKey code of
                 Just (Keyboard.Character " ") ->
-                    ( {model | hay = checkForMatches model.needle model.hay}
+                    ( { model | hay = checkForMatches model.needle model.hay }
                     , Cmd.none
                     )
+
                 _ ->
                     ( model, Cmd.none )
-        
+
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
@@ -477,8 +488,8 @@ httpCommand dataURL =
 
 {-| skipList returns a list of numbers in intervals of 30.
 -- this is required for parallel dispatch of ~30 requests
-skipList 120
---> [0, 30, 60, 90, 120]
+skipList 120 40
+--> [0, 40, 80, 120]
 skipList 170
 --> [0, 30, 60, 90, 120, 150, 180]
 -}
@@ -556,6 +567,10 @@ checkForMatches needle haylist =
 -- If 'needle' is empty, then function returns 'Nothing'
 -- If 'needle' is present and matched, the function returns a Match object 'Yes'
 -- If 'needle' is present and not matched, the function returns a Match object 'No'
+-- What if needle contains multiple words? 
+--   - can use String.split to create a list of words and 
+--   - Therefore, better to place the needle as the 
+--   - second argument? 
 -}
 isMatch : String -> String -> Maybe Match
 isMatch needle hay =
@@ -583,6 +598,34 @@ isMatch needle hay =
         False ->
             Nothing
 
+{-| listMatch checks for match of any or all of tokens in a list 
+-- Depending upon the MatchMode, the function will 
+-- return the appropriate value 
+listMatch True "two points" "one two three main points"
+--> True 
+listMatch False "two points" "one two three..."
+--> True 
+-}
+listMatch: MatchMode -> String -> String -> Maybe Match
+listMatch matchmode needle hay = 
+  let 
+      needelist = String.split " " needle 
+      
+      resultOf a b = 
+        case (a, b) of 
+          (Nothing, Just Yes) -> 
+            Just Yes 
+          (Nothing, Just No) -> 
+            Just No 
+          (_, _) -> 
+            Nothing 
+            
+  in 
+      needelist 
+        |> List.map  (flip isMatch hay) 
+        |> List.foldl resultOf Nothing
+
+
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
 -- The 'match' attribute is set if there is match with the needle
@@ -596,6 +639,7 @@ makeHayFromUrls needle urls =
                 ++ link.title
                 ++ Maybe.withDefault "" (parseKeyword link.keyword_link)
                 ++ String.join " " link.tags
+        
 
         linkToHay l =
             HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing
@@ -657,7 +701,6 @@ view model =
             , input [ placeholder "search", value model.needle, onInput StoreNeedle ] []
             , button [ onClick SearchNeedle ] [ text "Search!" ]
             , text (" " ++ model.needle)
-            
             ]
         , hr [] []
         , div []
