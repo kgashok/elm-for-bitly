@@ -654,11 +654,7 @@ listMatch viewmode needle hay =
         resultOfAny x accumulator =
             {--
             let
-                _ =
-                    Debug.log "resultOfAny x " x
-
-                _ =
-                    Debug.log "resultOfAny acc " accumulator
+                _ = Debug.log "resultOfAny (x, accumulator)" (x, accumulator)            
             in
             --}
             case ( x, accumulator ) of
@@ -690,7 +686,7 @@ listMatch viewmode needle hay =
                 |> List.foldl resultOfAny Nothing
 
         ShowAll ->
-            Nothing  -- show never get called, actually! 
+            Nothing  -- should never get called, actually! 
 
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
