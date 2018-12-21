@@ -100,6 +100,7 @@ only those that matched?
 type ViewMode
     = ShowAll
     | ShowMatched
+    | ShowAny
 
 
 {-| Model is what captures what all that is required to make this app work
@@ -215,7 +216,7 @@ update msg model =
                             "deep docs"
 
                         _ ->
-                            "twoPoints cloudcoder"
+                            "medium python time"
 
                 model_ =
                     { model
@@ -404,6 +405,14 @@ update msg model =
                         ShowAll ->
                             ( { model_
                                 | viewMode = ShowMatched
+                                , errorMessage = Just "Press Ctrl-q to toggle view"
+                              }
+                            , Cmd.none
+                            )
+                        
+                        ShowMatched -> 
+                            ( { model_
+                                | viewMode = ShowAny
                                 , errorMessage = Just "Press Ctrl-q to toggle view"
                               }
                             , Cmd.none
@@ -631,8 +640,11 @@ listMatch matchmode needle hay =
                 ( _, _ ) ->
                     Nothing
     in
+    {- the map-reduce paradigm is adopted to
+       - get the final value
+    -}
     needlelist
-        |> List.map (flip isMatch hay)
+        |> List.map (\token -> isMatch token hay)
         |> List.foldl resultOf Nothing
 
 

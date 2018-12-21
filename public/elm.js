@@ -4559,10 +4559,6 @@ var author$project$Main$bitlyAPI = 'https://api-ssl.bitly.com/v3/user/link_histo
 var author$project$Main$AllNeedles = {$: 'AllNeedles'};
 var author$project$Main$No = {$: 'No'};
 var author$project$Main$Yes = {$: 'Yes'};
-var author$project$Main$flip = F3(
-	function (func, first, second) {
-		return A2(func, second, first);
-	});
 var elm$core$Basics$apL = F2(
 	function (f, x) {
 		return f(x);
@@ -4733,7 +4729,9 @@ var author$project$Main$listMatch = F3(
 			elm$core$Maybe$Nothing,
 			A2(
 				elm$core$List$map,
-				A2(author$project$Main$flip, author$project$Main$isMatch, hay),
+				function (token) {
+					return A2(author$project$Main$isMatch, token, hay);
+				},
 				needlelist));
 	});
 var author$project$Main$checkForMatches = F2(
@@ -5836,6 +5834,7 @@ var author$project$Main$subscriptions = function (model) {
 				ohanhi$keyboard$Keyboard$downs(author$project$Main$KeyDown)
 			]));
 };
+var author$project$Main$ShowAny = {$: 'ShowAny'};
 var author$project$Main$ShowMatched = {$: 'ShowMatched'};
 var author$project$Main$DataReceived = function (a) {
 	return {$: 'DataReceived', a: a};
@@ -6487,6 +6486,10 @@ var author$project$Main$createErrorMessage = function (httpError) {
 			return message;
 	}
 };
+var author$project$Main$flip = F3(
+	function (func, first, second) {
+		return A2(func, second, first);
+	});
 var author$project$Main$makeHayFromNames = F2(
 	function (needle, names) {
 		return A2(
@@ -7043,7 +7046,7 @@ var author$project$Main$update = F2(
 						case 'Test':
 							return 'deep docs';
 						default:
-							return 'twoPoints cloudcoder';
+							return 'medium python time';
 					}
 				}();
 				var model_ = _Utils_update(
@@ -7263,21 +7266,31 @@ var author$project$Main$update = F2(
 					model_.pressedKeys);
 				if (_n7) {
 					var _n8 = model_.viewMode;
-					if (_n8.$ === 'ShowAll') {
-						return _Utils_Tuple2(
-							_Utils_update(
-								model_,
-								{
-									errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
-									viewMode: author$project$Main$ShowMatched
-								}),
-							elm$core$Platform$Cmd$none);
-					} else {
-						return _Utils_Tuple2(
-							_Utils_update(
-								model_,
-								{viewMode: author$project$Main$ShowAll}),
-							elm$core$Platform$Cmd$none);
+					switch (_n8.$) {
+						case 'ShowAll':
+							return _Utils_Tuple2(
+								_Utils_update(
+									model_,
+									{
+										errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
+										viewMode: author$project$Main$ShowMatched
+									}),
+								elm$core$Platform$Cmd$none);
+						case 'ShowMatched':
+							return _Utils_Tuple2(
+								_Utils_update(
+									model_,
+									{
+										errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
+										viewMode: author$project$Main$ShowAny
+									}),
+								elm$core$Platform$Cmd$none);
+						default:
+							return _Utils_Tuple2(
+								_Utils_update(
+									model_,
+									{viewMode: author$project$Main$ShowAll}),
+								elm$core$Platform$Cmd$none);
 					}
 				} else {
 					return _Utils_Tuple2(model_, elm$core$Platform$Cmd$none);
