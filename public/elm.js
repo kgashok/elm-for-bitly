@@ -7727,6 +7727,10 @@ var author$project$Main$view = function (model) {
 								_Utils_eq(model.viewMode, author$project$Main$ShowMatched),
 								author$project$Main$ChangeViewTo(author$project$Main$ShowMatched)),
 								_Utils_Tuple3(
+								'Match Any',
+								_Utils_eq(model.viewMode, author$project$Main$ShowAny),
+								author$project$Main$ChangeViewTo(author$project$Main$ShowAny)),
+								_Utils_Tuple3(
 								'Show All',
 								_Utils_eq(model.viewMode, author$project$Main$ShowAll),
 								author$project$Main$ChangeViewTo(author$project$Main$ShowAll))

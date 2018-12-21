@@ -728,6 +728,7 @@ view model =
             [ text "Hay (a list of URLs strings stored in bitly)"
             , viewPicker
                 [ ( "Matched Only", model.viewMode == ShowMatched, ChangeViewTo ShowMatched )
+                , ( "Match Any", model.viewMode == ShowAny, ChangeViewTo ShowAny )
                 , ( "Show All", model.viewMode == ShowAll, ChangeViewTo ShowAll )
                 ]
             , lazy2 generateListView model.viewMode model.hay
