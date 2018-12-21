@@ -135,12 +135,12 @@ init _ =
       , errorStatus = False
       , dataAPI = bitlyAPI
       , data = Production
-      , viewMode = ShowAll
+      , viewMode = ShowAny
       , linkcount = 1700
       , offset = 0
       , pressedKeys = []
       }
-        |> (\model -> { model | hay = checkForMatches model.needle model.hay })
+        |> (\model -> { model | hay = checkForMatches model.viewMode model.needle model.hay })
       -- , Task.perform (always StoreNeedle "rawgit")
     , Cmd.none
     )
@@ -254,14 +254,14 @@ update msg model =
 
         SearchNeedle ->
             ( { model
-                | hay = checkForMatches model.needle model.hay
+                | hay = checkForMatches model.viewMode model.needle model.hay
               }
             , Cmd.none
             )
 
         NamesReceived (Ok nicknames) ->
             ( { model
-                | hay = makeHayFromNames model.needle nicknames
+                | hay = makeHayFromNames model.viewMode model.needle nicknames
                 , errorMessage = Nothing
                 , errorStatus = False
               }
@@ -279,7 +279,7 @@ update msg model =
         IncDataReceived (Ok urls) ->
             let
                 updatedHays =
-                    model.hay ++ makeHayFromUrls model.needle urls
+                    model.hay ++ makeHayFromUrls model.viewMode model.needle urls
 
                 incOffset =
                     case model.offset < model.linkcount of
@@ -324,7 +324,7 @@ update msg model =
                     model.hay
             in
             ( { model
-                | hay = makeHayFromUrls model.needle urls ++ previous
+                | hay = makeHayFromUrls model.viewMode model.needle urls ++ previous
                 , errorMessage = Nothing
                 , errorStatus = False
               }
@@ -345,7 +345,7 @@ update msg model =
                     listOfListUrls |> List.concat
             in
             ( { model
-                | hay = makeHayFromUrls model.needle urllist
+                | hay = makeHayFromUrls model.viewMode model.needle urllist
                 , errorMessage = Nothing
                 , errorStatus = False
               }
@@ -378,9 +378,17 @@ update msg model =
             )
 
         ChangeViewTo v ->
-            ( { model
-                | viewMode = v
-              }
+            ( case v of
+                ShowAll ->
+                    { model
+                        | viewMode = v
+                    }
+
+                _ ->
+                    { model
+                        | viewMode = v
+                        , hay = checkForMatches v model.needle model.hay
+                    }
             , Cmd.none
             )
 
@@ -405,14 +413,16 @@ update msg model =
                         ShowAll ->
                             ( { model_
                                 | viewMode = ShowMatched
+                                , hay = checkForMatches ShowMatched model.needle model.hay
                                 , errorMessage = Just "Press Ctrl-q to toggle view"
                               }
                             , Cmd.none
                             )
-                        
-                        ShowMatched -> 
+
+                        ShowMatched ->
                             ( { model_
                                 | viewMode = ShowAny
+                                , hay = checkForMatches ShowAny model.needle model.hay
                                 , errorMessage = Just "Press Ctrl-q to toggle view"
                               }
                             , Cmd.none
@@ -433,7 +443,7 @@ update msg model =
             --}
             case Keyboard.characterKey code of
                 Just (Keyboard.Character " ") ->
-                    ( { model | hay = checkForMatches model.needle model.hay }
+                    ( { model | hay = checkForMatches model.viewMode model.needle model.hay }
                     , Cmd.none
                     )
 
@@ -565,11 +575,11 @@ parseKeyword short =
     List.head (List.reverse tlist)
 
 
-checkForMatches : String -> List HayString -> List HayString
-checkForMatches needle haylist =
+checkForMatches : ViewMode -> String -> List HayString -> List HayString
+checkForMatches viewmode needle haylist =
     haylist
         -- |> List.map (\hs -> { hs | match = isMatch needle hs.dump })
-        |> List.map (\hs -> { hs | match = listMatch AllNeedles needle hs.dump })
+        |> List.map (\hs -> { hs | match = listMatch viewmode needle hs.dump })
 
 
 {-| isMatch is the crux of the whole app and is where all the
@@ -617,13 +627,14 @@ listMatch AllNeedles "two points" "one two three main points"
 listMatch AllNeedles "two points" "one two three..."
 --> True
 -}
-listMatch : MatchMode -> String -> String -> Maybe Match
-listMatch matchmode needle hay =
+listMatch : ViewMode -> String -> String -> Maybe Match
+listMatch viewmode needle hay =
     let
         needlelist =
             String.split " " needle
 
-        resultOf x accumulator =
+        -- _ = Debug.log "hay " hay
+        resultOfAll x accumulator =
             case ( x, accumulator ) of
                 ( Just No, _ ) ->
                     Just No
@@ -639,21 +650,56 @@ listMatch matchmode needle hay =
 
                 ( _, _ ) ->
                     Nothing
+
+        resultOfAny x accumulator =
+            {--
+            let
+                _ =
+                    Debug.log "resultOfAny x " x
+
+                _ =
+                    Debug.log "resultOfAny acc " accumulator
+            in
+            --}
+            case ( x, accumulator ) of
+                ( Just No, Just Yes ) ->
+                    Just Yes
+
+                ( Just Yes, _ ) ->
+                    Just Yes
+
+                ( _, Just Yes ) ->
+                    Just Yes
+
+                ( _, Just No ) ->
+                    Just No
+
+                ( _, _ ) ->
+                    Nothing
     in
     {- the map-reduce paradigm is adopted to
        - get the final value
     -}
     needlelist
         |> List.map (\token -> isMatch token hay)
-        |> List.foldl resultOf Nothing
+        |> (case viewmode of
+                ShowMatched ->
+                    List.foldl resultOfAll Nothing
+
+                ShowAny ->
+                    List.foldl resultOfAny Nothing
+
+                ShowAll ->
+                    List.foldl resultOfAll Nothing
+           )
 
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
 -- The 'match' attribute is set if there is match with the needle
 -- The dump is a concatenation of all strings from all fields
 -}
-makeHayFromUrls : String -> List Link -> List HayString
-makeHayFromUrls needle urls =
+makeHayFromUrls : ViewMode -> String -> List Link -> List HayString
+makeHayFromUrls viewmode needle urls =
     let
         makeHay link =
             link.long_url
@@ -664,16 +710,16 @@ makeHayFromUrls needle urls =
         linkToHay l =
             HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing
                 -- |> (\hs -> { hs | match = isMatch needle hs.dump })
-                |> (\hs -> { hs | match = listMatch AllNeedles needle hs.dump })
+                |> (\hs -> { hs | match = listMatch viewmode needle hs.dump })
     in
     urls
         |> List.map linkToHay
 
 
-makeHayFromNames needle names =
+makeHayFromNames viewmode needle names =
     names
         |> List.map (\x -> HayString x "" Nothing [] x Nothing)
-        |> checkForMatches needle
+        |> checkForMatches viewmode needle
 
 
 createErrorMessage : Http.Error -> String

@@ -4472,7 +4472,7 @@ var author$project$Main$HayString = F6(
 		return {dump: dump, hay: hay, match: match, _short: _short, tags: tags, title: title};
 	});
 var author$project$Main$Production = {$: 'Production'};
-var author$project$Main$ShowAll = {$: 'ShowAll'};
+var author$project$Main$ShowAny = {$: 'ShowAny'};
 var author$project$Main$apiKey = '1ef1315a2efebd7557de137f776602276d833cb9';
 var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
 var elm$core$Array$foldr = F3(
@@ -4556,7 +4556,6 @@ var elm$core$Set$toList = function (_n0) {
 };
 var elm$core$Basics$append = _Utils_append;
 var author$project$Main$bitlyAPI = 'https://api-ssl.bitly.com/v3/user/link_history?access_token=' + author$project$Main$apiKey;
-var author$project$Main$AllNeedles = {$: 'AllNeedles'};
 var author$project$Main$No = {$: 'No'};
 var author$project$Main$Yes = {$: 'Yes'};
 var elm$core$Basics$apL = F2(
@@ -4695,27 +4694,65 @@ var elm$core$String$split = F2(
 			A2(_String_split, sep, string));
 	});
 var author$project$Main$listMatch = F3(
-	function (matchmode, needle, hay) {
-		var resultOf = F2(
+	function (viewmode, needle, hay) {
+		var resultOfAny = F2(
 			function (x, accumulator) {
-				var _n0 = _Utils_Tuple2(x, accumulator);
-				if (_n0.a.$ === 'Just') {
-					if (_n0.a.a.$ === 'No') {
-						var _n1 = _n0.a.a;
+				var _n7 = _Utils_Tuple2(x, accumulator);
+				_n7$1:
+				while (true) {
+					if (_n7.b.$ === 'Just') {
+						if (_n7.b.a.$ === 'Yes') {
+							if (_n7.a.$ === 'Just') {
+								if (_n7.a.a.$ === 'No') {
+									var _n8 = _n7.a.a;
+									var _n9 = _n7.b.a;
+									return elm$core$Maybe$Just(author$project$Main$Yes);
+								} else {
+									break _n7$1;
+								}
+							} else {
+								var _n11 = _n7.b.a;
+								return elm$core$Maybe$Just(author$project$Main$Yes);
+							}
+						} else {
+							if ((_n7.a.$ === 'Just') && (_n7.a.a.$ === 'Yes')) {
+								break _n7$1;
+							} else {
+								var _n12 = _n7.b.a;
+								return elm$core$Maybe$Just(author$project$Main$No);
+							}
+						}
+					} else {
+						if ((_n7.a.$ === 'Just') && (_n7.a.a.$ === 'Yes')) {
+							break _n7$1;
+						} else {
+							return elm$core$Maybe$Nothing;
+						}
+					}
+				}
+				var _n10 = _n7.a.a;
+				return elm$core$Maybe$Just(author$project$Main$Yes);
+			});
+		var resultOfAll = F2(
+			function (x, accumulator) {
+				var _n1 = _Utils_Tuple2(x, accumulator);
+				if (_n1.a.$ === 'Just') {
+					if (_n1.a.a.$ === 'No') {
+						var _n2 = _n1.a.a;
 						return elm$core$Maybe$Just(author$project$Main$No);
 					} else {
-						if ((_n0.b.$ === 'Just') && (_n0.b.a.$ === 'No')) {
-							var _n2 = _n0.a.a;
-							var _n3 = _n0.b.a;
+						if ((_n1.b.$ === 'Just') && (_n1.b.a.$ === 'No')) {
+							var _n3 = _n1.a.a;
+							var _n4 = _n1.b.a;
 							return elm$core$Maybe$Just(author$project$Main$No);
 						} else {
-							var _n4 = _n0.a.a;
+							var _n5 = _n1.a.a;
 							return elm$core$Maybe$Just(author$project$Main$Yes);
 						}
 					}
 				} else {
-					if ((_n0.b.$ === 'Just') && (_n0.b.a.$ === 'Yes')) {
-						var _n5 = _n0.b.a;
+					if ((_n1.b.$ === 'Just') && (_n1.b.a.$ === 'Yes')) {
+						var _n6 = _n1.b.a;
 						return elm$core$Maybe$Just(author$project$Main$Yes);
 					} else {
 						return elm$core$Maybe$Nothing;
@@ -4723,10 +4760,16 @@ var author$project$Main$listMatch = F3(
 				}
 			});
 		var needlelist = A2(elm$core$String$split, ' ', needle);
-		return A3(
-			elm$core$List$foldl,
-			resultOf,
-			elm$core$Maybe$Nothing,
+		return function () {
+			switch (viewmode.$) {
+				case 'ShowMatched':
+					return A2(elm$core$List$foldl, resultOfAll, elm$core$Maybe$Nothing);
+				case 'ShowAny':
+					return A2(elm$core$List$foldl, resultOfAny, elm$core$Maybe$Nothing);
+				default:
+					return A2(elm$core$List$foldl, resultOfAll, elm$core$Maybe$Nothing);
+			}
+		}()(
 			A2(
 				elm$core$List$map,
 				function (token) {
@@ -4734,15 +4777,15 @@ var author$project$Main$listMatch = F3(
 				},
 				needlelist));
 	});
-var author$project$Main$checkForMatches = F2(
-	function (needle, haylist) {
+var author$project$Main$checkForMatches = F3(
+	function (viewmode, needle, haylist) {
 		return A2(
 			elm$core$List$map,
 			function (hs) {
 				return _Utils_update(
 					hs,
 					{
-						match: A3(author$project$Main$listMatch, author$project$Main$AllNeedles, needle, hs.dump)
+						match: A3(author$project$Main$listMatch, viewmode, needle, hs.dump)
 					});
 			},
 			haylist);
@@ -5107,7 +5150,7 @@ var author$project$Main$init = function (_n0) {
 			return _Utils_update(
 				model,
 				{
-					hay: A2(author$project$Main$checkForMatches, model.needle, model.hay)
+					hay: A3(author$project$Main$checkForMatches, model.viewMode, model.needle, model.hay)
 				});
 		}(
 			{
@@ -5143,7 +5186,7 @@ var author$project$Main$init = function (_n0) {
 				offset: 0,
 				pressedKeys: _List_Nil,
 				val: 0,
-				viewMode: author$project$Main$ShowAll
+				viewMode: author$project$Main$ShowAny
 			}),
 		elm$core$Platform$Cmd$none);
 };
@@ -5834,7 +5877,7 @@ var author$project$Main$subscriptions = function (model) {
 				ohanhi$keyboard$Keyboard$downs(author$project$Main$KeyDown)
 			]));
 };
-var author$project$Main$ShowAny = {$: 'ShowAny'};
+var author$project$Main$ShowAll = {$: 'ShowAll'};
 var author$project$Main$ShowMatched = {$: 'ShowMatched'};
 var author$project$Main$DataReceived = function (a) {
 	return {$: 'DataReceived', a: a};
@@ -6490,10 +6533,11 @@ var author$project$Main$flip = F3(
 	function (func, first, second) {
 		return A2(func, second, first);
 	});
-var author$project$Main$makeHayFromNames = F2(
-	function (needle, names) {
-		return A2(
+var author$project$Main$makeHayFromNames = F3(
+	function (viewmode, needle, names) {
+		return A3(
 			author$project$Main$checkForMatches,
+			viewmode,
 			needle,
 			A2(
 				elm$core$List$map,
@@ -6519,8 +6563,8 @@ var author$project$Main$parseKeyword = function (_short) {
 	return elm$core$List$head(
 		elm$core$List$reverse(tlist));
 };
-var author$project$Main$makeHayFromUrls = F2(
-	function (needle, urls) {
+var author$project$Main$makeHayFromUrls = F3(
+	function (viewmode, needle, urls) {
 		var makeHay = function (link) {
 			return _Utils_ap(
 				link.long_url,
@@ -6538,7 +6582,7 @@ var author$project$Main$makeHayFromUrls = F2(
 				return _Utils_update(
 					hs,
 					{
-						match: A3(author$project$Main$listMatch, author$project$Main$AllNeedles, needle, hs.dump)
+						match: A3(author$project$Main$listMatch, viewmode, needle, hs.dump)
 					});
 			}(
 				A6(
@@ -7087,7 +7131,7 @@ var author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							hay: A2(author$project$Main$checkForMatches, model.needle, model.hay)
+							hay: A3(author$project$Main$checkForMatches, model.viewMode, model.needle, model.hay)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 'NamesReceived':
@@ -7099,7 +7143,7 @@ var author$project$Main$update = F2(
 							{
 								errorMessage: elm$core$Maybe$Nothing,
 								errorStatus: false,
-								hay: A2(author$project$Main$makeHayFromNames, model.needle, nicknames)
+								hay: A3(author$project$Main$makeHayFromNames, model.viewMode, model.needle, nicknames)
 							}),
 						elm$core$Platform$Cmd$none);
 				} else {
@@ -7119,7 +7163,7 @@ var author$project$Main$update = F2(
 					var urls = msg.a.a;
 					var updatedHays = _Utils_ap(
 						model.hay,
-						A2(author$project$Main$makeHayFromUrls, model.needle, urls));
+						A3(author$project$Main$makeHayFromUrls, model.viewMode, model.needle, urls));
 					var incOffset = function () {
 						var _n5 = _Utils_cmp(model.offset, model.linkcount) < 0;
 						if (_n5) {
@@ -7174,7 +7218,7 @@ var author$project$Main$update = F2(
 								errorMessage: elm$core$Maybe$Nothing,
 								errorStatus: false,
 								hay: _Utils_ap(
-									A2(author$project$Main$makeHayFromUrls, model.needle, urls),
+									A3(author$project$Main$makeHayFromUrls, model.viewMode, model.needle, urls),
 									previous)
 							}),
 						elm$core$Platform$Cmd$none);
@@ -7200,7 +7244,7 @@ var author$project$Main$update = F2(
 							{
 								errorMessage: elm$core$Maybe$Nothing,
 								errorStatus: false,
-								hay: A2(author$project$Main$makeHayFromUrls, model.needle, urllist)
+								hay: A3(author$project$Main$makeHayFromUrls, model.viewMode, model.needle, urllist)
 							}),
 						elm$core$Platform$Cmd$none);
 				} else {
@@ -7237,9 +7281,20 @@ var author$project$Main$update = F2(
 			case 'ChangeViewTo':
 				var v = msg.a;
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{viewMode: v}),
+					function () {
+						if (v.$ === 'ShowAll') {
+							return _Utils_update(
+								model,
+								{viewMode: v});
+						} else {
+							return _Utils_update(
+								model,
+								{
+									hay: A3(author$project$Main$checkForMatches, v, model.needle, model.hay),
+									viewMode: v
+								});
+						}
+					}(),
 					elm$core$Platform$Cmd$none);
 			case 'UpdateLinkCount':
 				var c = msg.a;
@@ -7260,19 +7315,20 @@ var author$project$Main$update = F2(
 					{
 						pressedKeys: A2(ohanhi$keyboard$Keyboard$update, keyboardMsg, model.pressedKeys)
 					});
-				var _n7 = A2(elm$core$List$member, ohanhi$keyboard$Keyboard$Control, model_.pressedKeys) && A2(
+				var _n8 = A2(elm$core$List$member, ohanhi$keyboard$Keyboard$Control, model_.pressedKeys) && A2(
 					elm$core$List$member,
 					ohanhi$keyboard$Keyboard$Character('q'),
 					model_.pressedKeys);
-				if (_n7) {
-					var _n8 = model_.viewMode;
-					switch (_n8.$) {
+				if (_n8) {
+					var _n9 = model_.viewMode;
+					switch (_n9.$) {
 						case 'ShowAll':
 							return _Utils_Tuple2(
 								_Utils_update(
 									model_,
 									{
 										errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
+										hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowMatched, model.needle, model.hay),
 										viewMode: author$project$Main$ShowMatched
 									}),
 								elm$core$Platform$Cmd$none);
@@ -7282,6 +7338,7 @@ var author$project$Main$update = F2(
 									model_,
 									{
 										errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
+										hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowAny, model.needle, model.hay),
 										viewMode: author$project$Main$ShowAny
 									}),
 								elm$core$Platform$Cmd$none);
@@ -7297,13 +7354,13 @@ var author$project$Main$update = F2(
 				}
 			case 'KeyDown':
 				var code = msg.a;
-				var _n9 = ohanhi$keyboard$Keyboard$characterKey(code);
-				if (((_n9.$ === 'Just') && (_n9.a.$ === 'Character')) && (_n9.a.a === ' ')) {
+				var _n10 = ohanhi$keyboard$Keyboard$characterKey(code);
+				if (((_n10.$ === 'Just') && (_n10.a.$ === 'Character')) && (_n10.a.a === ' ')) {
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{
-								hay: A2(author$project$Main$checkForMatches, model.needle, model.hay)
+								hay: A3(author$project$Main$checkForMatches, model.viewMode, model.needle, model.hay)
 							}),
 						elm$core$Platform$Cmd$none);
 				} else {
