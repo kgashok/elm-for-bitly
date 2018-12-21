@@ -690,7 +690,7 @@ listMatch viewmode needle hay =
                     List.foldl resultOfAny Nothing
 
                 ShowAll ->
-                    List.foldl resultOfAll Nothing
+                    List.foldl (\x a -> a) Nothing
            )
 
 

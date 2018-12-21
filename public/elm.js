@@ -4767,7 +4767,13 @@ var author$project$Main$listMatch = F3(
 				case 'ShowAny':
 					return A2(elm$core$List$foldl, resultOfAny, elm$core$Maybe$Nothing);
 				default:
-					return A2(elm$core$List$foldl, resultOfAll, elm$core$Maybe$Nothing);
+					return A2(
+						elm$core$List$foldl,
+						F2(
+							function (x, a) {
+								return a;
+							}),
+						elm$core$Maybe$Nothing);
 			}
 		}()(
 			A2(
