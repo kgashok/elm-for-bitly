@@ -680,18 +680,17 @@ listMatch viewmode needle hay =
     {- the map-reduce paradigm is adopted to
        - get the final value
     -}
-    needlelist
-        |> List.map (\token -> isMatch token hay)
-        |> (case viewmode of
-                ShowMatched ->
-                    List.foldl resultOfAll Nothing
+    case viewmode of
+        ShowMatched ->
+            List.map (\token -> isMatch token hay) needlelist
+                |> List.foldl resultOfAll Nothing
 
-                ShowAny ->
-                    List.foldl resultOfAny Nothing
+        ShowAny ->
+            List.map (\token -> isMatch token hay) needlelist
+                |> List.foldl resultOfAny Nothing
 
-                ShowAll ->
-                    List.foldl (\x a -> a) Nothing
-           )
+        ShowAll ->
+            Nothing  -- show never get called, actually! 
 
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects

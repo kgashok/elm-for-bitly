@@ -4760,28 +4760,32 @@ var author$project$Main$listMatch = F3(
 				}
 			});
 		var needlelist = A2(elm$core$String$split, ' ', needle);
-		return function () {
-			switch (viewmode.$) {
-				case 'ShowMatched':
-					return A2(elm$core$List$foldl, resultOfAll, elm$core$Maybe$Nothing);
-				case 'ShowAny':
-					return A2(elm$core$List$foldl, resultOfAny, elm$core$Maybe$Nothing);
-				default:
-					return A2(
-						elm$core$List$foldl,
-						F2(
-							function (x, a) {
-								return a;
-							}),
-						elm$core$Maybe$Nothing);
-			}
-		}()(
-			A2(
-				elm$core$List$map,
-				function (token) {
-					return A2(author$project$Main$isMatch, token, hay);
-				},
-				needlelist));
+		switch (viewmode.$) {
+			case 'ShowMatched':
+				return A3(
+					elm$core$List$foldl,
+					resultOfAll,
+					elm$core$Maybe$Nothing,
+					A2(
+						elm$core$List$map,
+						function (token) {
+							return A2(author$project$Main$isMatch, token, hay);
+						},
+						needlelist));
+			case 'ShowAny':
+				return A3(
+					elm$core$List$foldl,
+					resultOfAny,
+					elm$core$Maybe$Nothing,
+					A2(
+						elm$core$List$map,
+						function (token) {
+							return A2(author$project$Main$isMatch, token, hay);
+						},
+						needlelist));
+			default:
+				return elm$core$Maybe$Nothing;
+		}
 	});
 var author$project$Main$checkForMatches = F3(
 	function (viewmode, needle, haylist) {
