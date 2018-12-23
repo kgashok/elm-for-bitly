@@ -5164,6 +5164,7 @@ var author$project$Main$init = function (_n0) {
 				});
 		}(
 			{
+				darkMode: false,
 				data: author$project$Main$Production,
 				dataAPI: author$project$Main$bitlyAPI,
 				errorMessage: elm$core$Maybe$Nothing,
@@ -7376,6 +7377,12 @@ var author$project$Main$update = F2(
 				} else {
 					return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
 				}
+			case 'ToggleDarkMode':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{darkMode: !model.darkMode}),
+					elm$core$Platform$Cmd$none);
 			case 'Increment':
 				return _Utils_Tuple2(
 					_Utils_update(
@@ -7403,6 +7410,7 @@ var author$project$Main$SwitchTo = function (a) {
 	return {$: 'SwitchTo', a: a};
 };
 var author$project$Main$Test = {$: 'Test'};
+var author$project$Main$ToggleDarkMode = {$: 'ToggleDarkMode'};
 var author$project$Main$UpdateLinkCount = function (a) {
 	return {$: 'UpdateLinkCount', a: a};
 };
@@ -7668,7 +7676,14 @@ var elm$html$Html$Lazy$lazy2 = elm$virtual_dom$VirtualDom$lazy2;
 var author$project$Main$view = function (model) {
 	return A2(
 		elm$html$Html$div,
-		_List_Nil,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$classList(
+				_List_fromArray(
+					[
+						_Utils_Tuple2('dark', model.darkMode)
+					]))
+			]),
 		_List_fromArray(
 			[
 				A2(
@@ -7679,7 +7694,27 @@ var author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
-						elm$html$Html$text('Elm for Bitly')
+						elm$html$Html$text('Bitly using Elm ')
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$id('darkButtonDiv')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						elm$html$Html$button,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$id('darkButton'),
+								elm$html$Html$Events$onClick(author$project$Main$ToggleDarkMode)
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text('dark')
+							]))
 					])),
 				author$project$Main$footer,
 				A2(elm$html$Html$hr, _List_Nil, _List_Nil),

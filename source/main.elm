@@ -65,9 +65,14 @@ type Match
     | No
 
 
+{--
+ -- using ViewMode for now to toggle between various modes 
+ 
 type MatchMode
     = AllNeedles
     | AnyOneNeedle
+
+--}
 
 
 {-| HayString resonates with the basic problem that this app is trying to solve
@@ -118,6 +123,7 @@ type alias Model =
     , linkcount : Int
     , offset : Int -- required for obtaining pages of information from API
     , pressedKeys : List Keyboard.Key
+    , darkMode : Bool
     }
 
 
@@ -139,6 +145,7 @@ init _ =
       , linkcount = 1700
       , offset = 0
       , pressedKeys = []
+      , darkMode = False
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle model.hay })
       -- , Task.perform (always StoreNeedle "rawgit")
@@ -198,6 +205,7 @@ type Msg
     | UpdateLinkCount String
     | KeyDown RawKey
     | KeyboardMsg Keyboard.Msg
+    | ToggleDarkMode 
     | Increment -- not relevant; legacy
     | Decrement -- not relevant; legacy
 
@@ -449,6 +457,11 @@ update msg model =
 
                 _ ->
                     ( model, Cmd.none )
+                    
+        ToggleDarkMode ->
+            ( { model | darkMode = not model.darkMode }
+            , Cmd.none
+            )
 
         -- irrelevant message types, to be removed eventually
         Increment ->
@@ -686,7 +699,11 @@ listMatch viewmode needle hay =
                 |> List.foldl resultOfAny Nothing
 
         ShowAll ->
-            Nothing  -- should never get called, actually! 
+            Nothing
+
+
+
+-- should never get called, actually!
 
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
@@ -696,6 +713,7 @@ listMatch viewmode needle hay =
 makeHayFromUrls : ViewMode -> String -> List Link -> List HayString
 makeHayFromUrls viewmode needle urls =
     let
+        -- _ = Debug.log "viewMode needle urls" (viewmode, needle, urls)
         makeHay link =
             link.long_url
                 ++ link.title
@@ -738,8 +756,9 @@ createErrorMessage httpError =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ div [ id "title" ] [ text "Elm for Bitly" ]
+    div [ classList [ ( "dark", model.darkMode == True )] ]
+        [ div [id "title" ] [ text "Bitly using Elm "]
+        , div [id "darkButtonDiv"] [ button [ id "darkButton", onClick ToggleDarkMode ] [ text "dark" ] ]
         , footer
         , hr [] []
         , div [ id "apiString" ] [ text model.dataAPI ]
