@@ -65,6 +65,7 @@ type Match
     | No
 
 
+
 {--
  -- using ViewMode for now to toggle between various modes 
  
@@ -205,7 +206,7 @@ type Msg
     | UpdateLinkCount String
     | KeyDown RawKey
     | KeyboardMsg Keyboard.Msg
-    | ToggleDarkMode 
+    | ToggleDarkMode
     | Increment -- not relevant; legacy
     | Decrement -- not relevant; legacy
 
@@ -457,7 +458,7 @@ update msg model =
 
                 _ ->
                     ( model, Cmd.none )
-                    
+
         ToggleDarkMode ->
             ( { model | darkMode = not model.darkMode }
             , Cmd.none
@@ -698,12 +699,9 @@ listMatch viewmode needle hay =
             List.map (\token -> isMatch token hay) needlelist
                 |> List.foldl resultOfAny Nothing
 
+        -- should never get called, actually!
         ShowAll ->
             Nothing
-
-
-
--- should never get called, actually!
 
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
@@ -756,9 +754,9 @@ createErrorMessage httpError =
 
 view : Model -> Html Msg
 view model =
-    div [ classList [ ( "dark", model.darkMode == True )] ]
-        [ div [id "title" ] [ text "Bitly using Elm "]
-        , div [id "darkButtonDiv"] [ button [ id "darkButton", onClick ToggleDarkMode ] [ text "dark" ] ]
+    div [ classList [ ( "dark", model.darkMode == True ) ] ]
+        [ div [ id "title" ] [ text "Bitly using Elm " ]
+        , div [ id "darkButtonDiv" ] [ button [ id "darkButton", onClick ToggleDarkMode ] [ text "dark" ] ]
         , footer
         , hr [] []
         , div [ id "apiString" ] [ text model.dataAPI ]
