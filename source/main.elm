@@ -140,17 +140,17 @@ init _ =
             ]
       , errorMessage = Nothing
       , errorStatus = False
-      , dataAPI = bitlyAPI
-      , data = Production
-      , viewMode = ShowAny
-      , linkcount = 1700
+      , dataAPI = testJson
+      , data = Test
+      , viewMode = ShowAll
+      , linkcount = 1701
       , offset = 0
       , pressedKeys = []
-      , darkMode = False
+      , darkMode = True
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle model.hay })
-      -- , Task.perform (always StoreNeedle "rawgit")
-    , Cmd.none
+      -- , Task.perform (always SearchNeedle)
+      , Cmd.none
     )
 
 
@@ -225,7 +225,7 @@ update msg model =
                             "deep docs"
 
                         _ ->
-                            "medium python time"
+                            "medium deferred"
 
                 model_ =
                     { model
@@ -519,12 +519,12 @@ httpCommand dataURL =
                 |> Http.send DataReceived
 
 
-{-| skipList returns a list of numbers in intervals of 30.
+{-| skipList returns a list of numbers in intervals of 30 (default value).
 -- this is required for parallel dispatch of ~30 requests
-skipList 120 40
---> [0, 40, 80, 120]
 skipList 170
 --> [0, 30, 60, 90, 120, 150, 180]
+skipList 120 40
+--> [0, 40, 80, 120]
 -}
 skipList : Int -> Maybe Int -> List Int
 skipList totalCount pageSize =
@@ -634,11 +634,11 @@ isMatch needle hay =
 
 
 {-| listMatch checks for match of any or all of tokens in a list
--- Depending upon the MatchMode, the function will
+-- Depending upon the ViewMode, the function will
 -- return the appropriate value
-listMatch AllNeedles "two points" "one two three main points"
+listMatch ShowMatched "two points" "one two three main points"
 --> True
-listMatch AllNeedles "two points" "one two three..."
+listMatch ShowAny "two points" "one two three..."
 --> True
 -}
 listMatch : ViewMode -> String -> String -> Maybe Match
@@ -785,7 +785,7 @@ view model =
         , div []
             [ text "Hay (a list of URLs strings stored in bitly)"
             , viewPicker
-                [ ( "Matched Only", model.viewMode == ShowMatched, ChangeViewTo ShowMatched )
+                [ ( "Match All", model.viewMode == ShowMatched, ChangeViewTo ShowMatched )
                 , ( "Match Any", model.viewMode == ShowAny, ChangeViewTo ShowAny )
                 , ( "Show All", model.viewMode == ShowAll, ChangeViewTo ShowAll )
                 ]
@@ -842,11 +842,14 @@ footer =
         ]
 
 
+{-| generateListView presents the HayString object
+-- provided "ShowAll" is set or match attribute has been set
+-}
 generateListView : ViewMode -> List HayString -> Html Msg
-generateListView viewmode slist =
+generateListView viewmode haylist =
     let
         items =
-            slist
+            haylist
                 |> List.filter (\x -> viewmode == ShowAll || x.match == Just Yes)
                 |> List.map displayURL
     in
