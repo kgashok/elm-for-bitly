@@ -637,9 +637,9 @@ isMatch needle hay =
 -- Depending upon the ViewMode, the function will
 -- return the appropriate value
 listMatch ShowMatched "two points" "one two three main points"
---> True
+--> Just Yes
 listMatch ShowAny "two points" "one two three..."
---> True
+--> Just Yes
 -}
 listMatch : ViewMode -> String -> String -> Maybe Match
 listMatch viewmode needle hay =
