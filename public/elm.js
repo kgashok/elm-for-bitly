@@ -4588,13 +4588,14 @@ var author$project$Main$isMatch = F2(
 			return elm$core$Maybe$Nothing;
 		}
 	});
+var elm$core$Basics$False = {$: 'False'};
+var elm$core$Basics$True = {$: 'True'};
+var elm$core$Debug$log = _Debug_log;
 var elm$core$Basics$composeL = F3(
 	function (g, f, x) {
 		return g(
 			f(x));
 	});
-var elm$core$Basics$False = {$: 'False'};
-var elm$core$Basics$True = {$: 'True'};
 var elm$core$List$any = F2(
 	function (isOkay, list) {
 		any:
@@ -4633,9 +4634,17 @@ var author$project$Main$listMatch = F3(
 		var needlelist = A2(elm$core$String$split, ' ', needle);
 		var boolMatchVal = F2(
 			function (h, token) {
-				return _Utils_eq(
-					A2(author$project$Main$isMatch, token, h),
-					elm$core$Maybe$Just(author$project$Main$Yes));
+				var _n1 = A2(
+					elm$core$Debug$log,
+					'(token hay)',
+					_Utils_Tuple2(token, hay));
+				var _n2 = A2(author$project$Main$isMatch, token, h);
+				if ((_n2.$ === 'Just') && (_n2.a.$ === 'No')) {
+					var _n3 = _n2.a;
+					return false;
+				} else {
+					return true;
+				}
 			});
 		switch (viewmode.$) {
 			case 'ShowAny':
@@ -5126,7 +5135,7 @@ var author$project$Main$init = function (_n0) {
 				});
 		}(
 			{
-				darkMode: true,
+				darkMode: false,
 				data: author$project$Main$Test,
 				dataAPI: author$project$Main$testJson,
 				errorMessage: elm$core$Maybe$Nothing,

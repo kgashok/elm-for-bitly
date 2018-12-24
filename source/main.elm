@@ -146,7 +146,7 @@ init _ =
       , linkcount = 1701
       , offset = 0
       , pressedKeys = []
-      , darkMode = True
+      , darkMode = False
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle model.hay })
       -- , Task.perform (always SearchNeedle)
@@ -648,7 +648,16 @@ listMatch viewmode needle hay =
             String.split " " needle
 
         boolMatchVal h token =
-            isMatch token h == Just Yes
+            let
+                _ =
+                    Debug.log "(token hay)" ( token, hay )
+            in
+            case isMatch token h of
+                Just No ->
+                    False
+
+                _ ->
+                    True
     in
     case viewmode of
         ShowAny ->
