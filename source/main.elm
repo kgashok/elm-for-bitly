@@ -150,7 +150,7 @@ init _ =
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle model.hay })
       -- , Task.perform (always SearchNeedle)
-      , Cmd.none
+    , Cmd.none
     )
 
 
@@ -686,18 +686,30 @@ listMatch viewmode needle hay =
 
                 ( _, _ ) ->
                     Nothing
+
+        boolMatchVal h token = 
+          if (isMatch token h == Just Yes) then 
+            True
+          else
+            False
+
     in
     {- the map-reduce paradigm is adopted to
        - get the final value
     -}
     case viewmode of
-        ShowMatched ->
-            List.map (\token -> isMatch token hay) needlelist
-                |> List.foldl resultOfAll Nothing
-
         ShowAny ->
-            List.map (\token -> isMatch token hay) needlelist
-                |> List.foldl resultOfAny Nothing
+          if List.any (boolMatchVal hay) needlelist == True then
+            Just Yes
+          else
+            Just No
+
+        ShowMatched ->
+          -- not (any (not << isOkay) list)
+          if not (List.any (not << boolMatchVal hay) needlelist) == True then
+            Just Yes
+          else
+            Just No
 
         -- should never get called, actually!
         ShowAll ->

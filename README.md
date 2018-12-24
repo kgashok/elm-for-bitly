@@ -20,6 +20,10 @@ gives me zero links, when I actually have at least **10+ links**, some of them a
      - as per part of the Incremental Hackathon experience 
   - to also present a case study of how to manage App development in Github 
 
+### Misc 
+
+ - Need to explore [https://elm.christmas/2018/16](https://elm.christmas/2018/16)
+
 
 ---
 

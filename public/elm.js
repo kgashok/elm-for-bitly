@@ -4588,102 +4588,33 @@ var author$project$Main$isMatch = F2(
 			return elm$core$Maybe$Nothing;
 		}
 	});
-var elm$core$Basics$apR = F2(
-	function (x, f) {
-		return f(x);
+var elm$core$Basics$False = {$: 'False'};
+var elm$core$Basics$True = {$: 'True'};
+var elm$core$Basics$composeL = F3(
+	function (g, f, x) {
+		return g(
+			f(x));
 	});
-var elm$core$List$foldl = F3(
-	function (func, acc, list) {
-		foldl:
+var elm$core$List$any = F2(
+	function (isOkay, list) {
+		any:
 		while (true) {
 			if (!list.b) {
-				return acc;
+				return false;
 			} else {
 				var x = list.a;
 				var xs = list.b;
-				var $temp$func = func,
-					$temp$acc = A2(func, x, acc),
-					$temp$list = xs;
-				func = $temp$func;
-				acc = $temp$acc;
-				list = $temp$list;
-				continue foldl;
-			}
-		}
-	});
-var elm$core$Basics$add = _Basics_add;
-var elm$core$Basics$gt = _Utils_gt;
-var elm$core$List$reverse = function (list) {
-	return A3(elm$core$List$foldl, elm$core$List$cons, _List_Nil, list);
-};
-var elm$core$List$foldrHelper = F4(
-	function (fn, acc, ctr, ls) {
-		if (!ls.b) {
-			return acc;
-		} else {
-			var a = ls.a;
-			var r1 = ls.b;
-			if (!r1.b) {
-				return A2(fn, a, acc);
-			} else {
-				var b = r1.a;
-				var r2 = r1.b;
-				if (!r2.b) {
-					return A2(
-						fn,
-						a,
-						A2(fn, b, acc));
+				if (isOkay(x)) {
+					return true;
 				} else {
-					var c = r2.a;
-					var r3 = r2.b;
-					if (!r3.b) {
-						return A2(
-							fn,
-							a,
-							A2(
-								fn,
-								b,
-								A2(fn, c, acc)));
-					} else {
-						var d = r3.a;
-						var r4 = r3.b;
-						var res = (ctr > 500) ? A3(
-							elm$core$List$foldl,
-							fn,
-							acc,
-							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
-						return A2(
-							fn,
-							a,
-							A2(
-								fn,
-								b,
-								A2(
-									fn,
-									c,
-									A2(fn, d, res))));
-					}
+					var $temp$isOkay = isOkay,
+						$temp$list = xs;
+					isOkay = $temp$isOkay;
+					list = $temp$list;
+					continue any;
 				}
 			}
 		}
-	});
-var elm$core$List$foldr = F3(
-	function (fn, acc, ls) {
-		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
-	});
-var elm$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return A2(
-						elm$core$List$cons,
-						f(x),
-						acc);
-				}),
-			_List_Nil,
-			xs);
 	});
 var elm$core$String$split = F2(
 	function (sep, string) {
@@ -4757,32 +4688,126 @@ var author$project$Main$listMatch = F3(
 				}
 			});
 		var needlelist = A2(elm$core$String$split, ' ', needle);
+		var boolMatchVal = F2(
+			function (h, token) {
+				return _Utils_eq(
+					A2(author$project$Main$isMatch, token, h),
+					elm$core$Maybe$Just(author$project$Main$Yes)) ? true : false;
+			});
 		switch (viewmode.$) {
-			case 'ShowMatched':
-				return A3(
-					elm$core$List$foldl,
-					resultOfAll,
-					elm$core$Maybe$Nothing,
-					A2(
-						elm$core$List$map,
-						function (token) {
-							return A2(author$project$Main$isMatch, token, hay);
-						},
-						needlelist));
 			case 'ShowAny':
-				return A3(
-					elm$core$List$foldl,
-					resultOfAny,
-					elm$core$Maybe$Nothing,
+				return A2(
+					elm$core$List$any,
+					boolMatchVal(hay),
+					needlelist) ? elm$core$Maybe$Just(author$project$Main$Yes) : elm$core$Maybe$Just(author$project$Main$No);
+			case 'ShowMatched':
+				return (!A2(
+					elm$core$List$any,
 					A2(
-						elm$core$List$map,
-						function (token) {
-							return A2(author$project$Main$isMatch, token, hay);
-						},
-						needlelist));
+						elm$core$Basics$composeL,
+						elm$core$Basics$not,
+						boolMatchVal(hay)),
+					needlelist)) ? elm$core$Maybe$Just(author$project$Main$Yes) : elm$core$Maybe$Just(author$project$Main$No);
 			default:
 				return elm$core$Maybe$Nothing;
 		}
+	});
+var elm$core$Basics$apR = F2(
+	function (x, f) {
+		return f(x);
+	});
+var elm$core$Basics$add = _Basics_add;
+var elm$core$Basics$gt = _Utils_gt;
+var elm$core$List$foldl = F3(
+	function (func, acc, list) {
+		foldl:
+		while (true) {
+			if (!list.b) {
+				return acc;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				var $temp$func = func,
+					$temp$acc = A2(func, x, acc),
+					$temp$list = xs;
+				func = $temp$func;
+				acc = $temp$acc;
+				list = $temp$list;
+				continue foldl;
+			}
+		}
+	});
+var elm$core$List$reverse = function (list) {
+	return A3(elm$core$List$foldl, elm$core$List$cons, _List_Nil, list);
+};
+var elm$core$List$foldrHelper = F4(
+	function (fn, acc, ctr, ls) {
+		if (!ls.b) {
+			return acc;
+		} else {
+			var a = ls.a;
+			var r1 = ls.b;
+			if (!r1.b) {
+				return A2(fn, a, acc);
+			} else {
+				var b = r1.a;
+				var r2 = r1.b;
+				if (!r2.b) {
+					return A2(
+						fn,
+						a,
+						A2(fn, b, acc));
+				} else {
+					var c = r2.a;
+					var r3 = r2.b;
+					if (!r3.b) {
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(fn, c, acc)));
+					} else {
+						var d = r3.a;
+						var r4 = r3.b;
+						var res = (ctr > 500) ? A3(
+							elm$core$List$foldl,
+							fn,
+							acc,
+							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(
+									fn,
+									c,
+									A2(fn, d, res))));
+					}
+				}
+			}
+		}
+	});
+var elm$core$List$foldr = F3(
+	function (fn, acc, ls) {
+		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
+	});
+var elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
 	});
 var author$project$Main$checkForMatches = F3(
 	function (viewmode, needle, haylist) {
@@ -4798,8 +4823,6 @@ var author$project$Main$checkForMatches = F3(
 			haylist);
 	});
 var author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
-var elm$core$Basics$False = {$: 'False'};
-var elm$core$Basics$True = {$: 'True'};
 var elm$core$Result$isOk = function (result) {
 	if (result.$ === 'Ok') {
 		return true;
@@ -6415,11 +6438,6 @@ var elm$http$Http$get = F2(
 				withCredentials: false
 			});
 	});
-var elm$core$Basics$composeL = F3(
-	function (g, f, x) {
-		return g(
-			f(x));
-	});
 var elm$core$Task$onError = _Scheduler_onError;
 var elm$core$Task$attempt = F2(
 	function (resultToMessage, task) {
@@ -6620,27 +6638,6 @@ var elm$core$List$append = F2(
 var elm$core$List$concat = function (lists) {
 	return A3(elm$core$List$foldr, elm$core$List$append, _List_Nil, lists);
 };
-var elm$core$List$any = F2(
-	function (isOkay, list) {
-		any:
-		while (true) {
-			if (!list.b) {
-				return false;
-			} else {
-				var x = list.a;
-				var xs = list.b;
-				if (isOkay(x)) {
-					return true;
-				} else {
-					var $temp$isOkay = isOkay,
-						$temp$list = xs;
-					isOkay = $temp$isOkay;
-					list = $temp$list;
-					continue any;
-				}
-			}
-		}
-	});
 var elm$core$List$member = F2(
 	function (x, xs) {
 		return A2(
