@@ -4616,6 +4616,13 @@ var elm$core$List$any = F2(
 			}
 		}
 	});
+var elm$core$List$all = F2(
+	function (isOkay, list) {
+		return !A2(
+			elm$core$List$any,
+			A2(elm$core$Basics$composeL, elm$core$Basics$not, isOkay),
+			list);
+	});
 var elm$core$String$split = F2(
 	function (sep, string) {
 		return _List_fromArray(
@@ -4637,13 +4644,10 @@ var author$project$Main$listMatch = F3(
 					boolMatchVal(hay),
 					needlelist) ? elm$core$Maybe$Just(author$project$Main$Yes) : elm$core$Maybe$Just(author$project$Main$No);
 			case 'ShowMatched':
-				return (!A2(
-					elm$core$List$any,
-					A2(
-						elm$core$Basics$composeL,
-						elm$core$Basics$not,
-						boolMatchVal(hay)),
-					needlelist)) ? elm$core$Maybe$Just(author$project$Main$Yes) : elm$core$Maybe$Just(author$project$Main$No);
+				return A2(
+					elm$core$List$all,
+					boolMatchVal(hay),
+					needlelist) ? elm$core$Maybe$Just(author$project$Main$Yes) : elm$core$Maybe$Just(author$project$Main$No);
 			default:
 				return elm$core$Maybe$Nothing;
 		}

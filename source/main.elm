@@ -700,8 +700,7 @@ listMatch viewmode needle hay =
             Just No
 
         ShowMatched ->
-          -- not (any (not << isOkay) list)
-          if not (List.any (not << boolMatchVal hay) needlelist) then
+          if List.all (boolMatchVal hay) needlelist then
             Just Yes
           else
             Just No
