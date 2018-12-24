@@ -695,9 +695,6 @@ listMatch viewmode needle hay =
             False
 
     in
-    {- the map-reduce paradigm is adopted to
-       - get the final value
-    -}
     case viewmode of
         ShowAny ->
           if List.any (boolMatchVal hay) needlelist == True then
