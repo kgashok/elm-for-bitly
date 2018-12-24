@@ -647,63 +647,23 @@ listMatch viewmode needle hay =
         needlelist =
             String.split " " needle
 
-        {--
-        resultOfAll x accumulator =
-            case ( x, accumulator ) of
-                ( Just No, _ ) ->
-                    Just No
-
-                ( Just Yes, Just No ) ->
-                    Just No
-
-                ( Just Yes, _ ) ->
-                    Just Yes
-
-                ( _, Just Yes ) ->
-                    Just Yes
-
-                ( _, _ ) ->
-                    Nothing
-
-        resultOfAny x accumulator =
-            {--
-            let
-                _ = Debug.log "resultOfAny (x, accumulator)" (x, accumulator)            
-            in
-            --}
-            case ( x, accumulator ) of
-                ( Just No, Just Yes ) ->
-                    Just Yes
-
-                ( Just Yes, _ ) ->
-                    Just Yes
-
-                ( _, Just Yes ) ->
-                    Just Yes
-
-                ( _, Just No ) ->
-                    Just No
-
-                ( _, _ ) ->
-                    Nothing
-        --}
-        
-        boolMatchVal h token = 
-          isMatch token h == Just Yes
-
+        boolMatchVal h token =
+            isMatch token h == Just Yes
     in
     case viewmode of
         ShowAny ->
-          if List.any (boolMatchVal hay) needlelist then
-            Just Yes
-          else
-            Just No
+            if List.any (boolMatchVal hay) needlelist then
+                Just Yes
+
+            else
+                Just No
 
         ShowMatched ->
-          if List.all (boolMatchVal hay) needlelist then
-            Just Yes
-          else
-            Just No
+            if List.all (boolMatchVal hay) needlelist then
+                Just Yes
+
+            else
+                Just No
 
         -- should never get called, actually!
         ShowAll ->
