@@ -689,22 +689,19 @@ listMatch viewmode needle hay =
         --}
         
         boolMatchVal h token = 
-          if (isMatch token h == Just Yes) then 
-            True
-          else
-            False
+          isMatch token h == Just Yes
 
     in
     case viewmode of
         ShowAny ->
-          if List.any (boolMatchVal hay) needlelist == True then
+          if List.any (boolMatchVal hay) needlelist then
             Just Yes
           else
             Just No
 
         ShowMatched ->
           -- not (any (not << isOkay) list)
-          if not (List.any (not << boolMatchVal hay) needlelist) == True then
+          if not (List.any (not << boolMatchVal hay) needlelist) then
             Just Yes
           else
             Just No

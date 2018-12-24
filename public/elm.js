@@ -4588,13 +4588,13 @@ var author$project$Main$isMatch = F2(
 			return elm$core$Maybe$Nothing;
 		}
 	});
-var elm$core$Basics$False = {$: 'False'};
-var elm$core$Basics$True = {$: 'True'};
 var elm$core$Basics$composeL = F3(
 	function (g, f, x) {
 		return g(
 			f(x));
 	});
+var elm$core$Basics$False = {$: 'False'};
+var elm$core$Basics$True = {$: 'True'};
 var elm$core$List$any = F2(
 	function (isOkay, list) {
 		any:
@@ -4628,7 +4628,7 @@ var author$project$Main$listMatch = F3(
 			function (h, token) {
 				return _Utils_eq(
 					A2(author$project$Main$isMatch, token, h),
-					elm$core$Maybe$Just(author$project$Main$Yes)) ? true : false;
+					elm$core$Maybe$Just(author$project$Main$Yes));
 			});
 		switch (viewmode.$) {
 			case 'ShowAny':
