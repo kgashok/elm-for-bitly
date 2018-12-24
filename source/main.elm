@@ -66,9 +66,8 @@ type Match
 
 
 
+-- using ViewMode for now to toggle between various modes
 {--
- -- using ViewMode for now to toggle between various modes 
- 
 type MatchMode
     = AllNeedles
     | AnyOneNeedle
@@ -225,7 +224,7 @@ update msg model =
                             "deep docs"
 
                         _ ->
-                            "medium deferred python"
+                            "entharo youtu.be"
 
                 model_ =
                     { model
@@ -636,8 +635,8 @@ isMatch needle hay =
 {-| listMatch checks for match of any or all of tokens in a list
 -- Depending upon the ViewMode, the function will
 -- return the appropriate value
-listMatch ShowMatched "two points" "one two three main points" == True
-listMatch ShowAny "two points" "one two three..." == True
+listMatch ShowMatched "two points" "one two three main points" == Just True
+listMatch ShowAny "two points" "one two three..." == Just True
 -}
 listMatch : ViewMode -> String -> String -> Maybe Bool
 listMatch viewmode tokenstring text =
@@ -663,6 +662,7 @@ listMatch viewmode tokenstring text =
         -- should never get called, actually!
         ShowAll ->
             Nothing
+
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
 -- The 'match' attribute is set if there is match with the needle

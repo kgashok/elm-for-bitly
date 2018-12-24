@@ -7047,7 +7047,7 @@ var author$project$Main$update = F2(
 						case 'Test':
 							return 'deep docs';
 						default:
-							return 'medium deferred python';
+							return 'entharo youtu.be';
 					}
 				}();
 				var model_ = _Utils_update(
