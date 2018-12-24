@@ -86,7 +86,7 @@ type alias HayString =
     , short : Maybe String -- not every link has been customized to be easily recalled
     , tags : List String
     , dump : String -- dump of everything in the above fields
-    , match : Maybe Match -- why not Bool? See documentation for Match type
+    , match : Maybe Bool -- why not Bool? See documentation for Match type
     }
 
 
@@ -225,7 +225,7 @@ update msg model =
                             "deep docs"
 
                         _ ->
-                            "medium deferred"
+                            "medium deferred python"
 
                 model_ =
                     { model
@@ -636,48 +636,33 @@ isMatch needle hay =
 {-| listMatch checks for match of any or all of tokens in a list
 -- Depending upon the ViewMode, the function will
 -- return the appropriate value
-listMatch ShowMatched "two points" "one two three main points"
---> Just Yes
-listMatch ShowAny "two points" "one two three..."
---> Just Yes
+listMatch ShowMatched "two points" "one two three main points" == True
+listMatch ShowAny "two points" "one two three..." == True
 -}
-listMatch : ViewMode -> String -> String -> Maybe Match
-listMatch viewmode needle hay =
+listMatch : ViewMode -> String -> String -> Maybe Bool
+listMatch viewmode tokenstring text =
     let
         needlelist =
-            String.split " " needle
+            String.split " " (String.trim <| tokenstring)
 
-        boolMatchVal h token =
-            let
-                _ =
-                    Debug.log "(token hay)" ( token, hay )
-            in
-            case isMatch token h of
-                Just No ->
-                    False
+        boolIsMatch hay needle =
+            case isMatch needle hay of
+                Just Yes ->
+                    True
 
                 _ ->
-                    True
+                    False
     in
     case viewmode of
         ShowAny ->
-            if List.any (boolMatchVal hay) needlelist then
-                Just Yes
-
-            else
-                Just No
+            Just <| List.any (boolIsMatch text) needlelist
 
         ShowMatched ->
-            if List.all (boolMatchVal hay) needlelist then
-                Just Yes
-
-            else
-                Just No
+            Just <| List.all (boolIsMatch text) needlelist
 
         -- should never get called, actually!
         ShowAll ->
             Nothing
-
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
 -- The 'match' attribute is set if there is match with the needle
@@ -825,7 +810,7 @@ generateListView viewmode haylist =
     let
         items =
             haylist
-                |> List.filter (\x -> viewmode == ShowAll || x.match == Just Yes)
+                |> List.filter (\x -> viewmode == ShowAll || x.match == Just True)
                 |> List.map displayURL
     in
     div [] [ ul [] items ]
@@ -847,7 +832,7 @@ displayURL hs =
             else
                 (++) "tags: " <| String.join ", " hs.tags
     in
-    li [ classList [ ( "matched", hs.match == Just Yes ) ] ]
+    li [ classList [ ( "matched", hs.match == Just True ) ] ]
         [ div [] [ text hs.hay ]
         , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
         , div [ classList [ ( "hayKey", True ) ] ]

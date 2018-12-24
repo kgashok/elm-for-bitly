@@ -4590,7 +4590,6 @@ var author$project$Main$isMatch = F2(
 	});
 var elm$core$Basics$False = {$: 'False'};
 var elm$core$Basics$True = {$: 'True'};
-var elm$core$Debug$log = _Debug_log;
 var elm$core$Basics$composeL = F3(
 	function (g, f, x) {
 		return g(
@@ -4630,33 +4629,34 @@ var elm$core$String$split = F2(
 			A2(_String_split, sep, string));
 	});
 var author$project$Main$listMatch = F3(
-	function (viewmode, needle, hay) {
-		var needlelist = A2(elm$core$String$split, ' ', needle);
-		var boolMatchVal = F2(
-			function (h, token) {
-				var _n1 = A2(
-					elm$core$Debug$log,
-					'(token hay)',
-					_Utils_Tuple2(token, hay));
-				var _n2 = A2(author$project$Main$isMatch, token, h);
-				if ((_n2.$ === 'Just') && (_n2.a.$ === 'No')) {
-					var _n3 = _n2.a;
-					return false;
-				} else {
+	function (viewmode, tokenstring, text) {
+		var needlelist = A2(
+			elm$core$String$split,
+			' ',
+			elm$core$String$trim(tokenstring));
+		var boolIsMatch = F2(
+			function (hay, needle) {
+				var _n1 = A2(author$project$Main$isMatch, needle, hay);
+				if ((_n1.$ === 'Just') && (_n1.a.$ === 'Yes')) {
+					var _n2 = _n1.a;
 					return true;
+				} else {
+					return false;
 				}
 			});
 		switch (viewmode.$) {
 			case 'ShowAny':
-				return A2(
-					elm$core$List$any,
-					boolMatchVal(hay),
-					needlelist) ? elm$core$Maybe$Just(author$project$Main$Yes) : elm$core$Maybe$Just(author$project$Main$No);
+				return elm$core$Maybe$Just(
+					A2(
+						elm$core$List$any,
+						boolIsMatch(text),
+						needlelist));
 			case 'ShowMatched':
-				return A2(
-					elm$core$List$all,
-					boolMatchVal(hay),
-					needlelist) ? elm$core$Maybe$Just(author$project$Main$Yes) : elm$core$Maybe$Just(author$project$Main$No);
+				return elm$core$Maybe$Just(
+					A2(
+						elm$core$List$all,
+						boolIsMatch(text),
+						needlelist));
 			default:
 				return elm$core$Maybe$Nothing;
 		}
@@ -7047,7 +7047,7 @@ var author$project$Main$update = F2(
 						case 'Test':
 							return 'deep docs';
 						default:
-							return 'medium deferred';
+							return 'medium deferred python';
 					}
 				}();
 				var model_ = _Utils_update(
@@ -7440,7 +7440,7 @@ var author$project$Main$displayURL = function (hs) {
 						'matched',
 						_Utils_eq(
 							hs.match,
-							elm$core$Maybe$Just(author$project$Main$Yes)))
+							elm$core$Maybe$Just(true)))
 					]))
 			]),
 		_List_fromArray(
@@ -7518,7 +7518,7 @@ var author$project$Main$generateListView = F2(
 				function (x) {
 					return _Utils_eq(viewmode, author$project$Main$ShowAll) || _Utils_eq(
 						x.match,
-						elm$core$Maybe$Just(author$project$Main$Yes));
+						elm$core$Maybe$Just(true));
 				},
 				haylist));
 		return A2(
