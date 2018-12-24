@@ -7047,7 +7047,7 @@ var author$project$Main$update = F2(
 						case 'Test':
 							return 'deep docs';
 						default:
-							return 'entharo youtu.be';
+							return 'entharo endaro';
 					}
 				}();
 				var model_ = _Utils_update(
@@ -7070,7 +7070,11 @@ var author$project$Main$update = F2(
 				}();
 				var _n1 = model_.data;
 				if (_n1.$ === 'Production') {
-					return _Utils_Tuple2(model_, dataRequestTask);
+					return _Utils_Tuple2(
+						_Utils_update(
+							model_,
+							{linkcount: 3600}),
+						dataRequestTask);
 				} else {
 					return _Utils_Tuple2(
 						model_,

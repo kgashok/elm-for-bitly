@@ -224,7 +224,7 @@ update msg model =
                             "deep docs"
 
                         _ ->
-                            "entharo youtu.be"
+                            "entharo endaro"
 
                 model_ =
                     { model
@@ -246,7 +246,7 @@ update msg model =
             in
             case model_.data of
                 Production ->
-                    ( model_, dataRequestTask )
+                    ( {model_ | linkcount = 3600}, dataRequestTask )
 
                 _ ->
                     ( model_, httpCommand model.dataAPI )
