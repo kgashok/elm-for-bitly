@@ -647,7 +647,7 @@ listMatch viewmode needle hay =
         needlelist =
             String.split " " needle
 
-        -- _ = Debug.log "hay " hay
+        {--
         resultOfAll x accumulator =
             case ( x, accumulator ) of
                 ( Just No, _ ) ->
@@ -686,7 +686,8 @@ listMatch viewmode needle hay =
 
                 ( _, _ ) ->
                     Nothing
-
+        --}
+        
         boolMatchVal h token = 
           if (isMatch token h == Just Yes) then 
             True
