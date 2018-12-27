@@ -5163,7 +5163,7 @@ var author$project$Main$init = function (_n0) {
 						elm$core$Maybe$Nothing),
 						A6(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing)
 					]),
-				linkcount: 1701,
+				linkcount: 3400,
 				needle: 'com junk',
 				offset: 0,
 				pressedKeys: _List_Nil,
@@ -7070,11 +7070,7 @@ var author$project$Main$update = F2(
 				}();
 				var _n1 = model_.data;
 				if (_n1.$ === 'Production') {
-					return _Utils_Tuple2(
-						_Utils_update(
-							model_,
-							{linkcount: 3600}),
-						dataRequestTask);
+					return _Utils_Tuple2(model_, dataRequestTask);
 				} else {
 					return _Utils_Tuple2(
 						model_,
@@ -7404,7 +7400,19 @@ var author$project$Main$footer = A2(
 				]),
 			_List_fromArray(
 				[
-					elm$html$Html$text('Provide feedback?')
+					elm$html$Html$text('Provide feedback?;')
+				])),
+			A2(
+			elm$html$Html$a,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$href(author$project$Main$gitRepo + '/commits/glitch'),
+					elm$html$Html$Attributes$target('_blank'),
+					elm$html$Html$Attributes$rel('noopener noreferrer')
+				]),
+			_List_fromArray(
+				[
+					elm$html$Html$text(' last checkin')
 				]))
 		]));
 var elm$core$List$isEmpty = function (xs) {

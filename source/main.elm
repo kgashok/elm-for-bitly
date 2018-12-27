@@ -142,7 +142,7 @@ init _ =
       , dataAPI = testJson
       , data = Test
       , viewMode = ShowAll
-      , linkcount = 1701
+      , linkcount = 3400
       , offset = 0
       , pressedKeys = []
       , darkMode = False
@@ -246,7 +246,7 @@ update msg model =
             in
             case model_.data of
                 Production ->
-                    ( {model_ | linkcount = 3600}, dataRequestTask )
+                    ( model_, dataRequestTask )
 
                 _ ->
                     ( model_, httpCommand model.dataAPI )
@@ -798,7 +798,13 @@ footer =
             , target "_blank"
             , rel "noopener noreferrer"
             ]
-            [ text "Provide feedback?" ]
+            [ text "Provide feedback?;" ]
+        , a
+            [ href (gitRepo ++ "/commits/glitch")
+            , target "_blank"
+            , rel "noopener noreferrer"
+            ]
+            [ text " last checkin" ]
         ]
 
 

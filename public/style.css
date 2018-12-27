@@ -62,8 +62,3 @@
 .dark #title { background: #282c34; } 
 .dark #error { background-color: DarkGray} 
 
-.dark code[class*=language-],
-.dark table tbody>tr:nth-child(odd)>td,
-.dark table tbody>tr:nth-child(odd)>th {
-  background: #282c34
-}
