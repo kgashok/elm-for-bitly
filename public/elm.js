@@ -5163,7 +5163,7 @@ var author$project$Main$init = function (_n0) {
 						elm$core$Maybe$Nothing),
 						A6(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing)
 					]),
-				linkcount: 3400,
+				linkcount: 1701,
 				needle: 'com junk',
 				offset: 0,
 				pressedKeys: _List_Nil,
