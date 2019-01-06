@@ -278,11 +278,12 @@ update msg model =
             )
 
         SearchNeedle ->
-            ( { model
-                | hay = checkForMatches model.viewMode model.needle model.hay
+            (
+              { model
+                 | hay = checkForMatches model.viewMode model.needle model.hay
               }
             , Cmd.none
-            )
+            )                           
 
         NamesReceived (Ok nicknames) ->
             ( { model
@@ -678,7 +679,8 @@ listMatch viewmode tokenstring text =
 
         -- should never get called, actually!
         ShowAll ->
-            Nothing
+            Just <| List.all (boolIsMatch text) needlelist
+            -- Nothing
 
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects

@@ -4658,7 +4658,11 @@ var author$project$Main$listMatch = F3(
 						boolIsMatch(text),
 						needlelist));
 			default:
-				return elm$core$Maybe$Nothing;
+				return elm$core$Maybe$Just(
+					A2(
+						elm$core$List$all,
+						boolIsMatch(text),
+						needlelist));
 		}
 	});
 var elm$core$Basics$apR = F2(
