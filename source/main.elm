@@ -198,6 +198,7 @@ type Msg
     | SwitchTo DataSource
     | ChangeViewTo ViewMode
     | SendHttpRequest
+    | FetchLatest
     | DataReceived (Result Http.Error (List Link))
     | DataSReceived (Result Http.Error (List (List Link)))
     | IncDataReceived (Result Http.Error (List Link))
@@ -213,6 +214,9 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        FetchLatest ->
+            ( model, Cmd.none )
+
         SendHttpRequest ->
             let
                 needle_ =
@@ -224,7 +228,7 @@ update msg model =
                             "deep docs"
 
                         _ ->
-                            "entharo endaro"
+                            "pc2"
 
                 model_ =
                     { model
@@ -725,7 +729,10 @@ view model =
             , ( "use Test data", model.data == Test, SwitchTo Test )
             , ( "Access bitly API", model.data == Production, SwitchTo Production )
             ]
-        , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
+        , span []
+            [ button [ onClick FetchLatest ] [ text "Fetch Latest" ]
+            , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
+            ]
         , div []
             [ text " limited to "
             , input [ placeholder (String.fromInt model.linkcount), onInput UpdateLinkCount ] []

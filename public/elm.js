@@ -7038,6 +7038,8 @@ var ohanhi$keyboard$Keyboard$update = ohanhi$keyboard$Keyboard$updateWithParser(
 var author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
+			case 'FetchLatest':
+				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
 			case 'SendHttpRequest':
 				var needle_ = function () {
 					var _n3 = model.data;
@@ -7047,7 +7049,7 @@ var author$project$Main$update = F2(
 						case 'Test':
 							return 'deep docs';
 						default:
-							return 'entharo endaro';
+							return 'pc2';
 					}
 				}();
 				var model_ = _Utils_update(
@@ -7346,6 +7348,7 @@ var author$project$Main$update = F2(
 var author$project$Main$ChangeViewTo = function (a) {
 	return {$: 'ChangeViewTo', a: a};
 };
+var author$project$Main$FetchLatest = {$: 'FetchLatest'};
 var author$project$Main$Production = {$: 'Production'};
 var author$project$Main$SearchNeedle = {$: 'SearchNeedle'};
 var author$project$Main$SendHttpRequest = {$: 'SendHttpRequest'};
@@ -7600,6 +7603,7 @@ var author$project$Main$viewPicker = function (options) {
 };
 var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$hr = _VirtualDom_node('hr');
+var elm$html$Html$span = _VirtualDom_node('span');
 var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
 var elm$html$Html$Attributes$value = elm$html$Html$Attributes$stringProperty('value');
 var elm$html$Html$Events$alwaysStop = function (x) {
@@ -7703,14 +7707,30 @@ var author$project$Main$view = function (model) {
 						author$project$Main$SwitchTo(author$project$Main$Production))
 					])),
 				A2(
-				elm$html$Html$button,
+				elm$html$Html$span,
+				_List_Nil,
 				_List_fromArray(
 					[
-						elm$html$Html$Events$onClick(author$project$Main$SendHttpRequest)
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text('Fetch URLs')
+						A2(
+						elm$html$Html$button,
+						_List_fromArray(
+							[
+								elm$html$Html$Events$onClick(author$project$Main$FetchLatest)
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text('Fetch Latest')
+							])),
+						A2(
+						elm$html$Html$button,
+						_List_fromArray(
+							[
+								elm$html$Html$Events$onClick(author$project$Main$SendHttpRequest)
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text('Fetch URLs')
+							]))
 					])),
 				A2(
 				elm$html$Html$div,
