@@ -5859,6 +5859,7 @@ var author$project$Main$subscriptions = function (model) {
 				ohanhi$keyboard$Keyboard$downs(author$project$Main$KeyDown)
 			]));
 };
+var author$project$Main$Production = {$: 'Production'};
 var author$project$Main$ShowAny = {$: 'ShowAny'};
 var author$project$Main$ShowMatched = {$: 'ShowMatched'};
 var author$project$Main$apiKey = '1ef1315a2efebd7557de137f776602276d833cb9';
@@ -7039,7 +7040,21 @@ var author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'FetchLatest':
-				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+				var model_ = _Utils_update(
+					model,
+					{
+						data: author$project$Main$Production,
+						dataAPI: author$project$Main$bitlyAPI,
+						errorMessage: elm$core$Maybe$Just('Getting the latest 100 -> '),
+						hay: _List_Nil,
+						linkcount: 100,
+						needle: '',
+						offset: 0,
+						viewMode: author$project$Main$ShowAll
+					});
+				return _Utils_Tuple2(
+					model_,
+					A3(author$project$Main$bitlyIncRequest, model_.dataAPI, model_.linkcount, model_.offset));
 			case 'SendHttpRequest':
 				var needle_ = function () {
 					var _n3 = model.data;
@@ -7349,7 +7364,6 @@ var author$project$Main$ChangeViewTo = function (a) {
 	return {$: 'ChangeViewTo', a: a};
 };
 var author$project$Main$FetchLatest = {$: 'FetchLatest'};
-var author$project$Main$Production = {$: 'Production'};
 var author$project$Main$SearchNeedle = {$: 'SearchNeedle'};
 var author$project$Main$SendHttpRequest = {$: 'SendHttpRequest'};
 var author$project$Main$SimpleList = {$: 'SimpleList'};

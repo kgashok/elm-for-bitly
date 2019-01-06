@@ -215,7 +215,20 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         FetchLatest ->
-            ( model, Cmd.none )
+            let
+                model_ =
+                    { model
+                        | needle = ""
+                        , data = Production
+                        , dataAPI = bitlyAPI
+                        , linkcount = 100
+                        , viewMode = ShowAll
+                        , offset = 0
+                        , hay = []
+                        , errorMessage = Just "Getting the latest 100 -> "
+                    }
+            in
+            ( model_, bitlyIncRequest model_.dataAPI model_.linkcount model_.offset )
 
         SendHttpRequest ->
             let
