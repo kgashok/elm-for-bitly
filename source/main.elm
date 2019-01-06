@@ -130,26 +130,27 @@ type alias Model =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( { val = 0
-      , needle = "com junk"
+      , needle = ""
       , hay =
             [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" Nothing
             , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" Nothing
             , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "http://junk.com" Nothing
             , HayString "http://abcde.org" "" Nothing [] "http://abcde.org" Nothing
             ]
-      , errorMessage = Nothing
+      , errorMessage = Just "Getting latest 100...->"
       , errorStatus = False
-      , dataAPI = testJson
-      , data = Test
+      , dataAPI = bitlyAPI
+      , data = Production
       , viewMode = ShowAll
-      , linkcount = 1701
+      , linkcount = 100
       , offset = 0
       , pressedKeys = []
       , darkMode = False
       }
-        |> (\model -> { model | hay = checkForMatches model.viewMode model.needle model.hay })
-      -- , Task.perform (always SearchNeedle)
-    , Cmd.none
+        |> (\model -> { model | hay = checkForMatches model.viewMode model.needle [] })
+    , bitlyIncRequest bitlyAPI 100 0
+      --, Task.perform (always FetchLatest)
+      -- , Cmd.none
     )
 
 
@@ -278,12 +279,11 @@ update msg model =
             )
 
         SearchNeedle ->
-            (
-              { model
-                 | hay = checkForMatches model.viewMode model.needle model.hay
+            ( { model
+                | hay = checkForMatches model.viewMode model.needle model.hay
               }
             , Cmd.none
-            )                           
+            )
 
         NamesReceived (Ok nicknames) ->
             ( { model
@@ -680,7 +680,10 @@ listMatch viewmode tokenstring text =
         -- should never get called, actually!
         ShowAll ->
             Just <| List.all (boolIsMatch text) needlelist
-            -- Nothing
+
+
+
+-- Nothing
 
 
 {-| makeHayFromUrls converts a List of Link object into a List of Haystring objects
