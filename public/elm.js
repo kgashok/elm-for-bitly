@@ -7730,23 +7730,23 @@ var author$project$Main$view = function (model) {
 						_List_fromArray(
 							[
 								elm$html$Html$text('Fetch URLs')
-							]))
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(' limited to '),
+							])),
 						A2(
-						elm$html$Html$input,
+						elm$html$Html$div,
+						_List_Nil,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$placeholder(
-								elm$core$String$fromInt(model.linkcount)),
-								elm$html$Html$Events$onInput(author$project$Main$UpdateLinkCount)
-							]),
-						_List_Nil)
+								elm$html$Html$text(' limited to '),
+								A2(
+								elm$html$Html$input,
+								_List_fromArray(
+									[
+										elm$html$Html$Attributes$placeholder(
+										elm$core$String$fromInt(model.linkcount)),
+										elm$html$Html$Events$onInput(author$project$Main$UpdateLinkCount)
+									]),
+								_List_Nil)
+							]))
 					])),
 				A2(
 				elm$html$Html$div,

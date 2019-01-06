@@ -732,10 +732,10 @@ view model =
         , span []
             [ button [ onClick FetchLatest ] [ text "Fetch Latest" ]
             , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
-            ]
-        , div []
-            [ text " limited to "
-            , input [ placeholder (String.fromInt model.linkcount), onInput UpdateLinkCount ] []
+            , div []
+                [ text " limited to "
+                , input [ placeholder (String.fromInt model.linkcount), onInput UpdateLinkCount ] []
+                ]
             ]
         , div [ id "error", classList [ ( "failed", model.errorStatus == True ) ] ]
             [ text (Maybe.withDefault "status: Ok" model.errorMessage) ]

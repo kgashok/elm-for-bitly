@@ -62,3 +62,7 @@
 .dark #title { background: #282c34; } 
 .dark #error { background-color: DarkGray} 
 
+span {
+    padding:5px; 
+    display:block;
+}
