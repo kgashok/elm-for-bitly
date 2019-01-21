@@ -779,6 +779,115 @@ function _Utils_ap(xs, ys)
 
 
 
+// MATH
+
+var _Basics_add = F2(function(a, b) { return a + b; });
+var _Basics_sub = F2(function(a, b) { return a - b; });
+var _Basics_mul = F2(function(a, b) { return a * b; });
+var _Basics_fdiv = F2(function(a, b) { return a / b; });
+var _Basics_idiv = F2(function(a, b) { return (a / b) | 0; });
+var _Basics_pow = F2(Math.pow);
+
+var _Basics_remainderBy = F2(function(b, a) { return a % b; });
+
+// https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/divmodnote-letter.pdf
+var _Basics_modBy = F2(function(modulus, x)
+{
+	var answer = x % modulus;
+	return modulus === 0
+		? _Debug_crash(11)
+		:
+	((answer > 0 && modulus < 0) || (answer < 0 && modulus > 0))
+		? answer + modulus
+		: answer;
+});
+
+
+// TRIGONOMETRY
+
+var _Basics_pi = Math.PI;
+var _Basics_e = Math.E;
+var _Basics_cos = Math.cos;
+var _Basics_sin = Math.sin;
+var _Basics_tan = Math.tan;
+var _Basics_acos = Math.acos;
+var _Basics_asin = Math.asin;
+var _Basics_atan = Math.atan;
+var _Basics_atan2 = F2(Math.atan2);
+
+
+// MORE MATH
+
+function _Basics_toFloat(x) { return x; }
+function _Basics_truncate(n) { return n | 0; }
+function _Basics_isInfinite(n) { return n === Infinity || n === -Infinity; }
+
+var _Basics_ceiling = Math.ceil;
+var _Basics_floor = Math.floor;
+var _Basics_round = Math.round;
+var _Basics_sqrt = Math.sqrt;
+var _Basics_log = Math.log;
+var _Basics_isNaN = isNaN;
+
+
+// BOOLEANS
+
+function _Basics_not(bool) { return !bool; }
+var _Basics_and = F2(function(a, b) { return a && b; });
+var _Basics_or  = F2(function(a, b) { return a || b; });
+var _Basics_xor = F2(function(a, b) { return a !== b; });
+
+
+
+function _Char_toCode(char)
+{
+	var code = char.charCodeAt(0);
+	if (0xD800 <= code && code <= 0xDBFF)
+	{
+		return (code - 0xD800) * 0x400 + char.charCodeAt(1) - 0xDC00 + 0x10000
+	}
+	return code;
+}
+
+function _Char_fromCode(code)
+{
+	return _Utils_chr(
+		(code < 0 || 0x10FFFF < code)
+			? '\uFFFD'
+			:
+		(code <= 0xFFFF)
+			? String.fromCharCode(code)
+			:
+		(code -= 0x10000,
+			String.fromCharCode(Math.floor(code / 0x400) + 0xD800)
+			+
+			String.fromCharCode(code % 0x400 + 0xDC00)
+		)
+	);
+}
+
+function _Char_toUpper(char)
+{
+	return _Utils_chr(char.toUpperCase());
+}
+
+function _Char_toLower(char)
+{
+	return _Utils_chr(char.toLowerCase());
+}
+
+function _Char_toLocaleUpper(char)
+{
+	return _Utils_chr(char.toLocaleUpperCase());
+}
+
+function _Char_toLocaleLower(char)
+{
+	return _Utils_chr(char.toLocaleLowerCase());
+}
+
+
+
 var _String_cons = F2(function(chr, str)
 {
 	return chr + str;
@@ -1088,115 +1197,6 @@ function _String_fromList(chars)
 	return _List_toArray(chars).join('');
 }
 
-
-
-
-// MATH
-
-var _Basics_add = F2(function(a, b) { return a + b; });
-var _Basics_sub = F2(function(a, b) { return a - b; });
-var _Basics_mul = F2(function(a, b) { return a * b; });
-var _Basics_fdiv = F2(function(a, b) { return a / b; });
-var _Basics_idiv = F2(function(a, b) { return (a / b) | 0; });
-var _Basics_pow = F2(Math.pow);
-
-var _Basics_remainderBy = F2(function(b, a) { return a % b; });
-
-// https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/divmodnote-letter.pdf
-var _Basics_modBy = F2(function(modulus, x)
-{
-	var answer = x % modulus;
-	return modulus === 0
-		? _Debug_crash(11)
-		:
-	((answer > 0 && modulus < 0) || (answer < 0 && modulus > 0))
-		? answer + modulus
-		: answer;
-});
-
-
-// TRIGONOMETRY
-
-var _Basics_pi = Math.PI;
-var _Basics_e = Math.E;
-var _Basics_cos = Math.cos;
-var _Basics_sin = Math.sin;
-var _Basics_tan = Math.tan;
-var _Basics_acos = Math.acos;
-var _Basics_asin = Math.asin;
-var _Basics_atan = Math.atan;
-var _Basics_atan2 = F2(Math.atan2);
-
-
-// MORE MATH
-
-function _Basics_toFloat(x) { return x; }
-function _Basics_truncate(n) { return n | 0; }
-function _Basics_isInfinite(n) { return n === Infinity || n === -Infinity; }
-
-var _Basics_ceiling = Math.ceil;
-var _Basics_floor = Math.floor;
-var _Basics_round = Math.round;
-var _Basics_sqrt = Math.sqrt;
-var _Basics_log = Math.log;
-var _Basics_isNaN = isNaN;
-
-
-// BOOLEANS
-
-function _Basics_not(bool) { return !bool; }
-var _Basics_and = F2(function(a, b) { return a && b; });
-var _Basics_or  = F2(function(a, b) { return a || b; });
-var _Basics_xor = F2(function(a, b) { return a !== b; });
-
-
-
-function _Char_toCode(char)
-{
-	var code = char.charCodeAt(0);
-	if (0xD800 <= code && code <= 0xDBFF)
-	{
-		return (code - 0xD800) * 0x400 + char.charCodeAt(1) - 0xDC00 + 0x10000
-	}
-	return code;
-}
-
-function _Char_fromCode(code)
-{
-	return _Utils_chr(
-		(code < 0 || 0x10FFFF < code)
-			? '\uFFFD'
-			:
-		(code <= 0xFFFF)
-			? String.fromCharCode(code)
-			:
-		(code -= 0x10000,
-			String.fromCharCode(Math.floor(code / 0x400) + 0xD800)
-			+
-			String.fromCharCode(code % 0x400 + 0xDC00)
-		)
-	);
-}
-
-function _Char_toUpper(char)
-{
-	return _Utils_chr(char.toUpperCase());
-}
-
-function _Char_toLower(char)
-{
-	return _Utils_chr(char.toLowerCase());
-}
-
-function _Char_toLocaleUpper(char)
-{
-	return _Utils_chr(char.toLocaleUpperCase());
-}
-
-function _Char_toLocaleLower(char)
-{
-	return _Utils_chr(char.toLocaleLowerCase());
-}
 
 
 
@@ -4472,7 +4472,7 @@ var author$project$Main$HayString = F6(
 		return {dump: dump, hay: hay, match: match, _short: _short, tags: tags, title: title};
 	});
 var author$project$Main$Production = {$: 'Production'};
-var author$project$Main$ShowAll = {$: 'ShowAll'};
+var author$project$Main$ShowMatched = {$: 'ShowMatched'};
 var author$project$Main$apiKey = '1ef1315a2efebd7557de137f776602276d833cb9';
 var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
 var elm$core$Array$foldr = F3(
@@ -4556,19 +4556,12 @@ var elm$core$Set$toList = function (_n0) {
 };
 var elm$core$Basics$append = _Utils_append;
 var author$project$Main$bitlyAPI = 'https://api-ssl.bitly.com/v3/user/link_history?access_token=' + author$project$Main$apiKey;
-var author$project$Main$IncDataReceived = function (a) {
-	return {$: 'IncDataReceived', a: a};
+var author$project$Main$DataReceived = function (a) {
+	return {$: 'DataReceived', a: a};
 };
-var elm$core$Maybe$Just = function (a) {
-	return {$: 'Just', a: a};
+var author$project$Main$NamesReceived = function (a) {
+	return {$: 'NamesReceived', a: a};
 };
-var elm$core$Maybe$Nothing = {$: 'Nothing'};
-var elm$core$String$fromInt = _String_fromNumber;
-var author$project$Main$pagesize = elm$core$String$fromInt(100);
-var author$project$Main$Link = F4(
-	function (title, keyword_link, long_url, tags) {
-		return {keyword_link: keyword_link, long_url: long_url, tags: tags, title: title};
-	});
 var elm$core$Array$branchFactor = 32;
 var elm$core$Array$Array_elm_builtin = F4(
 	function (a, b, c, d) {
@@ -4741,6 +4734,10 @@ var elm$core$Array$initialize = F2(
 			return A5(elm$core$Array$initializeHelp, fn, initialFromIndex, len, _List_Nil, tail);
 		}
 	});
+var elm$core$Maybe$Just = function (a) {
+	return {$: 'Just', a: a};
+};
+var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var elm$core$Result$Err = function (a) {
 	return {$: 'Err', a: a};
 };
@@ -4835,6 +4832,7 @@ var elm$core$List$indexedMap = F2(
 			xs);
 	});
 var elm$core$String$all = _String_all;
+var elm$core$String$fromInt = _String_fromNumber;
 var elm$core$String$join = F2(
 	function (sep, chunks) {
 		return A2(
@@ -4960,6 +4958,15 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 	});
 var elm$json$Json$Decode$field = _Json_decodeField;
 var elm$json$Json$Decode$list = _Json_decodeList;
+var elm$json$Json$Decode$string = _Json_decodeString;
+var author$project$Main$nicknamesDecoder = A2(
+	elm$json$Json$Decode$field,
+	'nicknames',
+	elm$json$Json$Decode$list(elm$json$Json$Decode$string));
+var author$project$Main$Link = F4(
+	function (title, keyword_link, long_url, tags) {
+		return {keyword_link: keyword_link, long_url: long_url, tags: tags, title: title};
+	});
 var elm$json$Json$Decode$map4 = _Json_map4;
 var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$oneOf = _Json_oneOf;
@@ -4972,7 +4979,6 @@ var elm$json$Json$Decode$maybe = function (decoder) {
 				elm$json$Json$Decode$succeed(elm$core$Maybe$Nothing)
 			]));
 };
-var elm$json$Json$Decode$string = _Json_decodeString;
 var author$project$Main$linkDecoder = A5(
 	elm$json$Json$Decode$map4,
 	author$project$Main$Link,
@@ -5763,23 +5769,58 @@ var elm$http$Http$send = F2(
 			resultToMessage,
 			elm$http$Http$toTask(request_));
 	});
-var author$project$Main$bitlyIncRequest = F3(
-	function (dataURL, count, offset) {
-		var skipUrl = F2(
-			function (url, o) {
-				return _Utils_ap(
-					url,
-					'&limit=' + _Utils_ap(
-						author$project$Main$pagesize,
-						'&offset=' + elm$core$String$fromInt(o)));
-			});
+var author$project$Main$httpCommand = function (dataURL) {
+	if (dataURL === 'https://api.myjson.com/bins/19yily') {
 		return A2(
 			elm$http$Http$send,
-			author$project$Main$IncDataReceived,
+			author$project$Main$NamesReceived,
+			A2(elm$http$Http$get, dataURL, author$project$Main$nicknamesDecoder));
+	} else {
+		return A2(
+			elm$http$Http$send,
+			author$project$Main$DataReceived,
+			A2(elm$http$Http$get, dataURL, author$project$Main$urlsDecoder));
+	}
+};
+var author$project$Main$pagesize = elm$core$String$fromInt(100);
+var elm$core$Basics$round = _Basics_round;
+var elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var author$project$Main$skipList = F2(
+	function (totalCount, pageSize) {
+		var size = A2(elm$core$Maybe$withDefault, 30, pageSize);
+		var rangeLimit = elm$core$Basics$round(totalCount / size);
+		return A2(
+			elm$core$List$map,
+			function (x) {
+				return x * size;
+			},
+			A2(elm$core$List$range, 0, rangeLimit));
+	});
+var elm$core$String$toInt = _String_toInt;
+var author$project$Main$bitlyBatchRequest = F2(
+	function (dataURL, count) {
+		var skipUrl = F2(
+			function (url, offset) {
+				return url + ('&limit=' + (author$project$Main$pagesize + ('&offset=' + elm$core$String$fromInt(offset))));
+			});
+		return A2(
+			elm$core$List$map,
+			author$project$Main$httpCommand,
 			A2(
-				elm$http$Http$get,
-				A2(skipUrl, dataURL, offset),
-				author$project$Main$urlsDecoder));
+				elm$core$List$map,
+				skipUrl(dataURL),
+				A2(
+					author$project$Main$skipList,
+					count,
+					elm$core$String$toInt(author$project$Main$pagesize))));
 	});
 var author$project$Main$No = {$: 'No'};
 var author$project$Main$Yes = {$: 'Yes'};
@@ -5885,6 +5926,7 @@ var author$project$Main$checkForMatches = F3(
 			},
 			haylist);
 	});
+var elm$core$Platform$Cmd$batch = _Platform_batch;
 var author$project$Main$init = function (_n0) {
 	return _Utils_Tuple2(
 		function (model) {
@@ -5898,7 +5940,7 @@ var author$project$Main$init = function (_n0) {
 				darkMode: false,
 				data: author$project$Main$Production,
 				dataAPI: author$project$Main$bitlyAPI,
-				errorMessage: elm$core$Maybe$Just('Getting latest 100...->'),
+				errorMessage: elm$core$Maybe$Just('Getting latest 2000...->'),
 				errorStatus: false,
 				hay: _List_fromArray(
 					[
@@ -5923,14 +5965,15 @@ var author$project$Main$init = function (_n0) {
 						elm$core$Maybe$Nothing),
 						A6(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing)
 					]),
-				linkcount: 100,
-				needle: '',
+				linkcount: 2000,
+				needle: 'medium python',
 				offset: 0,
 				pressedKeys: _List_Nil,
 				val: 0,
-				viewMode: author$project$Main$ShowAll
+				viewMode: author$project$Main$ShowMatched
 			}),
-		A3(author$project$Main$bitlyIncRequest, author$project$Main$bitlyAPI, 100, 0));
+		elm$core$Platform$Cmd$batch(
+			A2(author$project$Main$bitlyBatchRequest, author$project$Main$bitlyAPI, 2000)));
 };
 var author$project$Main$KeyDown = function (a) {
 	return {$: 'KeyDown', a: a};
@@ -6027,7 +6070,6 @@ var elm$core$String$left = F2(
 	function (n, string) {
 		return (n < 1) ? '' : A3(elm$core$String$slice, 0, n, string);
 	});
-var elm$core$String$toInt = _String_toInt;
 var elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
 		return {fragment: fragment, host: host, path: path, port_: port_, protocol: protocol, query: query};
@@ -6428,68 +6470,28 @@ var author$project$Main$subscriptions = function (model) {
 				ohanhi$keyboard$Keyboard$downs(author$project$Main$KeyDown)
 			]));
 };
+var author$project$Main$ShowAll = {$: 'ShowAll'};
 var author$project$Main$ShowAny = {$: 'ShowAny'};
-var author$project$Main$ShowMatched = {$: 'ShowMatched'};
-var author$project$Main$DataReceived = function (a) {
-	return {$: 'DataReceived', a: a};
+var author$project$Main$IncDataReceived = function (a) {
+	return {$: 'IncDataReceived', a: a};
 };
-var author$project$Main$NamesReceived = function (a) {
-	return {$: 'NamesReceived', a: a};
-};
-var author$project$Main$nicknamesDecoder = A2(
-	elm$json$Json$Decode$field,
-	'nicknames',
-	elm$json$Json$Decode$list(elm$json$Json$Decode$string));
-var author$project$Main$httpCommand = function (dataURL) {
-	if (dataURL === 'https://api.myjson.com/bins/19yily') {
-		return A2(
-			elm$http$Http$send,
-			author$project$Main$NamesReceived,
-			A2(elm$http$Http$get, dataURL, author$project$Main$nicknamesDecoder));
-	} else {
-		return A2(
-			elm$http$Http$send,
-			author$project$Main$DataReceived,
-			A2(elm$http$Http$get, dataURL, author$project$Main$urlsDecoder));
-	}
-};
-var elm$core$Basics$round = _Basics_round;
-var elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
-var author$project$Main$skipList = F2(
-	function (totalCount, pageSize) {
-		var size = A2(elm$core$Maybe$withDefault, 30, pageSize);
-		var rangeLimit = elm$core$Basics$round(totalCount / size);
-		return A2(
-			elm$core$List$map,
-			function (x) {
-				return x * size;
-			},
-			A2(elm$core$List$range, 0, rangeLimit));
-	});
-var author$project$Main$bitlyBatchRequest = F2(
-	function (dataURL, count) {
+var author$project$Main$bitlyIncRequest = F3(
+	function (dataURL, count, offset) {
 		var skipUrl = F2(
-			function (url, offset) {
-				return url + ('&limit=' + (author$project$Main$pagesize + ('&offset=' + elm$core$String$fromInt(offset))));
+			function (url, o) {
+				return _Utils_ap(
+					url,
+					'&limit=' + _Utils_ap(
+						author$project$Main$pagesize,
+						'&offset=' + elm$core$String$fromInt(o)));
 			});
 		return A2(
-			elm$core$List$map,
-			author$project$Main$httpCommand,
+			elm$http$Http$send,
+			author$project$Main$IncDataReceived,
 			A2(
-				elm$core$List$map,
-				skipUrl(dataURL),
-				A2(
-					author$project$Main$skipList,
-					count,
-					elm$core$String$toInt(author$project$Main$pagesize))));
+				elm$http$Http$get,
+				A2(skipUrl, dataURL, offset),
+				author$project$Main$urlsDecoder));
 	});
 var author$project$Main$createErrorMessage = function (httpError) {
 	switch (httpError.$) {
@@ -6598,7 +6600,6 @@ var elm$core$List$member = F2(
 			},
 			xs);
 	});
-var elm$core$Platform$Cmd$batch = _Platform_batch;
 var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var ohanhi$keyboard$Keyboard$Character = function (a) {
 	return {$: 'Character', a: a};
@@ -7436,6 +7437,13 @@ var author$project$Main$footer = A2(
 					elm$html$Html$text(' last checkin')
 				]))
 		]));
+var elm$core$List$isEmpty = function (xs) {
+	if (!xs.b) {
+		return true;
+	} else {
+		return false;
+	}
+};
 var elm$html$Html$li = _VirtualDom_node('li');
 var elm$core$Tuple$second = function (_n0) {
 	var y = _n0.b;
@@ -7454,7 +7462,7 @@ var elm$html$Html$Attributes$classList = function (classes) {
 };
 var author$project$Main$displayURL = function (hs) {
 	var title = (!elm$core$String$length(hs.title)) ? '<NA>' : hs.title;
-	var tagString = (!elm$core$List$length(hs.tags)) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
+	var tagString = elm$core$List$isEmpty(hs.tags) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
 	var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
 	return A2(
 		elm$html$Html$li,

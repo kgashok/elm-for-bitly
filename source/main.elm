@@ -130,25 +130,26 @@ type alias Model =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( { val = 0
-      , needle = ""
+      , needle = "medium python"
       , hay =
             [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" Nothing
             , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" Nothing
             , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "http://junk.com" Nothing
             , HayString "http://abcde.org" "" Nothing [] "http://abcde.org" Nothing
             ]
-      , errorMessage = Just "Getting latest 100...->"
+      , errorMessage = Just "Getting latest 2000...->"
       , errorStatus = False
       , dataAPI = bitlyAPI
       , data = Production
-      , viewMode = ShowAll
-      , linkcount = 100
+      , viewMode = ShowMatched
+      , linkcount = 2000
       , offset = 0
       , pressedKeys = []
       , darkMode = False
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle [] })
-    , bitlyIncRequest bitlyAPI 100 0
+    , Cmd.batch (bitlyBatchRequest bitlyAPI 2000)
+      -- , bitlyIncRequest bitlyAPI 1701 0
       --, Task.perform (always FetchLatest)
       -- , Cmd.none
     )
@@ -864,7 +865,7 @@ displayURL hs =
                 hs.title
 
         tagString =
-            if List.length hs.tags == 0 then
+            if List.isEmpty hs.tags then
                 ""
 
             else
