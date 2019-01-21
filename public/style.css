@@ -20,15 +20,21 @@
   background-color: beige;
 }
 .hayTitle { 
-  font-size: 9px;
+  font-size: 12px;
 }
 .hayKey { 
   font-style: italic; 
   font-size: 8px;
 }
 .matched .hayTitle { 
-  font-style: oblique;
-  font-size: 12px;
+  /*font-style: oblique; */
+  font-size: 14px;
+  background-color: green;
+}
+.matched .hayTitle a { 
+  /*font-style: oblique; */
+  color: lemonchiffon;
+  text-decoration: none; 
 }
 .matched .hayKey { 
   font-size: 12px; 
@@ -37,7 +43,7 @@
 }
 .matched .hayKey a { 
   /*background-color: yellow;*/
-  color: lemonchiffon;
+  color: yellow;
 }
 
 #apiString { 

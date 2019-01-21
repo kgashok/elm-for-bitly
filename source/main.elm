@@ -864,8 +864,14 @@ displayURL hs =
                 (++) "tags: " <| String.join ", " hs.tags
     in
     li [ classList [ ( "matched", hs.match == Just True ) ] ]
-        [ div [] [ text hs.hay ]
-        , div [ classList [ ( "hayTitle", True ) ] ] [ text hs.title ]
+        [ div [ classList [ ( "hayTitle", True ) ] ]
+            [ a
+                [ href hs.hay
+                , target "_blank"
+                , rel "noopener noreferrer"
+                ]
+                [ text hs.title ]
+            ]
         , div [ classList [ ( "hayKey", True ) ] ]
             [ a
                 [ href shortener

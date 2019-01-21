@@ -7480,13 +7480,6 @@ var author$project$Main$displayURL = function (hs) {
 			[
 				A2(
 				elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(hs.hay)
-					])),
-				A2(
-				elm$html$Html$div,
 				_List_fromArray(
 					[
 						elm$html$Html$Attributes$classList(
@@ -7497,7 +7490,18 @@ var author$project$Main$displayURL = function (hs) {
 					]),
 				_List_fromArray(
 					[
-						elm$html$Html$text(hs.title)
+						A2(
+						elm$html$Html$a,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$href(hs.hay),
+								elm$html$Html$Attributes$target('_blank'),
+								elm$html$Html$Attributes$rel('noopener noreferrer')
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text(hs.title)
+							]))
 					])),
 				A2(
 				elm$html$Html$div,
