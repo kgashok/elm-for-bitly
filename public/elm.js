@@ -5937,7 +5937,7 @@ var author$project$Main$init = function (_n0) {
 				});
 		}(
 			{
-				darkMode: false,
+				darkMode: true,
 				data: author$project$Main$Production,
 				dataAPI: author$project$Main$bitlyAPI,
 				errorMessage: elm$core$Maybe$Just('Getting latest 2000...->'),

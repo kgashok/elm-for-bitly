@@ -145,7 +145,7 @@ init _ =
       , linkcount = 2000
       , offset = 0
       , pressedKeys = []
-      , darkMode = False
+      , darkMode = True
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle [] })
     , Cmd.batch (bitlyBatchRequest bitlyAPI 2000)
