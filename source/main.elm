@@ -864,7 +864,7 @@ displayURL hs =
                 hs.title
 
         tagString =
-            if List.isEmpty hs.tags then
+            if List.length hs.tags == 0 then
                 ""
 
             else

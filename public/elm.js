@@ -7436,13 +7436,6 @@ var author$project$Main$footer = A2(
 					elm$html$Html$text(' last checkin')
 				]))
 		]));
-var elm$core$List$isEmpty = function (xs) {
-	if (!xs.b) {
-		return true;
-	} else {
-		return false;
-	}
-};
 var elm$html$Html$li = _VirtualDom_node('li');
 var elm$core$Tuple$second = function (_n0) {
 	var y = _n0.b;
@@ -7461,7 +7454,7 @@ var elm$html$Html$Attributes$classList = function (classes) {
 };
 var author$project$Main$displayURL = function (hs) {
 	var title = (!elm$core$String$length(hs.title)) ? '<NA>' : hs.title;
-	var tagString = elm$core$List$isEmpty(hs.tags) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
+	var tagString = (!elm$core$List$length(hs.tags)) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
 	var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
 	return A2(
 		elm$html$Html$li,
