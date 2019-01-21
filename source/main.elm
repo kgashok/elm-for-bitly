@@ -856,6 +856,13 @@ displayURL hs =
         shortener =
             Maybe.withDefault "" hs.short
 
+        title =
+            if String.length hs.title == 0 then
+                "<NA>"
+
+            else
+                hs.title
+
         tagString =
             if List.isEmpty hs.tags then
                 ""
@@ -870,7 +877,7 @@ displayURL hs =
                 , target "_blank"
                 , rel "noopener noreferrer"
                 ]
-                [ text hs.title ]
+                [ text title ]
             ]
         , div [ classList [ ( "hayKey", True ) ] ]
             [ a

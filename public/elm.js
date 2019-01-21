@@ -7460,6 +7460,7 @@ var elm$html$Html$Attributes$classList = function (classes) {
 				A2(elm$core$List$filter, elm$core$Tuple$second, classes))));
 };
 var author$project$Main$displayURL = function (hs) {
+	var title = (!elm$core$String$length(hs.title)) ? '<NA>' : hs.title;
 	var tagString = elm$core$List$isEmpty(hs.tags) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
 	var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
 	return A2(
@@ -7500,7 +7501,7 @@ var author$project$Main$displayURL = function (hs) {
 							]),
 						_List_fromArray(
 							[
-								elm$html$Html$text(hs.title)
+								elm$html$Html$text(title)
 							]))
 					])),
 				A2(
