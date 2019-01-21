@@ -67,6 +67,7 @@
 .dark li { background: #282c34}
 .dark #title { background: #282c34; } 
 .dark #error { background-color: DarkGray} 
+.dark a { color: beige}
 
 span {
     padding:5px; 
