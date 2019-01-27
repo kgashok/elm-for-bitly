@@ -22,7 +22,7 @@
 }
 .hayTitle { 
   /*font-size: 12px; */
-  font-size: 1.2em;
+  font-size: 1.0em;
 }
 .hayKey { 
   font-style: italic; 
@@ -30,7 +30,7 @@
 }
 .matched .hayTitle { 
   /*font-style: oblique; */
-  font-size: 1.3em;
+  font-size: 1.0em;
   background-color: green;
 }
 .matched .hayTitle a { 
@@ -39,7 +39,7 @@
   text-decoration: none; 
 }
 .matched .hayKey { 
-  font-size: .9em; 
+  font-size: .8em; 
   /*background-color: yellow;*/
   background-color: green;
 }
