@@ -18,13 +18,15 @@
 #title { 
   text-align: center;
   background-color: beige;
+  font-size: 2em;
 }
 .hayTitle { 
-  font-size: 12px;
+  /*font-size: 12px; */
+  font-size: 1.2em;
 }
 .hayKey { 
   font-style: italic; 
-  font-size: 8px;
+  font-size: .8em;
 }
 .matched .hayTitle { 
   /*font-style: oblique; */

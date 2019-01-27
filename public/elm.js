@@ -7528,21 +7528,21 @@ var author$project$Main$displayURL = function (hs) {
 						_List_fromArray(
 							[
 								elm$html$Html$text(shortener)
-							]))
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$classList(
+							])),
+						A2(
+						elm$html$Html$div,
 						_List_fromArray(
 							[
-								_Utils_Tuple2('hayKey', true)
+								elm$html$Html$Attributes$classList(
+								_List_fromArray(
+									[
+										_Utils_Tuple2('hayKey', true)
+									]))
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text(tagString)
 							]))
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text(tagString)
 					]))
 			]));
 };
