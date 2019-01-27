@@ -887,7 +887,7 @@ displayURL hs =
                 , rel "noopener noreferrer"
                 ]
                 [ text shortener ]
-            ,  div [ classList [ ( "hayKey", True ) ] ]
+            , div [ classList [ ( "hayKey", True ) ] ]
                 [ text tagString ]
             ]
         ]

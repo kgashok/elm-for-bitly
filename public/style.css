@@ -30,7 +30,7 @@
 }
 .matched .hayTitle { 
   /*font-style: oblique; */
-  font-size: 14px;
+  font-size: 1.3em;
   background-color: green;
 }
 .matched .hayTitle a { 
@@ -39,7 +39,7 @@
   text-decoration: none; 
 }
 .matched .hayKey { 
-  font-size: 12px; 
+  font-size: .9em; 
   /*background-color: yellow;*/
   background-color: green;
 }
@@ -49,7 +49,7 @@
 }
 
 #apiString { 
-  font-size: 10px;
+  font-size: .9em;
 }
 #error { 
   background-color: papayawhip;
