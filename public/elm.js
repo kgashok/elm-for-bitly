@@ -5965,7 +5965,7 @@ var author$project$Main$init = function (_n0) {
 						elm$core$Maybe$Nothing),
 						A6(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing)
 					]),
-				linkcount: 2000,
+				linkcount: 5000,
 				needle: 'medium python',
 				offset: 0,
 				pressedKeys: _List_Nil,
@@ -7081,7 +7081,7 @@ var author$project$Main$update = F2(
 						viewMode: author$project$Main$ShowMatched
 					});
 				var dataRequestTask = function () {
-					var _n2 = model_.linkcount > 1700;
+					var _n2 = model_.linkcount > 5000;
 					if (_n2) {
 						return A3(author$project$Main$bitlyIncRequest, model_.dataAPI, model_.linkcount, model_.offset);
 					} else {
