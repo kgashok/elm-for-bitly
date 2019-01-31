@@ -142,7 +142,7 @@ init _ =
       , dataAPI = bitlyAPI
       , data = Production
       , viewMode = ShowMatched
-      , linkcount = 5000
+      , linkcount = 4500
       , offset = 0
       , pressedKeys = []
       , darkMode = True
@@ -255,7 +255,7 @@ update msg model =
                     }
 
                 dataRequestTask =
-                    case model_.linkcount > 5000 of
+                    case model_.linkcount > 4501 of
                         True ->
                             -- bitlySeqRequest model_.dataAPI model_.linkcount
                             bitlyIncRequest model_.dataAPI model_.linkcount model_.offset
@@ -753,7 +753,9 @@ view model =
             , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
             , div []
                 [ text " limited to "
-                , input [ placeholder (String.fromInt model.linkcount), onInput UpdateLinkCount ] []
+                , input [ placeholder (String.fromInt model.linkcount)
+                        , value (String.fromInt model.linkcount)
+                        , onInput UpdateLinkCount ] []
                 ]
             ]
         , div [ id "error", classList [ ( "failed", model.errorStatus == True ) ] ]
