@@ -7068,7 +7068,7 @@ var author$project$Main$update = F2(
 						case 'Test':
 							return 'deep docs';
 						default:
-							return 'pc2';
+							return 'project_ideas';
 					}
 				}();
 				var model_ = _Utils_update(
@@ -7081,7 +7081,7 @@ var author$project$Main$update = F2(
 						viewMode: author$project$Main$ShowMatched
 					});
 				var dataRequestTask = function () {
-					var _n2 = model_.linkcount > 4501;
+					var _n2 = model_.linkcount > 4500;
 					if (_n2) {
 						return A3(author$project$Main$bitlyIncRequest, model_.dataAPI, model_.linkcount, model_.offset);
 					} else {

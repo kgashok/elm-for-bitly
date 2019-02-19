@@ -243,7 +243,7 @@ update msg model =
                             "deep docs"
 
                         _ ->
-                            "pc2"
+                            "project_ideas"
 
                 model_ =
                     { model
@@ -255,7 +255,7 @@ update msg model =
                     }
 
                 dataRequestTask =
-                    case model_.linkcount > 4501 of
+                    case model_.linkcount > 4500 of
                         True ->
                             -- bitlySeqRequest model_.dataAPI model_.linkcount
                             bitlyIncRequest model_.dataAPI model_.linkcount model_.offset
@@ -753,9 +753,12 @@ view model =
             , button [ onClick SendHttpRequest ] [ text "Fetch URLs" ]
             , div []
                 [ text " limited to "
-                , input [ placeholder (String.fromInt model.linkcount)
-                        , value (String.fromInt model.linkcount)
-                        , onInput UpdateLinkCount ] []
+                , input
+                    [ placeholder (String.fromInt model.linkcount)
+                    , value (String.fromInt model.linkcount)
+                    , onInput UpdateLinkCount
+                    ]
+                    []
                 ]
             ]
         , div [ id "error", classList [ ( "failed", model.errorStatus == True ) ] ]
