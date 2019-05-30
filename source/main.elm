@@ -142,7 +142,7 @@ init _ =
       , dataAPI = bitlyAPI
       , data = Production
       , viewMode = ShowMatched
-      , linkcount = 4500
+      , linkcount = 5000
       , offset = 0
       , pressedKeys = []
       , darkMode = True
@@ -255,7 +255,7 @@ update msg model =
                     }
 
                 dataRequestTask =
-                    case model_.linkcount > 4500 of
+                    case model_.linkcount > 5000 of
                         True ->
                             -- bitlySeqRequest model_.dataAPI model_.linkcount
                             bitlyIncRequest model_.dataAPI model_.linkcount model_.offset

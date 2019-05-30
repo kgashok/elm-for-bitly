@@ -31,7 +31,8 @@
 .matched .hayTitle { 
   /*font-style: oblique; */
   font-size: 1.3em;
-  background-color: green;
+  /* background-color: green; */
+  background-color: #265B5F; /* teal; */ 
 }
 .matched .hayTitle a { 
   /*font-style: oblique; */
@@ -41,7 +42,8 @@
 .matched .hayKey { 
   font-size: .8em; 
   /*background-color: yellow;*/
-  background-color: green;
+  /*background-color: green; */
+  background-color: #265B5F; /* teal; */ 
 }
 .matched .hayKey a { 
   /*background-color: yellow;*/
