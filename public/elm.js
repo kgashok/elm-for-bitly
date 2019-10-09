@@ -4963,11 +4963,11 @@ var author$project$Main$nicknamesDecoder = A2(
 	elm$json$Json$Decode$field,
 	'nicknames',
 	elm$json$Json$Decode$list(elm$json$Json$Decode$string));
-var author$project$Main$Link = F4(
-	function (title, keyword_link, long_url, tags) {
-		return {keyword_link: keyword_link, long_url: long_url, tags: tags, title: title};
+var author$project$Main$Link = F6(
+	function (title, keyword_link, long_url, tags, created_at, modified_at) {
+		return {created_at: created_at, keyword_link: keyword_link, long_url: long_url, modified_at: modified_at, tags: tags, title: title};
 	});
-var elm$json$Json$Decode$map4 = _Json_map4;
+var elm$json$Json$Decode$map6 = _Json_map6;
 var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$oneOf = _Json_oneOf;
 var elm$json$Json$Decode$succeed = _Json_succeed;
@@ -4979,8 +4979,8 @@ var elm$json$Json$Decode$maybe = function (decoder) {
 				elm$json$Json$Decode$succeed(elm$core$Maybe$Nothing)
 			]));
 };
-var author$project$Main$linkDecoder = A5(
-	elm$json$Json$Decode$map4,
+var author$project$Main$linkDecoder = A7(
+	elm$json$Json$Decode$map6,
 	author$project$Main$Link,
 	A2(elm$json$Json$Decode$field, 'title', elm$json$Json$Decode$string),
 	elm$json$Json$Decode$maybe(
@@ -4989,7 +4989,9 @@ var author$project$Main$linkDecoder = A5(
 	A2(
 		elm$json$Json$Decode$field,
 		'tags',
-		elm$json$Json$Decode$list(elm$json$Json$Decode$string)));
+		elm$json$Json$Decode$list(elm$json$Json$Decode$string)),
+	A2(elm$json$Json$Decode$field, 'created_at', elm$json$Json$Decode$string),
+	A2(elm$json$Json$Decode$field, 'modified_at', elm$json$Json$Decode$string));
 var elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {
@@ -5965,7 +5967,7 @@ var author$project$Main$init = function (_n0) {
 						elm$core$Maybe$Nothing),
 						A6(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing)
 					]),
-				linkcount: 5000,
+				linkcount: 7000,
 				needle: 'medium python',
 				offset: 0,
 				pressedKeys: _List_Nil,
@@ -7081,7 +7083,7 @@ var author$project$Main$update = F2(
 						viewMode: author$project$Main$ShowMatched
 					});
 				var dataRequestTask = function () {
-					var _n2 = model_.linkcount > 5000;
+					var _n2 = model_.linkcount > 7000;
 					if (_n2) {
 						return A3(author$project$Main$bitlyIncRequest, model_.dataAPI, model_.linkcount, model_.offset);
 					} else {

@@ -48,6 +48,8 @@ type alias Link =
     , keyword_link : Maybe String
     , long_url : String
     , tags : List String
+    , created_at : String
+    , modified_at : String
     }
 
 
@@ -142,7 +144,7 @@ init _ =
       , dataAPI = bitlyAPI
       , data = Production
       , viewMode = ShowMatched
-      , linkcount = 5000
+      , linkcount = 7000
       , offset = 0
       , pressedKeys = []
       , darkMode = True
@@ -255,7 +257,7 @@ update msg model =
                     }
 
                 dataRequestTask =
-                    case model_.linkcount > 5000 of
+                    case model_.linkcount > 7000 of
                         True ->
                             -- bitlySeqRequest model_.dataAPI model_.linkcount
                             bitlyIncRequest model_.dataAPI model_.linkcount model_.offset
@@ -932,12 +934,14 @@ urlsDecoder =
 
 linkDecoder : Decoder Link
 linkDecoder =
-    Json.Decode.map4
+    Json.Decode.map6
         Link
         (field "title" string)
         (maybe (field "keyword_link" string))
         (field "long_url" string)
         (field "tags" (list string))
+        (field "created_at" string)
+        (field "modified_at" string)
 
 
 
