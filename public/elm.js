@@ -5970,7 +5970,7 @@ var author$project$Main$init = function (_n0) {
 						0),
 						A7(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing, 0)
 					]),
-				linkcount: 7000,
+				linkcount: 5000,
 				needle: 'medium python',
 				offset: 0,
 				pressedKeys: _List_Nil,
@@ -6580,7 +6580,7 @@ var author$project$Main$makeHayFromUrls = F3(
 					l.tags,
 					makeHay(l),
 					elm$core$Maybe$Nothing,
-					l.created_at));
+					l.created_at * 1000));
 		};
 		return A2(elm$core$List$map, linkToHay, urls);
 	});
@@ -7087,7 +7087,7 @@ var author$project$Main$update = F2(
 						viewMode: author$project$Main$ShowMatched
 					});
 				var dataRequestTask = function () {
-					var _n2 = model_.linkcount > 7000;
+					var _n2 = model_.linkcount > 5000;
 					if (_n2) {
 						return A3(author$project$Main$bitlyIncRequest, model_.dataAPI, model_.linkcount, model_.offset);
 					} else {
@@ -7466,10 +7466,175 @@ var elm$html$Html$Attributes$classList = function (classes) {
 				elm$core$Tuple$first,
 				A2(elm$core$List$filter, elm$core$Tuple$second, classes))));
 };
+var elm$time$Time$Posix = function (a) {
+	return {$: 'Posix', a: a};
+};
+var elm$time$Time$millisToPosix = elm$time$Time$Posix;
+var elm$time$Time$flooredDiv = F2(
+	function (numerator, denominator) {
+		return elm$core$Basics$floor(numerator / denominator);
+	});
+var elm$time$Time$posixToMillis = function (_n0) {
+	var millis = _n0.a;
+	return millis;
+};
+var elm$time$Time$toAdjustedMinutesHelp = F3(
+	function (defaultOffset, posixMinutes, eras) {
+		toAdjustedMinutesHelp:
+		while (true) {
+			if (!eras.b) {
+				return posixMinutes + defaultOffset;
+			} else {
+				var era = eras.a;
+				var olderEras = eras.b;
+				if (_Utils_cmp(era.start, posixMinutes) < 0) {
+					return posixMinutes + era.offset;
+				} else {
+					var $temp$defaultOffset = defaultOffset,
+						$temp$posixMinutes = posixMinutes,
+						$temp$eras = olderEras;
+					defaultOffset = $temp$defaultOffset;
+					posixMinutes = $temp$posixMinutes;
+					eras = $temp$eras;
+					continue toAdjustedMinutesHelp;
+				}
+			}
+		}
+	});
+var elm$time$Time$toAdjustedMinutes = F2(
+	function (_n0, time) {
+		var defaultOffset = _n0.a;
+		var eras = _n0.b;
+		return A3(
+			elm$time$Time$toAdjustedMinutesHelp,
+			defaultOffset,
+			A2(
+				elm$time$Time$flooredDiv,
+				elm$time$Time$posixToMillis(time),
+				60000),
+			eras);
+	});
+var elm$core$Basics$ge = _Utils_ge;
+var elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var elm$time$Time$toCivil = function (minutes) {
+	var rawDay = A2(elm$time$Time$flooredDiv, minutes, 60 * 24) + 719468;
+	var era = (((rawDay >= 0) ? rawDay : (rawDay - 146096)) / 146097) | 0;
+	var dayOfEra = rawDay - (era * 146097);
+	var yearOfEra = ((((dayOfEra - ((dayOfEra / 1460) | 0)) + ((dayOfEra / 36524) | 0)) - ((dayOfEra / 146096) | 0)) / 365) | 0;
+	var dayOfYear = dayOfEra - (((365 * yearOfEra) + ((yearOfEra / 4) | 0)) - ((yearOfEra / 100) | 0));
+	var mp = (((5 * dayOfYear) + 2) / 153) | 0;
+	var month = mp + ((mp < 10) ? 3 : (-9));
+	var year = yearOfEra + (era * 400);
+	return {
+		day: (dayOfYear - ((((153 * mp) + 2) / 5) | 0)) + 1,
+		month: month,
+		year: year + ((month <= 2) ? 1 : 0)
+	};
+};
+var elm$time$Time$toDay = F2(
+	function (zone, time) {
+		return elm$time$Time$toCivil(
+			A2(elm$time$Time$toAdjustedMinutes, zone, time)).day;
+	});
+var elm$time$Time$Apr = {$: 'Apr'};
+var elm$time$Time$Aug = {$: 'Aug'};
+var elm$time$Time$Dec = {$: 'Dec'};
+var elm$time$Time$Feb = {$: 'Feb'};
+var elm$time$Time$Jan = {$: 'Jan'};
+var elm$time$Time$Jul = {$: 'Jul'};
+var elm$time$Time$Jun = {$: 'Jun'};
+var elm$time$Time$Mar = {$: 'Mar'};
+var elm$time$Time$May = {$: 'May'};
+var elm$time$Time$Nov = {$: 'Nov'};
+var elm$time$Time$Oct = {$: 'Oct'};
+var elm$time$Time$Sep = {$: 'Sep'};
+var elm$time$Time$toMonth = F2(
+	function (zone, time) {
+		var _n0 = elm$time$Time$toCivil(
+			A2(elm$time$Time$toAdjustedMinutes, zone, time)).month;
+		switch (_n0) {
+			case 1:
+				return elm$time$Time$Jan;
+			case 2:
+				return elm$time$Time$Feb;
+			case 3:
+				return elm$time$Time$Mar;
+			case 4:
+				return elm$time$Time$Apr;
+			case 5:
+				return elm$time$Time$May;
+			case 6:
+				return elm$time$Time$Jun;
+			case 7:
+				return elm$time$Time$Jul;
+			case 8:
+				return elm$time$Time$Aug;
+			case 9:
+				return elm$time$Time$Sep;
+			case 10:
+				return elm$time$Time$Oct;
+			case 11:
+				return elm$time$Time$Nov;
+			default:
+				return elm$time$Time$Dec;
+		}
+	});
+var elm$time$Time$toYear = F2(
+	function (zone, time) {
+		return elm$time$Time$toCivil(
+			A2(elm$time$Time$toAdjustedMinutes, zone, time)).year;
+	});
+var elm$time$Time$Zone = F2(
+	function (a, b) {
+		return {$: 'Zone', a: a, b: b};
+	});
+var elm$time$Time$utc = A2(elm$time$Time$Zone, 0, _List_Nil);
 var author$project$Main$displayURL = function (hs) {
+	var yearInfo = A2(
+		elm$time$Time$toYear,
+		elm$time$Time$utc,
+		elm$time$Time$millisToPosix(hs.created));
 	var title = (!elm$core$String$length(hs.title)) ? '<NA>' : hs.title;
 	var tagString = elm$core$List$isEmpty(hs.tags) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
 	var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
+	var monthInfo = function () {
+		var _n0 = A2(
+			elm$time$Time$toMonth,
+			elm$time$Time$utc,
+			elm$time$Time$millisToPosix(hs.created));
+		switch (_n0.$) {
+			case 'Jan':
+				return 'Jan';
+			case 'Feb':
+				return 'Feb';
+			case 'Mar':
+				return 'Mar';
+			case 'Apr':
+				return 'Apr';
+			case 'May':
+				return 'May';
+			case 'Jun':
+				return 'Jun';
+			case 'Jul':
+				return 'Jul';
+			case 'Aug':
+				return 'Aug';
+			case 'Sep':
+				return 'Sep';
+			case 'Oct':
+				return 'Oct';
+			case 'Nov':
+				return 'Nov';
+			default:
+				return 'Dec';
+		}
+	}();
+	var dateInfo = A2(
+		elm$time$Time$toDay,
+		elm$time$Time$utc,
+		elm$time$Time$millisToPosix(hs.created));
 	return A2(
 		elm$html$Html$li,
 		_List_fromArray(
@@ -7486,6 +7651,21 @@ var author$project$Main$displayURL = function (hs) {
 			]),
 		_List_fromArray(
 			[
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('created', true)
+							]))
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						monthInfo + ('-' + (elm$core$String$fromInt(dateInfo) + (' ' + elm$core$String$fromInt(yearInfo)))))
+					])),
 				A2(
 				elm$html$Html$div,
 				_List_fromArray(

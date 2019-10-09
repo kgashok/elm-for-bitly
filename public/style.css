@@ -15,6 +15,15 @@
   font-size: 20px;
   color: palegoldenrod;
 }
+
+.created {
+  color: #828387;
+  letter-spacing: .3px;
+  font: "Proxima Nova";
+  text-transform: uppercase;
+  /*display: inline-block;*/
+  font-size:.6em;
+}
 #title { 
   text-align: center;
   background-color: beige;

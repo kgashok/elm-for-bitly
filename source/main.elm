@@ -6,10 +6,12 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Html.Lazy exposing (lazy2)
 import Http
+import Iso8601 exposing (fromTime)
 import Json.Decode exposing (Decoder, decodeString, field, int, list, map2, maybe, string)
 import Keyboard exposing (RawKey)
 import Process
 import Task
+import Time exposing (millisToPosix, toDay, toMonth, toYear, utc)
 
 
 {-| apiKey needs to be hidden but it is okay for now
@@ -145,7 +147,7 @@ init _ =
       , dataAPI = bitlyAPI
       , data = Production
       , viewMode = ShowMatched
-      , linkcount = 7000
+      , linkcount = 5000
       , offset = 0
       , pressedKeys = []
       , darkMode = True
@@ -258,7 +260,7 @@ update msg model =
                     }
 
                 dataRequestTask =
-                    case model_.linkcount > 7000 of
+                    case model_.linkcount > 5000 of
                         True ->
                             -- bitlySeqRequest model_.dataAPI model_.linkcount
                             bitlyIncRequest model_.dataAPI model_.linkcount model_.offset
@@ -705,7 +707,7 @@ makeHayFromUrls viewmode needle urls =
                 ++ String.join " " link.tags
 
         linkToHay l =
-            HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing l.created_at
+            HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing (l.created_at * 1000)
                 -- |> (\hs -> { hs | match = isMatch needle hs.dump })
                 |> (\hs -> { hs | match = listMatch viewmode needle hs.dump })
     in
@@ -878,9 +880,57 @@ displayURL hs =
 
             else
                 (++) "tags: " <| String.join ", " hs.tags
+
+        yearInfo =
+            toYear utc (millisToPosix hs.created)
+
+        monthInfo =
+            case toMonth utc (millisToPosix hs.created) of
+                Time.Jan ->
+                    "Jan"
+
+                Time.Feb ->
+                    "Feb"
+
+                Time.Mar ->
+                    "Mar"
+
+                Time.Apr ->
+                    "Apr"
+
+                Time.May ->
+                    "May"
+
+                Time.Jun ->
+                    "Jun"
+
+                Time.Jul ->
+                    "Jul"
+
+                Time.Aug ->
+                    "Aug"
+
+                Time.Sep ->
+                    "Sep"
+
+                Time.Oct ->
+                    "Oct"
+
+                Time.Nov ->
+                    "Nov"
+
+                Time.Dec ->
+                    "Dec"
+
+        dateInfo =
+            toDay utc (millisToPosix hs.created)
     in
     li [ classList [ ( "matched", hs.match == Just True ) ] ]
-        [ div [ classList [ ( "hayTitle", True ) ] ]
+        [ div [ classList [ ( "created", True ) ] ]
+            [ text (monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo) ]
+
+        --[ text (String.fromInt hs.created) ]
+        , div [ classList [ ( "hayTitle", True ) ] ]
             [ a
                 [ href hs.hay
                 , target "_blank"
