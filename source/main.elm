@@ -88,6 +88,7 @@ type alias HayString =
     , tags : List String
     , dump : String -- dump of everything in the above fields
     , match : Maybe Bool -- why not Bool? See documentation for Match type
+    , created : Int
     }
 
 
@@ -134,10 +135,10 @@ init _ =
     ( { val = 0
       , needle = "medium python"
       , hay =
-            [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" Nothing
-            , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" Nothing
-            , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "http://junk.com" Nothing
-            , HayString "http://abcde.org" "" Nothing [] "http://abcde.org" Nothing
+            [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" Nothing 0
+            , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" Nothing 0
+            , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "http://junk.com" Nothing 0
+            , HayString "http://abcde.org" "" Nothing [] "http://abcde.org" Nothing 0
             ]
       , errorMessage = Just "Getting latest 2000...->"
       , errorStatus = False
@@ -704,7 +705,7 @@ makeHayFromUrls viewmode needle urls =
                 ++ String.join " " link.tags
 
         linkToHay l =
-            HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing
+            HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing l.created_at
                 -- |> (\hs -> { hs | match = isMatch needle hs.dump })
                 |> (\hs -> { hs | match = listMatch viewmode needle hs.dump })
     in
@@ -714,7 +715,7 @@ makeHayFromUrls viewmode needle urls =
 
 makeHayFromNames viewmode needle names =
     names
-        |> List.map (\x -> HayString x "" Nothing [] x Nothing)
+        |> List.map (\x -> HayString x "" Nothing [] x Nothing 0)
         |> checkForMatches viewmode needle
 
 

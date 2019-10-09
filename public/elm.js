@@ -4467,9 +4467,9 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$Main$HayString = F6(
-	function (hay, title, _short, tags, dump, match) {
-		return {dump: dump, hay: hay, match: match, _short: _short, tags: tags, title: title};
+var author$project$Main$HayString = F7(
+	function (hay, title, _short, tags, dump, match, created) {
+		return {created: created, dump: dump, hay: hay, match: match, _short: _short, tags: tags, title: title};
 	});
 var author$project$Main$Production = {$: 'Production'};
 var author$project$Main$ShowMatched = {$: 'ShowMatched'};
@@ -5947,8 +5947,8 @@ var author$project$Main$init = function (_n0) {
 				errorStatus: false,
 				hay: _List_fromArray(
 					[
-						A6(author$project$Main$HayString, 'http://rawgit.com', '', elm$core$Maybe$Nothing, _List_Nil, 'http://rawgit.com', elm$core$Maybe$Nothing),
-						A6(
+						A7(author$project$Main$HayString, 'http://rawgit.com', '', elm$core$Maybe$Nothing, _List_Nil, 'http://rawgit.com', elm$core$Maybe$Nothing, 0),
+						A7(
 						author$project$Main$HayString,
 						'http://google.com',
 						'',
@@ -5956,8 +5956,9 @@ var author$project$Main$init = function (_n0) {
 						_List_fromArray(
 							['search']),
 						'http://google.com',
-						elm$core$Maybe$Nothing),
-						A6(
+						elm$core$Maybe$Nothing,
+						0),
+						A7(
 						author$project$Main$HayString,
 						'http://junk.com',
 						'',
@@ -5965,8 +5966,9 @@ var author$project$Main$init = function (_n0) {
 						_List_fromArray(
 							['junk', 'archive']),
 						'http://junk.com',
-						elm$core$Maybe$Nothing),
-						A6(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing)
+						elm$core$Maybe$Nothing,
+						0),
+						A7(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing, 0)
 					]),
 				linkcount: 7000,
 				needle: 'medium python',
@@ -6527,7 +6529,7 @@ var author$project$Main$makeHayFromNames = F3(
 			A2(
 				elm$core$List$map,
 				function (x) {
-					return A6(author$project$Main$HayString, x, '', elm$core$Maybe$Nothing, _List_Nil, x, elm$core$Maybe$Nothing);
+					return A7(author$project$Main$HayString, x, '', elm$core$Maybe$Nothing, _List_Nil, x, elm$core$Maybe$Nothing, 0);
 				},
 				names));
 	});
@@ -6570,14 +6572,15 @@ var author$project$Main$makeHayFromUrls = F3(
 						match: A3(author$project$Main$listMatch, viewmode, needle, hs.dump)
 					});
 			}(
-				A6(
+				A7(
 					author$project$Main$HayString,
 					l.long_url,
 					l.title,
 					l.keyword_link,
 					l.tags,
 					makeHay(l),
-					elm$core$Maybe$Nothing));
+					elm$core$Maybe$Nothing,
+					l.created_at));
 		};
 		return A2(elm$core$List$map, linkToHay, urls);
 	});
