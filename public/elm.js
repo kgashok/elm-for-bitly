@@ -4967,6 +4967,7 @@ var author$project$Main$Link = F6(
 	function (title, keyword_link, long_url, tags, created_at, modified_at) {
 		return {created_at: created_at, keyword_link: keyword_link, long_url: long_url, modified_at: modified_at, tags: tags, title: title};
 	});
+var elm$json$Json$Decode$int = _Json_decodeInt;
 var elm$json$Json$Decode$map6 = _Json_map6;
 var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$oneOf = _Json_oneOf;
@@ -4990,8 +4991,8 @@ var author$project$Main$linkDecoder = A7(
 		elm$json$Json$Decode$field,
 		'tags',
 		elm$json$Json$Decode$list(elm$json$Json$Decode$string)),
-	A2(elm$json$Json$Decode$field, 'created_at', elm$json$Json$Decode$string),
-	A2(elm$json$Json$Decode$field, 'modified_at', elm$json$Json$Decode$string));
+	A2(elm$json$Json$Decode$field, 'created_at', elm$json$Json$Decode$int),
+	A2(elm$json$Json$Decode$field, 'modified_at', elm$json$Json$Decode$int));
 var elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {

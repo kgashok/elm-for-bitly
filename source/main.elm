@@ -6,7 +6,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Html.Lazy exposing (lazy2)
 import Http
-import Json.Decode exposing (Decoder, decodeString, field, list, map2, maybe, string)
+import Json.Decode exposing (Decoder, decodeString, field, int, list, map2, maybe, string)
 import Keyboard exposing (RawKey)
 import Process
 import Task
@@ -48,8 +48,8 @@ type alias Link =
     , keyword_link : Maybe String
     , long_url : String
     , tags : List String
-    , created_at : String
-    , modified_at : String
+    , created_at : Int
+    , modified_at : Int
     }
 
 
@@ -940,8 +940,8 @@ linkDecoder =
         (maybe (field "keyword_link" string))
         (field "long_url" string)
         (field "tags" (list string))
-        (field "created_at" string)
-        (field "modified_at" string)
+        (field "created_at" int)
+        (field "modified_at" int)
 
 
 
