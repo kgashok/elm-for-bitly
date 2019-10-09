@@ -152,7 +152,7 @@ Thanks to the Iso8601 elm-package and the [SO answer](https://stackoverflow.com/
 
 ![unix](https://files.gitter.im/kgashok/advik/bBDA/Screenshot-of-Glitch-Console-1-.jpg)
 
-and it resulted in this [edit](http://github.com/kgashok/elm-for-bitly/commit/f3096954f78d315114e6f65ef76fa32a36853220#r35434532) which finally resolved the bug fix.
+and it resulted in this http://github.com/kgashok/elm-for-bitly/commit/f3096954f78d315114e6f65ef76fa32a36853220#r35434532 which finally resolved the bug fix.
 
 ## Need to refactor
 My `displayURL` function has gotten hairy because of the need to convert and display Posix values to Human readable tokens. That is not acceptable. It needs to be refactored. But that can be done later. 
