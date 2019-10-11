@@ -21,9 +21,14 @@
   letter-spacing: .3px;
   font: "Proxima Nova";
   text-transform: uppercase;
-  /*display: inline-block;*/
+  display: none;
   font-size:.6em;
 }
+
+.displaydate {
+  display: block;
+}
+
 #title { 
   text-align: center;
   background-color: beige;

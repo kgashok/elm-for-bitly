@@ -5943,6 +5943,7 @@ var author$project$Main$init = function (_n0) {
 				darkMode: true,
 				data: author$project$Main$Production,
 				dataAPI: author$project$Main$bitlyAPI,
+				dateDisplay: true,
 				errorMessage: elm$core$Maybe$Just('Getting latest 2000...->'),
 				errorStatus: false,
 				hay: _List_fromArray(
@@ -7299,47 +7300,67 @@ var author$project$Main$update = F2(
 					{
 						pressedKeys: A2(ohanhi$keyboard$Keyboard$update, keyboardMsg, model.pressedKeys)
 					});
-				var _n8 = A2(elm$core$List$member, ohanhi$keyboard$Keyboard$Control, model_.pressedKeys) && A2(
-					elm$core$List$member,
-					ohanhi$keyboard$Keyboard$Character('q'),
-					model_.pressedKeys);
-				if (_n8) {
-					var _n9 = model_.viewMode;
-					switch (_n9.$) {
-						case 'ShowAll':
-							return _Utils_Tuple2(
-								_Utils_update(
-									model_,
-									{
-										errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
-										hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowMatched, model.needle, model.hay),
-										viewMode: author$project$Main$ShowMatched
-									}),
-								elm$core$Platform$Cmd$none);
-						case 'ShowMatched':
-							return _Utils_Tuple2(
-								_Utils_update(
-									model_,
-									{
-										errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
-										hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowAny, model.needle, model.hay),
-										viewMode: author$project$Main$ShowAny
-									}),
-								elm$core$Platform$Cmd$none);
-						default:
-							return _Utils_Tuple2(
-								_Utils_update(
-									model_,
-									{viewMode: author$project$Main$ShowAll}),
-								elm$core$Platform$Cmd$none);
-					}
-				} else {
+				var ctrlkey = A2(elm$core$List$member, ohanhi$keyboard$Keyboard$Control, model_.pressedKeys);
+				if (!ctrlkey) {
 					return _Utils_Tuple2(model_, elm$core$Platform$Cmd$none);
+				} else {
+					var _n9 = A2(
+						elm$core$List$member,
+						ohanhi$keyboard$Keyboard$Character('q'),
+						model_.pressedKeys);
+					if (_n9) {
+						var _n10 = model_.viewMode;
+						switch (_n10.$) {
+							case 'ShowAll':
+								return _Utils_Tuple2(
+									_Utils_update(
+										model_,
+										{
+											errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
+											hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowMatched, model.needle, model.hay),
+											viewMode: author$project$Main$ShowMatched
+										}),
+									elm$core$Platform$Cmd$none);
+							case 'ShowMatched':
+								return _Utils_Tuple2(
+									_Utils_update(
+										model_,
+										{
+											errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
+											hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowAny, model.needle, model.hay),
+											viewMode: author$project$Main$ShowAny
+										}),
+									elm$core$Platform$Cmd$none);
+							default:
+								return _Utils_Tuple2(
+									_Utils_update(
+										model_,
+										{viewMode: author$project$Main$ShowAll}),
+									elm$core$Platform$Cmd$none);
+						}
+					} else {
+						var _n11 = A2(
+							elm$core$List$member,
+							ohanhi$keyboard$Keyboard$Character('c'),
+							model_.pressedKeys);
+						if (_n11) {
+							return _Utils_Tuple2(
+								_Utils_update(
+									model_,
+									{
+										dateDisplay: !model_.dateDisplay,
+										errorMessage: elm$core$Maybe$Just('Press Ctrl-c to toggle date display')
+									}),
+								elm$core$Platform$Cmd$none);
+						} else {
+							return _Utils_Tuple2(model_, elm$core$Platform$Cmd$none);
+						}
+					}
 				}
 			case 'KeyDown':
 				var code = msg.a;
-				var _n10 = ohanhi$keyboard$Keyboard$characterKey(code);
-				if (((_n10.$ === 'Just') && (_n10.a.$ === 'Character')) && (_n10.a.a === ' ')) {
+				var _n12 = ohanhi$keyboard$Keyboard$characterKey(code);
+				if (((_n12.$ === 'Just') && (_n12.a.$ === 'Character')) && (_n12.a.a === ' ')) {
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -7355,6 +7376,12 @@ var author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{darkMode: !model.darkMode}),
+					elm$core$Platform$Cmd$none);
+			case 'ToggleDateDisplay':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{dateDisplay: !model.dateDisplay}),
 					elm$core$Platform$Cmd$none);
 			case 'Increment':
 				return _Utils_Tuple2(
@@ -7591,153 +7618,155 @@ var elm$time$Time$Zone = F2(
 		return {$: 'Zone', a: a, b: b};
 	});
 var elm$time$Time$utc = A2(elm$time$Time$Zone, 0, _List_Nil);
-var author$project$Main$displayURL = function (hs) {
-	var yearInfo = A2(
-		elm$time$Time$toYear,
-		elm$time$Time$utc,
-		elm$time$Time$millisToPosix(hs.created));
-	var title = (!elm$core$String$length(hs.title)) ? '<NA>' : hs.title;
-	var tagString = elm$core$List$isEmpty(hs.tags) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
-	var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
-	var monthInfo = function () {
-		var _n0 = A2(
-			elm$time$Time$toMonth,
+var author$project$Main$displayURL = F2(
+	function (showdate, hs) {
+		var yearInfo = A2(
+			elm$time$Time$toYear,
 			elm$time$Time$utc,
 			elm$time$Time$millisToPosix(hs.created));
-		switch (_n0.$) {
-			case 'Jan':
-				return 'Jan';
-			case 'Feb':
-				return 'Feb';
-			case 'Mar':
-				return 'Mar';
-			case 'Apr':
-				return 'Apr';
-			case 'May':
-				return 'May';
-			case 'Jun':
-				return 'Jun';
-			case 'Jul':
-				return 'Jul';
-			case 'Aug':
-				return 'Aug';
-			case 'Sep':
-				return 'Sep';
-			case 'Oct':
-				return 'Oct';
-			case 'Nov':
-				return 'Nov';
-			default:
-				return 'Dec';
-		}
-	}();
-	var dateInfo = A2(
-		elm$time$Time$toDay,
-		elm$time$Time$utc,
-		elm$time$Time$millisToPosix(hs.created));
-	return A2(
-		elm$html$Html$li,
-		_List_fromArray(
-			[
-				elm$html$Html$Attributes$classList(
-				_List_fromArray(
-					[
-						_Utils_Tuple2(
-						'matched',
-						_Utils_eq(
-							hs.match,
-							elm$core$Maybe$Just(true)))
-					]))
-			]),
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$classList(
-						_List_fromArray(
-							[
-								_Utils_Tuple2('created', true)
-							]))
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						monthInfo + ('-' + (elm$core$String$fromInt(dateInfo) + (' ' + elm$core$String$fromInt(yearInfo)))))
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$classList(
-						_List_fromArray(
-							[
-								_Utils_Tuple2('hayTitle', true)
-							]))
-					]),
-				_List_fromArray(
-					[
-						A2(
-						elm$html$Html$a,
-						_List_fromArray(
-							[
-								elm$html$Html$Attributes$href(hs.hay),
-								elm$html$Html$Attributes$target('_blank'),
-								elm$html$Html$Attributes$rel('noopener noreferrer')
-							]),
-						_List_fromArray(
-							[
-								elm$html$Html$text(title)
-							]))
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$classList(
-						_List_fromArray(
-							[
-								_Utils_Tuple2('hayKey', true)
-							]))
-					]),
-				_List_fromArray(
-					[
-						A2(
-						elm$html$Html$a,
-						_List_fromArray(
-							[
-								elm$html$Html$Attributes$href(shortener),
-								elm$html$Html$Attributes$target('_blank'),
-								elm$html$Html$Attributes$rel('noopener noreferrer')
-							]),
-						_List_fromArray(
-							[
-								elm$html$Html$text(shortener)
-							])),
-						A2(
-						elm$html$Html$div,
-						_List_fromArray(
-							[
-								elm$html$Html$Attributes$classList(
-								_List_fromArray(
-									[
-										_Utils_Tuple2('hayKey', true)
-									]))
-							]),
-						_List_fromArray(
-							[
-								elm$html$Html$text(tagString)
-							]))
-					]))
-			]));
-};
+		var title = (!elm$core$String$length(hs.title)) ? '<NA>' : hs.title;
+		var tagString = elm$core$List$isEmpty(hs.tags) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
+		var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
+		var monthInfo = function () {
+			var _n0 = A2(
+				elm$time$Time$toMonth,
+				elm$time$Time$utc,
+				elm$time$Time$millisToPosix(hs.created));
+			switch (_n0.$) {
+				case 'Jan':
+					return 'Jan';
+				case 'Feb':
+					return 'Feb';
+				case 'Mar':
+					return 'Mar';
+				case 'Apr':
+					return 'Apr';
+				case 'May':
+					return 'May';
+				case 'Jun':
+					return 'Jun';
+				case 'Jul':
+					return 'Jul';
+				case 'Aug':
+					return 'Aug';
+				case 'Sep':
+					return 'Sep';
+				case 'Oct':
+					return 'Oct';
+				case 'Nov':
+					return 'Nov';
+				default:
+					return 'Dec';
+			}
+		}();
+		var dateInfo = A2(
+			elm$time$Time$toDay,
+			elm$time$Time$utc,
+			elm$time$Time$millisToPosix(hs.created));
+		return A2(
+			elm$html$Html$li,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$classList(
+					_List_fromArray(
+						[
+							_Utils_Tuple2(
+							'matched',
+							_Utils_eq(
+								hs.match,
+								elm$core$Maybe$Just(true)))
+						]))
+				]),
+			_List_fromArray(
+				[
+					A2(
+					elm$html$Html$div,
+					_List_fromArray(
+						[
+							elm$html$Html$Attributes$classList(
+							_List_fromArray(
+								[
+									_Utils_Tuple2('created', true),
+									_Utils_Tuple2('displaydate', showdate)
+								]))
+						]),
+					_List_fromArray(
+						[
+							elm$html$Html$text(
+							monthInfo + ('-' + (elm$core$String$fromInt(dateInfo) + (' ' + elm$core$String$fromInt(yearInfo)))))
+						])),
+					A2(
+					elm$html$Html$div,
+					_List_fromArray(
+						[
+							elm$html$Html$Attributes$classList(
+							_List_fromArray(
+								[
+									_Utils_Tuple2('hayTitle', true)
+								]))
+						]),
+					_List_fromArray(
+						[
+							A2(
+							elm$html$Html$a,
+							_List_fromArray(
+								[
+									elm$html$Html$Attributes$href(hs.hay),
+									elm$html$Html$Attributes$target('_blank'),
+									elm$html$Html$Attributes$rel('noopener noreferrer')
+								]),
+							_List_fromArray(
+								[
+									elm$html$Html$text(title)
+								]))
+						])),
+					A2(
+					elm$html$Html$div,
+					_List_fromArray(
+						[
+							elm$html$Html$Attributes$classList(
+							_List_fromArray(
+								[
+									_Utils_Tuple2('hayKey', true)
+								]))
+						]),
+					_List_fromArray(
+						[
+							A2(
+							elm$html$Html$a,
+							_List_fromArray(
+								[
+									elm$html$Html$Attributes$href(shortener),
+									elm$html$Html$Attributes$target('_blank'),
+									elm$html$Html$Attributes$rel('noopener noreferrer')
+								]),
+							_List_fromArray(
+								[
+									elm$html$Html$text(shortener)
+								])),
+							A2(
+							elm$html$Html$div,
+							_List_fromArray(
+								[
+									elm$html$Html$Attributes$classList(
+									_List_fromArray(
+										[
+											_Utils_Tuple2('hayKey', true)
+										]))
+								]),
+							_List_fromArray(
+								[
+									elm$html$Html$text(tagString)
+								]))
+						]))
+				]));
+	});
 var elm$html$Html$ul = _VirtualDom_node('ul');
-var author$project$Main$generateListView = F2(
-	function (viewmode, haylist) {
+var author$project$Main$generateListView = F3(
+	function (viewmode, showdate, haylist) {
 		var items = A2(
 			elm$core$List$map,
-			author$project$Main$displayURL,
+			author$project$Main$displayURL(showdate),
 			A2(
 				elm$core$List$filter,
 				function (x) {
@@ -7843,8 +7872,8 @@ var elm$html$Html$Events$onInput = function (tagger) {
 			elm$html$Html$Events$alwaysStop,
 			A2(elm$json$Json$Decode$map, tagger, elm$html$Html$Events$targetValue)));
 };
-var elm$virtual_dom$VirtualDom$lazy2 = _VirtualDom_lazy2;
-var elm$html$Html$Lazy$lazy2 = elm$virtual_dom$VirtualDom$lazy2;
+var elm$virtual_dom$VirtualDom$lazy3 = _VirtualDom_lazy3;
+var elm$html$Html$Lazy$lazy3 = elm$virtual_dom$VirtualDom$lazy3;
 var author$project$Main$view = function (model) {
 	return A2(
 		elm$html$Html$div,
@@ -8027,7 +8056,7 @@ var author$project$Main$view = function (model) {
 								_Utils_eq(model.viewMode, author$project$Main$ShowAll),
 								author$project$Main$ChangeViewTo(author$project$Main$ShowAll))
 							])),
-						A3(elm$html$Html$Lazy$lazy2, author$project$Main$generateListView, model.viewMode, model.hay)
+						A4(elm$html$Html$Lazy$lazy3, author$project$Main$generateListView, model.viewMode, model.dateDisplay, model.hay)
 					]))
 			]));
 };

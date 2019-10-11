@@ -4,7 +4,7 @@ import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
-import Html.Lazy exposing (lazy2)
+import Html.Lazy exposing (lazy2, lazy3)
 import Http
 import Iso8601 exposing (fromTime)
 import Json.Decode exposing (Decoder, decodeString, field, int, list, map2, maybe, string)
@@ -129,6 +129,7 @@ type alias Model =
     , offset : Int -- required for obtaining pages of information from API
     , pressedKeys : List Keyboard.Key
     , darkMode : Bool
+    , dateDisplay : Bool
     }
 
 
@@ -151,6 +152,7 @@ init _ =
       , offset = 0
       , pressedKeys = []
       , darkMode = True
+      , dateDisplay = True
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle [] })
     , Cmd.batch (bitlyBatchRequest bitlyAPI 2000)
@@ -214,6 +216,7 @@ type Msg
     | KeyDown RawKey
     | KeyboardMsg Keyboard.Msg
     | ToggleDarkMode
+    | ToggleDateDisplay
     | Increment -- not relevant; legacy
     | Decrement -- not relevant; legacy
 
@@ -435,36 +438,51 @@ update msg model =
             let
                 model_ =
                     { model | pressedKeys = Keyboard.update keyboardMsg model.pressedKeys }
+
+                ctrlkey =
+                    List.member Keyboard.Control model_.pressedKeys
             in
-            case
-                List.member Keyboard.Control model_.pressedKeys
-                    && List.member (Keyboard.Character "q") model_.pressedKeys
-            of
-                True ->
-                    case model_.viewMode of
-                        ShowAll ->
-                            ( { model_
-                                | viewMode = ShowMatched
-                                , hay = checkForMatches ShowMatched model.needle model.hay
-                                , errorMessage = Just "Press Ctrl-q to toggle view"
-                              }
-                            , Cmd.none
-                            )
-
-                        ShowMatched ->
-                            ( { model_
-                                | viewMode = ShowAny
-                                , hay = checkForMatches ShowAny model.needle model.hay
-                                , errorMessage = Just "Press Ctrl-q to toggle view"
-                              }
-                            , Cmd.none
-                            )
-
-                        _ ->
-                            ( { model_ | viewMode = ShowAll }, Cmd.none )
-
+            case ctrlkey of
                 False ->
                     ( model_, Cmd.none )
+
+                _ ->
+                    case List.member (Keyboard.Character "q") model_.pressedKeys of
+                        True ->
+                            case model_.viewMode of
+                                ShowAll ->
+                                    ( { model_
+                                        | viewMode = ShowMatched
+                                        , hay = checkForMatches ShowMatched model.needle model.hay
+                                        , errorMessage = Just "Press Ctrl-q to toggle view"
+                                      }
+                                    , Cmd.none
+                                    )
+
+                                ShowMatched ->
+                                    ( { model_
+                                        | viewMode = ShowAny
+                                        , hay = checkForMatches ShowAny model.needle model.hay
+                                        , errorMessage = Just "Press Ctrl-q to toggle view"
+                                      }
+                                    , Cmd.none
+                                    )
+
+                                _ ->
+                                    ( { model_ | viewMode = ShowAll }, Cmd.none )
+
+                        False ->
+                            case List.member (Keyboard.Character "c") model_.pressedKeys of
+                                True ->
+                                    ( { model_
+                                        | dateDisplay = not model_.dateDisplay
+                                        , errorMessage = Just "Press Ctrl-c to toggle date display"
+                                      }
+                                    , Cmd.none
+                                    )
+
+                                _ ->
+                                    ( model_, Cmd.none )
 
         KeyDown code ->
             {--
@@ -484,6 +502,11 @@ update msg model =
 
         ToggleDarkMode ->
             ( { model | darkMode = not model.darkMode }
+            , Cmd.none
+            )
+
+        ToggleDateDisplay ->
+            ( { model | dateDisplay = not model.dateDisplay }
             , Cmd.none
             )
 
@@ -785,7 +808,7 @@ view model =
                 , ( "Match Any", model.viewMode == ShowAny, ChangeViewTo ShowAny )
                 , ( "Show All", model.viewMode == ShowAll, ChangeViewTo ShowAll )
                 ]
-            , lazy2 generateListView model.viewMode model.hay
+            , lazy3 generateListView model.viewMode model.dateDisplay model.hay
             ]
         ]
 
@@ -847,13 +870,13 @@ footer =
 {-| generateListView presents the HayString object
 -- provided "ShowAll" is set or match attribute has been set
 -}
-generateListView : ViewMode -> List HayString -> Html Msg
-generateListView viewmode haylist =
+generateListView : ViewMode -> Bool -> List HayString -> Html Msg
+generateListView viewmode showdate haylist =
     let
         items =
             haylist
                 |> List.filter (\x -> viewmode == ShowAll || x.match == Just True)
-                |> List.map displayURL
+                |> List.map (displayURL showdate)
     in
     div [] [ ul [] items ]
 
@@ -861,8 +884,8 @@ generateListView viewmode haylist =
 {-| displayURL returns the HTML list item corresponding to a HayString
 -- defines how the attributes of a haystring is to be displayed in the view
 -}
-displayURL : HayString -> Html msg
-displayURL hs =
+displayURL : Bool -> HayString -> Html msg
+displayURL showdate hs =
     let
         shortener =
             Maybe.withDefault "" hs.short
@@ -926,7 +949,7 @@ displayURL hs =
             toDay utc (millisToPosix hs.created)
     in
     li [ classList [ ( "matched", hs.match == Just True ) ] ]
-        [ div [ classList [ ( "created", True ) ] ]
+        [ div [ classList [ ( "created", True ), ( "displaydate", showdate == True ) ] ]
             [ text (monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo) ]
 
         --[ text (String.fromInt hs.created) ]
