@@ -903,12 +903,47 @@ displayURL showdate hs =
 
             else
                 (++) "tags: " <| String.join ", " hs.tags
+    in
+    li [ classList [ ( "matched", hs.match == Just True ) ] ]
+        [ div
+            [ classList
+                [ ( "created", True )
+                , ( "displaydate", showdate == True )
+                ]
+            ]
+            [ text (displayDate hs.created)
 
+            -- text (String.fromInt hs.created)
+            ]
+        , div [ classList [ ( "hayTitle", True ) ] ]
+            [ a
+                [ href hs.hay
+                , target "_blank"
+                , rel "noopener noreferrer"
+                ]
+                [ text title ]
+            ]
+        , div [ classList [ ( "hayKey", True ) ] ]
+            [ a
+                [ href shortener
+                , target "_blank"
+                , rel "noopener noreferrer"
+                ]
+                [ text shortener ]
+            , div [ classList [ ( "hayKey", True ) ] ]
+                [ text tagString ]
+            ]
+        ]
+
+
+displayDate : Int -> String
+displayDate created_at =
+    let
         yearInfo =
-            toYear utc (millisToPosix hs.created)
+            toYear utc (millisToPosix created_at)
 
         monthInfo =
-            case toMonth utc (millisToPosix hs.created) of
+            case toMonth utc (millisToPosix created_at) of
                 Time.Jan ->
                     "Jan"
 
@@ -946,32 +981,9 @@ displayURL showdate hs =
                     "Dec"
 
         dateInfo =
-            toDay utc (millisToPosix hs.created)
+            toDay utc (millisToPosix created_at)
     in
-    li [ classList [ ( "matched", hs.match == Just True ) ] ]
-        [ div [ classList [ ( "created", True ), ( "displaydate", showdate == True ) ] ]
-            [ text (monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo) ]
-
-        --[ text (String.fromInt hs.created) ]
-        , div [ classList [ ( "hayTitle", True ) ] ]
-            [ a
-                [ href hs.hay
-                , target "_blank"
-                , rel "noopener noreferrer"
-                ]
-                [ text title ]
-            ]
-        , div [ classList [ ( "hayKey", True ) ] ]
-            [ a
-                [ href shortener
-                , target "_blank"
-                , rel "noopener noreferrer"
-                ]
-                [ text shortener ]
-            , div [ classList [ ( "hayKey", True ) ] ]
-                [ text tagString ]
-            ]
-        ]
+    monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo
 
 
 {-| hayBackGround assigns the "matched" CSS attribute

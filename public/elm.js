@@ -7470,29 +7470,6 @@ var author$project$Main$footer = A2(
 					elm$html$Html$text(' last checkin')
 				]))
 		]));
-var elm$core$List$isEmpty = function (xs) {
-	if (!xs.b) {
-		return true;
-	} else {
-		return false;
-	}
-};
-var elm$html$Html$li = _VirtualDom_node('li');
-var elm$core$Tuple$second = function (_n0) {
-	var y = _n0.b;
-	return y;
-};
-var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
-var elm$html$Html$Attributes$classList = function (classes) {
-	return elm$html$Html$Attributes$class(
-		A2(
-			elm$core$String$join,
-			' ',
-			A2(
-				elm$core$List$map,
-				elm$core$Tuple$first,
-				A2(elm$core$List$filter, elm$core$Tuple$second, classes))));
-};
 var elm$time$Time$Posix = function (a) {
 	return {$: 'Posix', a: a};
 };
@@ -7618,51 +7595,77 @@ var elm$time$Time$Zone = F2(
 		return {$: 'Zone', a: a, b: b};
 	});
 var elm$time$Time$utc = A2(elm$time$Time$Zone, 0, _List_Nil);
+var author$project$Main$displayDate = function (created_at) {
+	var yearInfo = A2(
+		elm$time$Time$toYear,
+		elm$time$Time$utc,
+		elm$time$Time$millisToPosix(created_at));
+	var monthInfo = function () {
+		var _n0 = A2(
+			elm$time$Time$toMonth,
+			elm$time$Time$utc,
+			elm$time$Time$millisToPosix(created_at));
+		switch (_n0.$) {
+			case 'Jan':
+				return 'Jan';
+			case 'Feb':
+				return 'Feb';
+			case 'Mar':
+				return 'Mar';
+			case 'Apr':
+				return 'Apr';
+			case 'May':
+				return 'May';
+			case 'Jun':
+				return 'Jun';
+			case 'Jul':
+				return 'Jul';
+			case 'Aug':
+				return 'Aug';
+			case 'Sep':
+				return 'Sep';
+			case 'Oct':
+				return 'Oct';
+			case 'Nov':
+				return 'Nov';
+			default:
+				return 'Dec';
+		}
+	}();
+	var dateInfo = A2(
+		elm$time$Time$toDay,
+		elm$time$Time$utc,
+		elm$time$Time$millisToPosix(created_at));
+	return monthInfo + ('-' + (elm$core$String$fromInt(dateInfo) + (' ' + elm$core$String$fromInt(yearInfo))));
+};
+var elm$core$List$isEmpty = function (xs) {
+	if (!xs.b) {
+		return true;
+	} else {
+		return false;
+	}
+};
+var elm$html$Html$li = _VirtualDom_node('li');
+var elm$core$Tuple$second = function (_n0) {
+	var y = _n0.b;
+	return y;
+};
+var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
+var elm$html$Html$Attributes$classList = function (classes) {
+	return elm$html$Html$Attributes$class(
+		A2(
+			elm$core$String$join,
+			' ',
+			A2(
+				elm$core$List$map,
+				elm$core$Tuple$first,
+				A2(elm$core$List$filter, elm$core$Tuple$second, classes))));
+};
 var author$project$Main$displayURL = F2(
 	function (showdate, hs) {
-		var yearInfo = A2(
-			elm$time$Time$toYear,
-			elm$time$Time$utc,
-			elm$time$Time$millisToPosix(hs.created));
 		var title = (!elm$core$String$length(hs.title)) ? '<NA>' : hs.title;
 		var tagString = elm$core$List$isEmpty(hs.tags) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
 		var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
-		var monthInfo = function () {
-			var _n0 = A2(
-				elm$time$Time$toMonth,
-				elm$time$Time$utc,
-				elm$time$Time$millisToPosix(hs.created));
-			switch (_n0.$) {
-				case 'Jan':
-					return 'Jan';
-				case 'Feb':
-					return 'Feb';
-				case 'Mar':
-					return 'Mar';
-				case 'Apr':
-					return 'Apr';
-				case 'May':
-					return 'May';
-				case 'Jun':
-					return 'Jun';
-				case 'Jul':
-					return 'Jul';
-				case 'Aug':
-					return 'Aug';
-				case 'Sep':
-					return 'Sep';
-				case 'Oct':
-					return 'Oct';
-				case 'Nov':
-					return 'Nov';
-				default:
-					return 'Dec';
-			}
-		}();
-		var dateInfo = A2(
-			elm$time$Time$toDay,
-			elm$time$Time$utc,
-			elm$time$Time$millisToPosix(hs.created));
 		return A2(
 			elm$html$Html$li,
 			_List_fromArray(
@@ -7693,7 +7696,7 @@ var author$project$Main$displayURL = F2(
 					_List_fromArray(
 						[
 							elm$html$Html$text(
-							monthInfo + ('-' + (elm$core$String$fromInt(dateInfo) + (' ' + elm$core$String$fromInt(yearInfo)))))
+							author$project$Main$displayDate(hs.created))
 						])),
 					A2(
 					elm$html$Html$div,
