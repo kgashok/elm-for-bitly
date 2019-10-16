@@ -136,7 +136,7 @@ type alias Model =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( { val = 0
-      , needle = "medium python"
+      , needle = "haiku"
       , hay =
             [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" Nothing 0
             , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" Nothing 0
@@ -903,6 +903,9 @@ displayURL showdate hs =
 
             else
                 (++) "tags: " <| String.join ", " hs.tags
+
+        hidekeyline =
+            String.isEmpty shortener && String.isEmpty tagString
     in
     li [ classList [ ( "matched", hs.match == Just True ) ] ]
         [ div
@@ -923,14 +926,24 @@ displayURL showdate hs =
                 ]
                 [ text title ]
             ]
-        , div [ classList [ ( "hayKey", True ) ] ]
+        , div
+            [ classList
+                [ ( "hayKey", True )
+                , ( "hidekeyline", hidekeyline == True )
+                ]
+            ]
             [ a
                 [ href shortener
                 , target "_blank"
                 , rel "noopener noreferrer"
                 ]
                 [ text shortener ]
-            , div [ classList [ ( "hayKey", True ) ] ]
+            , div
+                [ classList
+                    [ ( "hayKey", True )
+                    , ( "hidekeyline", hidekeyline == True )
+                    ]
+                ]
                 [ text tagString ]
             ]
         ]

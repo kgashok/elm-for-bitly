@@ -5972,7 +5972,7 @@ var author$project$Main$init = function (_n0) {
 						A7(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing, 0)
 					]),
 				linkcount: 5000,
-				needle: 'medium python',
+				needle: 'haiku',
 				offset: 0,
 				pressedKeys: _List_Nil,
 				val: 0,
@@ -7666,6 +7666,7 @@ var author$project$Main$displayURL = F2(
 		var title = (!elm$core$String$length(hs.title)) ? '<NA>' : hs.title;
 		var tagString = elm$core$List$isEmpty(hs.tags) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
 		var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
+		var hidekeyline = elm$core$String$isEmpty(shortener) && elm$core$String$isEmpty(tagString);
 		return A2(
 			elm$html$Html$li,
 			_List_fromArray(
@@ -7730,7 +7731,8 @@ var author$project$Main$displayURL = F2(
 							elm$html$Html$Attributes$classList(
 							_List_fromArray(
 								[
-									_Utils_Tuple2('hayKey', true)
+									_Utils_Tuple2('hayKey', true),
+									_Utils_Tuple2('hidekeyline', hidekeyline)
 								]))
 						]),
 					_List_fromArray(
@@ -7754,7 +7756,8 @@ var author$project$Main$displayURL = F2(
 									elm$html$Html$Attributes$classList(
 									_List_fromArray(
 										[
-											_Utils_Tuple2('hayKey', true)
+											_Utils_Tuple2('hayKey', true),
+											_Utils_Tuple2('hidekeyline', hidekeyline)
 										]))
 								]),
 							_List_fromArray(
