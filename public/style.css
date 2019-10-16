@@ -42,7 +42,7 @@
   font-style: italic; 
   font-size: .9em;
   display: inline-block;
-  /*margin: 2px;*/
+  margin: 2px;
 }
 .matched .hayTitle { 
   /*font-style: oblique; */

@@ -136,7 +136,7 @@ type alias Model =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( { val = 0
-      , needle = "haiku"
+      , needle = "medium python"
       , hay =
             [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" Nothing 0
             , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" Nothing 0
@@ -939,11 +939,7 @@ displayURL showdate hs =
                 ]
                 [ text shortener ]
             , div
-                [ classList
-                    [ ( "hayKey", True )
-                    , ( "hidekeyline", hidekeyline == True )
-                    ]
-                ]
+                [ classList [ ( "hayKey", True ) ] ]
                 [ text tagString ]
             ]
         ]
