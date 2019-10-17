@@ -6586,6 +6586,15 @@ var author$project$Main$makeHayFromUrls = F3(
 		return A2(elm$core$List$map, linkToHay, urls);
 	});
 var author$project$Main$nicknamesJson = 'https://api.myjson.com/bins/19yily';
+var elm$core$List$sortBy = _List_sortBy;
+var author$project$Main$sortHay = function (haylist) {
+	return A2(
+		elm$core$List$sortBy,
+		function ($) {
+			return $.created;
+		},
+		haylist);
+};
 var author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
 var elm$core$List$append = F2(
 	function (xs, ys) {
@@ -7384,7 +7393,13 @@ var author$project$Main$update = F2(
 						{dateDisplay: !model.dateDisplay}),
 					elm$core$Platform$Cmd$none);
 			case 'SortLinks':
-				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							hay: author$project$Main$sortHay(model.hay)
+						}),
+					elm$core$Platform$Cmd$none);
 			case 'Increment':
 				return _Utils_Tuple2(
 					_Utils_update(

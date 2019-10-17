@@ -512,7 +512,7 @@ update msg model =
             )
 
         SortLinks ->
-            ( model
+            ( { model | hay = sortHay model.hay }
             , Cmd.none
             )
 
@@ -522,6 +522,11 @@ update msg model =
 
         Decrement ->
             ( { model | val = model.val - 1 }, Cmd.none )
+
+
+sortHay : List HayString -> List HayString
+sortHay haylist =
+    List.sortBy .created haylist
 
 
 {-| flip is now deprecated in Elm 0.19
