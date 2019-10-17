@@ -7383,6 +7383,8 @@ var author$project$Main$update = F2(
 						model,
 						{dateDisplay: !model.dateDisplay}),
 					elm$core$Platform$Cmd$none);
+			case 'SortLinks':
+				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
 			case 'Increment':
 				return _Utils_Tuple2(
 					_Utils_update(
@@ -7404,6 +7406,7 @@ var author$project$Main$FetchLatest = {$: 'FetchLatest'};
 var author$project$Main$SearchNeedle = {$: 'SearchNeedle'};
 var author$project$Main$SendHttpRequest = {$: 'SendHttpRequest'};
 var author$project$Main$SimpleList = {$: 'SimpleList'};
+var author$project$Main$SortLinks = {$: 'SortLinks'};
 var author$project$Main$StoreNeedle = function (a) {
 	return {$: 'StoreNeedle', a: a};
 };
@@ -7928,6 +7931,17 @@ var author$project$Main$view = function (model) {
 						_List_fromArray(
 							[
 								elm$html$Html$text(themeButtonLabel)
+							])),
+						A2(
+						elm$html$Html$button,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$id('sortButton'),
+								elm$html$Html$Events$onClick(author$project$Main$SortLinks)
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text('sort')
 							]))
 					])),
 				author$project$Main$footer,

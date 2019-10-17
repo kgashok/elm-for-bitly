@@ -217,6 +217,7 @@ type Msg
     | KeyboardMsg Keyboard.Msg
     | ToggleDarkMode
     | ToggleDateDisplay
+    | SortLinks
     | Increment -- not relevant; legacy
     | Decrement -- not relevant; legacy
 
@@ -510,6 +511,11 @@ update msg model =
             , Cmd.none
             )
 
+        SortLinks ->
+            ( model
+            , Cmd.none
+            )
+
         -- irrelevant message types, to be removed eventually
         Increment ->
             ( { model | val = model.val + 1 }, Cmd.none )
@@ -776,7 +782,10 @@ view model =
     in
     div [ classList [ ( "dark", model.darkMode == True ) ] ]
         [ div [ id "title" ] [ text "Bitly using Elm " ]
-        , div [ id "darkButtonDiv" ] [ button [ id "darkButton", onClick ToggleDarkMode ] [ text themeButtonLabel ] ]
+        , div [ id "darkButtonDiv" ]
+            [ button [ id "darkButton", onClick ToggleDarkMode ] [ text themeButtonLabel ]
+            , button [ id "sortButton", onClick SortLinks ] [ text "sort" ]
+            ]
         , footer
         , hr [] []
         , div [ id "apiString" ] [ text model.dataAPI ]
