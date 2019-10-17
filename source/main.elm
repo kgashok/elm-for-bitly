@@ -130,6 +130,7 @@ type alias Model =
     , pressedKeys : List Keyboard.Key
     , darkMode : Bool
     , dateDisplay : Bool
+    , sorted : Bool
     }
 
 
@@ -153,6 +154,7 @@ init _ =
       , pressedKeys = []
       , darkMode = True
       , dateDisplay = True
+      , sorted = False
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle [] })
     , Cmd.batch (bitlyBatchRequest bitlyAPI 2000)
@@ -274,7 +276,9 @@ update msg model =
             in
             case model_.data of
                 Production ->
-                    ( model_, dataRequestTask )
+                    ( model_
+                    , dataRequestTask
+                    )
 
                 _ ->
                     ( model_, httpCommand model.dataAPI )
@@ -512,7 +516,10 @@ update msg model =
             )
 
         SortLinks ->
-            ( { model | hay = sortHay model.hay }
+            ( { model
+                | hay = sortHay model.hay model.sorted
+                , sorted = not model.sorted
+              }
             , Cmd.none
             )
 
@@ -524,9 +531,14 @@ update msg model =
             ( { model | val = model.val - 1 }, Cmd.none )
 
 
-sortHay : List HayString -> List HayString
-sortHay haylist =
-    List.sortBy .created haylist
+sortHay : List HayString -> Bool -> List HayString
+sortHay haylist sorted =
+    case sorted of
+        False ->
+            List.sortBy .created haylist
+
+        _ ->
+            List.reverse haylist
 
 
 {-| flip is now deprecated in Elm 0.19

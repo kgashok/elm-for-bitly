@@ -5975,6 +5975,7 @@ var author$project$Main$init = function (_n0) {
 				needle: 'medium python',
 				offset: 0,
 				pressedKeys: _List_Nil,
+				sorted: false,
 				val: 0,
 				viewMode: author$project$Main$ShowMatched
 			}),
@@ -6587,14 +6588,19 @@ var author$project$Main$makeHayFromUrls = F3(
 	});
 var author$project$Main$nicknamesJson = 'https://api.myjson.com/bins/19yily';
 var elm$core$List$sortBy = _List_sortBy;
-var author$project$Main$sortHay = function (haylist) {
-	return A2(
-		elm$core$List$sortBy,
-		function ($) {
-			return $.created;
-		},
-		haylist);
-};
+var author$project$Main$sortHay = F2(
+	function (haylist, sorted) {
+		if (!sorted) {
+			return A2(
+				elm$core$List$sortBy,
+				function ($) {
+					return $.created;
+				},
+				haylist);
+		} else {
+			return elm$core$List$reverse(haylist);
+		}
+	});
 var author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
 var elm$core$List$append = F2(
 	function (xs, ys) {
@@ -7397,7 +7403,8 @@ var author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							hay: author$project$Main$sortHay(model.hay)
+							hay: A2(author$project$Main$sortHay, model.hay, model.sorted),
+							sorted: !model.sorted
 						}),
 					elm$core$Platform$Cmd$none);
 			case 'Increment':
