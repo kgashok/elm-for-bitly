@@ -7880,6 +7880,14 @@ var elm$html$Html$Events$onInput = function (tagger) {
 var elm$virtual_dom$VirtualDom$lazy3 = _VirtualDom_lazy3;
 var elm$html$Html$Lazy$lazy3 = elm$virtual_dom$VirtualDom$lazy3;
 var author$project$Main$view = function (model) {
+	var themeButtonLabel = function () {
+		var _n0 = model.darkMode;
+		if (!_n0) {
+			return 'dark';
+		} else {
+			return 'light';
+		}
+	}();
 	return A2(
 		elm$html$Html$div,
 		_List_fromArray(
@@ -7919,7 +7927,7 @@ var author$project$Main$view = function (model) {
 							]),
 						_List_fromArray(
 							[
-								elm$html$Html$text('dark')
+								elm$html$Html$text(themeButtonLabel)
 							]))
 					])),
 				author$project$Main$footer,

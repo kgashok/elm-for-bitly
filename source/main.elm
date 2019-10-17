@@ -765,9 +765,18 @@ createErrorMessage httpError =
 
 view : Model -> Html Msg
 view model =
+    let
+        themeButtonLabel =
+            case model.darkMode of
+                False ->
+                    "dark"
+
+                _ ->
+                    "light"
+    in
     div [ classList [ ( "dark", model.darkMode == True ) ] ]
         [ div [ id "title" ] [ text "Bitly using Elm " ]
-        , div [ id "darkButtonDiv" ] [ button [ id "darkButton", onClick ToggleDarkMode ] [ text "dark" ] ]
+        , div [ id "darkButtonDiv" ] [ button [ id "darkButton", onClick ToggleDarkMode ] [ text themeButtonLabel ] ]
         , footer
         , hr [] []
         , div [ id "apiString" ] [ text model.dataAPI ]
