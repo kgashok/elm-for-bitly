@@ -523,14 +523,27 @@ flip func first second =
 
 handleControlKeyShortCuts : Model -> Model
 handleControlKeyShortCuts model =
-    case List.member (Keyboard.Character "q") model.pressedKeys of
-        True ->
+    let
+        ctrlKeyOptions =
+            [ "q", "c" ]
+
+        keyPressed =
+            ctrlKeyOptions
+                |> List.map (\key -> List.member (Keyboard.Character key) model.pressedKeys)
+
+        {-
+           _ =
+               Debug.log "keyPressed: " keyPressed
+        -}
+    in
+    case keyPressed of
+        [ True, _ ] ->
             case model.viewMode of
                 ShowAll ->
                     { model
                         | viewMode = ShowMatched
                         , hay = checkForMatches ShowMatched model.needle model.hay
-                        , errorMessage = Just "Press Ctrl-q to toggle view"
+                        , errorMessage = Just "Press Ctrl-q to toggle view "
                     }
 
                 ShowMatched ->
@@ -543,16 +556,49 @@ handleControlKeyShortCuts model =
                 _ ->
                     { model | viewMode = ShowAll }
 
-        False ->
-            case List.member (Keyboard.Character "c") model.pressedKeys of
-                True ->
-                    { model
-                        | dateDisplay = not model.dateDisplay
-                        , errorMessage = Just "Press Ctrl-c to toggle date display"
-                    }
+        [ _, True ] ->
+            { model
+                | dateDisplay = not model.dateDisplay
+                , errorMessage = Just "Press Ctrl-c to toggle date display"
+            }
 
-                _ ->
-                    model
+        _ ->
+            model
+
+
+
+{-
+   case List.member (Keyboard.Character "q") model.pressedKeys of
+       True ->
+           case model.viewMode of
+               ShowAll ->
+                   { model
+                       | viewMode = ShowMatched
+                       , hay = checkForMatches ShowMatched model.needle model.hay
+                       , errorMessage = Just "Press Ctrl-q to toggle view "
+                   }
+
+               ShowMatched ->
+                   { model
+                       | viewMode = ShowAny
+                       , hay = checkForMatches ShowAny model.needle model.hay
+                       , errorMessage = Just "Press Ctrl-q to toggle view"
+                   }
+
+               _ ->
+                   { model | viewMode = ShowAll }
+
+       False ->
+           case List.member (Keyboard.Character "c") model.pressedKeys of
+               True ->
+                   { model
+                       | dateDisplay = not model.dateDisplay
+                       , errorMessage = Just "Press Ctrl-c to toggle date display"
+                   }
+
+               _ ->
+                   model
+-}
 
 
 bitlyIncRequest : String -> Int -> Int -> Cmd Msg

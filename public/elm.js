@@ -6535,50 +6535,63 @@ var ohanhi$keyboard$Keyboard$Character = function (a) {
 	return {$: 'Character', a: a};
 };
 var author$project$Main$handleControlKeyShortCuts = function (model) {
-	var _n0 = A2(
-		elm$core$List$member,
-		ohanhi$keyboard$Keyboard$Character('q'),
-		model.pressedKeys);
-	if (_n0) {
-		var _n1 = model.viewMode;
-		switch (_n1.$) {
-			case 'ShowAll':
-				return _Utils_update(
-					model,
-					{
-						errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
-						hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowMatched, model.needle, model.hay),
-						viewMode: author$project$Main$ShowMatched
-					});
-			case 'ShowMatched':
-				return _Utils_update(
-					model,
-					{
-						errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
-						hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowAny, model.needle, model.hay),
-						viewMode: author$project$Main$ShowAny
-					});
-			default:
-				return _Utils_update(
-					model,
-					{viewMode: author$project$Main$ShowAll});
-		}
-	} else {
-		var _n2 = A2(
-			elm$core$List$member,
-			ohanhi$keyboard$Keyboard$Character('c'),
-			model.pressedKeys);
-		if (_n2) {
-			return _Utils_update(
-				model,
-				{
-					dateDisplay: !model.dateDisplay,
-					errorMessage: elm$core$Maybe$Just('Press Ctrl-c to toggle date display')
-				});
+	var ctrlKeyOptions = _List_fromArray(
+		['q', 'c']);
+	var keyPressed = A2(
+		elm$core$List$map,
+		function (key) {
+			return A2(
+				elm$core$List$member,
+				ohanhi$keyboard$Keyboard$Character(key),
+				model.pressedKeys);
+		},
+		ctrlKeyOptions);
+	_n0$2:
+	while (true) {
+		if ((keyPressed.b && keyPressed.b.b) && (!keyPressed.b.b.b)) {
+			if (keyPressed.a) {
+				var _n1 = keyPressed.b;
+				var _n2 = model.viewMode;
+				switch (_n2.$) {
+					case 'ShowAll':
+						return _Utils_update(
+							model,
+							{
+								errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view '),
+								hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowMatched, model.needle, model.hay),
+								viewMode: author$project$Main$ShowMatched
+							});
+					case 'ShowMatched':
+						return _Utils_update(
+							model,
+							{
+								errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
+								hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowAny, model.needle, model.hay),
+								viewMode: author$project$Main$ShowAny
+							});
+					default:
+						return _Utils_update(
+							model,
+							{viewMode: author$project$Main$ShowAll});
+				}
+			} else {
+				if (keyPressed.b.a) {
+					var _n3 = keyPressed.b;
+					return _Utils_update(
+						model,
+						{
+							dateDisplay: !model.dateDisplay,
+							errorMessage: elm$core$Maybe$Just('Press Ctrl-c to toggle date display')
+						});
+				} else {
+					break _n0$2;
+				}
+			}
 		} else {
-			return model;
+			break _n0$2;
 		}
 	}
+	return model;
 };
 var author$project$Main$makeHayFromNames = F3(
 	function (viewmode, needle, names) {
