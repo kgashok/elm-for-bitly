@@ -452,7 +452,7 @@ update msg model =
                     ( model_, Cmd.none )
 
                 _ ->
-                    handleControlKeyShortCuts model_
+                    ( handleControlKeyShortCuts model_, Cmd.none )
 
         KeyDown code ->
             {--
@@ -521,43 +521,38 @@ flip func first second =
     func second first
 
 
+handleControlKeyShortCuts : Model -> Model
 handleControlKeyShortCuts model =
     case List.member (Keyboard.Character "q") model.pressedKeys of
         True ->
             case model.viewMode of
                 ShowAll ->
-                    ( { model
+                    { model
                         | viewMode = ShowMatched
                         , hay = checkForMatches ShowMatched model.needle model.hay
                         , errorMessage = Just "Press Ctrl-q to toggle view"
-                      }
-                    , Cmd.none
-                    )
+                    }
 
                 ShowMatched ->
-                    ( { model
+                    { model
                         | viewMode = ShowAny
                         , hay = checkForMatches ShowAny model.needle model.hay
                         , errorMessage = Just "Press Ctrl-q to toggle view"
-                      }
-                    , Cmd.none
-                    )
+                    }
 
                 _ ->
-                    ( { model | viewMode = ShowAll }, Cmd.none )
+                    { model | viewMode = ShowAll }
 
         False ->
             case List.member (Keyboard.Character "c") model.pressedKeys of
                 True ->
-                    ( { model
+                    { model
                         | dateDisplay = not model.dateDisplay
                         , errorMessage = Just "Press Ctrl-c to toggle date display"
-                      }
-                    , Cmd.none
-                    )
+                    }
 
                 _ ->
-                    ( model, Cmd.none )
+                    model
 
 
 bitlyIncRequest : String -> Int -> Int -> Cmd Msg

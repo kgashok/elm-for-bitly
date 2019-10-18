@@ -6531,7 +6531,6 @@ var elm$core$List$member = F2(
 			},
 			xs);
 	});
-var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var ohanhi$keyboard$Keyboard$Character = function (a) {
 	return {$: 'Character', a: a};
 };
@@ -6544,31 +6543,25 @@ var author$project$Main$handleControlKeyShortCuts = function (model) {
 		var _n1 = model.viewMode;
 		switch (_n1.$) {
 			case 'ShowAll':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
-							hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowMatched, model.needle, model.hay),
-							viewMode: author$project$Main$ShowMatched
-						}),
-					elm$core$Platform$Cmd$none);
+				return _Utils_update(
+					model,
+					{
+						errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
+						hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowMatched, model.needle, model.hay),
+						viewMode: author$project$Main$ShowMatched
+					});
 			case 'ShowMatched':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
-							hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowAny, model.needle, model.hay),
-							viewMode: author$project$Main$ShowAny
-						}),
-					elm$core$Platform$Cmd$none);
+				return _Utils_update(
+					model,
+					{
+						errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
+						hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowAny, model.needle, model.hay),
+						viewMode: author$project$Main$ShowAny
+					});
 			default:
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{viewMode: author$project$Main$ShowAll}),
-					elm$core$Platform$Cmd$none);
+				return _Utils_update(
+					model,
+					{viewMode: author$project$Main$ShowAll});
 		}
 	} else {
 		var _n2 = A2(
@@ -6576,16 +6569,14 @@ var author$project$Main$handleControlKeyShortCuts = function (model) {
 			ohanhi$keyboard$Keyboard$Character('c'),
 			model.pressedKeys);
 		if (_n2) {
-			return _Utils_Tuple2(
-				_Utils_update(
-					model,
-					{
-						dateDisplay: !model.dateDisplay,
-						errorMessage: elm$core$Maybe$Just('Press Ctrl-c to toggle date display')
-					}),
-				elm$core$Platform$Cmd$none);
+			return _Utils_update(
+				model,
+				{
+					dateDisplay: !model.dateDisplay,
+					errorMessage: elm$core$Maybe$Just('Press Ctrl-c to toggle date display')
+				});
 		} else {
-			return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+			return model;
 		}
 	}
 };
@@ -6680,6 +6671,7 @@ var elm$core$List$append = F2(
 var elm$core$List$concat = function (lists) {
 	return A3(elm$core$List$foldr, elm$core$List$append, _List_Nil, lists);
 };
+var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var ohanhi$keyboard$Keyboard$Control = {$: 'Control'};
 var ohanhi$keyboard$Keyboard$characterKey = function (_n0) {
 	var value = _n0.a;
@@ -7373,7 +7365,9 @@ var author$project$Main$update = F2(
 				if (!ctrlkey) {
 					return _Utils_Tuple2(model_, elm$core$Platform$Cmd$none);
 				} else {
-					return author$project$Main$handleControlKeyShortCuts(model_);
+					return _Utils_Tuple2(
+						author$project$Main$handleControlKeyShortCuts(model_),
+						elm$core$Platform$Cmd$none);
 				}
 			case 'KeyDown':
 				var code = msg.a;
