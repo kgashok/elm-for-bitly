@@ -502,6 +502,14 @@ update msg model =
                     , Cmd.none
                     )
 
+                Just (Keyboard.Character "/") ->
+                    ( { model
+                        | hay = sortHay model.hay model.sorted
+                        , sorted = not model.sorted
+                      }
+                    , Cmd.none
+                    )
+
                 _ ->
                     ( model, Cmd.none )
 

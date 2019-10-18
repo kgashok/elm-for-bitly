@@ -7375,17 +7375,35 @@ var author$project$Main$update = F2(
 			case 'KeyDown':
 				var code = msg.a;
 				var _n12 = ohanhi$keyboard$Keyboard$characterKey(code);
-				if (((_n12.$ === 'Just') && (_n12.a.$ === 'Character')) && (_n12.a.a === ' ')) {
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								hay: A3(author$project$Main$checkForMatches, model.viewMode, model.needle, model.hay)
-							}),
-						elm$core$Platform$Cmd$none);
-				} else {
-					return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+				_n12$2:
+				while (true) {
+					if ((_n12.$ === 'Just') && (_n12.a.$ === 'Character')) {
+						switch (_n12.a.a) {
+							case ' ':
+								return _Utils_Tuple2(
+									_Utils_update(
+										model,
+										{
+											hay: A3(author$project$Main$checkForMatches, model.viewMode, model.needle, model.hay)
+										}),
+									elm$core$Platform$Cmd$none);
+							case '/':
+								return _Utils_Tuple2(
+									_Utils_update(
+										model,
+										{
+											hay: A2(author$project$Main$sortHay, model.hay, model.sorted),
+											sorted: !model.sorted
+										}),
+									elm$core$Platform$Cmd$none);
+							default:
+								break _n12$2;
+						}
+					} else {
+						break _n12$2;
+					}
 				}
+				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
 			case 'ToggleDarkMode':
 				return _Utils_Tuple2(
 					_Utils_update(
