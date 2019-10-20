@@ -504,23 +504,6 @@ update msg model =
             ( { model | val = model.val - 1 }, Cmd.none )
 
 
-sortHay : List HayString -> Bool -> List HayString
-sortHay haylist sorted =
-    case sorted of
-        False ->
-            List.sortBy .created haylist
-
-        _ ->
-            List.reverse haylist
-
-
-{-| flip is now deprecated in Elm 0.19
--- Available here for practice
--}
-flip func first second =
-    func second first
-
-
 handleControlKeyShortCuts : Model -> Model
 handleControlKeyShortCuts model =
     let
@@ -543,7 +526,7 @@ handleControlKeyShortCuts model =
                     { model
                         | viewMode = ShowMatched
                         , hay = checkForMatches ShowMatched model.needle model.hay
-                        , errorMessage = Just "Press Ctrl-q to toggle view "
+                        , errorMessage = Just "Press Ctrl-q to toggle view"
                     }
 
                 ShowMatched ->
@@ -564,6 +547,23 @@ handleControlKeyShortCuts model =
 
         _ ->
             model
+
+
+sortHay : List HayString -> Bool -> List HayString
+sortHay haylist sorted =
+    case sorted of
+        False ->
+            List.sortBy .created haylist
+
+        _ ->
+            List.reverse haylist
+
+
+{-| flip is now deprecated in Elm 0.19
+-- Available here for practice
+-}
+flip func first second =
+    func second first
 
 
 bitlyIncRequest : String -> Int -> Int -> Cmd Msg

@@ -6557,7 +6557,7 @@ var author$project$Main$handleControlKeyShortCuts = function (model) {
 						return _Utils_update(
 							model,
 							{
-								errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view '),
+								errorMessage: elm$core$Maybe$Just('Press Ctrl-q to toggle view'),
 								hay: A3(author$project$Main$checkForMatches, author$project$Main$ShowMatched, model.needle, model.hay),
 								viewMode: author$project$Main$ShowMatched
 							});
