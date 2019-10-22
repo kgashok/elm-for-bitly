@@ -960,6 +960,10 @@ displayURL showdate hs =
 
         hidekeyline =
             String.isEmpty shortener && String.isEmpty tagString
+
+        dates =
+            displayDate hs.created (Just " ")
+                ++ displayDate hs.modified (Just "modified: ")
     in
     li [ classList [ ( "matched", hs.match == Just True ) ] ]
         [ div
@@ -968,10 +972,7 @@ displayURL showdate hs =
                 , ( "displaydate", showdate == True )
                 ]
             ]
-            [ text
-                (displayDate hs.created (Just "")
-                    |> (++) (displayDate hs.modified (Just " modified: "))
-                )
+            [ text dates
 
             -- text (String.fromInt hs.created)
             ]
