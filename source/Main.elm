@@ -1,25 +1,26 @@
 module Main exposing (Msg(..), main, update, view)
 
+-- import Iso8601 exposing (fromTime)
+
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
-import Html.Lazy exposing (lazy2, lazy3)
+import Html.Lazy exposing (lazy3)
 import Http
-import Iso8601 exposing (fromTime)
-import Json.Decode exposing (Decoder, decodeString, field, int, list, map2, maybe, string)
+import Json.Decode exposing (Decoder, field, int, list, maybe, string)
 import Keyboard exposing (RawKey)
-import Process
-import Task
 import Time exposing (millisToPosix, toDay, toMonth, toYear, utc)
 
 
 {-| apiKey needs to be hidden but it is okay for now
 -}
+apiKey : String
 apiKey =
     "1ef1315a2efebd7557de137f776602276d833cb9"
 
 
+bitlyAPI : String
 bitlyAPI =
     "https://api-ssl.bitly.com/v3/user/link_history?access_token=" ++ apiKey
 
@@ -27,6 +28,7 @@ bitlyAPI =
 {-| pagesize defines the number of links to be retrieved in
 in one http request
 -}
+pagesize : String
 pagesize =
     String.fromInt 100
 
@@ -159,7 +161,7 @@ init _ =
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle [] })
     , Cmd.batch (bitlyBatchRequest bitlyAPI 2000)
-      -- , bitlyIncRequest bitlyAPI 1701 0
+      -- , bitlyIncRequest bitlyAPI 0
       --, Task.perform (always FetchLatest)
       -- , Cmd.none
     )
@@ -195,7 +197,7 @@ main =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
+subscriptions _ =
     Sub.batch
         [ Sub.map KeyboardMsg Keyboard.subscriptions
         , Keyboard.downs KeyDown
@@ -242,7 +244,7 @@ update msg model =
                         , errorMessage = Just "Getting the latest 100 -> "
                     }
             in
-            ( model_, bitlyIncRequest model_.dataAPI model_.linkcount model_.offset )
+            ( model_, bitlyIncRequest model_.dataAPI model_.offset )
 
         SendHttpRequest ->
             let
@@ -267,13 +269,12 @@ update msg model =
                     }
 
                 dataRequestTask =
-                    case model_.linkcount > 5000 of
-                        True ->
-                            -- bitlySeqRequest model_.dataAPI model_.linkcount
-                            bitlyIncRequest model_.dataAPI model_.linkcount model_.offset
+                    if model_.linkcount > 5000 then
+                        -- bitlySeqRequest model_.dataAPI model_.linkcount
+                        bitlyIncRequest model_.dataAPI model_.offset
 
-                        False ->
-                            Cmd.batch (bitlyBatchRequest model_.dataAPI model_.linkcount)
+                    else
+                        Cmd.batch (bitlyBatchRequest model_.dataAPI model_.linkcount)
             in
             case model_.data of
                 Production ->
@@ -323,25 +324,24 @@ update msg model =
                     model.hay ++ makeHayFromUrls model.viewMode model.needle urls
 
                 incOffset =
-                    case model.offset < model.linkcount of
-                        True ->
-                            model.offset + 100
+                    if model.offset < model.linkcount then
+                        model.offset + 100
 
-                        False ->
-                            0
+                    else
+                        0
 
                 nextCmd =
-                    case incOffset < model.linkcount of
-                        True ->
-                            bitlyIncRequest model.dataAPI model.linkcount incOffset
+                    if incOffset < model.linkcount then
+                        bitlyIncRequest model.dataAPI incOffset
 
-                        False ->
-                            Cmd.none
+                    else
+                        Cmd.none
             in
             ( { model
                 | hay = updatedHays
                 , errorMessage =
-                    (++) (Maybe.withDefault "" model.errorMessage) " ."
+                    Maybe.withDefault "" model.errorMessage
+                        ++ " ."
                         |> flip (++) (String.fromInt model.offset)
                         -- |> (\message -> (++) message (String.fromInt model.offset))
                         |> Just
@@ -448,12 +448,11 @@ update msg model =
                 ctrlkey =
                     List.member Keyboard.Control model_.pressedKeys
             in
-            case ctrlkey of
-                False ->
-                    ( model_, Cmd.none )
+            if ctrlkey == False then
+                ( model_, Cmd.none )
 
-                _ ->
-                    ( handleControlKeyShortCuts model_, Cmd.none )
+            else
+                ( handleControlKeyShortCuts model_, Cmd.none )
 
         KeyDown code ->
             {--
@@ -552,12 +551,11 @@ handleControlKeyShortCuts model =
 
 sortHay : List HayString -> Bool -> List HayString
 sortHay haylist sorted =
-    case sorted of
-        False ->
-            List.sortBy .created haylist
+    if sorted then
+        List.sortBy .created haylist
 
-        _ ->
-            List.reverse haylist
+    else
+        List.reverse haylist
 
 
 {-| flip is now deprecated in Elm 0.19
@@ -567,8 +565,8 @@ flip func first second =
     func second first
 
 
-bitlyIncRequest : String -> Int -> Int -> Cmd Msg
-bitlyIncRequest dataURL count offset =
+bitlyIncRequest : String -> Int -> Cmd Msg
+bitlyIncRequest dataURL offset =
     let
         skipUrl url o =
             String.fromInt o
@@ -642,6 +640,9 @@ bitlyBatchRequest dataURL count =
         |> List.map httpCommand
 
 
+
+{--
+httpCommand2 : String -> Task 
 httpCommand2 dataURL =
     {--let
         _ =
@@ -651,9 +652,9 @@ httpCommand2 dataURL =
     urlsDecoder
         |> Http.get dataURL
         |> Http.toTask
-
-
-{--}
+--}
+{--
+bitlySeqRequest: String -> Int -> Task
 bitlySeqRequest dataURL count =
     let
         skipUrl url offset =
@@ -701,24 +702,22 @@ isMatch needle hay =
             Debug.log "needle and hay: " (needle ++ ":" ++ hay)
     in
     --}
-    case not (String.isEmpty needle) of
-        True ->
-            let
-                needle_ =
-                    String.toLower <| String.trim needle
+    if not (String.isEmpty needle) then
+        let
+            needle_ =
+                String.toLower <| String.trim needle
 
-                hay_ =
-                    String.toLower hay
-            in
-            case String.contains needle_ hay_ of
-                True ->
-                    Just Yes
+            hay_ =
+                String.toLower hay
+        in
+        if String.contains needle_ hay_ then
+            Just Yes
 
-                _ ->
-                    Just No
+        else
+            Just No
 
-        False ->
-            Nothing
+    else
+        Nothing
 
 
 {-| listMatch checks for match of any or all of tokens in a list
@@ -801,7 +800,7 @@ createErrorMessage httpError =
         Http.BadStatus response ->
             response.status.message
 
-        Http.BadPayload message response ->
+        Http.BadPayload message _ ->
             message
 
 
@@ -809,11 +808,9 @@ view : Model -> Html Msg
 view model =
     let
         themeButtonLabel =
-            case model.darkMode of
-                False ->
+            if model.darkMode then 
                     "dark"
-
-                _ ->
+            else 
                     "light"
     in
     div [ classList [ ( "dark", model.darkMode == True ) ] ]

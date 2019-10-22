@@ -6027,17 +6027,11 @@ var $elm$core$String$toLower = _String_toLower;
 var $elm$core$String$trim = _String_trim;
 var $author$project$Main$isMatch = F2(
 	function (needle, hay) {
-		var _v0 = !$elm$core$String$isEmpty(needle);
-		if (_v0) {
+		if (!$elm$core$String$isEmpty(needle)) {
 			var needle_ = $elm$core$String$toLower(
 				$elm$core$String$trim(needle));
 			var hay_ = $elm$core$String$toLower(hay);
-			var _v1 = A2($elm$core$String$contains, needle_, hay_);
-			if (_v1) {
-				return $elm$core$Maybe$Just($author$project$Main$Yes);
-			} else {
-				return $elm$core$Maybe$Just($author$project$Main$No);
-			}
+			return A2($elm$core$String$contains, needle_, hay_) ? $elm$core$Maybe$Just($author$project$Main$Yes) : $elm$core$Maybe$Just($author$project$Main$No);
 		} else {
 			return $elm$core$Maybe$Nothing;
 		}
@@ -6472,7 +6466,7 @@ var $ohanhi$keyboard$Keyboard$subscriptions = $elm$core$Platform$Sub$batch(
 			$ohanhi$keyboard$Keyboard$downs($ohanhi$keyboard$Keyboard$Down),
 			$ohanhi$keyboard$Keyboard$ups($ohanhi$keyboard$Keyboard$Up)
 		]));
-var $author$project$Main$subscriptions = function (model) {
+var $author$project$Main$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$batch(
 		_List_fromArray(
 			[
@@ -6485,8 +6479,8 @@ var $author$project$Main$ShowAll = {$: 'ShowAll'};
 var $author$project$Main$IncDataReceived = function (a) {
 	return {$: 'IncDataReceived', a: a};
 };
-var $author$project$Main$bitlyIncRequest = F3(
-	function (dataURL, count, offset) {
+var $author$project$Main$bitlyIncRequest = F2(
+	function (dataURL, offset) {
 		var skipUrl = F2(
 			function (url, o) {
 				return _Utils_ap(
@@ -6536,7 +6530,6 @@ var $author$project$Main$createErrorMessage = function (httpError) {
 			return response.status.message;
 		default:
 			var message = httpError.a;
-			var response = httpError.b;
 			return message;
 	}
 };
@@ -6683,16 +6676,12 @@ var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$List$sortBy = _List_sortBy;
 var $author$project$Main$sortHay = F2(
 	function (haylist, sorted) {
-		if (!sorted) {
-			return A2(
-				$elm$core$List$sortBy,
-				function ($) {
-					return $.created;
-				},
-				haylist);
-		} else {
-			return $elm$core$List$reverse(haylist);
-		}
+		return sorted ? A2(
+			$elm$core$List$sortBy,
+			function ($) {
+				return $.created;
+			},
+			haylist) : $elm$core$List$reverse(haylist);
 	});
 var $author$project$Main$testJson = 'https://api.myjson.com/bins/skw8e';
 var $ohanhi$keyboard$Keyboard$Backspace = {$: 'Backspace'};
@@ -7143,11 +7132,11 @@ var $author$project$Main$update = F2(
 					});
 				return _Utils_Tuple2(
 					model_,
-					A3($author$project$Main$bitlyIncRequest, model_.dataAPI, model_.linkcount, model_.offset));
+					A2($author$project$Main$bitlyIncRequest, model_.dataAPI, model_.offset));
 			case 'SendHttpRequest':
 				var needle_ = function () {
-					var _v3 = model.data;
-					switch (_v3.$) {
+					var _v2 = model.data;
+					switch (_v2.$) {
 						case 'SimpleList':
 							return 'God';
 						case 'Test':
@@ -7165,15 +7154,8 @@ var $author$project$Main$update = F2(
 						offset: 0,
 						viewMode: $author$project$Main$ShowMatched
 					});
-				var dataRequestTask = function () {
-					var _v2 = model_.linkcount > 5000;
-					if (_v2) {
-						return A3($author$project$Main$bitlyIncRequest, model_.dataAPI, model_.linkcount, model_.offset);
-					} else {
-						return $elm$core$Platform$Cmd$batch(
-							A2($author$project$Main$bitlyBatchRequest, model_.dataAPI, model_.linkcount));
-					}
-				}();
+				var dataRequestTask = (model_.linkcount > 5000) ? A2($author$project$Main$bitlyIncRequest, model_.dataAPI, model_.offset) : $elm$core$Platform$Cmd$batch(
+					A2($author$project$Main$bitlyBatchRequest, model_.dataAPI, model_.linkcount));
 				var _v1 = model_.data;
 				if (_v1.$ === 'Production') {
 					return _Utils_Tuple2(model_, dataRequestTask);
@@ -7227,22 +7209,8 @@ var $author$project$Main$update = F2(
 					var updatedHays = _Utils_ap(
 						model.hay,
 						A3($author$project$Main$makeHayFromUrls, model.viewMode, model.needle, urls));
-					var incOffset = function () {
-						var _v5 = _Utils_cmp(model.offset, model.linkcount) < 0;
-						if (_v5) {
-							return model.offset + 100;
-						} else {
-							return 0;
-						}
-					}();
-					var nextCmd = function () {
-						var _v4 = _Utils_cmp(incOffset, model.linkcount) < 0;
-						if (_v4) {
-							return A3($author$project$Main$bitlyIncRequest, model.dataAPI, model.linkcount, incOffset);
-						} else {
-							return $elm$core$Platform$Cmd$none;
-						}
-					}();
+					var incOffset = (_Utils_cmp(model.offset, model.linkcount) < 0) ? (model.offset + 100) : 0;
+					var nextCmd = (_Utils_cmp(incOffset, model.linkcount) < 0) ? A2($author$project$Main$bitlyIncRequest, model.dataAPI, incOffset) : $elm$core$Platform$Cmd$none;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -7379,20 +7347,16 @@ var $author$project$Main$update = F2(
 						pressedKeys: A2($ohanhi$keyboard$Keyboard$update, keyboardMsg, model.pressedKeys)
 					});
 				var ctrlkey = A2($elm$core$List$member, $ohanhi$keyboard$Keyboard$Control, model_.pressedKeys);
-				if (!ctrlkey) {
-					return _Utils_Tuple2(model_, $elm$core$Platform$Cmd$none);
-				} else {
-					return _Utils_Tuple2(
-						$author$project$Main$handleControlKeyShortCuts(model_),
-						$elm$core$Platform$Cmd$none);
-				}
+				return (!ctrlkey) ? _Utils_Tuple2(model_, $elm$core$Platform$Cmd$none) : _Utils_Tuple2(
+					$author$project$Main$handleControlKeyShortCuts(model_),
+					$elm$core$Platform$Cmd$none);
 			case 'KeyDown':
 				var code = msg.a;
-				var _v9 = $ohanhi$keyboard$Keyboard$characterKey(code);
-				_v9$2:
+				var _v5 = $ohanhi$keyboard$Keyboard$characterKey(code);
+				_v5$2:
 				while (true) {
-					if ((_v9.$ === 'Just') && (_v9.a.$ === 'Character')) {
-						switch (_v9.a.a) {
+					if ((_v5.$ === 'Just') && (_v5.a.$ === 'Character')) {
+						switch (_v5.a.a) {
 							case ' ':
 								return _Utils_Tuple2(
 									_Utils_update(
@@ -7411,10 +7375,10 @@ var $author$project$Main$update = F2(
 										}),
 									$elm$core$Platform$Cmd$none);
 							default:
-								break _v9$2;
+								break _v5$2;
 						}
 					} else {
-						break _v9$2;
+						break _v5$2;
 					}
 				}
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -7948,14 +7912,7 @@ var $author$project$Main$viewPicker = function (options) {
 		A2($elm$core$List$map, $author$project$Main$radio, options));
 };
 var $author$project$Main$view = function (model) {
-	var themeButtonLabel = function () {
-		var _v0 = model.darkMode;
-		if (!_v0) {
-			return 'dark';
-		} else {
-			return 'light';
-		}
-	}();
+	var themeButtonLabel = model.darkMode ? 'dark' : 'light';
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(

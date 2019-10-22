@@ -2,4 +2,4 @@
 # the elm formatter 
 # Need to find out how to automatically run this 
 # 
-elm-format --yes source/main.elm; refresh 
+elm-format --yes source/Main.elm; refresh 
