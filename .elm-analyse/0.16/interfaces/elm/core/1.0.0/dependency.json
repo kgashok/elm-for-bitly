@@ -1,0 +1,2070 @@
+{
+  "name": "elm/core",
+  "version": "1.0.0",
+  "interfaces": [
+    {
+      "key": [
+        "Array"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Array",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "append"
+        },
+        {
+          "type": "function",
+          "value": "empty"
+        },
+        {
+          "type": "function",
+          "value": "filter"
+        },
+        {
+          "type": "function",
+          "value": "foldl"
+        },
+        {
+          "type": "function",
+          "value": "foldr"
+        },
+        {
+          "type": "function",
+          "value": "fromList"
+        },
+        {
+          "type": "function",
+          "value": "get"
+        },
+        {
+          "type": "function",
+          "value": "indexedMap"
+        },
+        {
+          "type": "function",
+          "value": "initialize"
+        },
+        {
+          "type": "function",
+          "value": "isEmpty"
+        },
+        {
+          "type": "function",
+          "value": "length"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "push"
+        },
+        {
+          "type": "function",
+          "value": "repeat"
+        },
+        {
+          "type": "function",
+          "value": "set"
+        },
+        {
+          "type": "function",
+          "value": "slice"
+        },
+        {
+          "type": "function",
+          "value": "toIndexedList"
+        },
+        {
+          "type": "function",
+          "value": "toList"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Basics"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Bool",
+            "constructors": [
+              "True",
+              "False"
+            ]
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Float",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Int",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Never",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Order",
+            "constructors": [
+              "LT",
+              "EQ",
+              "GT"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "abs"
+        },
+        {
+          "type": "function",
+          "value": "acos"
+        },
+        {
+          "type": "function",
+          "value": "always"
+        },
+        {
+          "type": "function",
+          "value": "asin"
+        },
+        {
+          "type": "function",
+          "value": "atan"
+        },
+        {
+          "type": "function",
+          "value": "atan2"
+        },
+        {
+          "type": "function",
+          "value": "ceiling"
+        },
+        {
+          "type": "function",
+          "value": "clamp"
+        },
+        {
+          "type": "function",
+          "value": "compare"
+        },
+        {
+          "type": "function",
+          "value": "cos"
+        },
+        {
+          "type": "function",
+          "value": "degrees"
+        },
+        {
+          "type": "function",
+          "value": "e"
+        },
+        {
+          "type": "function",
+          "value": "floor"
+        },
+        {
+          "type": "function",
+          "value": "fromPolar"
+        },
+        {
+          "type": "function",
+          "value": "identity"
+        },
+        {
+          "type": "function",
+          "value": "isInfinite"
+        },
+        {
+          "type": "function",
+          "value": "isNaN"
+        },
+        {
+          "type": "function",
+          "value": "logBase"
+        },
+        {
+          "type": "function",
+          "value": "max"
+        },
+        {
+          "type": "function",
+          "value": "min"
+        },
+        {
+          "type": "function",
+          "value": "modBy"
+        },
+        {
+          "type": "function",
+          "value": "negate"
+        },
+        {
+          "type": "function",
+          "value": "never"
+        },
+        {
+          "type": "function",
+          "value": "not"
+        },
+        {
+          "type": "function",
+          "value": "pi"
+        },
+        {
+          "type": "function",
+          "value": "radians"
+        },
+        {
+          "type": "function",
+          "value": "remainderBy"
+        },
+        {
+          "type": "function",
+          "value": "round"
+        },
+        {
+          "type": "function",
+          "value": "sin"
+        },
+        {
+          "type": "function",
+          "value": "sqrt"
+        },
+        {
+          "type": "function",
+          "value": "tan"
+        },
+        {
+          "type": "function",
+          "value": "toFloat"
+        },
+        {
+          "type": "function",
+          "value": "toPolar"
+        },
+        {
+          "type": "function",
+          "value": "truncate"
+        },
+        {
+          "type": "function",
+          "value": "turns"
+        },
+        {
+          "type": "function",
+          "value": "xor"
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "right"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 3
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "&&"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "&&"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 7
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "*"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "*"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 6
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "+"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "+"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "right"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 5
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "++"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "++"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 6
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "-"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "-"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 7
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "/"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "/"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 7
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "//"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "//"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 4
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "/="
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "/="
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 4
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "<"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "<"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 9
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "<<"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "<<"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 4
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "<="
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "<="
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "right"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 0
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "<|"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "<|"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 4
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "=="
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "=="
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 4
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": ">"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": ">"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 4
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": ">="
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": ">="
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "right"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 9
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": ">>"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": ">>"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "right"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 8
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "^"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "^"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 0
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "|>"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "|>"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "right"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 2
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "||"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "||"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": [
+        "Bitwise"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "and"
+        },
+        {
+          "type": "function",
+          "value": "complement"
+        },
+        {
+          "type": "function",
+          "value": "or"
+        },
+        {
+          "type": "function",
+          "value": "shiftLeftBy"
+        },
+        {
+          "type": "function",
+          "value": "shiftRightBy"
+        },
+        {
+          "type": "function",
+          "value": "shiftRightZfBy"
+        },
+        {
+          "type": "function",
+          "value": "xor"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Char"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Char",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "fromCode"
+        },
+        {
+          "type": "function",
+          "value": "isAlpha"
+        },
+        {
+          "type": "function",
+          "value": "isAlphaNum"
+        },
+        {
+          "type": "function",
+          "value": "isDigit"
+        },
+        {
+          "type": "function",
+          "value": "isHexDigit"
+        },
+        {
+          "type": "function",
+          "value": "isLower"
+        },
+        {
+          "type": "function",
+          "value": "isOctDigit"
+        },
+        {
+          "type": "function",
+          "value": "isUpper"
+        },
+        {
+          "type": "function",
+          "value": "toCode"
+        },
+        {
+          "type": "function",
+          "value": "toLocaleLower"
+        },
+        {
+          "type": "function",
+          "value": "toLocaleUpper"
+        },
+        {
+          "type": "function",
+          "value": "toLower"
+        },
+        {
+          "type": "function",
+          "value": "toUpper"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Debug"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "log"
+        },
+        {
+          "type": "function",
+          "value": "toString"
+        },
+        {
+          "type": "function",
+          "value": "todo"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Dict"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Dict",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "diff"
+        },
+        {
+          "type": "function",
+          "value": "empty"
+        },
+        {
+          "type": "function",
+          "value": "filter"
+        },
+        {
+          "type": "function",
+          "value": "foldl"
+        },
+        {
+          "type": "function",
+          "value": "foldr"
+        },
+        {
+          "type": "function",
+          "value": "fromList"
+        },
+        {
+          "type": "function",
+          "value": "get"
+        },
+        {
+          "type": "function",
+          "value": "insert"
+        },
+        {
+          "type": "function",
+          "value": "intersect"
+        },
+        {
+          "type": "function",
+          "value": "isEmpty"
+        },
+        {
+          "type": "function",
+          "value": "keys"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "member"
+        },
+        {
+          "type": "function",
+          "value": "merge"
+        },
+        {
+          "type": "function",
+          "value": "partition"
+        },
+        {
+          "type": "function",
+          "value": "remove"
+        },
+        {
+          "type": "function",
+          "value": "singleton"
+        },
+        {
+          "type": "function",
+          "value": "size"
+        },
+        {
+          "type": "function",
+          "value": "toList"
+        },
+        {
+          "type": "function",
+          "value": "union"
+        },
+        {
+          "type": "function",
+          "value": "update"
+        },
+        {
+          "type": "function",
+          "value": "values"
+        }
+      ]
+    },
+    {
+      "key": [
+        "List"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "all"
+        },
+        {
+          "type": "function",
+          "value": "any"
+        },
+        {
+          "type": "function",
+          "value": "append"
+        },
+        {
+          "type": "function",
+          "value": "concat"
+        },
+        {
+          "type": "function",
+          "value": "concatMap"
+        },
+        {
+          "type": "function",
+          "value": "drop"
+        },
+        {
+          "type": "function",
+          "value": "filter"
+        },
+        {
+          "type": "function",
+          "value": "filterMap"
+        },
+        {
+          "type": "function",
+          "value": "foldl"
+        },
+        {
+          "type": "function",
+          "value": "foldr"
+        },
+        {
+          "type": "function",
+          "value": "head"
+        },
+        {
+          "type": "function",
+          "value": "indexedMap"
+        },
+        {
+          "type": "function",
+          "value": "intersperse"
+        },
+        {
+          "type": "function",
+          "value": "isEmpty"
+        },
+        {
+          "type": "function",
+          "value": "length"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "map2"
+        },
+        {
+          "type": "function",
+          "value": "map3"
+        },
+        {
+          "type": "function",
+          "value": "map4"
+        },
+        {
+          "type": "function",
+          "value": "map5"
+        },
+        {
+          "type": "function",
+          "value": "maximum"
+        },
+        {
+          "type": "function",
+          "value": "member"
+        },
+        {
+          "type": "function",
+          "value": "minimum"
+        },
+        {
+          "type": "function",
+          "value": "partition"
+        },
+        {
+          "type": "function",
+          "value": "product"
+        },
+        {
+          "type": "function",
+          "value": "range"
+        },
+        {
+          "type": "function",
+          "value": "repeat"
+        },
+        {
+          "type": "function",
+          "value": "reverse"
+        },
+        {
+          "type": "function",
+          "value": "singleton"
+        },
+        {
+          "type": "function",
+          "value": "sort"
+        },
+        {
+          "type": "function",
+          "value": "sortBy"
+        },
+        {
+          "type": "function",
+          "value": "sortWith"
+        },
+        {
+          "type": "function",
+          "value": "sum"
+        },
+        {
+          "type": "function",
+          "value": "tail"
+        },
+        {
+          "type": "function",
+          "value": "take"
+        },
+        {
+          "type": "function",
+          "value": "unzip"
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "right"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 5
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "::"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "::"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": [
+        "Maybe"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Maybe",
+            "constructors": [
+              "Just",
+              "Nothing"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "andThen"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "map2"
+        },
+        {
+          "type": "function",
+          "value": "map3"
+        },
+        {
+          "type": "function",
+          "value": "map4"
+        },
+        {
+          "type": "function",
+          "value": "map5"
+        },
+        {
+          "type": "function",
+          "value": "withDefault"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Platform"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "ProcessId",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Program",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Router",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Task",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "sendToApp"
+        },
+        {
+          "type": "function",
+          "value": "sendToSelf"
+        },
+        {
+          "type": "function",
+          "value": "worker"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Platform",
+        "Cmd"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Cmd",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "batch"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Platform",
+        "Sub"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Sub",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "batch"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Process"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Id"
+        },
+        {
+          "type": "function",
+          "value": "kill"
+        },
+        {
+          "type": "function",
+          "value": "sleep"
+        },
+        {
+          "type": "function",
+          "value": "spawn"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Result"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Result",
+            "constructors": [
+              "Ok",
+              "Err"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "andThen"
+        },
+        {
+          "type": "function",
+          "value": "fromMaybe"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "map2"
+        },
+        {
+          "type": "function",
+          "value": "map3"
+        },
+        {
+          "type": "function",
+          "value": "map4"
+        },
+        {
+          "type": "function",
+          "value": "map5"
+        },
+        {
+          "type": "function",
+          "value": "mapError"
+        },
+        {
+          "type": "function",
+          "value": "toMaybe"
+        },
+        {
+          "type": "function",
+          "value": "withDefault"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Set"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Set",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "diff"
+        },
+        {
+          "type": "function",
+          "value": "empty"
+        },
+        {
+          "type": "function",
+          "value": "filter"
+        },
+        {
+          "type": "function",
+          "value": "foldl"
+        },
+        {
+          "type": "function",
+          "value": "foldr"
+        },
+        {
+          "type": "function",
+          "value": "fromList"
+        },
+        {
+          "type": "function",
+          "value": "insert"
+        },
+        {
+          "type": "function",
+          "value": "intersect"
+        },
+        {
+          "type": "function",
+          "value": "isEmpty"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "member"
+        },
+        {
+          "type": "function",
+          "value": "partition"
+        },
+        {
+          "type": "function",
+          "value": "remove"
+        },
+        {
+          "type": "function",
+          "value": "singleton"
+        },
+        {
+          "type": "function",
+          "value": "size"
+        },
+        {
+          "type": "function",
+          "value": "toList"
+        },
+        {
+          "type": "function",
+          "value": "union"
+        }
+      ]
+    },
+    {
+      "key": [
+        "String"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "String",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "all"
+        },
+        {
+          "type": "function",
+          "value": "any"
+        },
+        {
+          "type": "function",
+          "value": "append"
+        },
+        {
+          "type": "function",
+          "value": "concat"
+        },
+        {
+          "type": "function",
+          "value": "cons"
+        },
+        {
+          "type": "function",
+          "value": "contains"
+        },
+        {
+          "type": "function",
+          "value": "dropLeft"
+        },
+        {
+          "type": "function",
+          "value": "dropRight"
+        },
+        {
+          "type": "function",
+          "value": "endsWith"
+        },
+        {
+          "type": "function",
+          "value": "filter"
+        },
+        {
+          "type": "function",
+          "value": "foldl"
+        },
+        {
+          "type": "function",
+          "value": "foldr"
+        },
+        {
+          "type": "function",
+          "value": "fromChar"
+        },
+        {
+          "type": "function",
+          "value": "fromFloat"
+        },
+        {
+          "type": "function",
+          "value": "fromInt"
+        },
+        {
+          "type": "function",
+          "value": "fromList"
+        },
+        {
+          "type": "function",
+          "value": "indexes"
+        },
+        {
+          "type": "function",
+          "value": "indices"
+        },
+        {
+          "type": "function",
+          "value": "isEmpty"
+        },
+        {
+          "type": "function",
+          "value": "join"
+        },
+        {
+          "type": "function",
+          "value": "left"
+        },
+        {
+          "type": "function",
+          "value": "length"
+        },
+        {
+          "type": "function",
+          "value": "lines"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "pad"
+        },
+        {
+          "type": "function",
+          "value": "padLeft"
+        },
+        {
+          "type": "function",
+          "value": "padRight"
+        },
+        {
+          "type": "function",
+          "value": "repeat"
+        },
+        {
+          "type": "function",
+          "value": "replace"
+        },
+        {
+          "type": "function",
+          "value": "reverse"
+        },
+        {
+          "type": "function",
+          "value": "right"
+        },
+        {
+          "type": "function",
+          "value": "slice"
+        },
+        {
+          "type": "function",
+          "value": "split"
+        },
+        {
+          "type": "function",
+          "value": "startsWith"
+        },
+        {
+          "type": "function",
+          "value": "toFloat"
+        },
+        {
+          "type": "function",
+          "value": "toInt"
+        },
+        {
+          "type": "function",
+          "value": "toList"
+        },
+        {
+          "type": "function",
+          "value": "toLower"
+        },
+        {
+          "type": "function",
+          "value": "toUpper"
+        },
+        {
+          "type": "function",
+          "value": "trim"
+        },
+        {
+          "type": "function",
+          "value": "trimLeft"
+        },
+        {
+          "type": "function",
+          "value": "trimRight"
+        },
+        {
+          "type": "function",
+          "value": "uncons"
+        },
+        {
+          "type": "function",
+          "value": "words"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Task"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Task"
+        },
+        {
+          "type": "function",
+          "value": "andThen"
+        },
+        {
+          "type": "function",
+          "value": "attempt"
+        },
+        {
+          "type": "function",
+          "value": "fail"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "map2"
+        },
+        {
+          "type": "function",
+          "value": "map3"
+        },
+        {
+          "type": "function",
+          "value": "map4"
+        },
+        {
+          "type": "function",
+          "value": "map5"
+        },
+        {
+          "type": "function",
+          "value": "mapError"
+        },
+        {
+          "type": "function",
+          "value": "onError"
+        },
+        {
+          "type": "function",
+          "value": "perform"
+        },
+        {
+          "type": "function",
+          "value": "sequence"
+        },
+        {
+          "type": "function",
+          "value": "succeed"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Tuple"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "first"
+        },
+        {
+          "type": "function",
+          "value": "mapBoth"
+        },
+        {
+          "type": "function",
+          "value": "mapFirst"
+        },
+        {
+          "type": "function",
+          "value": "mapSecond"
+        },
+        {
+          "type": "function",
+          "value": "pair"
+        },
+        {
+          "type": "function",
+          "value": "second"
+        }
+      ]
+    }
+  ]
+}

@@ -4,16 +4,18 @@
   "description": "Using Elm to retrieve custom links from Bitly",
   "main": "server.js",
   "scripts": {
-    "prestart": "elm make source/main.elm --output public/elm.js",
+    "prestart": "elm make source/Main.elm --output public/elm.js",
     "start": "npm run prestart && node server.js"
   },
   "dependencies": {
-    "express": "^4.16.3",
-    "elm": "0.19.0-bugfix2",
-    "elm-upgrade": "0.19.2",
-    "elm-format": "^0.8.0",
-    "json-server": "^0.14.0",
-    "uglify-js": "^3.4.9"
+    "elm": "^0.19.1-3",
+    "elm-analyse": "^0.16.4",
+    "elm-format": "^0.8.2",
+    "elm-json": "^0.2.2",
+    "elm-upgrade": "^0.19.6",
+    "express": "^4.17.1",
+    "json-server": "^0.15.1",
+    "uglify-js": "^3.6.3"
   },
   "engines": {
     "node": "8.x"

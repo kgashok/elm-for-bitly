@@ -1,0 +1,295 @@
+{
+  "name": "elm/url",
+  "version": "1.0.0",
+  "interfaces": [
+    {
+      "key": [
+        "Url"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Url"
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Protocol",
+            "constructors": [
+              "Http",
+              "Https"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "fromString"
+        },
+        {
+          "type": "function",
+          "value": "percentDecode"
+        },
+        {
+          "type": "function",
+          "value": "percentEncode"
+        },
+        {
+          "type": "function",
+          "value": "toString"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Url",
+        "Builder"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "QueryParameter",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Root",
+            "constructors": [
+              "Absolute",
+              "Relative",
+              "CrossOrigin"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "absolute"
+        },
+        {
+          "type": "function",
+          "value": "crossOrigin"
+        },
+        {
+          "type": "function",
+          "value": "custom"
+        },
+        {
+          "type": "function",
+          "value": "int"
+        },
+        {
+          "type": "function",
+          "value": "relative"
+        },
+        {
+          "type": "function",
+          "value": "string"
+        },
+        {
+          "type": "function",
+          "value": "toQuery"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Url",
+        "Parser"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Parser",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "custom"
+        },
+        {
+          "type": "function",
+          "value": "fragment"
+        },
+        {
+          "type": "function",
+          "value": "int"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "oneOf"
+        },
+        {
+          "type": "function",
+          "value": "parse"
+        },
+        {
+          "type": "function",
+          "value": "query"
+        },
+        {
+          "type": "function",
+          "value": "s"
+        },
+        {
+          "type": "function",
+          "value": "string"
+        },
+        {
+          "type": "function",
+          "value": "top"
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "right"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 7
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "</>"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "</>"
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 8
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "<?>"
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "<?>"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": [
+        "Url",
+        "Parser",
+        "Query"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Parser"
+        },
+        {
+          "type": "function",
+          "value": "custom"
+        },
+        {
+          "type": "function",
+          "value": "enum"
+        },
+        {
+          "type": "function",
+          "value": "int"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "map2"
+        },
+        {
+          "type": "function",
+          "value": "map3"
+        },
+        {
+          "type": "function",
+          "value": "map4"
+        },
+        {
+          "type": "function",
+          "value": "map5"
+        },
+        {
+          "type": "function",
+          "value": "map6"
+        },
+        {
+          "type": "function",
+          "value": "map7"
+        },
+        {
+          "type": "function",
+          "value": "map8"
+        },
+        {
+          "type": "function",
+          "value": "string"
+        }
+      ]
+    }
+  ]
+}

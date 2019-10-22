@@ -1,0 +1,201 @@
+{
+  "name": "elm/browser",
+  "version": "1.0.0",
+  "interfaces": [
+    {
+      "key": [
+        "Browser"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Document"
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "UrlRequest",
+            "constructors": [
+              "Internal",
+              "External"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "application"
+        },
+        {
+          "type": "function",
+          "value": "document"
+        },
+        {
+          "type": "function",
+          "value": "element"
+        },
+        {
+          "type": "function",
+          "value": "sandbox"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Browser",
+        "Dom"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Element"
+        },
+        {
+          "type": "alias",
+          "value": "Viewport"
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Error",
+            "constructors": [
+              "NotFound"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "blur"
+        },
+        {
+          "type": "function",
+          "value": "focus"
+        },
+        {
+          "type": "function",
+          "value": "getElement"
+        },
+        {
+          "type": "function",
+          "value": "getViewport"
+        },
+        {
+          "type": "function",
+          "value": "getViewportOf"
+        },
+        {
+          "type": "function",
+          "value": "setViewport"
+        },
+        {
+          "type": "function",
+          "value": "setViewportOf"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Browser",
+        "Events"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Visibility",
+            "constructors": [
+              "Visible",
+              "Hidden"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "onAnimationFrame"
+        },
+        {
+          "type": "function",
+          "value": "onAnimationFrameDelta"
+        },
+        {
+          "type": "function",
+          "value": "onClick"
+        },
+        {
+          "type": "function",
+          "value": "onKeyDown"
+        },
+        {
+          "type": "function",
+          "value": "onKeyPress"
+        },
+        {
+          "type": "function",
+          "value": "onKeyUp"
+        },
+        {
+          "type": "function",
+          "value": "onMouseDown"
+        },
+        {
+          "type": "function",
+          "value": "onMouseMove"
+        },
+        {
+          "type": "function",
+          "value": "onMouseUp"
+        },
+        {
+          "type": "function",
+          "value": "onResize"
+        },
+        {
+          "type": "function",
+          "value": "onVisibilityChange"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Browser",
+        "Navigation"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Key",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "back"
+        },
+        {
+          "type": "function",
+          "value": "forward"
+        },
+        {
+          "type": "function",
+          "value": "load"
+        },
+        {
+          "type": "function",
+          "value": "pushUrl"
+        },
+        {
+          "type": "function",
+          "value": "reload"
+        },
+        {
+          "type": "function",
+          "value": "reloadAndSkipCache"
+        },
+        {
+          "type": "function",
+          "value": "replaceUrl"
+        }
+      ]
+    }
+  ]
+}

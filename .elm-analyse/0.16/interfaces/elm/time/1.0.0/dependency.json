@@ -1,0 +1,136 @@
+{
+  "name": "elm/time",
+  "version": "1.0.0",
+  "interfaces": [
+    {
+      "key": [
+        "Time"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Month",
+            "constructors": [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Posix",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Weekday",
+            "constructors": [
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+              "Sun"
+            ]
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Zone",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "ZoneName",
+            "constructors": [
+              "Name",
+              "Offset"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "customZone"
+        },
+        {
+          "type": "function",
+          "value": "every"
+        },
+        {
+          "type": "function",
+          "value": "getZoneName"
+        },
+        {
+          "type": "function",
+          "value": "here"
+        },
+        {
+          "type": "function",
+          "value": "millisToPosix"
+        },
+        {
+          "type": "function",
+          "value": "now"
+        },
+        {
+          "type": "function",
+          "value": "posixToMillis"
+        },
+        {
+          "type": "function",
+          "value": "toDay"
+        },
+        {
+          "type": "function",
+          "value": "toHour"
+        },
+        {
+          "type": "function",
+          "value": "toMillis"
+        },
+        {
+          "type": "function",
+          "value": "toMinute"
+        },
+        {
+          "type": "function",
+          "value": "toMonth"
+        },
+        {
+          "type": "function",
+          "value": "toSecond"
+        },
+        {
+          "type": "function",
+          "value": "toWeekday"
+        },
+        {
+          "type": "function",
+          "value": "toYear"
+        },
+        {
+          "type": "function",
+          "value": "utc"
+        }
+      ]
+    }
+  ]
+}

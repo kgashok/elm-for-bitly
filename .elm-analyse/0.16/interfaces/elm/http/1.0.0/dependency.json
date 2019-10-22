@@ -1,0 +1,137 @@
+{
+  "name": "elm/http",
+  "version": "1.0.0",
+  "interfaces": [
+    {
+      "key": [
+        "Http"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Body"
+        },
+        {
+          "type": "alias",
+          "value": "Expect"
+        },
+        {
+          "type": "alias",
+          "value": "Header"
+        },
+        {
+          "type": "alias",
+          "value": "Request"
+        },
+        {
+          "type": "alias",
+          "value": "Response"
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Error",
+            "constructors": [
+              "BadUrl",
+              "Timeout",
+              "NetworkError",
+              "BadStatus",
+              "BadPayload"
+            ]
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Part",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "emptyBody"
+        },
+        {
+          "type": "function",
+          "value": "expectJson"
+        },
+        {
+          "type": "function",
+          "value": "expectString"
+        },
+        {
+          "type": "function",
+          "value": "expectStringResponse"
+        },
+        {
+          "type": "function",
+          "value": "get"
+        },
+        {
+          "type": "function",
+          "value": "getString"
+        },
+        {
+          "type": "function",
+          "value": "header"
+        },
+        {
+          "type": "function",
+          "value": "jsonBody"
+        },
+        {
+          "type": "function",
+          "value": "multipartBody"
+        },
+        {
+          "type": "function",
+          "value": "post"
+        },
+        {
+          "type": "function",
+          "value": "request"
+        },
+        {
+          "type": "function",
+          "value": "send"
+        },
+        {
+          "type": "function",
+          "value": "stringBody"
+        },
+        {
+          "type": "function",
+          "value": "stringPart"
+        },
+        {
+          "type": "function",
+          "value": "toTask"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Http",
+        "Progress"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Progress",
+            "constructors": [
+              "None",
+              "Some",
+              "Fail",
+              "Done"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "track"
+        }
+      ]
+    }
+  ]
+}

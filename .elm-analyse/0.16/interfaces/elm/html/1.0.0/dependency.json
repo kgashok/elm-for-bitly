@@ -1,0 +1,917 @@
+{
+  "name": "elm/html",
+  "version": "1.0.0",
+  "interfaces": [
+    {
+      "key": [
+        "Html"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Attribute"
+        },
+        {
+          "type": "alias",
+          "value": "Html"
+        },
+        {
+          "type": "function",
+          "value": "a"
+        },
+        {
+          "type": "function",
+          "value": "abbr"
+        },
+        {
+          "type": "function",
+          "value": "address"
+        },
+        {
+          "type": "function",
+          "value": "article"
+        },
+        {
+          "type": "function",
+          "value": "aside"
+        },
+        {
+          "type": "function",
+          "value": "audio"
+        },
+        {
+          "type": "function",
+          "value": "b"
+        },
+        {
+          "type": "function",
+          "value": "bdi"
+        },
+        {
+          "type": "function",
+          "value": "bdo"
+        },
+        {
+          "type": "function",
+          "value": "blockquote"
+        },
+        {
+          "type": "function",
+          "value": "br"
+        },
+        {
+          "type": "function",
+          "value": "button"
+        },
+        {
+          "type": "function",
+          "value": "canvas"
+        },
+        {
+          "type": "function",
+          "value": "caption"
+        },
+        {
+          "type": "function",
+          "value": "cite"
+        },
+        {
+          "type": "function",
+          "value": "code"
+        },
+        {
+          "type": "function",
+          "value": "col"
+        },
+        {
+          "type": "function",
+          "value": "colgroup"
+        },
+        {
+          "type": "function",
+          "value": "datalist"
+        },
+        {
+          "type": "function",
+          "value": "dd"
+        },
+        {
+          "type": "function",
+          "value": "del"
+        },
+        {
+          "type": "function",
+          "value": "details"
+        },
+        {
+          "type": "function",
+          "value": "dfn"
+        },
+        {
+          "type": "function",
+          "value": "div"
+        },
+        {
+          "type": "function",
+          "value": "dl"
+        },
+        {
+          "type": "function",
+          "value": "dt"
+        },
+        {
+          "type": "function",
+          "value": "em"
+        },
+        {
+          "type": "function",
+          "value": "embed"
+        },
+        {
+          "type": "function",
+          "value": "fieldset"
+        },
+        {
+          "type": "function",
+          "value": "figcaption"
+        },
+        {
+          "type": "function",
+          "value": "figure"
+        },
+        {
+          "type": "function",
+          "value": "footer"
+        },
+        {
+          "type": "function",
+          "value": "form"
+        },
+        {
+          "type": "function",
+          "value": "h1"
+        },
+        {
+          "type": "function",
+          "value": "h2"
+        },
+        {
+          "type": "function",
+          "value": "h3"
+        },
+        {
+          "type": "function",
+          "value": "h4"
+        },
+        {
+          "type": "function",
+          "value": "h5"
+        },
+        {
+          "type": "function",
+          "value": "h6"
+        },
+        {
+          "type": "function",
+          "value": "header"
+        },
+        {
+          "type": "function",
+          "value": "hr"
+        },
+        {
+          "type": "function",
+          "value": "i"
+        },
+        {
+          "type": "function",
+          "value": "iframe"
+        },
+        {
+          "type": "function",
+          "value": "img"
+        },
+        {
+          "type": "function",
+          "value": "input"
+        },
+        {
+          "type": "function",
+          "value": "ins"
+        },
+        {
+          "type": "function",
+          "value": "kbd"
+        },
+        {
+          "type": "function",
+          "value": "label"
+        },
+        {
+          "type": "function",
+          "value": "legend"
+        },
+        {
+          "type": "function",
+          "value": "li"
+        },
+        {
+          "type": "function",
+          "value": "main_"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "mark"
+        },
+        {
+          "type": "function",
+          "value": "math"
+        },
+        {
+          "type": "function",
+          "value": "menu"
+        },
+        {
+          "type": "function",
+          "value": "menuitem"
+        },
+        {
+          "type": "function",
+          "value": "meter"
+        },
+        {
+          "type": "function",
+          "value": "nav"
+        },
+        {
+          "type": "function",
+          "value": "node"
+        },
+        {
+          "type": "function",
+          "value": "object"
+        },
+        {
+          "type": "function",
+          "value": "ol"
+        },
+        {
+          "type": "function",
+          "value": "optgroup"
+        },
+        {
+          "type": "function",
+          "value": "option"
+        },
+        {
+          "type": "function",
+          "value": "output"
+        },
+        {
+          "type": "function",
+          "value": "p"
+        },
+        {
+          "type": "function",
+          "value": "param"
+        },
+        {
+          "type": "function",
+          "value": "pre"
+        },
+        {
+          "type": "function",
+          "value": "progress"
+        },
+        {
+          "type": "function",
+          "value": "q"
+        },
+        {
+          "type": "function",
+          "value": "rp"
+        },
+        {
+          "type": "function",
+          "value": "rt"
+        },
+        {
+          "type": "function",
+          "value": "ruby"
+        },
+        {
+          "type": "function",
+          "value": "s"
+        },
+        {
+          "type": "function",
+          "value": "samp"
+        },
+        {
+          "type": "function",
+          "value": "section"
+        },
+        {
+          "type": "function",
+          "value": "select"
+        },
+        {
+          "type": "function",
+          "value": "small"
+        },
+        {
+          "type": "function",
+          "value": "source"
+        },
+        {
+          "type": "function",
+          "value": "span"
+        },
+        {
+          "type": "function",
+          "value": "strong"
+        },
+        {
+          "type": "function",
+          "value": "sub"
+        },
+        {
+          "type": "function",
+          "value": "summary"
+        },
+        {
+          "type": "function",
+          "value": "sup"
+        },
+        {
+          "type": "function",
+          "value": "table"
+        },
+        {
+          "type": "function",
+          "value": "tbody"
+        },
+        {
+          "type": "function",
+          "value": "td"
+        },
+        {
+          "type": "function",
+          "value": "text"
+        },
+        {
+          "type": "function",
+          "value": "textarea"
+        },
+        {
+          "type": "function",
+          "value": "tfoot"
+        },
+        {
+          "type": "function",
+          "value": "th"
+        },
+        {
+          "type": "function",
+          "value": "thead"
+        },
+        {
+          "type": "function",
+          "value": "time"
+        },
+        {
+          "type": "function",
+          "value": "tr"
+        },
+        {
+          "type": "function",
+          "value": "track"
+        },
+        {
+          "type": "function",
+          "value": "u"
+        },
+        {
+          "type": "function",
+          "value": "ul"
+        },
+        {
+          "type": "function",
+          "value": "var"
+        },
+        {
+          "type": "function",
+          "value": "video"
+        },
+        {
+          "type": "function",
+          "value": "wbr"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Html",
+        "Attributes"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "accept"
+        },
+        {
+          "type": "function",
+          "value": "acceptCharset"
+        },
+        {
+          "type": "function",
+          "value": "accesskey"
+        },
+        {
+          "type": "function",
+          "value": "action"
+        },
+        {
+          "type": "function",
+          "value": "align"
+        },
+        {
+          "type": "function",
+          "value": "alt"
+        },
+        {
+          "type": "function",
+          "value": "attribute"
+        },
+        {
+          "type": "function",
+          "value": "autocomplete"
+        },
+        {
+          "type": "function",
+          "value": "autofocus"
+        },
+        {
+          "type": "function",
+          "value": "autoplay"
+        },
+        {
+          "type": "function",
+          "value": "checked"
+        },
+        {
+          "type": "function",
+          "value": "cite"
+        },
+        {
+          "type": "function",
+          "value": "class"
+        },
+        {
+          "type": "function",
+          "value": "classList"
+        },
+        {
+          "type": "function",
+          "value": "cols"
+        },
+        {
+          "type": "function",
+          "value": "colspan"
+        },
+        {
+          "type": "function",
+          "value": "contenteditable"
+        },
+        {
+          "type": "function",
+          "value": "contextmenu"
+        },
+        {
+          "type": "function",
+          "value": "controls"
+        },
+        {
+          "type": "function",
+          "value": "coords"
+        },
+        {
+          "type": "function",
+          "value": "datetime"
+        },
+        {
+          "type": "function",
+          "value": "default"
+        },
+        {
+          "type": "function",
+          "value": "dir"
+        },
+        {
+          "type": "function",
+          "value": "disabled"
+        },
+        {
+          "type": "function",
+          "value": "download"
+        },
+        {
+          "type": "function",
+          "value": "draggable"
+        },
+        {
+          "type": "function",
+          "value": "dropzone"
+        },
+        {
+          "type": "function",
+          "value": "enctype"
+        },
+        {
+          "type": "function",
+          "value": "for"
+        },
+        {
+          "type": "function",
+          "value": "form"
+        },
+        {
+          "type": "function",
+          "value": "headers"
+        },
+        {
+          "type": "function",
+          "value": "height"
+        },
+        {
+          "type": "function",
+          "value": "hidden"
+        },
+        {
+          "type": "function",
+          "value": "href"
+        },
+        {
+          "type": "function",
+          "value": "hreflang"
+        },
+        {
+          "type": "function",
+          "value": "id"
+        },
+        {
+          "type": "function",
+          "value": "ismap"
+        },
+        {
+          "type": "function",
+          "value": "itemprop"
+        },
+        {
+          "type": "function",
+          "value": "kind"
+        },
+        {
+          "type": "function",
+          "value": "lang"
+        },
+        {
+          "type": "function",
+          "value": "list"
+        },
+        {
+          "type": "function",
+          "value": "loop"
+        },
+        {
+          "type": "function",
+          "value": "manifest"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "max"
+        },
+        {
+          "type": "function",
+          "value": "maxlength"
+        },
+        {
+          "type": "function",
+          "value": "media"
+        },
+        {
+          "type": "function",
+          "value": "method"
+        },
+        {
+          "type": "function",
+          "value": "min"
+        },
+        {
+          "type": "function",
+          "value": "minlength"
+        },
+        {
+          "type": "function",
+          "value": "multiple"
+        },
+        {
+          "type": "function",
+          "value": "name"
+        },
+        {
+          "type": "function",
+          "value": "novalidate"
+        },
+        {
+          "type": "function",
+          "value": "pattern"
+        },
+        {
+          "type": "function",
+          "value": "ping"
+        },
+        {
+          "type": "function",
+          "value": "placeholder"
+        },
+        {
+          "type": "function",
+          "value": "poster"
+        },
+        {
+          "type": "function",
+          "value": "preload"
+        },
+        {
+          "type": "function",
+          "value": "property"
+        },
+        {
+          "type": "function",
+          "value": "pubdate"
+        },
+        {
+          "type": "function",
+          "value": "readonly"
+        },
+        {
+          "type": "function",
+          "value": "rel"
+        },
+        {
+          "type": "function",
+          "value": "required"
+        },
+        {
+          "type": "function",
+          "value": "reversed"
+        },
+        {
+          "type": "function",
+          "value": "rows"
+        },
+        {
+          "type": "function",
+          "value": "rowspan"
+        },
+        {
+          "type": "function",
+          "value": "sandbox"
+        },
+        {
+          "type": "function",
+          "value": "scope"
+        },
+        {
+          "type": "function",
+          "value": "selected"
+        },
+        {
+          "type": "function",
+          "value": "shape"
+        },
+        {
+          "type": "function",
+          "value": "size"
+        },
+        {
+          "type": "function",
+          "value": "spellcheck"
+        },
+        {
+          "type": "function",
+          "value": "src"
+        },
+        {
+          "type": "function",
+          "value": "srcdoc"
+        },
+        {
+          "type": "function",
+          "value": "srclang"
+        },
+        {
+          "type": "function",
+          "value": "start"
+        },
+        {
+          "type": "function",
+          "value": "step"
+        },
+        {
+          "type": "function",
+          "value": "style"
+        },
+        {
+          "type": "function",
+          "value": "tabindex"
+        },
+        {
+          "type": "function",
+          "value": "target"
+        },
+        {
+          "type": "function",
+          "value": "title"
+        },
+        {
+          "type": "function",
+          "value": "type_"
+        },
+        {
+          "type": "function",
+          "value": "usemap"
+        },
+        {
+          "type": "function",
+          "value": "value"
+        },
+        {
+          "type": "function",
+          "value": "width"
+        },
+        {
+          "type": "function",
+          "value": "wrap"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Html",
+        "Events"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "custom"
+        },
+        {
+          "type": "function",
+          "value": "keyCode"
+        },
+        {
+          "type": "function",
+          "value": "on"
+        },
+        {
+          "type": "function",
+          "value": "onBlur"
+        },
+        {
+          "type": "function",
+          "value": "onCheck"
+        },
+        {
+          "type": "function",
+          "value": "onClick"
+        },
+        {
+          "type": "function",
+          "value": "onDoubleClick"
+        },
+        {
+          "type": "function",
+          "value": "onFocus"
+        },
+        {
+          "type": "function",
+          "value": "onInput"
+        },
+        {
+          "type": "function",
+          "value": "onMouseDown"
+        },
+        {
+          "type": "function",
+          "value": "onMouseEnter"
+        },
+        {
+          "type": "function",
+          "value": "onMouseLeave"
+        },
+        {
+          "type": "function",
+          "value": "onMouseOut"
+        },
+        {
+          "type": "function",
+          "value": "onMouseOver"
+        },
+        {
+          "type": "function",
+          "value": "onMouseUp"
+        },
+        {
+          "type": "function",
+          "value": "onSubmit"
+        },
+        {
+          "type": "function",
+          "value": "preventDefaultOn"
+        },
+        {
+          "type": "function",
+          "value": "stopPropagationOn"
+        },
+        {
+          "type": "function",
+          "value": "targetChecked"
+        },
+        {
+          "type": "function",
+          "value": "targetValue"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Html",
+        "Keyed"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "node"
+        },
+        {
+          "type": "function",
+          "value": "ol"
+        },
+        {
+          "type": "function",
+          "value": "ul"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Html",
+        "Lazy"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "lazy"
+        },
+        {
+          "type": "function",
+          "value": "lazy2"
+        },
+        {
+          "type": "function",
+          "value": "lazy3"
+        },
+        {
+          "type": "function",
+          "value": "lazy4"
+        },
+        {
+          "type": "function",
+          "value": "lazy5"
+        },
+        {
+          "type": "function",
+          "value": "lazy6"
+        },
+        {
+          "type": "function",
+          "value": "lazy7"
+        },
+        {
+          "type": "function",
+          "value": "lazy8"
+        }
+      ]
+    }
+  ]
+}

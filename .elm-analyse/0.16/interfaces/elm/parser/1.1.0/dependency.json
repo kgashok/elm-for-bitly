@@ -1,0 +1,585 @@
+{
+  "name": "elm/parser",
+  "version": "1.1.0",
+  "interfaces": [
+    {
+      "key": [
+        "Parser"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "DeadEnd"
+        },
+        {
+          "type": "alias",
+          "value": "Parser"
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Nestable",
+            "constructors": [
+              "NotNestable",
+              "Nestable"
+            ]
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Problem",
+            "constructors": [
+              "Expecting",
+              "ExpectingInt",
+              "ExpectingHex",
+              "ExpectingOctal",
+              "ExpectingBinary",
+              "ExpectingFloat",
+              "ExpectingNumber",
+              "ExpectingVariable",
+              "ExpectingSymbol",
+              "ExpectingKeyword",
+              "ExpectingEnd",
+              "UnexpectedChar",
+              "Problem",
+              "BadRepeat"
+            ]
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Step",
+            "constructors": [
+              "Loop",
+              "Done"
+            ]
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Trailing",
+            "constructors": [
+              "Forbidden",
+              "Optional",
+              "Mandatory"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "andThen"
+        },
+        {
+          "type": "function",
+          "value": "backtrackable"
+        },
+        {
+          "type": "function",
+          "value": "chompIf"
+        },
+        {
+          "type": "function",
+          "value": "chompUntil"
+        },
+        {
+          "type": "function",
+          "value": "chompUntilEndOr"
+        },
+        {
+          "type": "function",
+          "value": "chompWhile"
+        },
+        {
+          "type": "function",
+          "value": "commit"
+        },
+        {
+          "type": "function",
+          "value": "deadEndsToString"
+        },
+        {
+          "type": "function",
+          "value": "end"
+        },
+        {
+          "type": "function",
+          "value": "float"
+        },
+        {
+          "type": "function",
+          "value": "getChompedString"
+        },
+        {
+          "type": "function",
+          "value": "getCol"
+        },
+        {
+          "type": "function",
+          "value": "getIndent"
+        },
+        {
+          "type": "function",
+          "value": "getOffset"
+        },
+        {
+          "type": "function",
+          "value": "getPosition"
+        },
+        {
+          "type": "function",
+          "value": "getRow"
+        },
+        {
+          "type": "function",
+          "value": "getSource"
+        },
+        {
+          "type": "function",
+          "value": "int"
+        },
+        {
+          "type": "function",
+          "value": "keyword"
+        },
+        {
+          "type": "function",
+          "value": "lazy"
+        },
+        {
+          "type": "function",
+          "value": "lineComment"
+        },
+        {
+          "type": "function",
+          "value": "loop"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "mapChompedString"
+        },
+        {
+          "type": "function",
+          "value": "multiComment"
+        },
+        {
+          "type": "function",
+          "value": "number"
+        },
+        {
+          "type": "function",
+          "value": "oneOf"
+        },
+        {
+          "type": "function",
+          "value": "problem"
+        },
+        {
+          "type": "function",
+          "value": "run"
+        },
+        {
+          "type": "function",
+          "value": "sequence"
+        },
+        {
+          "type": "function",
+          "value": "spaces"
+        },
+        {
+          "type": "function",
+          "value": "succeed"
+        },
+        {
+          "type": "function",
+          "value": "symbol"
+        },
+        {
+          "type": "function",
+          "value": "token"
+        },
+        {
+          "type": "function",
+          "value": "variable"
+        },
+        {
+          "type": "function",
+          "value": "withIndent"
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 6
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "|."
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "|."
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 5
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "|="
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "|="
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": [
+        "Parser",
+        "Advanced"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "DeadEnd"
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Nestable",
+            "constructors": [
+              "NotNestable",
+              "Nestable"
+            ]
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Parser",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Step",
+            "constructors": [
+              "Loop",
+              "Done"
+            ]
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Token",
+            "constructors": [
+              "Token"
+            ]
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Trailing",
+            "constructors": [
+              "Forbidden",
+              "Optional",
+              "Mandatory"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "andThen"
+        },
+        {
+          "type": "function",
+          "value": "backtrackable"
+        },
+        {
+          "type": "function",
+          "value": "chompIf"
+        },
+        {
+          "type": "function",
+          "value": "chompUntil"
+        },
+        {
+          "type": "function",
+          "value": "chompUntilEndOr"
+        },
+        {
+          "type": "function",
+          "value": "chompWhile"
+        },
+        {
+          "type": "function",
+          "value": "commit"
+        },
+        {
+          "type": "function",
+          "value": "end"
+        },
+        {
+          "type": "function",
+          "value": "float"
+        },
+        {
+          "type": "function",
+          "value": "getChompedString"
+        },
+        {
+          "type": "function",
+          "value": "getCol"
+        },
+        {
+          "type": "function",
+          "value": "getIndent"
+        },
+        {
+          "type": "function",
+          "value": "getOffset"
+        },
+        {
+          "type": "function",
+          "value": "getPosition"
+        },
+        {
+          "type": "function",
+          "value": "getRow"
+        },
+        {
+          "type": "function",
+          "value": "getSource"
+        },
+        {
+          "type": "function",
+          "value": "inContext"
+        },
+        {
+          "type": "function",
+          "value": "int"
+        },
+        {
+          "type": "function",
+          "value": "keyword"
+        },
+        {
+          "type": "function",
+          "value": "lazy"
+        },
+        {
+          "type": "function",
+          "value": "lineComment"
+        },
+        {
+          "type": "function",
+          "value": "loop"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "mapChompedString"
+        },
+        {
+          "type": "function",
+          "value": "multiComment"
+        },
+        {
+          "type": "function",
+          "value": "number"
+        },
+        {
+          "type": "function",
+          "value": "oneOf"
+        },
+        {
+          "type": "function",
+          "value": "problem"
+        },
+        {
+          "type": "function",
+          "value": "run"
+        },
+        {
+          "type": "function",
+          "value": "sequence"
+        },
+        {
+          "type": "function",
+          "value": "spaces"
+        },
+        {
+          "type": "function",
+          "value": "succeed"
+        },
+        {
+          "type": "function",
+          "value": "symbol"
+        },
+        {
+          "type": "function",
+          "value": "token"
+        },
+        {
+          "type": "function",
+          "value": "variable"
+        },
+        {
+          "type": "function",
+          "value": "withIndent"
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 6
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "|."
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "|."
+            }
+          }
+        },
+        {
+          "type": "operator",
+          "value": {
+            "direction": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "left"
+            },
+            "precedence": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": 5
+            },
+            "operator": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "|="
+            },
+            "function": {
+              "range": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "value": "|="
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

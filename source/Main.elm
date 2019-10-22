@@ -1083,12 +1083,12 @@ nicknamesJson =
 
 nicknamesDecoder : Decoder (List String)
 nicknamesDecoder =
-    field "nicknames" (list string)
+    field "nicknames" (Json.Decode.list string)
 
 
 urlsDecoder : Decoder (List Link)
 urlsDecoder =
-    Json.Decode.at [ "data", "link_history" ] (list linkDecoder)
+    Json.Decode.at [ "data", "link_history" ] (Json.Decode.list linkDecoder)
 
 
 linkDecoder : Decoder Link
@@ -1098,7 +1098,7 @@ linkDecoder =
         (field "title" string)
         (maybe (field "keyword_link" string))
         (field "long_url" string)
-        (field "tags" (list string))
+        (field "tags" (Json.Decode.list string))
         (field "created_at" int)
         (field "modified_at" int)
 

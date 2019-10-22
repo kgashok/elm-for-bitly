@@ -1,0 +1,6931 @@
+{
+  "name": "rtfeldman/elm-css",
+  "version": "15.0.0",
+  "interfaces": [
+    {
+      "key": [
+        "Css"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "AlignItems"
+        },
+        {
+          "type": "alias",
+          "value": "All"
+        },
+        {
+          "type": "alias",
+          "value": "Angle"
+        },
+        {
+          "type": "alias",
+          "value": "AngleOrDirection"
+        },
+        {
+          "type": "alias",
+          "value": "BackgroundAttachment"
+        },
+        {
+          "type": "alias",
+          "value": "BackgroundBlendMode"
+        },
+        {
+          "type": "alias",
+          "value": "BackgroundClip"
+        },
+        {
+          "type": "alias",
+          "value": "BackgroundImage"
+        },
+        {
+          "type": "alias",
+          "value": "BackgroundOrigin"
+        },
+        {
+          "type": "alias",
+          "value": "BackgroundRepeat"
+        },
+        {
+          "type": "alias",
+          "value": "BackgroundRepeatShorthand"
+        },
+        {
+          "type": "alias",
+          "value": "BasicProperty"
+        },
+        {
+          "type": "alias",
+          "value": "BorderCollapse"
+        },
+        {
+          "type": "alias",
+          "value": "BorderStyle"
+        },
+        {
+          "type": "alias",
+          "value": "BoxSizing"
+        },
+        {
+          "type": "alias",
+          "value": "Calc"
+        },
+        {
+          "type": "alias",
+          "value": "Ch"
+        },
+        {
+          "type": "alias",
+          "value": "Cm"
+        },
+        {
+          "type": "alias",
+          "value": "Color"
+        },
+        {
+          "type": "alias",
+          "value": "ColorStop"
+        },
+        {
+          "type": "alias",
+          "value": "ColorValue"
+        },
+        {
+          "type": "alias",
+          "value": "Compatible"
+        },
+        {
+          "type": "alias",
+          "value": "Cursor"
+        },
+        {
+          "type": "alias",
+          "value": "Display"
+        },
+        {
+          "type": "alias",
+          "value": "Em"
+        },
+        {
+          "type": "alias",
+          "value": "Ex"
+        },
+        {
+          "type": "alias",
+          "value": "ExplicitLength"
+        },
+        {
+          "type": "alias",
+          "value": "FeatureTagValue"
+        },
+        {
+          "type": "alias",
+          "value": "FlexBasis"
+        },
+        {
+          "type": "alias",
+          "value": "FlexDirection"
+        },
+        {
+          "type": "alias",
+          "value": "FlexDirectionOrWrap"
+        },
+        {
+          "type": "alias",
+          "value": "FlexWrap"
+        },
+        {
+          "type": "alias",
+          "value": "FontFamily"
+        },
+        {
+          "type": "alias",
+          "value": "FontSize"
+        },
+        {
+          "type": "alias",
+          "value": "FontStyle"
+        },
+        {
+          "type": "alias",
+          "value": "FontStyleOrFeatureTagValue"
+        },
+        {
+          "type": "alias",
+          "value": "FontVariant"
+        },
+        {
+          "type": "alias",
+          "value": "FontVariantCaps"
+        },
+        {
+          "type": "alias",
+          "value": "FontVariantLigatures"
+        },
+        {
+          "type": "alias",
+          "value": "FontVariantNumeric"
+        },
+        {
+          "type": "alias",
+          "value": "FontWeight"
+        },
+        {
+          "type": "alias",
+          "value": "ImportType"
+        },
+        {
+          "type": "alias",
+          "value": "In"
+        },
+        {
+          "type": "alias",
+          "value": "IncompatibleUnits"
+        },
+        {
+          "type": "alias",
+          "value": "IntOrAuto"
+        },
+        {
+          "type": "alias",
+          "value": "JustifyContent"
+        },
+        {
+          "type": "alias",
+          "value": "Length"
+        },
+        {
+          "type": "alias",
+          "value": "LengthOrAuto"
+        },
+        {
+          "type": "alias",
+          "value": "LengthOrAutoOrCoverOrContain"
+        },
+        {
+          "type": "alias",
+          "value": "LengthOrMinMaxDimension"
+        },
+        {
+          "type": "alias",
+          "value": "LengthOrNone"
+        },
+        {
+          "type": "alias",
+          "value": "LengthOrNoneOrMinMaxDimension"
+        },
+        {
+          "type": "alias",
+          "value": "LengthOrNumber"
+        },
+        {
+          "type": "alias",
+          "value": "LengthOrNumberOrAutoOrNoneOrContent"
+        },
+        {
+          "type": "alias",
+          "value": "ListStyle"
+        },
+        {
+          "type": "alias",
+          "value": "ListStylePosition"
+        },
+        {
+          "type": "alias",
+          "value": "ListStyleType"
+        },
+        {
+          "type": "alias",
+          "value": "MinMaxDimension"
+        },
+        {
+          "type": "alias",
+          "value": "Mm"
+        },
+        {
+          "type": "alias",
+          "value": "NonMixable"
+        },
+        {
+          "type": "alias",
+          "value": "None"
+        },
+        {
+          "type": "alias",
+          "value": "Number"
+        },
+        {
+          "type": "alias",
+          "value": "Outline"
+        },
+        {
+          "type": "alias",
+          "value": "Overflow"
+        },
+        {
+          "type": "alias",
+          "value": "Pc"
+        },
+        {
+          "type": "alias",
+          "value": "Pct"
+        },
+        {
+          "type": "alias",
+          "value": "Position"
+        },
+        {
+          "type": "alias",
+          "value": "Pt"
+        },
+        {
+          "type": "alias",
+          "value": "Px"
+        },
+        {
+          "type": "alias",
+          "value": "Rem"
+        },
+        {
+          "type": "alias",
+          "value": "Resize"
+        },
+        {
+          "type": "alias",
+          "value": "Style"
+        },
+        {
+          "type": "alias",
+          "value": "TableLayout"
+        },
+        {
+          "type": "alias",
+          "value": "TextDecorationLine"
+        },
+        {
+          "type": "alias",
+          "value": "TextDecorationStyle"
+        },
+        {
+          "type": "alias",
+          "value": "TextIndent"
+        },
+        {
+          "type": "alias",
+          "value": "TextOrientation"
+        },
+        {
+          "type": "alias",
+          "value": "TextOverflow"
+        },
+        {
+          "type": "alias",
+          "value": "TextRendering"
+        },
+        {
+          "type": "alias",
+          "value": "TextTransform"
+        },
+        {
+          "type": "alias",
+          "value": "TouchAction"
+        },
+        {
+          "type": "alias",
+          "value": "Transform"
+        },
+        {
+          "type": "alias",
+          "value": "TransformBox"
+        },
+        {
+          "type": "alias",
+          "value": "TransformStyle"
+        },
+        {
+          "type": "alias",
+          "value": "Value"
+        },
+        {
+          "type": "alias",
+          "value": "VerticalAlign"
+        },
+        {
+          "type": "alias",
+          "value": "Vh"
+        },
+        {
+          "type": "alias",
+          "value": "Visibility"
+        },
+        {
+          "type": "alias",
+          "value": "Vmax"
+        },
+        {
+          "type": "alias",
+          "value": "Vmin"
+        },
+        {
+          "type": "alias",
+          "value": "Vw"
+        },
+        {
+          "type": "alias",
+          "value": "WhiteSpace"
+        },
+        {
+          "type": "alias",
+          "value": "Wrap"
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "CalcExpression",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "absolute"
+        },
+        {
+          "type": "function",
+          "value": "active"
+        },
+        {
+          "type": "function",
+          "value": "after"
+        },
+        {
+          "type": "function",
+          "value": "alignItems"
+        },
+        {
+          "type": "function",
+          "value": "alignSelf"
+        },
+        {
+          "type": "function",
+          "value": "all"
+        },
+        {
+          "type": "function",
+          "value": "allPetiteCaps"
+        },
+        {
+          "type": "function",
+          "value": "allScroll"
+        },
+        {
+          "type": "function",
+          "value": "allSmallCaps"
+        },
+        {
+          "type": "function",
+          "value": "animationName"
+        },
+        {
+          "type": "function",
+          "value": "any"
+        },
+        {
+          "type": "function",
+          "value": "arabicIndic"
+        },
+        {
+          "type": "function",
+          "value": "armenian"
+        },
+        {
+          "type": "function",
+          "value": "auto"
+        },
+        {
+          "type": "function",
+          "value": "backgroundAttachment"
+        },
+        {
+          "type": "function",
+          "value": "backgroundBlendMode"
+        },
+        {
+          "type": "function",
+          "value": "backgroundClip"
+        },
+        {
+          "type": "function",
+          "value": "backgroundColor"
+        },
+        {
+          "type": "function",
+          "value": "backgroundImage"
+        },
+        {
+          "type": "function",
+          "value": "backgroundOrigin"
+        },
+        {
+          "type": "function",
+          "value": "backgroundPosition"
+        },
+        {
+          "type": "function",
+          "value": "backgroundPosition2"
+        },
+        {
+          "type": "function",
+          "value": "backgroundRepeat"
+        },
+        {
+          "type": "function",
+          "value": "backgroundRepeat2"
+        },
+        {
+          "type": "function",
+          "value": "backgroundSize"
+        },
+        {
+          "type": "function",
+          "value": "backgroundSize2"
+        },
+        {
+          "type": "function",
+          "value": "baseline"
+        },
+        {
+          "type": "function",
+          "value": "batch"
+        },
+        {
+          "type": "function",
+          "value": "before"
+        },
+        {
+          "type": "function",
+          "value": "bengali"
+        },
+        {
+          "type": "function",
+          "value": "blink"
+        },
+        {
+          "type": "function",
+          "value": "block"
+        },
+        {
+          "type": "function",
+          "value": "bold"
+        },
+        {
+          "type": "function",
+          "value": "bolder"
+        },
+        {
+          "type": "function",
+          "value": "border"
+        },
+        {
+          "type": "function",
+          "value": "border2"
+        },
+        {
+          "type": "function",
+          "value": "border3"
+        },
+        {
+          "type": "function",
+          "value": "borderBottom"
+        },
+        {
+          "type": "function",
+          "value": "borderBottom2"
+        },
+        {
+          "type": "function",
+          "value": "borderBottom3"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomColor"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomLeftRadius"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomLeftRadius2"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomRightRadius"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomRightRadius2"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomStyle"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderBox"
+        },
+        {
+          "type": "function",
+          "value": "borderCollapse"
+        },
+        {
+          "type": "function",
+          "value": "borderColor"
+        },
+        {
+          "type": "function",
+          "value": "borderColor2"
+        },
+        {
+          "type": "function",
+          "value": "borderColor3"
+        },
+        {
+          "type": "function",
+          "value": "borderColor4"
+        },
+        {
+          "type": "function",
+          "value": "borderImageOutset"
+        },
+        {
+          "type": "function",
+          "value": "borderImageOutset2"
+        },
+        {
+          "type": "function",
+          "value": "borderImageOutset3"
+        },
+        {
+          "type": "function",
+          "value": "borderImageOutset4"
+        },
+        {
+          "type": "function",
+          "value": "borderImageWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderImageWidth2"
+        },
+        {
+          "type": "function",
+          "value": "borderImageWidth3"
+        },
+        {
+          "type": "function",
+          "value": "borderImageWidth4"
+        },
+        {
+          "type": "function",
+          "value": "borderLeft"
+        },
+        {
+          "type": "function",
+          "value": "borderLeft2"
+        },
+        {
+          "type": "function",
+          "value": "borderLeft3"
+        },
+        {
+          "type": "function",
+          "value": "borderLeftColor"
+        },
+        {
+          "type": "function",
+          "value": "borderLeftStyle"
+        },
+        {
+          "type": "function",
+          "value": "borderLeftWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderRadius"
+        },
+        {
+          "type": "function",
+          "value": "borderRadius2"
+        },
+        {
+          "type": "function",
+          "value": "borderRadius3"
+        },
+        {
+          "type": "function",
+          "value": "borderRadius4"
+        },
+        {
+          "type": "function",
+          "value": "borderRight"
+        },
+        {
+          "type": "function",
+          "value": "borderRight2"
+        },
+        {
+          "type": "function",
+          "value": "borderRight3"
+        },
+        {
+          "type": "function",
+          "value": "borderRightColor"
+        },
+        {
+          "type": "function",
+          "value": "borderRightStyle"
+        },
+        {
+          "type": "function",
+          "value": "borderRightWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderSpacing"
+        },
+        {
+          "type": "function",
+          "value": "borderSpacing2"
+        },
+        {
+          "type": "function",
+          "value": "borderStyle"
+        },
+        {
+          "type": "function",
+          "value": "borderTop"
+        },
+        {
+          "type": "function",
+          "value": "borderTop2"
+        },
+        {
+          "type": "function",
+          "value": "borderTop3"
+        },
+        {
+          "type": "function",
+          "value": "borderTopColor"
+        },
+        {
+          "type": "function",
+          "value": "borderTopLeftRadius"
+        },
+        {
+          "type": "function",
+          "value": "borderTopLeftRadius2"
+        },
+        {
+          "type": "function",
+          "value": "borderTopRightRadius"
+        },
+        {
+          "type": "function",
+          "value": "borderTopRightRadius2"
+        },
+        {
+          "type": "function",
+          "value": "borderTopStyle"
+        },
+        {
+          "type": "function",
+          "value": "borderTopWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderWidth2"
+        },
+        {
+          "type": "function",
+          "value": "borderWidth3"
+        },
+        {
+          "type": "function",
+          "value": "borderWidth4"
+        },
+        {
+          "type": "function",
+          "value": "both"
+        },
+        {
+          "type": "function",
+          "value": "bottom"
+        },
+        {
+          "type": "function",
+          "value": "boxShadow"
+        },
+        {
+          "type": "function",
+          "value": "boxShadow2"
+        },
+        {
+          "type": "function",
+          "value": "boxShadow3"
+        },
+        {
+          "type": "function",
+          "value": "boxShadow4"
+        },
+        {
+          "type": "function",
+          "value": "boxShadow5"
+        },
+        {
+          "type": "function",
+          "value": "boxShadow6"
+        },
+        {
+          "type": "function",
+          "value": "boxSizing"
+        },
+        {
+          "type": "function",
+          "value": "breakWord"
+        },
+        {
+          "type": "function",
+          "value": "calc"
+        },
+        {
+          "type": "function",
+          "value": "capitalize"
+        },
+        {
+          "type": "function",
+          "value": "cell"
+        },
+        {
+          "type": "function",
+          "value": "center"
+        },
+        {
+          "type": "function",
+          "value": "ch"
+        },
+        {
+          "type": "function",
+          "value": "checked"
+        },
+        {
+          "type": "function",
+          "value": "circle"
+        },
+        {
+          "type": "function",
+          "value": "cjkEarthlyBranch"
+        },
+        {
+          "type": "function",
+          "value": "cjkHeavenlyStem"
+        },
+        {
+          "type": "function",
+          "value": "clip"
+        },
+        {
+          "type": "function",
+          "value": "cm"
+        },
+        {
+          "type": "function",
+          "value": "colResize"
+        },
+        {
+          "type": "function",
+          "value": "collapse"
+        },
+        {
+          "type": "function",
+          "value": "color"
+        },
+        {
+          "type": "function",
+          "value": "colorBurn"
+        },
+        {
+          "type": "function",
+          "value": "colorDodge"
+        },
+        {
+          "type": "function",
+          "value": "column"
+        },
+        {
+          "type": "function",
+          "value": "columnReverse"
+        },
+        {
+          "type": "function",
+          "value": "commonLigatures"
+        },
+        {
+          "type": "function",
+          "value": "contain"
+        },
+        {
+          "type": "function",
+          "value": "content"
+        },
+        {
+          "type": "function",
+          "value": "contentBox"
+        },
+        {
+          "type": "function",
+          "value": "contextMenu"
+        },
+        {
+          "type": "function",
+          "value": "contextual"
+        },
+        {
+          "type": "function",
+          "value": "copy"
+        },
+        {
+          "type": "function",
+          "value": "cover"
+        },
+        {
+          "type": "function",
+          "value": "crosshair"
+        },
+        {
+          "type": "function",
+          "value": "currentColor"
+        },
+        {
+          "type": "function",
+          "value": "cursive"
+        },
+        {
+          "type": "function",
+          "value": "cursor"
+        },
+        {
+          "type": "function",
+          "value": "cursorAlias"
+        },
+        {
+          "type": "function",
+          "value": "darken"
+        },
+        {
+          "type": "function",
+          "value": "dashed"
+        },
+        {
+          "type": "function",
+          "value": "decimal"
+        },
+        {
+          "type": "function",
+          "value": "decimalLeadingZero"
+        },
+        {
+          "type": "function",
+          "value": "default"
+        },
+        {
+          "type": "function",
+          "value": "deg"
+        },
+        {
+          "type": "function",
+          "value": "devanagari"
+        },
+        {
+          "type": "function",
+          "value": "diagonalFractions"
+        },
+        {
+          "type": "function",
+          "value": "difference"
+        },
+        {
+          "type": "function",
+          "value": "disabled"
+        },
+        {
+          "type": "function",
+          "value": "disc"
+        },
+        {
+          "type": "function",
+          "value": "discretionaryLigatures"
+        },
+        {
+          "type": "function",
+          "value": "display"
+        },
+        {
+          "type": "function",
+          "value": "displayFlex"
+        },
+        {
+          "type": "function",
+          "value": "dotted"
+        },
+        {
+          "type": "function",
+          "value": "double"
+        },
+        {
+          "type": "function",
+          "value": "eResize"
+        },
+        {
+          "type": "function",
+          "value": "eachLine"
+        },
+        {
+          "type": "function",
+          "value": "ellipsis"
+        },
+        {
+          "type": "function",
+          "value": "em"
+        },
+        {
+          "type": "function",
+          "value": "empty"
+        },
+        {
+          "type": "function",
+          "value": "enabled"
+        },
+        {
+          "type": "function",
+          "value": "end"
+        },
+        {
+          "type": "function",
+          "value": "ewResize"
+        },
+        {
+          "type": "function",
+          "value": "ex"
+        },
+        {
+          "type": "function",
+          "value": "exclusion"
+        },
+        {
+          "type": "function",
+          "value": "fantasy"
+        },
+        {
+          "type": "function",
+          "value": "featureOff"
+        },
+        {
+          "type": "function",
+          "value": "featureOn"
+        },
+        {
+          "type": "function",
+          "value": "featureTag"
+        },
+        {
+          "type": "function",
+          "value": "featureTag2"
+        },
+        {
+          "type": "function",
+          "value": "fill"
+        },
+        {
+          "type": "function",
+          "value": "fillAvailable"
+        },
+        {
+          "type": "function",
+          "value": "fillBox"
+        },
+        {
+          "type": "function",
+          "value": "first"
+        },
+        {
+          "type": "function",
+          "value": "firstChild"
+        },
+        {
+          "type": "function",
+          "value": "firstLetter"
+        },
+        {
+          "type": "function",
+          "value": "firstLine"
+        },
+        {
+          "type": "function",
+          "value": "firstOfType"
+        },
+        {
+          "type": "function",
+          "value": "fitContent"
+        },
+        {
+          "type": "function",
+          "value": "fixed"
+        },
+        {
+          "type": "function",
+          "value": "flat"
+        },
+        {
+          "type": "function",
+          "value": "flex"
+        },
+        {
+          "type": "function",
+          "value": "flex2"
+        },
+        {
+          "type": "function",
+          "value": "flex3"
+        },
+        {
+          "type": "function",
+          "value": "flexBasis"
+        },
+        {
+          "type": "function",
+          "value": "flexDirection"
+        },
+        {
+          "type": "function",
+          "value": "flexEnd"
+        },
+        {
+          "type": "function",
+          "value": "flexFlow1"
+        },
+        {
+          "type": "function",
+          "value": "flexFlow2"
+        },
+        {
+          "type": "function",
+          "value": "flexGrow"
+        },
+        {
+          "type": "function",
+          "value": "flexShrink"
+        },
+        {
+          "type": "function",
+          "value": "flexStart"
+        },
+        {
+          "type": "function",
+          "value": "flexWrap"
+        },
+        {
+          "type": "function",
+          "value": "float"
+        },
+        {
+          "type": "function",
+          "value": "focus"
+        },
+        {
+          "type": "function",
+          "value": "fontFace"
+        },
+        {
+          "type": "function",
+          "value": "fontFamilies"
+        },
+        {
+          "type": "function",
+          "value": "fontFamily"
+        },
+        {
+          "type": "function",
+          "value": "fontFeatureSettings"
+        },
+        {
+          "type": "function",
+          "value": "fontFeatureSettingsList"
+        },
+        {
+          "type": "function",
+          "value": "fontSize"
+        },
+        {
+          "type": "function",
+          "value": "fontStyle"
+        },
+        {
+          "type": "function",
+          "value": "fontVariant"
+        },
+        {
+          "type": "function",
+          "value": "fontVariant2"
+        },
+        {
+          "type": "function",
+          "value": "fontVariant3"
+        },
+        {
+          "type": "function",
+          "value": "fontVariantCaps"
+        },
+        {
+          "type": "function",
+          "value": "fontVariantLigatures"
+        },
+        {
+          "type": "function",
+          "value": "fontVariantNumeric"
+        },
+        {
+          "type": "function",
+          "value": "fontVariantNumeric2"
+        },
+        {
+          "type": "function",
+          "value": "fontVariantNumeric3"
+        },
+        {
+          "type": "function",
+          "value": "fontVariantNumerics"
+        },
+        {
+          "type": "function",
+          "value": "fontWeight"
+        },
+        {
+          "type": "function",
+          "value": "fullWidth"
+        },
+        {
+          "type": "function",
+          "value": "fullscreen"
+        },
+        {
+          "type": "function",
+          "value": "geometricPrecision"
+        },
+        {
+          "type": "function",
+          "value": "georgian"
+        },
+        {
+          "type": "function",
+          "value": "grab"
+        },
+        {
+          "type": "function",
+          "value": "grabbing"
+        },
+        {
+          "type": "function",
+          "value": "grad"
+        },
+        {
+          "type": "function",
+          "value": "groove"
+        },
+        {
+          "type": "function",
+          "value": "gujarati"
+        },
+        {
+          "type": "function",
+          "value": "gurmukhi"
+        },
+        {
+          "type": "function",
+          "value": "hanging"
+        },
+        {
+          "type": "function",
+          "value": "hardLight"
+        },
+        {
+          "type": "function",
+          "value": "height"
+        },
+        {
+          "type": "function",
+          "value": "help"
+        },
+        {
+          "type": "function",
+          "value": "hex"
+        },
+        {
+          "type": "function",
+          "value": "hidden"
+        },
+        {
+          "type": "function",
+          "value": "historicalLigatures"
+        },
+        {
+          "type": "function",
+          "value": "horizontal"
+        },
+        {
+          "type": "function",
+          "value": "hover"
+        },
+        {
+          "type": "function",
+          "value": "hsl"
+        },
+        {
+          "type": "function",
+          "value": "hsla"
+        },
+        {
+          "type": "function",
+          "value": "hue"
+        },
+        {
+          "type": "function",
+          "value": "important"
+        },
+        {
+          "type": "function",
+          "value": "inches"
+        },
+        {
+          "type": "function",
+          "value": "indeterminate"
+        },
+        {
+          "type": "function",
+          "value": "inherit"
+        },
+        {
+          "type": "function",
+          "value": "initial"
+        },
+        {
+          "type": "function",
+          "value": "inline"
+        },
+        {
+          "type": "function",
+          "value": "inlineBlock"
+        },
+        {
+          "type": "function",
+          "value": "inlineFlex"
+        },
+        {
+          "type": "function",
+          "value": "inlineListItem"
+        },
+        {
+          "type": "function",
+          "value": "inlineTable"
+        },
+        {
+          "type": "function",
+          "value": "inset"
+        },
+        {
+          "type": "function",
+          "value": "inside"
+        },
+        {
+          "type": "function",
+          "value": "int"
+        },
+        {
+          "type": "function",
+          "value": "invalid"
+        },
+        {
+          "type": "function",
+          "value": "italic"
+        },
+        {
+          "type": "function",
+          "value": "justify"
+        },
+        {
+          "type": "function",
+          "value": "justifyAll"
+        },
+        {
+          "type": "function",
+          "value": "justifyContent"
+        },
+        {
+          "type": "function",
+          "value": "kannada"
+        },
+        {
+          "type": "function",
+          "value": "khmer"
+        },
+        {
+          "type": "function",
+          "value": "lang"
+        },
+        {
+          "type": "function",
+          "value": "lao"
+        },
+        {
+          "type": "function",
+          "value": "large"
+        },
+        {
+          "type": "function",
+          "value": "larger"
+        },
+        {
+          "type": "function",
+          "value": "lastChild"
+        },
+        {
+          "type": "function",
+          "value": "lastOfType"
+        },
+        {
+          "type": "function",
+          "value": "left"
+        },
+        {
+          "type": "function",
+          "value": "letterSpacing"
+        },
+        {
+          "type": "function",
+          "value": "lighten"
+        },
+        {
+          "type": "function",
+          "value": "lighter"
+        },
+        {
+          "type": "function",
+          "value": "lineHeight"
+        },
+        {
+          "type": "function",
+          "value": "lineThrough"
+        },
+        {
+          "type": "function",
+          "value": "linearGradient"
+        },
+        {
+          "type": "function",
+          "value": "linearGradient2"
+        },
+        {
+          "type": "function",
+          "value": "liningNums"
+        },
+        {
+          "type": "function",
+          "value": "link"
+        },
+        {
+          "type": "function",
+          "value": "listItem"
+        },
+        {
+          "type": "function",
+          "value": "listStyle"
+        },
+        {
+          "type": "function",
+          "value": "listStyle2"
+        },
+        {
+          "type": "function",
+          "value": "listStyle3"
+        },
+        {
+          "type": "function",
+          "value": "listStylePosition"
+        },
+        {
+          "type": "function",
+          "value": "listStyleType"
+        },
+        {
+          "type": "function",
+          "value": "local"
+        },
+        {
+          "type": "function",
+          "value": "lowerAlpha"
+        },
+        {
+          "type": "function",
+          "value": "lowerGreek"
+        },
+        {
+          "type": "function",
+          "value": "lowerLatin"
+        },
+        {
+          "type": "function",
+          "value": "lowerRoman"
+        },
+        {
+          "type": "function",
+          "value": "lowercase"
+        },
+        {
+          "type": "function",
+          "value": "luminosity"
+        },
+        {
+          "type": "function",
+          "value": "malayalam"
+        },
+        {
+          "type": "function",
+          "value": "manipulation"
+        },
+        {
+          "type": "function",
+          "value": "margin"
+        },
+        {
+          "type": "function",
+          "value": "margin2"
+        },
+        {
+          "type": "function",
+          "value": "margin3"
+        },
+        {
+          "type": "function",
+          "value": "margin4"
+        },
+        {
+          "type": "function",
+          "value": "marginBlockEnd"
+        },
+        {
+          "type": "function",
+          "value": "marginBlockStart"
+        },
+        {
+          "type": "function",
+          "value": "marginBottom"
+        },
+        {
+          "type": "function",
+          "value": "marginInlineEnd"
+        },
+        {
+          "type": "function",
+          "value": "marginInlineStart"
+        },
+        {
+          "type": "function",
+          "value": "marginLeft"
+        },
+        {
+          "type": "function",
+          "value": "marginRight"
+        },
+        {
+          "type": "function",
+          "value": "marginTop"
+        },
+        {
+          "type": "function",
+          "value": "matchParent"
+        },
+        {
+          "type": "function",
+          "value": "matrix"
+        },
+        {
+          "type": "function",
+          "value": "matrix3d"
+        },
+        {
+          "type": "function",
+          "value": "maxContent"
+        },
+        {
+          "type": "function",
+          "value": "maxHeight"
+        },
+        {
+          "type": "function",
+          "value": "maxWidth"
+        },
+        {
+          "type": "function",
+          "value": "medium"
+        },
+        {
+          "type": "function",
+          "value": "middle"
+        },
+        {
+          "type": "function",
+          "value": "minContent"
+        },
+        {
+          "type": "function",
+          "value": "minHeight"
+        },
+        {
+          "type": "function",
+          "value": "minWidth"
+        },
+        {
+          "type": "function",
+          "value": "minus"
+        },
+        {
+          "type": "function",
+          "value": "mm"
+        },
+        {
+          "type": "function",
+          "value": "monospace"
+        },
+        {
+          "type": "function",
+          "value": "move"
+        },
+        {
+          "type": "function",
+          "value": "multiply"
+        },
+        {
+          "type": "function",
+          "value": "myanmar"
+        },
+        {
+          "type": "function",
+          "value": "nResize"
+        },
+        {
+          "type": "function",
+          "value": "neResize"
+        },
+        {
+          "type": "function",
+          "value": "neswResize"
+        },
+        {
+          "type": "function",
+          "value": "noCommonLigatures"
+        },
+        {
+          "type": "function",
+          "value": "noContextual"
+        },
+        {
+          "type": "function",
+          "value": "noDiscretionaryLigatures"
+        },
+        {
+          "type": "function",
+          "value": "noDrop"
+        },
+        {
+          "type": "function",
+          "value": "noHistoricalLigatures"
+        },
+        {
+          "type": "function",
+          "value": "noRepeat"
+        },
+        {
+          "type": "function",
+          "value": "noWrap"
+        },
+        {
+          "type": "function",
+          "value": "none"
+        },
+        {
+          "type": "function",
+          "value": "normal"
+        },
+        {
+          "type": "function",
+          "value": "notAllowed"
+        },
+        {
+          "type": "function",
+          "value": "nsResize"
+        },
+        {
+          "type": "function",
+          "value": "nthChild"
+        },
+        {
+          "type": "function",
+          "value": "nthLastChild"
+        },
+        {
+          "type": "function",
+          "value": "nthLastOfType"
+        },
+        {
+          "type": "function",
+          "value": "nthOfType"
+        },
+        {
+          "type": "function",
+          "value": "num"
+        },
+        {
+          "type": "function",
+          "value": "nwResize"
+        },
+        {
+          "type": "function",
+          "value": "nwseResize"
+        },
+        {
+          "type": "function",
+          "value": "oblique"
+        },
+        {
+          "type": "function",
+          "value": "oldstyleNums"
+        },
+        {
+          "type": "function",
+          "value": "onlyChild"
+        },
+        {
+          "type": "function",
+          "value": "onlyOfType"
+        },
+        {
+          "type": "function",
+          "value": "opacity"
+        },
+        {
+          "type": "function",
+          "value": "optimizeLegibility"
+        },
+        {
+          "type": "function",
+          "value": "optimizeSpeed"
+        },
+        {
+          "type": "function",
+          "value": "optional"
+        },
+        {
+          "type": "function",
+          "value": "order"
+        },
+        {
+          "type": "function",
+          "value": "ordinal"
+        },
+        {
+          "type": "function",
+          "value": "oriya"
+        },
+        {
+          "type": "function",
+          "value": "outOfRange"
+        },
+        {
+          "type": "function",
+          "value": "outline"
+        },
+        {
+          "type": "function",
+          "value": "outline3"
+        },
+        {
+          "type": "function",
+          "value": "outlineColor"
+        },
+        {
+          "type": "function",
+          "value": "outlineOffset"
+        },
+        {
+          "type": "function",
+          "value": "outlineStyle"
+        },
+        {
+          "type": "function",
+          "value": "outlineWidth"
+        },
+        {
+          "type": "function",
+          "value": "outset"
+        },
+        {
+          "type": "function",
+          "value": "outside"
+        },
+        {
+          "type": "function",
+          "value": "overflow"
+        },
+        {
+          "type": "function",
+          "value": "overflowWrap"
+        },
+        {
+          "type": "function",
+          "value": "overflowX"
+        },
+        {
+          "type": "function",
+          "value": "overflowY"
+        },
+        {
+          "type": "function",
+          "value": "overlay"
+        },
+        {
+          "type": "function",
+          "value": "overline"
+        },
+        {
+          "type": "function",
+          "value": "padding"
+        },
+        {
+          "type": "function",
+          "value": "padding2"
+        },
+        {
+          "type": "function",
+          "value": "padding3"
+        },
+        {
+          "type": "function",
+          "value": "padding4"
+        },
+        {
+          "type": "function",
+          "value": "paddingBottom"
+        },
+        {
+          "type": "function",
+          "value": "paddingBox"
+        },
+        {
+          "type": "function",
+          "value": "paddingLeft"
+        },
+        {
+          "type": "function",
+          "value": "paddingRight"
+        },
+        {
+          "type": "function",
+          "value": "paddingTop"
+        },
+        {
+          "type": "function",
+          "value": "painted"
+        },
+        {
+          "type": "function",
+          "value": "panDown"
+        },
+        {
+          "type": "function",
+          "value": "panLeft"
+        },
+        {
+          "type": "function",
+          "value": "panRight"
+        },
+        {
+          "type": "function",
+          "value": "panUp"
+        },
+        {
+          "type": "function",
+          "value": "panX"
+        },
+        {
+          "type": "function",
+          "value": "panY"
+        },
+        {
+          "type": "function",
+          "value": "pc"
+        },
+        {
+          "type": "function",
+          "value": "pct"
+        },
+        {
+          "type": "function",
+          "value": "perspective"
+        },
+        {
+          "type": "function",
+          "value": "petiteCaps"
+        },
+        {
+          "type": "function",
+          "value": "pinchZoom"
+        },
+        {
+          "type": "function",
+          "value": "plus"
+        },
+        {
+          "type": "function",
+          "value": "pointer"
+        },
+        {
+          "type": "function",
+          "value": "pointerEvents"
+        },
+        {
+          "type": "function",
+          "value": "pointerEventsAll"
+        },
+        {
+          "type": "function",
+          "value": "pointerEventsFill"
+        },
+        {
+          "type": "function",
+          "value": "position"
+        },
+        {
+          "type": "function",
+          "value": "pre"
+        },
+        {
+          "type": "function",
+          "value": "preLine"
+        },
+        {
+          "type": "function",
+          "value": "preWrap"
+        },
+        {
+          "type": "function",
+          "value": "preserve3d"
+        },
+        {
+          "type": "function",
+          "value": "progress"
+        },
+        {
+          "type": "function",
+          "value": "property"
+        },
+        {
+          "type": "function",
+          "value": "proportionalNums"
+        },
+        {
+          "type": "function",
+          "value": "pseudoClass"
+        },
+        {
+          "type": "function",
+          "value": "pseudoElement"
+        },
+        {
+          "type": "function",
+          "value": "pt"
+        },
+        {
+          "type": "function",
+          "value": "px"
+        },
+        {
+          "type": "function",
+          "value": "qt"
+        },
+        {
+          "type": "function",
+          "value": "rad"
+        },
+        {
+          "type": "function",
+          "value": "readWrite"
+        },
+        {
+          "type": "function",
+          "value": "relative"
+        },
+        {
+          "type": "function",
+          "value": "rem"
+        },
+        {
+          "type": "function",
+          "value": "repeat"
+        },
+        {
+          "type": "function",
+          "value": "repeatX"
+        },
+        {
+          "type": "function",
+          "value": "repeatY"
+        },
+        {
+          "type": "function",
+          "value": "required"
+        },
+        {
+          "type": "function",
+          "value": "resize"
+        },
+        {
+          "type": "function",
+          "value": "rgb"
+        },
+        {
+          "type": "function",
+          "value": "rgba"
+        },
+        {
+          "type": "function",
+          "value": "ridge"
+        },
+        {
+          "type": "function",
+          "value": "right"
+        },
+        {
+          "type": "function",
+          "value": "root"
+        },
+        {
+          "type": "function",
+          "value": "rotate"
+        },
+        {
+          "type": "function",
+          "value": "rotate3d"
+        },
+        {
+          "type": "function",
+          "value": "rotateX"
+        },
+        {
+          "type": "function",
+          "value": "rotateY"
+        },
+        {
+          "type": "function",
+          "value": "rotateZ"
+        },
+        {
+          "type": "function",
+          "value": "round"
+        },
+        {
+          "type": "function",
+          "value": "row"
+        },
+        {
+          "type": "function",
+          "value": "rowResize"
+        },
+        {
+          "type": "function",
+          "value": "rowReverse"
+        },
+        {
+          "type": "function",
+          "value": "sResize"
+        },
+        {
+          "type": "function",
+          "value": "sansSerif"
+        },
+        {
+          "type": "function",
+          "value": "saturation"
+        },
+        {
+          "type": "function",
+          "value": "scale"
+        },
+        {
+          "type": "function",
+          "value": "scale2"
+        },
+        {
+          "type": "function",
+          "value": "scale3d"
+        },
+        {
+          "type": "function",
+          "value": "scaleX"
+        },
+        {
+          "type": "function",
+          "value": "scaleY"
+        },
+        {
+          "type": "function",
+          "value": "scope"
+        },
+        {
+          "type": "function",
+          "value": "screenBlendMode"
+        },
+        {
+          "type": "function",
+          "value": "scroll"
+        },
+        {
+          "type": "function",
+          "value": "seResize"
+        },
+        {
+          "type": "function",
+          "value": "selection"
+        },
+        {
+          "type": "function",
+          "value": "separate"
+        },
+        {
+          "type": "function",
+          "value": "serif"
+        },
+        {
+          "type": "function",
+          "value": "skew"
+        },
+        {
+          "type": "function",
+          "value": "skew2"
+        },
+        {
+          "type": "function",
+          "value": "skewX"
+        },
+        {
+          "type": "function",
+          "value": "skewY"
+        },
+        {
+          "type": "function",
+          "value": "slashedZero"
+        },
+        {
+          "type": "function",
+          "value": "small"
+        },
+        {
+          "type": "function",
+          "value": "smallCaps"
+        },
+        {
+          "type": "function",
+          "value": "smaller"
+        },
+        {
+          "type": "function",
+          "value": "softLight"
+        },
+        {
+          "type": "function",
+          "value": "solid"
+        },
+        {
+          "type": "function",
+          "value": "space"
+        },
+        {
+          "type": "function",
+          "value": "spaceAround"
+        },
+        {
+          "type": "function",
+          "value": "spaceBetween"
+        },
+        {
+          "type": "function",
+          "value": "square"
+        },
+        {
+          "type": "function",
+          "value": "src_"
+        },
+        {
+          "type": "function",
+          "value": "stackedFractions"
+        },
+        {
+          "type": "function",
+          "value": "start"
+        },
+        {
+          "type": "function",
+          "value": "static"
+        },
+        {
+          "type": "function",
+          "value": "sticky"
+        },
+        {
+          "type": "function",
+          "value": "stop"
+        },
+        {
+          "type": "function",
+          "value": "stop2"
+        },
+        {
+          "type": "function",
+          "value": "stretch"
+        },
+        {
+          "type": "function",
+          "value": "stroke"
+        },
+        {
+          "type": "function",
+          "value": "sub"
+        },
+        {
+          "type": "function",
+          "value": "super"
+        },
+        {
+          "type": "function",
+          "value": "swResize"
+        },
+        {
+          "type": "function",
+          "value": "table"
+        },
+        {
+          "type": "function",
+          "value": "tableCaption"
+        },
+        {
+          "type": "function",
+          "value": "tableCell"
+        },
+        {
+          "type": "function",
+          "value": "tableColumn"
+        },
+        {
+          "type": "function",
+          "value": "tableColumnGroup"
+        },
+        {
+          "type": "function",
+          "value": "tableFooterGroup"
+        },
+        {
+          "type": "function",
+          "value": "tableHeaderGroup"
+        },
+        {
+          "type": "function",
+          "value": "tableLayout"
+        },
+        {
+          "type": "function",
+          "value": "tableRow"
+        },
+        {
+          "type": "function",
+          "value": "tableRowGroup"
+        },
+        {
+          "type": "function",
+          "value": "tabularNums"
+        },
+        {
+          "type": "function",
+          "value": "target"
+        },
+        {
+          "type": "function",
+          "value": "telugu"
+        },
+        {
+          "type": "function",
+          "value": "textAlign"
+        },
+        {
+          "type": "function",
+          "value": "textAlignLast"
+        },
+        {
+          "type": "function",
+          "value": "textBottom"
+        },
+        {
+          "type": "function",
+          "value": "textDecoration"
+        },
+        {
+          "type": "function",
+          "value": "textDecoration2"
+        },
+        {
+          "type": "function",
+          "value": "textDecoration3"
+        },
+        {
+          "type": "function",
+          "value": "textDecorationLine"
+        },
+        {
+          "type": "function",
+          "value": "textDecorationLines"
+        },
+        {
+          "type": "function",
+          "value": "textDecorationStyle"
+        },
+        {
+          "type": "function",
+          "value": "textDecorations"
+        },
+        {
+          "type": "function",
+          "value": "textDecorations2"
+        },
+        {
+          "type": "function",
+          "value": "textDecorations3"
+        },
+        {
+          "type": "function",
+          "value": "textEmphasisColor"
+        },
+        {
+          "type": "function",
+          "value": "textIndent"
+        },
+        {
+          "type": "function",
+          "value": "textIndent2"
+        },
+        {
+          "type": "function",
+          "value": "textIndent3"
+        },
+        {
+          "type": "function",
+          "value": "textOrientation"
+        },
+        {
+          "type": "function",
+          "value": "textOverflow"
+        },
+        {
+          "type": "function",
+          "value": "textRendering"
+        },
+        {
+          "type": "function",
+          "value": "textShadow"
+        },
+        {
+          "type": "function",
+          "value": "textShadow2"
+        },
+        {
+          "type": "function",
+          "value": "textShadow3"
+        },
+        {
+          "type": "function",
+          "value": "textShadow4"
+        },
+        {
+          "type": "function",
+          "value": "textTop"
+        },
+        {
+          "type": "function",
+          "value": "textTransform"
+        },
+        {
+          "type": "function",
+          "value": "text_"
+        },
+        {
+          "type": "function",
+          "value": "thai"
+        },
+        {
+          "type": "function",
+          "value": "thick"
+        },
+        {
+          "type": "function",
+          "value": "thin"
+        },
+        {
+          "type": "function",
+          "value": "titlingCaps"
+        },
+        {
+          "type": "function",
+          "value": "toBottom"
+        },
+        {
+          "type": "function",
+          "value": "toBottomLeft"
+        },
+        {
+          "type": "function",
+          "value": "toBottomRight"
+        },
+        {
+          "type": "function",
+          "value": "toLeft"
+        },
+        {
+          "type": "function",
+          "value": "toRight"
+        },
+        {
+          "type": "function",
+          "value": "toTop"
+        },
+        {
+          "type": "function",
+          "value": "toTopLeft"
+        },
+        {
+          "type": "function",
+          "value": "toTopRight"
+        },
+        {
+          "type": "function",
+          "value": "top"
+        },
+        {
+          "type": "function",
+          "value": "touchAction"
+        },
+        {
+          "type": "function",
+          "value": "transform"
+        },
+        {
+          "type": "function",
+          "value": "transformBox"
+        },
+        {
+          "type": "function",
+          "value": "transformStyle"
+        },
+        {
+          "type": "function",
+          "value": "transforms"
+        },
+        {
+          "type": "function",
+          "value": "translate"
+        },
+        {
+          "type": "function",
+          "value": "translate2"
+        },
+        {
+          "type": "function",
+          "value": "translate3d"
+        },
+        {
+          "type": "function",
+          "value": "translateX"
+        },
+        {
+          "type": "function",
+          "value": "translateY"
+        },
+        {
+          "type": "function",
+          "value": "translateZ"
+        },
+        {
+          "type": "function",
+          "value": "transparent"
+        },
+        {
+          "type": "function",
+          "value": "true"
+        },
+        {
+          "type": "function",
+          "value": "turn"
+        },
+        {
+          "type": "function",
+          "value": "underline"
+        },
+        {
+          "type": "function",
+          "value": "unicase"
+        },
+        {
+          "type": "function",
+          "value": "unset"
+        },
+        {
+          "type": "function",
+          "value": "upperAlpha"
+        },
+        {
+          "type": "function",
+          "value": "upperLatin"
+        },
+        {
+          "type": "function",
+          "value": "upperRoman"
+        },
+        {
+          "type": "function",
+          "value": "uppercase"
+        },
+        {
+          "type": "function",
+          "value": "url"
+        },
+        {
+          "type": "function",
+          "value": "valid"
+        },
+        {
+          "type": "function",
+          "value": "vertical"
+        },
+        {
+          "type": "function",
+          "value": "verticalAlign"
+        },
+        {
+          "type": "function",
+          "value": "verticalText"
+        },
+        {
+          "type": "function",
+          "value": "vh"
+        },
+        {
+          "type": "function",
+          "value": "viewBox"
+        },
+        {
+          "type": "function",
+          "value": "visibility"
+        },
+        {
+          "type": "function",
+          "value": "visible"
+        },
+        {
+          "type": "function",
+          "value": "visibleFill"
+        },
+        {
+          "type": "function",
+          "value": "visiblePainted"
+        },
+        {
+          "type": "function",
+          "value": "visibleStroke"
+        },
+        {
+          "type": "function",
+          "value": "visited"
+        },
+        {
+          "type": "function",
+          "value": "vmax"
+        },
+        {
+          "type": "function",
+          "value": "vmin"
+        },
+        {
+          "type": "function",
+          "value": "vw"
+        },
+        {
+          "type": "function",
+          "value": "wResize"
+        },
+        {
+          "type": "function",
+          "value": "wait"
+        },
+        {
+          "type": "function",
+          "value": "wavy"
+        },
+        {
+          "type": "function",
+          "value": "whiteSpace"
+        },
+        {
+          "type": "function",
+          "value": "width"
+        },
+        {
+          "type": "function",
+          "value": "wrap"
+        },
+        {
+          "type": "function",
+          "value": "wrapReverse"
+        },
+        {
+          "type": "function",
+          "value": "xLarge"
+        },
+        {
+          "type": "function",
+          "value": "xSmall"
+        },
+        {
+          "type": "function",
+          "value": "xxLarge"
+        },
+        {
+          "type": "function",
+          "value": "xxSmall"
+        },
+        {
+          "type": "function",
+          "value": "zIndex"
+        },
+        {
+          "type": "function",
+          "value": "zero"
+        },
+        {
+          "type": "function",
+          "value": "zoomIn"
+        },
+        {
+          "type": "function",
+          "value": "zoomOut"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Css",
+        "Global"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Snippet"
+        },
+        {
+          "type": "function",
+          "value": "a"
+        },
+        {
+          "type": "function",
+          "value": "adjacentSiblings"
+        },
+        {
+          "type": "function",
+          "value": "article"
+        },
+        {
+          "type": "function",
+          "value": "aside"
+        },
+        {
+          "type": "function",
+          "value": "audio"
+        },
+        {
+          "type": "function",
+          "value": "blockquote"
+        },
+        {
+          "type": "function",
+          "value": "body"
+        },
+        {
+          "type": "function",
+          "value": "button"
+        },
+        {
+          "type": "function",
+          "value": "canvas"
+        },
+        {
+          "type": "function",
+          "value": "caption"
+        },
+        {
+          "type": "function",
+          "value": "children"
+        },
+        {
+          "type": "function",
+          "value": "circle"
+        },
+        {
+          "type": "function",
+          "value": "class"
+        },
+        {
+          "type": "function",
+          "value": "code"
+        },
+        {
+          "type": "function",
+          "value": "col"
+        },
+        {
+          "type": "function",
+          "value": "colgroup"
+        },
+        {
+          "type": "function",
+          "value": "dd"
+        },
+        {
+          "type": "function",
+          "value": "descendants"
+        },
+        {
+          "type": "function",
+          "value": "details"
+        },
+        {
+          "type": "function",
+          "value": "div"
+        },
+        {
+          "type": "function",
+          "value": "dl"
+        },
+        {
+          "type": "function",
+          "value": "dt"
+        },
+        {
+          "type": "function",
+          "value": "each"
+        },
+        {
+          "type": "function",
+          "value": "ellipse"
+        },
+        {
+          "type": "function",
+          "value": "em"
+        },
+        {
+          "type": "function",
+          "value": "everything"
+        },
+        {
+          "type": "function",
+          "value": "fieldset"
+        },
+        {
+          "type": "function",
+          "value": "footer"
+        },
+        {
+          "type": "function",
+          "value": "form"
+        },
+        {
+          "type": "function",
+          "value": "generalSiblings"
+        },
+        {
+          "type": "function",
+          "value": "global"
+        },
+        {
+          "type": "function",
+          "value": "h1"
+        },
+        {
+          "type": "function",
+          "value": "h2"
+        },
+        {
+          "type": "function",
+          "value": "h3"
+        },
+        {
+          "type": "function",
+          "value": "h4"
+        },
+        {
+          "type": "function",
+          "value": "h5"
+        },
+        {
+          "type": "function",
+          "value": "h6"
+        },
+        {
+          "type": "function",
+          "value": "header"
+        },
+        {
+          "type": "function",
+          "value": "hr"
+        },
+        {
+          "type": "function",
+          "value": "html"
+        },
+        {
+          "type": "function",
+          "value": "i"
+        },
+        {
+          "type": "function",
+          "value": "id"
+        },
+        {
+          "type": "function",
+          "value": "img"
+        },
+        {
+          "type": "function",
+          "value": "input"
+        },
+        {
+          "type": "function",
+          "value": "label"
+        },
+        {
+          "type": "function",
+          "value": "legend"
+        },
+        {
+          "type": "function",
+          "value": "li"
+        },
+        {
+          "type": "function",
+          "value": "line"
+        },
+        {
+          "type": "function",
+          "value": "main_"
+        },
+        {
+          "type": "function",
+          "value": "media"
+        },
+        {
+          "type": "function",
+          "value": "mediaQuery"
+        },
+        {
+          "type": "function",
+          "value": "menu"
+        },
+        {
+          "type": "function",
+          "value": "nav"
+        },
+        {
+          "type": "function",
+          "value": "ol"
+        },
+        {
+          "type": "function",
+          "value": "optgroup"
+        },
+        {
+          "type": "function",
+          "value": "option"
+        },
+        {
+          "type": "function",
+          "value": "p"
+        },
+        {
+          "type": "function",
+          "value": "path"
+        },
+        {
+          "type": "function",
+          "value": "polygon"
+        },
+        {
+          "type": "function",
+          "value": "polyline"
+        },
+        {
+          "type": "function",
+          "value": "pre"
+        },
+        {
+          "type": "function",
+          "value": "progress"
+        },
+        {
+          "type": "function",
+          "value": "q"
+        },
+        {
+          "type": "function",
+          "value": "rect"
+        },
+        {
+          "type": "function",
+          "value": "section"
+        },
+        {
+          "type": "function",
+          "value": "select"
+        },
+        {
+          "type": "function",
+          "value": "selector"
+        },
+        {
+          "type": "function",
+          "value": "small"
+        },
+        {
+          "type": "function",
+          "value": "span"
+        },
+        {
+          "type": "function",
+          "value": "strong"
+        },
+        {
+          "type": "function",
+          "value": "summary"
+        },
+        {
+          "type": "function",
+          "value": "svg"
+        },
+        {
+          "type": "function",
+          "value": "table"
+        },
+        {
+          "type": "function",
+          "value": "tbody"
+        },
+        {
+          "type": "function",
+          "value": "td"
+        },
+        {
+          "type": "function",
+          "value": "textarea"
+        },
+        {
+          "type": "function",
+          "value": "tfoot"
+        },
+        {
+          "type": "function",
+          "value": "th"
+        },
+        {
+          "type": "function",
+          "value": "thead"
+        },
+        {
+          "type": "function",
+          "value": "time"
+        },
+        {
+          "type": "function",
+          "value": "tr"
+        },
+        {
+          "type": "function",
+          "value": "typeSelector"
+        },
+        {
+          "type": "function",
+          "value": "ul"
+        },
+        {
+          "type": "function",
+          "value": "video"
+        },
+        {
+          "type": "function",
+          "value": "withAttribute"
+        },
+        {
+          "type": "function",
+          "value": "withClass"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Css",
+        "Media"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Bits"
+        },
+        {
+          "type": "alias",
+          "value": "CanHover"
+        },
+        {
+          "type": "alias",
+          "value": "Coarse"
+        },
+        {
+          "type": "alias",
+          "value": "Enabled"
+        },
+        {
+          "type": "alias",
+          "value": "Expression"
+        },
+        {
+          "type": "alias",
+          "value": "Fast"
+        },
+        {
+          "type": "alias",
+          "value": "Fine"
+        },
+        {
+          "type": "alias",
+          "value": "InitialOnly"
+        },
+        {
+          "type": "alias",
+          "value": "Interlace"
+        },
+        {
+          "type": "alias",
+          "value": "Landscape"
+        },
+        {
+          "type": "alias",
+          "value": "MediaQuery"
+        },
+        {
+          "type": "alias",
+          "value": "MediaType"
+        },
+        {
+          "type": "alias",
+          "value": "OptionalPaged"
+        },
+        {
+          "type": "alias",
+          "value": "P3"
+        },
+        {
+          "type": "alias",
+          "value": "Paged"
+        },
+        {
+          "type": "alias",
+          "value": "Portrait"
+        },
+        {
+          "type": "alias",
+          "value": "Progressive"
+        },
+        {
+          "type": "alias",
+          "value": "Ratio"
+        },
+        {
+          "type": "alias",
+          "value": "Rec2020"
+        },
+        {
+          "type": "alias",
+          "value": "Resolution"
+        },
+        {
+          "type": "alias",
+          "value": "SRGB"
+        },
+        {
+          "type": "alias",
+          "value": "Slow"
+        },
+        {
+          "type": "function",
+          "value": "all"
+        },
+        {
+          "type": "function",
+          "value": "anyHover"
+        },
+        {
+          "type": "function",
+          "value": "anyPointer"
+        },
+        {
+          "type": "function",
+          "value": "aspectRatio"
+        },
+        {
+          "type": "function",
+          "value": "bits"
+        },
+        {
+          "type": "function",
+          "value": "canHover"
+        },
+        {
+          "type": "function",
+          "value": "coarse"
+        },
+        {
+          "type": "function",
+          "value": "color"
+        },
+        {
+          "type": "function",
+          "value": "colorGamut"
+        },
+        {
+          "type": "function",
+          "value": "colorIndex"
+        },
+        {
+          "type": "function",
+          "value": "dpcm"
+        },
+        {
+          "type": "function",
+          "value": "dpi"
+        },
+        {
+          "type": "function",
+          "value": "dppx"
+        },
+        {
+          "type": "function",
+          "value": "enabled"
+        },
+        {
+          "type": "function",
+          "value": "fast"
+        },
+        {
+          "type": "function",
+          "value": "fine"
+        },
+        {
+          "type": "function",
+          "value": "grid"
+        },
+        {
+          "type": "function",
+          "value": "height"
+        },
+        {
+          "type": "function",
+          "value": "hover"
+        },
+        {
+          "type": "function",
+          "value": "initialOnly"
+        },
+        {
+          "type": "function",
+          "value": "interlace"
+        },
+        {
+          "type": "function",
+          "value": "landscape"
+        },
+        {
+          "type": "function",
+          "value": "maxAspectRatio"
+        },
+        {
+          "type": "function",
+          "value": "maxColor"
+        },
+        {
+          "type": "function",
+          "value": "maxColorIndex"
+        },
+        {
+          "type": "function",
+          "value": "maxHeight"
+        },
+        {
+          "type": "function",
+          "value": "maxMonochrome"
+        },
+        {
+          "type": "function",
+          "value": "maxResolution"
+        },
+        {
+          "type": "function",
+          "value": "maxWidth"
+        },
+        {
+          "type": "function",
+          "value": "minAspectRatio"
+        },
+        {
+          "type": "function",
+          "value": "minColor"
+        },
+        {
+          "type": "function",
+          "value": "minColorIndex"
+        },
+        {
+          "type": "function",
+          "value": "minHeight"
+        },
+        {
+          "type": "function",
+          "value": "minMonochrome"
+        },
+        {
+          "type": "function",
+          "value": "minResolution"
+        },
+        {
+          "type": "function",
+          "value": "minWidth"
+        },
+        {
+          "type": "function",
+          "value": "monochrome"
+        },
+        {
+          "type": "function",
+          "value": "not"
+        },
+        {
+          "type": "function",
+          "value": "only"
+        },
+        {
+          "type": "function",
+          "value": "optionalPaged"
+        },
+        {
+          "type": "function",
+          "value": "orientation"
+        },
+        {
+          "type": "function",
+          "value": "overflowBlock"
+        },
+        {
+          "type": "function",
+          "value": "overflowInline"
+        },
+        {
+          "type": "function",
+          "value": "p3"
+        },
+        {
+          "type": "function",
+          "value": "paged"
+        },
+        {
+          "type": "function",
+          "value": "pointer"
+        },
+        {
+          "type": "function",
+          "value": "portrait"
+        },
+        {
+          "type": "function",
+          "value": "print"
+        },
+        {
+          "type": "function",
+          "value": "progressive"
+        },
+        {
+          "type": "function",
+          "value": "ratio"
+        },
+        {
+          "type": "function",
+          "value": "rec2020"
+        },
+        {
+          "type": "function",
+          "value": "resolution"
+        },
+        {
+          "type": "function",
+          "value": "scan"
+        },
+        {
+          "type": "function",
+          "value": "screen"
+        },
+        {
+          "type": "function",
+          "value": "scripting"
+        },
+        {
+          "type": "function",
+          "value": "slow"
+        },
+        {
+          "type": "function",
+          "value": "speech"
+        },
+        {
+          "type": "function",
+          "value": "srgb"
+        },
+        {
+          "type": "function",
+          "value": "update"
+        },
+        {
+          "type": "function",
+          "value": "width"
+        },
+        {
+          "type": "function",
+          "value": "withMedia"
+        },
+        {
+          "type": "function",
+          "value": "withMediaQuery"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Css",
+        "Transitions"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Transition",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "background"
+        },
+        {
+          "type": "function",
+          "value": "background2"
+        },
+        {
+          "type": "function",
+          "value": "background3"
+        },
+        {
+          "type": "function",
+          "value": "backgroundColor"
+        },
+        {
+          "type": "function",
+          "value": "backgroundColor2"
+        },
+        {
+          "type": "function",
+          "value": "backgroundColor3"
+        },
+        {
+          "type": "function",
+          "value": "backgroundPosition"
+        },
+        {
+          "type": "function",
+          "value": "backgroundPosition2"
+        },
+        {
+          "type": "function",
+          "value": "backgroundPosition3"
+        },
+        {
+          "type": "function",
+          "value": "backgroundSize"
+        },
+        {
+          "type": "function",
+          "value": "backgroundSize2"
+        },
+        {
+          "type": "function",
+          "value": "backgroundSize3"
+        },
+        {
+          "type": "function",
+          "value": "border"
+        },
+        {
+          "type": "function",
+          "value": "border2"
+        },
+        {
+          "type": "function",
+          "value": "border3"
+        },
+        {
+          "type": "function",
+          "value": "borderBottom"
+        },
+        {
+          "type": "function",
+          "value": "borderBottom2"
+        },
+        {
+          "type": "function",
+          "value": "borderBottom3"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomColor"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomColor2"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomColor3"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomLeftRadius"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomLeftRadius2"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomLeftRadius3"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomRightRadius"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomRightRadius2"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomRightRadius3"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomWidth2"
+        },
+        {
+          "type": "function",
+          "value": "borderBottomWidth3"
+        },
+        {
+          "type": "function",
+          "value": "borderColor"
+        },
+        {
+          "type": "function",
+          "value": "borderColor2"
+        },
+        {
+          "type": "function",
+          "value": "borderColor3"
+        },
+        {
+          "type": "function",
+          "value": "borderLeft"
+        },
+        {
+          "type": "function",
+          "value": "borderLeft2"
+        },
+        {
+          "type": "function",
+          "value": "borderLeft3"
+        },
+        {
+          "type": "function",
+          "value": "borderLeftColor"
+        },
+        {
+          "type": "function",
+          "value": "borderLeftColor2"
+        },
+        {
+          "type": "function",
+          "value": "borderLeftColor3"
+        },
+        {
+          "type": "function",
+          "value": "borderLeftWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderLeftWidth2"
+        },
+        {
+          "type": "function",
+          "value": "borderLeftWidth3"
+        },
+        {
+          "type": "function",
+          "value": "borderRadius"
+        },
+        {
+          "type": "function",
+          "value": "borderRadius2"
+        },
+        {
+          "type": "function",
+          "value": "borderRadius3"
+        },
+        {
+          "type": "function",
+          "value": "borderRight"
+        },
+        {
+          "type": "function",
+          "value": "borderRight2"
+        },
+        {
+          "type": "function",
+          "value": "borderRight3"
+        },
+        {
+          "type": "function",
+          "value": "borderRightColor"
+        },
+        {
+          "type": "function",
+          "value": "borderRightColor2"
+        },
+        {
+          "type": "function",
+          "value": "borderRightColor3"
+        },
+        {
+          "type": "function",
+          "value": "borderRightWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderRightWidth2"
+        },
+        {
+          "type": "function",
+          "value": "borderRightWidth3"
+        },
+        {
+          "type": "function",
+          "value": "borderTop"
+        },
+        {
+          "type": "function",
+          "value": "borderTop2"
+        },
+        {
+          "type": "function",
+          "value": "borderTop3"
+        },
+        {
+          "type": "function",
+          "value": "borderTopColor"
+        },
+        {
+          "type": "function",
+          "value": "borderTopColor2"
+        },
+        {
+          "type": "function",
+          "value": "borderTopColor3"
+        },
+        {
+          "type": "function",
+          "value": "borderTopLeftRadius"
+        },
+        {
+          "type": "function",
+          "value": "borderTopLeftRadius2"
+        },
+        {
+          "type": "function",
+          "value": "borderTopLeftRadius3"
+        },
+        {
+          "type": "function",
+          "value": "borderTopRightRadius"
+        },
+        {
+          "type": "function",
+          "value": "borderTopRightRadius2"
+        },
+        {
+          "type": "function",
+          "value": "borderTopRightRadius3"
+        },
+        {
+          "type": "function",
+          "value": "borderTopWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderTopWidth2"
+        },
+        {
+          "type": "function",
+          "value": "borderTopWidth3"
+        },
+        {
+          "type": "function",
+          "value": "borderWidth"
+        },
+        {
+          "type": "function",
+          "value": "borderWidth2"
+        },
+        {
+          "type": "function",
+          "value": "borderWidth3"
+        },
+        {
+          "type": "function",
+          "value": "bottom"
+        },
+        {
+          "type": "function",
+          "value": "bottom2"
+        },
+        {
+          "type": "function",
+          "value": "bottom3"
+        },
+        {
+          "type": "function",
+          "value": "boxShadow"
+        },
+        {
+          "type": "function",
+          "value": "boxShadow2"
+        },
+        {
+          "type": "function",
+          "value": "boxShadow3"
+        },
+        {
+          "type": "function",
+          "value": "caretColor"
+        },
+        {
+          "type": "function",
+          "value": "caretColor2"
+        },
+        {
+          "type": "function",
+          "value": "caretColor3"
+        },
+        {
+          "type": "function",
+          "value": "clip"
+        },
+        {
+          "type": "function",
+          "value": "clip2"
+        },
+        {
+          "type": "function",
+          "value": "clip3"
+        },
+        {
+          "type": "function",
+          "value": "clipPath"
+        },
+        {
+          "type": "function",
+          "value": "clipPath2"
+        },
+        {
+          "type": "function",
+          "value": "clipPath3"
+        },
+        {
+          "type": "function",
+          "value": "color"
+        },
+        {
+          "type": "function",
+          "value": "color2"
+        },
+        {
+          "type": "function",
+          "value": "color3"
+        },
+        {
+          "type": "function",
+          "value": "columnCount"
+        },
+        {
+          "type": "function",
+          "value": "columnCount2"
+        },
+        {
+          "type": "function",
+          "value": "columnCount3"
+        },
+        {
+          "type": "function",
+          "value": "columnGap"
+        },
+        {
+          "type": "function",
+          "value": "columnGap2"
+        },
+        {
+          "type": "function",
+          "value": "columnGap3"
+        },
+        {
+          "type": "function",
+          "value": "columnRule"
+        },
+        {
+          "type": "function",
+          "value": "columnRule2"
+        },
+        {
+          "type": "function",
+          "value": "columnRule3"
+        },
+        {
+          "type": "function",
+          "value": "columnRuleColor"
+        },
+        {
+          "type": "function",
+          "value": "columnRuleColor2"
+        },
+        {
+          "type": "function",
+          "value": "columnRuleColor3"
+        },
+        {
+          "type": "function",
+          "value": "columnRuleWidth"
+        },
+        {
+          "type": "function",
+          "value": "columnRuleWidth2"
+        },
+        {
+          "type": "function",
+          "value": "columnRuleWidth3"
+        },
+        {
+          "type": "function",
+          "value": "columnWidth"
+        },
+        {
+          "type": "function",
+          "value": "columnWidth2"
+        },
+        {
+          "type": "function",
+          "value": "columnWidth3"
+        },
+        {
+          "type": "function",
+          "value": "columns"
+        },
+        {
+          "type": "function",
+          "value": "columns2"
+        },
+        {
+          "type": "function",
+          "value": "columns3"
+        },
+        {
+          "type": "function",
+          "value": "cubicBezier"
+        },
+        {
+          "type": "function",
+          "value": "ease"
+        },
+        {
+          "type": "function",
+          "value": "easeIn"
+        },
+        {
+          "type": "function",
+          "value": "easeInOut"
+        },
+        {
+          "type": "function",
+          "value": "easeOut"
+        },
+        {
+          "type": "function",
+          "value": "filter"
+        },
+        {
+          "type": "function",
+          "value": "filter2"
+        },
+        {
+          "type": "function",
+          "value": "filter3"
+        },
+        {
+          "type": "function",
+          "value": "flex"
+        },
+        {
+          "type": "function",
+          "value": "flex2"
+        },
+        {
+          "type": "function",
+          "value": "flex3"
+        },
+        {
+          "type": "function",
+          "value": "flexBasis"
+        },
+        {
+          "type": "function",
+          "value": "flexBasis2"
+        },
+        {
+          "type": "function",
+          "value": "flexBasis3"
+        },
+        {
+          "type": "function",
+          "value": "flexGrow"
+        },
+        {
+          "type": "function",
+          "value": "flexGrow2"
+        },
+        {
+          "type": "function",
+          "value": "flexGrow3"
+        },
+        {
+          "type": "function",
+          "value": "flexShrink"
+        },
+        {
+          "type": "function",
+          "value": "flexShrink2"
+        },
+        {
+          "type": "function",
+          "value": "flexShrink3"
+        },
+        {
+          "type": "function",
+          "value": "font"
+        },
+        {
+          "type": "function",
+          "value": "font2"
+        },
+        {
+          "type": "function",
+          "value": "font3"
+        },
+        {
+          "type": "function",
+          "value": "fontSize"
+        },
+        {
+          "type": "function",
+          "value": "fontSize2"
+        },
+        {
+          "type": "function",
+          "value": "fontSize3"
+        },
+        {
+          "type": "function",
+          "value": "fontSizeAdjust"
+        },
+        {
+          "type": "function",
+          "value": "fontSizeAdjust2"
+        },
+        {
+          "type": "function",
+          "value": "fontSizeAdjust3"
+        },
+        {
+          "type": "function",
+          "value": "fontStretch"
+        },
+        {
+          "type": "function",
+          "value": "fontStretch2"
+        },
+        {
+          "type": "function",
+          "value": "fontStretch3"
+        },
+        {
+          "type": "function",
+          "value": "fontVariationSettings"
+        },
+        {
+          "type": "function",
+          "value": "fontVariationSettings2"
+        },
+        {
+          "type": "function",
+          "value": "fontVariationSettings3"
+        },
+        {
+          "type": "function",
+          "value": "fontWeight"
+        },
+        {
+          "type": "function",
+          "value": "fontWeight2"
+        },
+        {
+          "type": "function",
+          "value": "fontWeight3"
+        },
+        {
+          "type": "function",
+          "value": "gridColumnGap"
+        },
+        {
+          "type": "function",
+          "value": "gridColumnGap2"
+        },
+        {
+          "type": "function",
+          "value": "gridColumnGap3"
+        },
+        {
+          "type": "function",
+          "value": "gridGap"
+        },
+        {
+          "type": "function",
+          "value": "gridGap2"
+        },
+        {
+          "type": "function",
+          "value": "gridGap3"
+        },
+        {
+          "type": "function",
+          "value": "gridRowGap"
+        },
+        {
+          "type": "function",
+          "value": "gridRowGap2"
+        },
+        {
+          "type": "function",
+          "value": "gridRowGap3"
+        },
+        {
+          "type": "function",
+          "value": "height"
+        },
+        {
+          "type": "function",
+          "value": "height2"
+        },
+        {
+          "type": "function",
+          "value": "height3"
+        },
+        {
+          "type": "function",
+          "value": "left"
+        },
+        {
+          "type": "function",
+          "value": "left2"
+        },
+        {
+          "type": "function",
+          "value": "left3"
+        },
+        {
+          "type": "function",
+          "value": "letterSpacing"
+        },
+        {
+          "type": "function",
+          "value": "letterSpacing2"
+        },
+        {
+          "type": "function",
+          "value": "letterSpacing3"
+        },
+        {
+          "type": "function",
+          "value": "lineHeight"
+        },
+        {
+          "type": "function",
+          "value": "lineHeight2"
+        },
+        {
+          "type": "function",
+          "value": "lineHeight3"
+        },
+        {
+          "type": "function",
+          "value": "linear"
+        },
+        {
+          "type": "function",
+          "value": "margin"
+        },
+        {
+          "type": "function",
+          "value": "margin2"
+        },
+        {
+          "type": "function",
+          "value": "margin3"
+        },
+        {
+          "type": "function",
+          "value": "marginBottom"
+        },
+        {
+          "type": "function",
+          "value": "marginBottom2"
+        },
+        {
+          "type": "function",
+          "value": "marginBottom3"
+        },
+        {
+          "type": "function",
+          "value": "marginLeft"
+        },
+        {
+          "type": "function",
+          "value": "marginLeft2"
+        },
+        {
+          "type": "function",
+          "value": "marginLeft3"
+        },
+        {
+          "type": "function",
+          "value": "marginRight"
+        },
+        {
+          "type": "function",
+          "value": "marginRight2"
+        },
+        {
+          "type": "function",
+          "value": "marginRight3"
+        },
+        {
+          "type": "function",
+          "value": "marginTop"
+        },
+        {
+          "type": "function",
+          "value": "marginTop2"
+        },
+        {
+          "type": "function",
+          "value": "marginTop3"
+        },
+        {
+          "type": "function",
+          "value": "mask"
+        },
+        {
+          "type": "function",
+          "value": "mask2"
+        },
+        {
+          "type": "function",
+          "value": "mask3"
+        },
+        {
+          "type": "function",
+          "value": "maskPosition"
+        },
+        {
+          "type": "function",
+          "value": "maskPosition2"
+        },
+        {
+          "type": "function",
+          "value": "maskPosition3"
+        },
+        {
+          "type": "function",
+          "value": "maskSize"
+        },
+        {
+          "type": "function",
+          "value": "maskSize2"
+        },
+        {
+          "type": "function",
+          "value": "maskSize3"
+        },
+        {
+          "type": "function",
+          "value": "maxHeight"
+        },
+        {
+          "type": "function",
+          "value": "maxHeight2"
+        },
+        {
+          "type": "function",
+          "value": "maxHeight3"
+        },
+        {
+          "type": "function",
+          "value": "maxWidth"
+        },
+        {
+          "type": "function",
+          "value": "maxWidth2"
+        },
+        {
+          "type": "function",
+          "value": "maxWidth3"
+        },
+        {
+          "type": "function",
+          "value": "minHeight"
+        },
+        {
+          "type": "function",
+          "value": "minHeight2"
+        },
+        {
+          "type": "function",
+          "value": "minHeight3"
+        },
+        {
+          "type": "function",
+          "value": "minWidth"
+        },
+        {
+          "type": "function",
+          "value": "minWidth2"
+        },
+        {
+          "type": "function",
+          "value": "minWidth3"
+        },
+        {
+          "type": "function",
+          "value": "objectPosition"
+        },
+        {
+          "type": "function",
+          "value": "objectPosition2"
+        },
+        {
+          "type": "function",
+          "value": "objectPosition3"
+        },
+        {
+          "type": "function",
+          "value": "offset"
+        },
+        {
+          "type": "function",
+          "value": "offset2"
+        },
+        {
+          "type": "function",
+          "value": "offset3"
+        },
+        {
+          "type": "function",
+          "value": "offsetAnchor"
+        },
+        {
+          "type": "function",
+          "value": "offsetAnchor2"
+        },
+        {
+          "type": "function",
+          "value": "offsetAnchor3"
+        },
+        {
+          "type": "function",
+          "value": "offsetDistance"
+        },
+        {
+          "type": "function",
+          "value": "offsetDistance2"
+        },
+        {
+          "type": "function",
+          "value": "offsetDistance3"
+        },
+        {
+          "type": "function",
+          "value": "offsetPath"
+        },
+        {
+          "type": "function",
+          "value": "offsetPath2"
+        },
+        {
+          "type": "function",
+          "value": "offsetPath3"
+        },
+        {
+          "type": "function",
+          "value": "offsetRotate"
+        },
+        {
+          "type": "function",
+          "value": "offsetRotate2"
+        },
+        {
+          "type": "function",
+          "value": "offsetRotate3"
+        },
+        {
+          "type": "function",
+          "value": "opacity"
+        },
+        {
+          "type": "function",
+          "value": "opacity2"
+        },
+        {
+          "type": "function",
+          "value": "opacity3"
+        },
+        {
+          "type": "function",
+          "value": "order"
+        },
+        {
+          "type": "function",
+          "value": "order2"
+        },
+        {
+          "type": "function",
+          "value": "order3"
+        },
+        {
+          "type": "function",
+          "value": "outline"
+        },
+        {
+          "type": "function",
+          "value": "outline2"
+        },
+        {
+          "type": "function",
+          "value": "outline3"
+        },
+        {
+          "type": "function",
+          "value": "outlineColor"
+        },
+        {
+          "type": "function",
+          "value": "outlineColor2"
+        },
+        {
+          "type": "function",
+          "value": "outlineColor3"
+        },
+        {
+          "type": "function",
+          "value": "outlineOffset"
+        },
+        {
+          "type": "function",
+          "value": "outlineOffset2"
+        },
+        {
+          "type": "function",
+          "value": "outlineOffset3"
+        },
+        {
+          "type": "function",
+          "value": "outlineWidth"
+        },
+        {
+          "type": "function",
+          "value": "outlineWidth2"
+        },
+        {
+          "type": "function",
+          "value": "outlineWidth3"
+        },
+        {
+          "type": "function",
+          "value": "padding"
+        },
+        {
+          "type": "function",
+          "value": "padding2"
+        },
+        {
+          "type": "function",
+          "value": "padding3"
+        },
+        {
+          "type": "function",
+          "value": "paddingBottom"
+        },
+        {
+          "type": "function",
+          "value": "paddingBottom2"
+        },
+        {
+          "type": "function",
+          "value": "paddingBottom3"
+        },
+        {
+          "type": "function",
+          "value": "paddingLeft"
+        },
+        {
+          "type": "function",
+          "value": "paddingLeft2"
+        },
+        {
+          "type": "function",
+          "value": "paddingLeft3"
+        },
+        {
+          "type": "function",
+          "value": "paddingRight"
+        },
+        {
+          "type": "function",
+          "value": "paddingRight2"
+        },
+        {
+          "type": "function",
+          "value": "paddingRight3"
+        },
+        {
+          "type": "function",
+          "value": "paddingTop"
+        },
+        {
+          "type": "function",
+          "value": "paddingTop2"
+        },
+        {
+          "type": "function",
+          "value": "paddingTop3"
+        },
+        {
+          "type": "function",
+          "value": "right"
+        },
+        {
+          "type": "function",
+          "value": "right2"
+        },
+        {
+          "type": "function",
+          "value": "right3"
+        },
+        {
+          "type": "function",
+          "value": "stepEnd"
+        },
+        {
+          "type": "function",
+          "value": "stepStart"
+        },
+        {
+          "type": "function",
+          "value": "tabSize"
+        },
+        {
+          "type": "function",
+          "value": "tabSize2"
+        },
+        {
+          "type": "function",
+          "value": "tabSize3"
+        },
+        {
+          "type": "function",
+          "value": "textIndent"
+        },
+        {
+          "type": "function",
+          "value": "textIndent2"
+        },
+        {
+          "type": "function",
+          "value": "textIndent3"
+        },
+        {
+          "type": "function",
+          "value": "textShadow"
+        },
+        {
+          "type": "function",
+          "value": "textShadow2"
+        },
+        {
+          "type": "function",
+          "value": "textShadow3"
+        },
+        {
+          "type": "function",
+          "value": "top"
+        },
+        {
+          "type": "function",
+          "value": "top2"
+        },
+        {
+          "type": "function",
+          "value": "top3"
+        },
+        {
+          "type": "function",
+          "value": "transform"
+        },
+        {
+          "type": "function",
+          "value": "transform2"
+        },
+        {
+          "type": "function",
+          "value": "transform3"
+        },
+        {
+          "type": "function",
+          "value": "transformOrigin"
+        },
+        {
+          "type": "function",
+          "value": "transformOrigin2"
+        },
+        {
+          "type": "function",
+          "value": "transformOrigin3"
+        },
+        {
+          "type": "function",
+          "value": "transition"
+        },
+        {
+          "type": "function",
+          "value": "verticalAlign"
+        },
+        {
+          "type": "function",
+          "value": "verticalAlign2"
+        },
+        {
+          "type": "function",
+          "value": "verticalAlign3"
+        },
+        {
+          "type": "function",
+          "value": "visibility"
+        },
+        {
+          "type": "function",
+          "value": "visibility2"
+        },
+        {
+          "type": "function",
+          "value": "visibility3"
+        },
+        {
+          "type": "function",
+          "value": "width"
+        },
+        {
+          "type": "function",
+          "value": "width2"
+        },
+        {
+          "type": "function",
+          "value": "width3"
+        },
+        {
+          "type": "function",
+          "value": "wordSpacing"
+        },
+        {
+          "type": "function",
+          "value": "wordSpacing2"
+        },
+        {
+          "type": "function",
+          "value": "wordSpacing3"
+        },
+        {
+          "type": "function",
+          "value": "zIndex"
+        },
+        {
+          "type": "function",
+          "value": "zIndex2"
+        },
+        {
+          "type": "function",
+          "value": "zIndex3"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Html",
+        "Styled"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Attribute"
+        },
+        {
+          "type": "alias",
+          "value": "Html"
+        },
+        {
+          "type": "function",
+          "value": "a"
+        },
+        {
+          "type": "function",
+          "value": "abbr"
+        },
+        {
+          "type": "function",
+          "value": "address"
+        },
+        {
+          "type": "function",
+          "value": "article"
+        },
+        {
+          "type": "function",
+          "value": "aside"
+        },
+        {
+          "type": "function",
+          "value": "audio"
+        },
+        {
+          "type": "function",
+          "value": "b"
+        },
+        {
+          "type": "function",
+          "value": "bdi"
+        },
+        {
+          "type": "function",
+          "value": "bdo"
+        },
+        {
+          "type": "function",
+          "value": "blockquote"
+        },
+        {
+          "type": "function",
+          "value": "br"
+        },
+        {
+          "type": "function",
+          "value": "button"
+        },
+        {
+          "type": "function",
+          "value": "canvas"
+        },
+        {
+          "type": "function",
+          "value": "caption"
+        },
+        {
+          "type": "function",
+          "value": "cite"
+        },
+        {
+          "type": "function",
+          "value": "code"
+        },
+        {
+          "type": "function",
+          "value": "col"
+        },
+        {
+          "type": "function",
+          "value": "colgroup"
+        },
+        {
+          "type": "function",
+          "value": "datalist"
+        },
+        {
+          "type": "function",
+          "value": "dd"
+        },
+        {
+          "type": "function",
+          "value": "del"
+        },
+        {
+          "type": "function",
+          "value": "details"
+        },
+        {
+          "type": "function",
+          "value": "dfn"
+        },
+        {
+          "type": "function",
+          "value": "div"
+        },
+        {
+          "type": "function",
+          "value": "dl"
+        },
+        {
+          "type": "function",
+          "value": "dt"
+        },
+        {
+          "type": "function",
+          "value": "em"
+        },
+        {
+          "type": "function",
+          "value": "embed"
+        },
+        {
+          "type": "function",
+          "value": "fieldset"
+        },
+        {
+          "type": "function",
+          "value": "figcaption"
+        },
+        {
+          "type": "function",
+          "value": "figure"
+        },
+        {
+          "type": "function",
+          "value": "footer"
+        },
+        {
+          "type": "function",
+          "value": "form"
+        },
+        {
+          "type": "function",
+          "value": "fromUnstyled"
+        },
+        {
+          "type": "function",
+          "value": "h1"
+        },
+        {
+          "type": "function",
+          "value": "h2"
+        },
+        {
+          "type": "function",
+          "value": "h3"
+        },
+        {
+          "type": "function",
+          "value": "h4"
+        },
+        {
+          "type": "function",
+          "value": "h5"
+        },
+        {
+          "type": "function",
+          "value": "h6"
+        },
+        {
+          "type": "function",
+          "value": "header"
+        },
+        {
+          "type": "function",
+          "value": "hr"
+        },
+        {
+          "type": "function",
+          "value": "i"
+        },
+        {
+          "type": "function",
+          "value": "iframe"
+        },
+        {
+          "type": "function",
+          "value": "img"
+        },
+        {
+          "type": "function",
+          "value": "input"
+        },
+        {
+          "type": "function",
+          "value": "ins"
+        },
+        {
+          "type": "function",
+          "value": "kbd"
+        },
+        {
+          "type": "function",
+          "value": "label"
+        },
+        {
+          "type": "function",
+          "value": "legend"
+        },
+        {
+          "type": "function",
+          "value": "li"
+        },
+        {
+          "type": "function",
+          "value": "main_"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "mark"
+        },
+        {
+          "type": "function",
+          "value": "math"
+        },
+        {
+          "type": "function",
+          "value": "menu"
+        },
+        {
+          "type": "function",
+          "value": "menuitem"
+        },
+        {
+          "type": "function",
+          "value": "meter"
+        },
+        {
+          "type": "function",
+          "value": "nav"
+        },
+        {
+          "type": "function",
+          "value": "node"
+        },
+        {
+          "type": "function",
+          "value": "object"
+        },
+        {
+          "type": "function",
+          "value": "ol"
+        },
+        {
+          "type": "function",
+          "value": "optgroup"
+        },
+        {
+          "type": "function",
+          "value": "option"
+        },
+        {
+          "type": "function",
+          "value": "output"
+        },
+        {
+          "type": "function",
+          "value": "p"
+        },
+        {
+          "type": "function",
+          "value": "param"
+        },
+        {
+          "type": "function",
+          "value": "pre"
+        },
+        {
+          "type": "function",
+          "value": "progress"
+        },
+        {
+          "type": "function",
+          "value": "q"
+        },
+        {
+          "type": "function",
+          "value": "rp"
+        },
+        {
+          "type": "function",
+          "value": "rt"
+        },
+        {
+          "type": "function",
+          "value": "ruby"
+        },
+        {
+          "type": "function",
+          "value": "s"
+        },
+        {
+          "type": "function",
+          "value": "samp"
+        },
+        {
+          "type": "function",
+          "value": "section"
+        },
+        {
+          "type": "function",
+          "value": "select"
+        },
+        {
+          "type": "function",
+          "value": "small"
+        },
+        {
+          "type": "function",
+          "value": "source"
+        },
+        {
+          "type": "function",
+          "value": "span"
+        },
+        {
+          "type": "function",
+          "value": "strong"
+        },
+        {
+          "type": "function",
+          "value": "styled"
+        },
+        {
+          "type": "function",
+          "value": "sub"
+        },
+        {
+          "type": "function",
+          "value": "summary"
+        },
+        {
+          "type": "function",
+          "value": "sup"
+        },
+        {
+          "type": "function",
+          "value": "table"
+        },
+        {
+          "type": "function",
+          "value": "tbody"
+        },
+        {
+          "type": "function",
+          "value": "td"
+        },
+        {
+          "type": "function",
+          "value": "text"
+        },
+        {
+          "type": "function",
+          "value": "textarea"
+        },
+        {
+          "type": "function",
+          "value": "tfoot"
+        },
+        {
+          "type": "function",
+          "value": "th"
+        },
+        {
+          "type": "function",
+          "value": "thead"
+        },
+        {
+          "type": "function",
+          "value": "time"
+        },
+        {
+          "type": "function",
+          "value": "toUnstyled"
+        },
+        {
+          "type": "function",
+          "value": "tr"
+        },
+        {
+          "type": "function",
+          "value": "track"
+        },
+        {
+          "type": "function",
+          "value": "u"
+        },
+        {
+          "type": "function",
+          "value": "ul"
+        },
+        {
+          "type": "function",
+          "value": "var"
+        },
+        {
+          "type": "function",
+          "value": "video"
+        },
+        {
+          "type": "function",
+          "value": "wbr"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Html",
+        "Styled",
+        "Attributes"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "accept"
+        },
+        {
+          "type": "function",
+          "value": "acceptCharset"
+        },
+        {
+          "type": "function",
+          "value": "accesskey"
+        },
+        {
+          "type": "function",
+          "value": "action"
+        },
+        {
+          "type": "function",
+          "value": "align"
+        },
+        {
+          "type": "function",
+          "value": "alt"
+        },
+        {
+          "type": "function",
+          "value": "attribute"
+        },
+        {
+          "type": "function",
+          "value": "autocomplete"
+        },
+        {
+          "type": "function",
+          "value": "autofocus"
+        },
+        {
+          "type": "function",
+          "value": "autoplay"
+        },
+        {
+          "type": "function",
+          "value": "checked"
+        },
+        {
+          "type": "function",
+          "value": "cite"
+        },
+        {
+          "type": "function",
+          "value": "class"
+        },
+        {
+          "type": "function",
+          "value": "classList"
+        },
+        {
+          "type": "function",
+          "value": "cols"
+        },
+        {
+          "type": "function",
+          "value": "colspan"
+        },
+        {
+          "type": "function",
+          "value": "contenteditable"
+        },
+        {
+          "type": "function",
+          "value": "contextmenu"
+        },
+        {
+          "type": "function",
+          "value": "controls"
+        },
+        {
+          "type": "function",
+          "value": "coords"
+        },
+        {
+          "type": "function",
+          "value": "css"
+        },
+        {
+          "type": "function",
+          "value": "datetime"
+        },
+        {
+          "type": "function",
+          "value": "default"
+        },
+        {
+          "type": "function",
+          "value": "dir"
+        },
+        {
+          "type": "function",
+          "value": "disabled"
+        },
+        {
+          "type": "function",
+          "value": "download"
+        },
+        {
+          "type": "function",
+          "value": "draggable"
+        },
+        {
+          "type": "function",
+          "value": "dropzone"
+        },
+        {
+          "type": "function",
+          "value": "enctype"
+        },
+        {
+          "type": "function",
+          "value": "for"
+        },
+        {
+          "type": "function",
+          "value": "form"
+        },
+        {
+          "type": "function",
+          "value": "fromUnstyled"
+        },
+        {
+          "type": "function",
+          "value": "headers"
+        },
+        {
+          "type": "function",
+          "value": "height"
+        },
+        {
+          "type": "function",
+          "value": "hidden"
+        },
+        {
+          "type": "function",
+          "value": "href"
+        },
+        {
+          "type": "function",
+          "value": "hreflang"
+        },
+        {
+          "type": "function",
+          "value": "id"
+        },
+        {
+          "type": "function",
+          "value": "ismap"
+        },
+        {
+          "type": "function",
+          "value": "itemprop"
+        },
+        {
+          "type": "function",
+          "value": "kind"
+        },
+        {
+          "type": "function",
+          "value": "lang"
+        },
+        {
+          "type": "function",
+          "value": "list"
+        },
+        {
+          "type": "function",
+          "value": "loop"
+        },
+        {
+          "type": "function",
+          "value": "manifest"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "max"
+        },
+        {
+          "type": "function",
+          "value": "maxlength"
+        },
+        {
+          "type": "function",
+          "value": "media"
+        },
+        {
+          "type": "function",
+          "value": "method"
+        },
+        {
+          "type": "function",
+          "value": "min"
+        },
+        {
+          "type": "function",
+          "value": "minlength"
+        },
+        {
+          "type": "function",
+          "value": "multiple"
+        },
+        {
+          "type": "function",
+          "value": "name"
+        },
+        {
+          "type": "function",
+          "value": "novalidate"
+        },
+        {
+          "type": "function",
+          "value": "pattern"
+        },
+        {
+          "type": "function",
+          "value": "ping"
+        },
+        {
+          "type": "function",
+          "value": "placeholder"
+        },
+        {
+          "type": "function",
+          "value": "poster"
+        },
+        {
+          "type": "function",
+          "value": "preload"
+        },
+        {
+          "type": "function",
+          "value": "property"
+        },
+        {
+          "type": "function",
+          "value": "pubdate"
+        },
+        {
+          "type": "function",
+          "value": "readonly"
+        },
+        {
+          "type": "function",
+          "value": "rel"
+        },
+        {
+          "type": "function",
+          "value": "required"
+        },
+        {
+          "type": "function",
+          "value": "reversed"
+        },
+        {
+          "type": "function",
+          "value": "rows"
+        },
+        {
+          "type": "function",
+          "value": "rowspan"
+        },
+        {
+          "type": "function",
+          "value": "sandbox"
+        },
+        {
+          "type": "function",
+          "value": "scope"
+        },
+        {
+          "type": "function",
+          "value": "selected"
+        },
+        {
+          "type": "function",
+          "value": "shape"
+        },
+        {
+          "type": "function",
+          "value": "size"
+        },
+        {
+          "type": "function",
+          "value": "spellcheck"
+        },
+        {
+          "type": "function",
+          "value": "src"
+        },
+        {
+          "type": "function",
+          "value": "srcdoc"
+        },
+        {
+          "type": "function",
+          "value": "srclang"
+        },
+        {
+          "type": "function",
+          "value": "start"
+        },
+        {
+          "type": "function",
+          "value": "step"
+        },
+        {
+          "type": "function",
+          "value": "style"
+        },
+        {
+          "type": "function",
+          "value": "tabindex"
+        },
+        {
+          "type": "function",
+          "value": "target"
+        },
+        {
+          "type": "function",
+          "value": "title"
+        },
+        {
+          "type": "function",
+          "value": "type_"
+        },
+        {
+          "type": "function",
+          "value": "usemap"
+        },
+        {
+          "type": "function",
+          "value": "value"
+        },
+        {
+          "type": "function",
+          "value": "width"
+        },
+        {
+          "type": "function",
+          "value": "wrap"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Html",
+        "Styled",
+        "Events"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "custom"
+        },
+        {
+          "type": "function",
+          "value": "keyCode"
+        },
+        {
+          "type": "function",
+          "value": "on"
+        },
+        {
+          "type": "function",
+          "value": "onBlur"
+        },
+        {
+          "type": "function",
+          "value": "onCheck"
+        },
+        {
+          "type": "function",
+          "value": "onClick"
+        },
+        {
+          "type": "function",
+          "value": "onDoubleClick"
+        },
+        {
+          "type": "function",
+          "value": "onFocus"
+        },
+        {
+          "type": "function",
+          "value": "onInput"
+        },
+        {
+          "type": "function",
+          "value": "onMouseDown"
+        },
+        {
+          "type": "function",
+          "value": "onMouseEnter"
+        },
+        {
+          "type": "function",
+          "value": "onMouseLeave"
+        },
+        {
+          "type": "function",
+          "value": "onMouseOut"
+        },
+        {
+          "type": "function",
+          "value": "onMouseOver"
+        },
+        {
+          "type": "function",
+          "value": "onMouseUp"
+        },
+        {
+          "type": "function",
+          "value": "onSubmit"
+        },
+        {
+          "type": "function",
+          "value": "preventDefaultOn"
+        },
+        {
+          "type": "function",
+          "value": "stopPropagationOn"
+        },
+        {
+          "type": "function",
+          "value": "targetChecked"
+        },
+        {
+          "type": "function",
+          "value": "targetValue"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Html",
+        "Styled",
+        "Keyed"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "node"
+        },
+        {
+          "type": "function",
+          "value": "ol"
+        },
+        {
+          "type": "function",
+          "value": "ul"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Html",
+        "Styled",
+        "Lazy"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "lazy"
+        },
+        {
+          "type": "function",
+          "value": "lazy2"
+        },
+        {
+          "type": "function",
+          "value": "lazy3"
+        },
+        {
+          "type": "function",
+          "value": "lazy4"
+        },
+        {
+          "type": "function",
+          "value": "lazy5"
+        },
+        {
+          "type": "function",
+          "value": "lazy6"
+        },
+        {
+          "type": "function",
+          "value": "lazy7"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Svg",
+        "Styled"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Attribute"
+        },
+        {
+          "type": "alias",
+          "value": "Svg"
+        },
+        {
+          "type": "function",
+          "value": "a"
+        },
+        {
+          "type": "function",
+          "value": "altGlyph"
+        },
+        {
+          "type": "function",
+          "value": "altGlyphDef"
+        },
+        {
+          "type": "function",
+          "value": "altGlyphItem"
+        },
+        {
+          "type": "function",
+          "value": "animate"
+        },
+        {
+          "type": "function",
+          "value": "animateColor"
+        },
+        {
+          "type": "function",
+          "value": "animateMotion"
+        },
+        {
+          "type": "function",
+          "value": "animateTransform"
+        },
+        {
+          "type": "function",
+          "value": "circle"
+        },
+        {
+          "type": "function",
+          "value": "clipPath"
+        },
+        {
+          "type": "function",
+          "value": "colorProfile"
+        },
+        {
+          "type": "function",
+          "value": "cursor"
+        },
+        {
+          "type": "function",
+          "value": "defs"
+        },
+        {
+          "type": "function",
+          "value": "desc"
+        },
+        {
+          "type": "function",
+          "value": "ellipse"
+        },
+        {
+          "type": "function",
+          "value": "feBlend"
+        },
+        {
+          "type": "function",
+          "value": "feColorMatrix"
+        },
+        {
+          "type": "function",
+          "value": "feComponentTransfer"
+        },
+        {
+          "type": "function",
+          "value": "feComposite"
+        },
+        {
+          "type": "function",
+          "value": "feConvolveMatrix"
+        },
+        {
+          "type": "function",
+          "value": "feDiffuseLighting"
+        },
+        {
+          "type": "function",
+          "value": "feDisplacementMap"
+        },
+        {
+          "type": "function",
+          "value": "feDistantLight"
+        },
+        {
+          "type": "function",
+          "value": "feFlood"
+        },
+        {
+          "type": "function",
+          "value": "feFuncA"
+        },
+        {
+          "type": "function",
+          "value": "feFuncB"
+        },
+        {
+          "type": "function",
+          "value": "feFuncG"
+        },
+        {
+          "type": "function",
+          "value": "feFuncR"
+        },
+        {
+          "type": "function",
+          "value": "feGaussianBlur"
+        },
+        {
+          "type": "function",
+          "value": "feImage"
+        },
+        {
+          "type": "function",
+          "value": "feMerge"
+        },
+        {
+          "type": "function",
+          "value": "feMergeNode"
+        },
+        {
+          "type": "function",
+          "value": "feMorphology"
+        },
+        {
+          "type": "function",
+          "value": "feOffset"
+        },
+        {
+          "type": "function",
+          "value": "fePointLight"
+        },
+        {
+          "type": "function",
+          "value": "feSpecularLighting"
+        },
+        {
+          "type": "function",
+          "value": "feSpotLight"
+        },
+        {
+          "type": "function",
+          "value": "feTile"
+        },
+        {
+          "type": "function",
+          "value": "feTurbulence"
+        },
+        {
+          "type": "function",
+          "value": "filter"
+        },
+        {
+          "type": "function",
+          "value": "font"
+        },
+        {
+          "type": "function",
+          "value": "foreignObject"
+        },
+        {
+          "type": "function",
+          "value": "fromUnstyled"
+        },
+        {
+          "type": "function",
+          "value": "g"
+        },
+        {
+          "type": "function",
+          "value": "glyph"
+        },
+        {
+          "type": "function",
+          "value": "glyphRef"
+        },
+        {
+          "type": "function",
+          "value": "image"
+        },
+        {
+          "type": "function",
+          "value": "line"
+        },
+        {
+          "type": "function",
+          "value": "linearGradient"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "marker"
+        },
+        {
+          "type": "function",
+          "value": "mask"
+        },
+        {
+          "type": "function",
+          "value": "metadata"
+        },
+        {
+          "type": "function",
+          "value": "mpath"
+        },
+        {
+          "type": "function",
+          "value": "node"
+        },
+        {
+          "type": "function",
+          "value": "path"
+        },
+        {
+          "type": "function",
+          "value": "pattern"
+        },
+        {
+          "type": "function",
+          "value": "polygon"
+        },
+        {
+          "type": "function",
+          "value": "polyline"
+        },
+        {
+          "type": "function",
+          "value": "radialGradient"
+        },
+        {
+          "type": "function",
+          "value": "rect"
+        },
+        {
+          "type": "function",
+          "value": "set"
+        },
+        {
+          "type": "function",
+          "value": "stop"
+        },
+        {
+          "type": "function",
+          "value": "style"
+        },
+        {
+          "type": "function",
+          "value": "styled"
+        },
+        {
+          "type": "function",
+          "value": "svg"
+        },
+        {
+          "type": "function",
+          "value": "switch"
+        },
+        {
+          "type": "function",
+          "value": "symbol"
+        },
+        {
+          "type": "function",
+          "value": "text"
+        },
+        {
+          "type": "function",
+          "value": "textPath"
+        },
+        {
+          "type": "function",
+          "value": "text_"
+        },
+        {
+          "type": "function",
+          "value": "title"
+        },
+        {
+          "type": "function",
+          "value": "toUnstyled"
+        },
+        {
+          "type": "function",
+          "value": "tref"
+        },
+        {
+          "type": "function",
+          "value": "tspan"
+        },
+        {
+          "type": "function",
+          "value": "use"
+        },
+        {
+          "type": "function",
+          "value": "view"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Svg",
+        "Styled",
+        "Attributes"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "accelerate"
+        },
+        {
+          "type": "function",
+          "value": "accentHeight"
+        },
+        {
+          "type": "function",
+          "value": "accumulate"
+        },
+        {
+          "type": "function",
+          "value": "additive"
+        },
+        {
+          "type": "function",
+          "value": "alignmentBaseline"
+        },
+        {
+          "type": "function",
+          "value": "allowReorder"
+        },
+        {
+          "type": "function",
+          "value": "alphabetic"
+        },
+        {
+          "type": "function",
+          "value": "amplitude"
+        },
+        {
+          "type": "function",
+          "value": "arabicForm"
+        },
+        {
+          "type": "function",
+          "value": "ascent"
+        },
+        {
+          "type": "function",
+          "value": "attributeName"
+        },
+        {
+          "type": "function",
+          "value": "attributeType"
+        },
+        {
+          "type": "function",
+          "value": "autoReverse"
+        },
+        {
+          "type": "function",
+          "value": "azimuth"
+        },
+        {
+          "type": "function",
+          "value": "baseFrequency"
+        },
+        {
+          "type": "function",
+          "value": "baseProfile"
+        },
+        {
+          "type": "function",
+          "value": "baselineShift"
+        },
+        {
+          "type": "function",
+          "value": "bbox"
+        },
+        {
+          "type": "function",
+          "value": "begin"
+        },
+        {
+          "type": "function",
+          "value": "bias"
+        },
+        {
+          "type": "function",
+          "value": "by"
+        },
+        {
+          "type": "function",
+          "value": "calcMode"
+        },
+        {
+          "type": "function",
+          "value": "capHeight"
+        },
+        {
+          "type": "function",
+          "value": "class"
+        },
+        {
+          "type": "function",
+          "value": "clip"
+        },
+        {
+          "type": "function",
+          "value": "clipPath"
+        },
+        {
+          "type": "function",
+          "value": "clipPathUnits"
+        },
+        {
+          "type": "function",
+          "value": "clipRule"
+        },
+        {
+          "type": "function",
+          "value": "color"
+        },
+        {
+          "type": "function",
+          "value": "colorInterpolation"
+        },
+        {
+          "type": "function",
+          "value": "colorInterpolationFilters"
+        },
+        {
+          "type": "function",
+          "value": "colorProfile"
+        },
+        {
+          "type": "function",
+          "value": "colorRendering"
+        },
+        {
+          "type": "function",
+          "value": "contentScriptType"
+        },
+        {
+          "type": "function",
+          "value": "contentStyleType"
+        },
+        {
+          "type": "function",
+          "value": "css"
+        },
+        {
+          "type": "function",
+          "value": "cursor"
+        },
+        {
+          "type": "function",
+          "value": "cx"
+        },
+        {
+          "type": "function",
+          "value": "cy"
+        },
+        {
+          "type": "function",
+          "value": "d"
+        },
+        {
+          "type": "function",
+          "value": "decelerate"
+        },
+        {
+          "type": "function",
+          "value": "descent"
+        },
+        {
+          "type": "function",
+          "value": "diffuseConstant"
+        },
+        {
+          "type": "function",
+          "value": "direction"
+        },
+        {
+          "type": "function",
+          "value": "display"
+        },
+        {
+          "type": "function",
+          "value": "divisor"
+        },
+        {
+          "type": "function",
+          "value": "dominantBaseline"
+        },
+        {
+          "type": "function",
+          "value": "dur"
+        },
+        {
+          "type": "function",
+          "value": "dx"
+        },
+        {
+          "type": "function",
+          "value": "dy"
+        },
+        {
+          "type": "function",
+          "value": "edgeMode"
+        },
+        {
+          "type": "function",
+          "value": "elevation"
+        },
+        {
+          "type": "function",
+          "value": "enableBackground"
+        },
+        {
+          "type": "function",
+          "value": "end"
+        },
+        {
+          "type": "function",
+          "value": "exponent"
+        },
+        {
+          "type": "function",
+          "value": "externalResourcesRequired"
+        },
+        {
+          "type": "function",
+          "value": "fill"
+        },
+        {
+          "type": "function",
+          "value": "fillOpacity"
+        },
+        {
+          "type": "function",
+          "value": "fillRule"
+        },
+        {
+          "type": "function",
+          "value": "filter"
+        },
+        {
+          "type": "function",
+          "value": "filterRes"
+        },
+        {
+          "type": "function",
+          "value": "filterUnits"
+        },
+        {
+          "type": "function",
+          "value": "floodColor"
+        },
+        {
+          "type": "function",
+          "value": "floodOpacity"
+        },
+        {
+          "type": "function",
+          "value": "fontFamily"
+        },
+        {
+          "type": "function",
+          "value": "fontSize"
+        },
+        {
+          "type": "function",
+          "value": "fontSizeAdjust"
+        },
+        {
+          "type": "function",
+          "value": "fontStretch"
+        },
+        {
+          "type": "function",
+          "value": "fontStyle"
+        },
+        {
+          "type": "function",
+          "value": "fontVariant"
+        },
+        {
+          "type": "function",
+          "value": "fontWeight"
+        },
+        {
+          "type": "function",
+          "value": "format"
+        },
+        {
+          "type": "function",
+          "value": "from"
+        },
+        {
+          "type": "function",
+          "value": "fromUnstyled"
+        },
+        {
+          "type": "function",
+          "value": "fx"
+        },
+        {
+          "type": "function",
+          "value": "fy"
+        },
+        {
+          "type": "function",
+          "value": "g1"
+        },
+        {
+          "type": "function",
+          "value": "g2"
+        },
+        {
+          "type": "function",
+          "value": "glyphName"
+        },
+        {
+          "type": "function",
+          "value": "glyphOrientationHorizontal"
+        },
+        {
+          "type": "function",
+          "value": "glyphOrientationVertical"
+        },
+        {
+          "type": "function",
+          "value": "glyphRef"
+        },
+        {
+          "type": "function",
+          "value": "gradientTransform"
+        },
+        {
+          "type": "function",
+          "value": "gradientUnits"
+        },
+        {
+          "type": "function",
+          "value": "hanging"
+        },
+        {
+          "type": "function",
+          "value": "height"
+        },
+        {
+          "type": "function",
+          "value": "horizAdvX"
+        },
+        {
+          "type": "function",
+          "value": "horizOriginX"
+        },
+        {
+          "type": "function",
+          "value": "horizOriginY"
+        },
+        {
+          "type": "function",
+          "value": "id"
+        },
+        {
+          "type": "function",
+          "value": "ideographic"
+        },
+        {
+          "type": "function",
+          "value": "imageRendering"
+        },
+        {
+          "type": "function",
+          "value": "in2"
+        },
+        {
+          "type": "function",
+          "value": "in_"
+        },
+        {
+          "type": "function",
+          "value": "intercept"
+        },
+        {
+          "type": "function",
+          "value": "k"
+        },
+        {
+          "type": "function",
+          "value": "k1"
+        },
+        {
+          "type": "function",
+          "value": "k2"
+        },
+        {
+          "type": "function",
+          "value": "k3"
+        },
+        {
+          "type": "function",
+          "value": "k4"
+        },
+        {
+          "type": "function",
+          "value": "kernelMatrix"
+        },
+        {
+          "type": "function",
+          "value": "kernelUnitLength"
+        },
+        {
+          "type": "function",
+          "value": "kerning"
+        },
+        {
+          "type": "function",
+          "value": "keyPoints"
+        },
+        {
+          "type": "function",
+          "value": "keySplines"
+        },
+        {
+          "type": "function",
+          "value": "keyTimes"
+        },
+        {
+          "type": "function",
+          "value": "lang"
+        },
+        {
+          "type": "function",
+          "value": "lengthAdjust"
+        },
+        {
+          "type": "function",
+          "value": "letterSpacing"
+        },
+        {
+          "type": "function",
+          "value": "lightingColor"
+        },
+        {
+          "type": "function",
+          "value": "limitingConeAngle"
+        },
+        {
+          "type": "function",
+          "value": "local"
+        },
+        {
+          "type": "function",
+          "value": "markerEnd"
+        },
+        {
+          "type": "function",
+          "value": "markerHeight"
+        },
+        {
+          "type": "function",
+          "value": "markerMid"
+        },
+        {
+          "type": "function",
+          "value": "markerStart"
+        },
+        {
+          "type": "function",
+          "value": "markerUnits"
+        },
+        {
+          "type": "function",
+          "value": "markerWidth"
+        },
+        {
+          "type": "function",
+          "value": "mask"
+        },
+        {
+          "type": "function",
+          "value": "maskContentUnits"
+        },
+        {
+          "type": "function",
+          "value": "maskUnits"
+        },
+        {
+          "type": "function",
+          "value": "mathematical"
+        },
+        {
+          "type": "function",
+          "value": "max"
+        },
+        {
+          "type": "function",
+          "value": "media"
+        },
+        {
+          "type": "function",
+          "value": "method"
+        },
+        {
+          "type": "function",
+          "value": "min"
+        },
+        {
+          "type": "function",
+          "value": "mode"
+        },
+        {
+          "type": "function",
+          "value": "name"
+        },
+        {
+          "type": "function",
+          "value": "numOctaves"
+        },
+        {
+          "type": "function",
+          "value": "offset"
+        },
+        {
+          "type": "function",
+          "value": "opacity"
+        },
+        {
+          "type": "function",
+          "value": "operator"
+        },
+        {
+          "type": "function",
+          "value": "order"
+        },
+        {
+          "type": "function",
+          "value": "orient"
+        },
+        {
+          "type": "function",
+          "value": "orientation"
+        },
+        {
+          "type": "function",
+          "value": "origin"
+        },
+        {
+          "type": "function",
+          "value": "overflow"
+        },
+        {
+          "type": "function",
+          "value": "overlinePosition"
+        },
+        {
+          "type": "function",
+          "value": "overlineThickness"
+        },
+        {
+          "type": "function",
+          "value": "panose1"
+        },
+        {
+          "type": "function",
+          "value": "path"
+        },
+        {
+          "type": "function",
+          "value": "pathLength"
+        },
+        {
+          "type": "function",
+          "value": "patternContentUnits"
+        },
+        {
+          "type": "function",
+          "value": "patternTransform"
+        },
+        {
+          "type": "function",
+          "value": "patternUnits"
+        },
+        {
+          "type": "function",
+          "value": "pointOrder"
+        },
+        {
+          "type": "function",
+          "value": "pointerEvents"
+        },
+        {
+          "type": "function",
+          "value": "points"
+        },
+        {
+          "type": "function",
+          "value": "pointsAtX"
+        },
+        {
+          "type": "function",
+          "value": "pointsAtY"
+        },
+        {
+          "type": "function",
+          "value": "pointsAtZ"
+        },
+        {
+          "type": "function",
+          "value": "preserveAlpha"
+        },
+        {
+          "type": "function",
+          "value": "preserveAspectRatio"
+        },
+        {
+          "type": "function",
+          "value": "primitiveUnits"
+        },
+        {
+          "type": "function",
+          "value": "r"
+        },
+        {
+          "type": "function",
+          "value": "radius"
+        },
+        {
+          "type": "function",
+          "value": "refX"
+        },
+        {
+          "type": "function",
+          "value": "refY"
+        },
+        {
+          "type": "function",
+          "value": "renderingIntent"
+        },
+        {
+          "type": "function",
+          "value": "repeatCount"
+        },
+        {
+          "type": "function",
+          "value": "repeatDur"
+        },
+        {
+          "type": "function",
+          "value": "requiredExtensions"
+        },
+        {
+          "type": "function",
+          "value": "requiredFeatures"
+        },
+        {
+          "type": "function",
+          "value": "restart"
+        },
+        {
+          "type": "function",
+          "value": "result"
+        },
+        {
+          "type": "function",
+          "value": "rotate"
+        },
+        {
+          "type": "function",
+          "value": "rx"
+        },
+        {
+          "type": "function",
+          "value": "ry"
+        },
+        {
+          "type": "function",
+          "value": "scale"
+        },
+        {
+          "type": "function",
+          "value": "seed"
+        },
+        {
+          "type": "function",
+          "value": "shapeRendering"
+        },
+        {
+          "type": "function",
+          "value": "slope"
+        },
+        {
+          "type": "function",
+          "value": "spacing"
+        },
+        {
+          "type": "function",
+          "value": "specularConstant"
+        },
+        {
+          "type": "function",
+          "value": "specularExponent"
+        },
+        {
+          "type": "function",
+          "value": "speed"
+        },
+        {
+          "type": "function",
+          "value": "spreadMethod"
+        },
+        {
+          "type": "function",
+          "value": "startOffset"
+        },
+        {
+          "type": "function",
+          "value": "stdDeviation"
+        },
+        {
+          "type": "function",
+          "value": "stemh"
+        },
+        {
+          "type": "function",
+          "value": "stemv"
+        },
+        {
+          "type": "function",
+          "value": "stitchTiles"
+        },
+        {
+          "type": "function",
+          "value": "stopColor"
+        },
+        {
+          "type": "function",
+          "value": "stopOpacity"
+        },
+        {
+          "type": "function",
+          "value": "strikethroughPosition"
+        },
+        {
+          "type": "function",
+          "value": "strikethroughThickness"
+        },
+        {
+          "type": "function",
+          "value": "string"
+        },
+        {
+          "type": "function",
+          "value": "stroke"
+        },
+        {
+          "type": "function",
+          "value": "strokeDasharray"
+        },
+        {
+          "type": "function",
+          "value": "strokeDashoffset"
+        },
+        {
+          "type": "function",
+          "value": "strokeLinecap"
+        },
+        {
+          "type": "function",
+          "value": "strokeLinejoin"
+        },
+        {
+          "type": "function",
+          "value": "strokeMiterlimit"
+        },
+        {
+          "type": "function",
+          "value": "strokeOpacity"
+        },
+        {
+          "type": "function",
+          "value": "strokeWidth"
+        },
+        {
+          "type": "function",
+          "value": "style"
+        },
+        {
+          "type": "function",
+          "value": "surfaceScale"
+        },
+        {
+          "type": "function",
+          "value": "systemLanguage"
+        },
+        {
+          "type": "function",
+          "value": "tableValues"
+        },
+        {
+          "type": "function",
+          "value": "target"
+        },
+        {
+          "type": "function",
+          "value": "targetX"
+        },
+        {
+          "type": "function",
+          "value": "targetY"
+        },
+        {
+          "type": "function",
+          "value": "textAnchor"
+        },
+        {
+          "type": "function",
+          "value": "textDecoration"
+        },
+        {
+          "type": "function",
+          "value": "textLength"
+        },
+        {
+          "type": "function",
+          "value": "textRendering"
+        },
+        {
+          "type": "function",
+          "value": "title"
+        },
+        {
+          "type": "function",
+          "value": "to"
+        },
+        {
+          "type": "function",
+          "value": "transform"
+        },
+        {
+          "type": "function",
+          "value": "type_"
+        },
+        {
+          "type": "function",
+          "value": "u1"
+        },
+        {
+          "type": "function",
+          "value": "u2"
+        },
+        {
+          "type": "function",
+          "value": "underlinePosition"
+        },
+        {
+          "type": "function",
+          "value": "underlineThickness"
+        },
+        {
+          "type": "function",
+          "value": "unicode"
+        },
+        {
+          "type": "function",
+          "value": "unicodeBidi"
+        },
+        {
+          "type": "function",
+          "value": "unicodeRange"
+        },
+        {
+          "type": "function",
+          "value": "unitsPerEm"
+        },
+        {
+          "type": "function",
+          "value": "vAlphabetic"
+        },
+        {
+          "type": "function",
+          "value": "vHanging"
+        },
+        {
+          "type": "function",
+          "value": "vIdeographic"
+        },
+        {
+          "type": "function",
+          "value": "vMathematical"
+        },
+        {
+          "type": "function",
+          "value": "values"
+        },
+        {
+          "type": "function",
+          "value": "version"
+        },
+        {
+          "type": "function",
+          "value": "vertAdvY"
+        },
+        {
+          "type": "function",
+          "value": "vertOriginX"
+        },
+        {
+          "type": "function",
+          "value": "vertOriginY"
+        },
+        {
+          "type": "function",
+          "value": "viewBox"
+        },
+        {
+          "type": "function",
+          "value": "viewTarget"
+        },
+        {
+          "type": "function",
+          "value": "visibility"
+        },
+        {
+          "type": "function",
+          "value": "width"
+        },
+        {
+          "type": "function",
+          "value": "widths"
+        },
+        {
+          "type": "function",
+          "value": "wordSpacing"
+        },
+        {
+          "type": "function",
+          "value": "writingMode"
+        },
+        {
+          "type": "function",
+          "value": "x"
+        },
+        {
+          "type": "function",
+          "value": "x1"
+        },
+        {
+          "type": "function",
+          "value": "x2"
+        },
+        {
+          "type": "function",
+          "value": "xChannelSelector"
+        },
+        {
+          "type": "function",
+          "value": "xHeight"
+        },
+        {
+          "type": "function",
+          "value": "xlinkActuate"
+        },
+        {
+          "type": "function",
+          "value": "xlinkArcrole"
+        },
+        {
+          "type": "function",
+          "value": "xlinkHref"
+        },
+        {
+          "type": "function",
+          "value": "xlinkRole"
+        },
+        {
+          "type": "function",
+          "value": "xlinkShow"
+        },
+        {
+          "type": "function",
+          "value": "xlinkTitle"
+        },
+        {
+          "type": "function",
+          "value": "xlinkType"
+        },
+        {
+          "type": "function",
+          "value": "xmlBase"
+        },
+        {
+          "type": "function",
+          "value": "xmlLang"
+        },
+        {
+          "type": "function",
+          "value": "xmlSpace"
+        },
+        {
+          "type": "function",
+          "value": "y"
+        },
+        {
+          "type": "function",
+          "value": "y1"
+        },
+        {
+          "type": "function",
+          "value": "y2"
+        },
+        {
+          "type": "function",
+          "value": "yChannelSelector"
+        },
+        {
+          "type": "function",
+          "value": "z"
+        },
+        {
+          "type": "function",
+          "value": "zoomAndPan"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Svg",
+        "Styled",
+        "Events"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "custom"
+        },
+        {
+          "type": "function",
+          "value": "on"
+        },
+        {
+          "type": "function",
+          "value": "onClick"
+        },
+        {
+          "type": "function",
+          "value": "onMouseDown"
+        },
+        {
+          "type": "function",
+          "value": "onMouseOut"
+        },
+        {
+          "type": "function",
+          "value": "onMouseOver"
+        },
+        {
+          "type": "function",
+          "value": "onMouseUp"
+        },
+        {
+          "type": "function",
+          "value": "preventDefaultOn"
+        },
+        {
+          "type": "function",
+          "value": "stopPropagationOn"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Svg",
+        "Styled",
+        "Keyed"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "node"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Svg",
+        "Styled",
+        "Lazy"
+      ],
+      "value": [
+        {
+          "type": "function",
+          "value": "lazy"
+        },
+        {
+          "type": "function",
+          "value": "lazy2"
+        },
+        {
+          "type": "function",
+          "value": "lazy3"
+        },
+        {
+          "type": "function",
+          "value": "lazy4"
+        },
+        {
+          "type": "function",
+          "value": "lazy5"
+        },
+        {
+          "type": "function",
+          "value": "lazy6"
+        },
+        {
+          "type": "function",
+          "value": "lazy7"
+        }
+      ]
+    }
+  ]
+}

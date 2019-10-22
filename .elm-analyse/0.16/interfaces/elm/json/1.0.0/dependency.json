@@ -1,0 +1,220 @@
+{
+  "name": "elm/json",
+  "version": "1.0.0",
+  "interfaces": [
+    {
+      "key": [
+        "Json",
+        "Decode"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Value"
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Decoder",
+            "constructors": []
+          }
+        },
+        {
+          "type": "type_",
+          "value": {
+            "name": "Error",
+            "constructors": [
+              "Field",
+              "Index",
+              "OneOf",
+              "Failure"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "andThen"
+        },
+        {
+          "type": "function",
+          "value": "array"
+        },
+        {
+          "type": "function",
+          "value": "at"
+        },
+        {
+          "type": "function",
+          "value": "bool"
+        },
+        {
+          "type": "function",
+          "value": "decodeString"
+        },
+        {
+          "type": "function",
+          "value": "decodeValue"
+        },
+        {
+          "type": "function",
+          "value": "dict"
+        },
+        {
+          "type": "function",
+          "value": "errorToString"
+        },
+        {
+          "type": "function",
+          "value": "fail"
+        },
+        {
+          "type": "function",
+          "value": "field"
+        },
+        {
+          "type": "function",
+          "value": "float"
+        },
+        {
+          "type": "function",
+          "value": "index"
+        },
+        {
+          "type": "function",
+          "value": "int"
+        },
+        {
+          "type": "function",
+          "value": "keyValuePairs"
+        },
+        {
+          "type": "function",
+          "value": "lazy"
+        },
+        {
+          "type": "function",
+          "value": "list"
+        },
+        {
+          "type": "function",
+          "value": "map"
+        },
+        {
+          "type": "function",
+          "value": "map2"
+        },
+        {
+          "type": "function",
+          "value": "map3"
+        },
+        {
+          "type": "function",
+          "value": "map4"
+        },
+        {
+          "type": "function",
+          "value": "map5"
+        },
+        {
+          "type": "function",
+          "value": "map6"
+        },
+        {
+          "type": "function",
+          "value": "map7"
+        },
+        {
+          "type": "function",
+          "value": "map8"
+        },
+        {
+          "type": "function",
+          "value": "maybe"
+        },
+        {
+          "type": "function",
+          "value": "null"
+        },
+        {
+          "type": "function",
+          "value": "nullable"
+        },
+        {
+          "type": "function",
+          "value": "oneOf"
+        },
+        {
+          "type": "function",
+          "value": "string"
+        },
+        {
+          "type": "function",
+          "value": "succeed"
+        },
+        {
+          "type": "function",
+          "value": "value"
+        }
+      ]
+    },
+    {
+      "key": [
+        "Json",
+        "Encode"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Value",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "array"
+        },
+        {
+          "type": "function",
+          "value": "bool"
+        },
+        {
+          "type": "function",
+          "value": "dict"
+        },
+        {
+          "type": "function",
+          "value": "encode"
+        },
+        {
+          "type": "function",
+          "value": "float"
+        },
+        {
+          "type": "function",
+          "value": "int"
+        },
+        {
+          "type": "function",
+          "value": "list"
+        },
+        {
+          "type": "function",
+          "value": "null"
+        },
+        {
+          "type": "function",
+          "value": "object"
+        },
+        {
+          "type": "function",
+          "value": "set"
+        },
+        {
+          "type": "function",
+          "value": "string"
+        }
+      ]
+    }
+  ]
+}
