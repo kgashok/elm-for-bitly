@@ -6027,13 +6027,13 @@ var $elm$core$String$toLower = _String_toLower;
 var $elm$core$String$trim = _String_trim;
 var $author$project$Main$isMatch = F2(
 	function (needle, hay) {
-		if (!$elm$core$String$isEmpty(needle)) {
+		if ($elm$core$String$isEmpty(needle)) {
+			return $elm$core$Maybe$Nothing;
+		} else {
 			var needle_ = $elm$core$String$toLower(
 				$elm$core$String$trim(needle));
 			var hay_ = $elm$core$String$toLower(hay);
 			return A2($elm$core$String$contains, needle_, hay_) ? $elm$core$Maybe$Just($author$project$Main$Yes) : $elm$core$Maybe$Just($author$project$Main$No);
-		} else {
-			return $elm$core$Maybe$Nothing;
 		}
 	});
 var $author$project$Main$listMatch = F3(
@@ -7639,11 +7639,11 @@ var $author$project$Main$displayDate = F2(
 			$elm$time$Time$utc,
 			$elm$time$Time$millisToPosix(created_at));
 		var monthInfo = function () {
-			var _v1 = A2(
+			var _v0 = A2(
 				$elm$time$Time$toMonth,
 				$elm$time$Time$utc,
 				$elm$time$Time$millisToPosix(created_at));
-			switch (_v1.$) {
+			switch (_v0.$) {
 				case 'Jan':
 					return 'Jan';
 				case 'Feb':
@@ -7674,11 +7674,7 @@ var $author$project$Main$displayDate = F2(
 			$elm$time$Time$toDay,
 			$elm$time$Time$utc,
 			$elm$time$Time$millisToPosix(created_at));
-		if (!created_at) {
-			return ' ';
-		} else {
-			return A2($elm$core$Maybe$withDefault, '', label) + (monthInfo + ('-' + ($elm$core$String$fromInt(dateInfo) + (' ' + $elm$core$String$fromInt(yearInfo)))));
-		}
+		return (!created_at) ? ' ' : (A2($elm$core$Maybe$withDefault, '', label) + (monthInfo + ('-' + ($elm$core$String$fromInt(dateInfo) + (' ' + $elm$core$String$fromInt(yearInfo))))));
 	});
 var $elm$core$List$isEmpty = function (xs) {
 	if (!xs.b) {

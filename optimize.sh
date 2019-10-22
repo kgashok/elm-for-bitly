@@ -5,7 +5,7 @@ set -e
 js="public/elm.js"
 min="public/elm.min.js"
 
-elm-format --yes source/Main.elm
+#elm-format --yes source/Main.elm
 refresh
 elm make --optimize --output=$js source/Main.elm 
 #elm make --debug --output=$js source/Main.elm 

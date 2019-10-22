@@ -1,7 +1,5 @@
 module Main exposing (Msg(..), main, update, view)
 
--- import Iso8601 exposing (fromTime)
-
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -11,6 +9,10 @@ import Http
 import Json.Decode exposing (Decoder, field, int, list, maybe, string)
 import Keyboard exposing (RawKey)
 import Time exposing (millisToPosix, toDay, toMonth, toYear, utc)
+
+
+
+-- import Iso8601 exposing (fromTime)
 
 
 {-| apiKey needs to be hidden but it is okay for now
@@ -702,7 +704,10 @@ isMatch needle hay =
             Debug.log "needle and hay: " (needle ++ ":" ++ hay)
     in
     --}
-    if not (String.isEmpty needle) then
+    if String.isEmpty needle then
+        Nothing
+
+    else
         let
             needle_ =
                 String.toLower <| String.trim needle
@@ -715,9 +720,6 @@ isMatch needle hay =
 
         else
             Just No
-
-    else
-        Nothing
 
 
 {-| listMatch checks for match of any or all of tokens in a list
@@ -808,10 +810,11 @@ view : Model -> Html Msg
 view model =
     let
         themeButtonLabel =
-            if model.darkMode then 
-                    "dark"
-            else 
-                    "light"
+            if model.darkMode then
+                "dark"
+
+            else
+                "light"
     in
     div [ classList [ ( "dark", model.darkMode == True ) ] ]
         [ div [ id "title" ] [ text "Bitly using Elm " ]
@@ -896,6 +899,7 @@ buttonDisplay model =
         ]
 
 
+gitRepo : String
 gitRepo =
     "https://github.com/kgashok/elm-for-bitly"
 
@@ -1048,12 +1052,11 @@ displayDate created_at label =
         dateInfo =
             toDay utc (millisToPosix created_at)
     in
-    case created_at of
-        0 ->
-            " "
+    if created_at == 0 then
+        " "
 
-        _ ->
-            Maybe.withDefault "" label ++ monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo
+    else
+        Maybe.withDefault "" label ++ monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo
 
 
 {-| hayBackGround assigns the "matched" CSS attribute

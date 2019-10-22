@@ -4,8 +4,9 @@
   "description": "Using Elm to retrieve custom links from Bitly",
   "main": "server.js",
   "scripts": {
+    "format": "elm-format --yes source/Main.elm",
     "prestart": "elm make source/Main.elm --output public/elm.js",
-    "start": "npm run prestart && node server.js"
+    "start": "npm run format && npm run prestart && node server.js"
   },
   "dependencies": {
     "elm": "^0.19.1-3",
