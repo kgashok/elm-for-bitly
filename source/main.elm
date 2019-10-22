@@ -91,6 +91,7 @@ type alias HayString =
     , dump : String -- dump of everything in the above fields
     , match : Maybe Bool -- why not Bool? See documentation for Match type
     , created : Int
+    , modified : Int
     }
 
 
@@ -139,10 +140,10 @@ init _ =
     ( { val = 0
       , needle = "medium python"
       , hay =
-            [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" Nothing 0
-            , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" Nothing 0
-            , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "http://junk.com" Nothing 0
-            , HayString "http://abcde.org" "" Nothing [] "http://abcde.org" Nothing 0
+            [ HayString "http://rawgit.com" "" Nothing [] "http://rawgit.com" Nothing 0 0
+            , HayString "http://google.com" "" Nothing [ "search" ] "http://google.com" Nothing 0 0
+            , HayString "http://junk.com" "" Nothing [ "junk", "archive" ] "http://junk.com" Nothing 0 0
+            , HayString "http://abcde.org" "" Nothing [] "http://abcde.org" Nothing 0 0
             ]
       , errorMessage = Just "Getting latest 2000...->"
       , errorStatus = False
@@ -771,7 +772,7 @@ makeHayFromUrls viewmode needle urls =
                 ++ String.join " " link.tags
 
         linkToHay l =
-            HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing (l.created_at * 1000)
+            HayString l.long_url l.title l.keyword_link l.tags (makeHay l) Nothing (l.created_at * 1000) (l.modified_at * 1000)
                 -- |> (\hs -> { hs | match = isMatch needle hs.dump })
                 |> (\hs -> { hs | match = listMatch viewmode needle hs.dump })
     in
@@ -781,7 +782,7 @@ makeHayFromUrls viewmode needle urls =
 
 makeHayFromNames viewmode needle names =
     names
-        |> List.map (\x -> HayString x "" Nothing [] x Nothing 0)
+        |> List.map (\x -> HayString x "" Nothing [] x Nothing 0 0)
         |> checkForMatches viewmode needle
 
 
@@ -967,7 +968,10 @@ displayURL showdate hs =
                 , ( "displaydate", showdate == True )
                 ]
             ]
-            [ text (displayDate hs.created)
+            [ text
+                (displayDate hs.created (Just "")
+                    |> (++) (displayDate hs.modified (Just " modified: "))
+                )
 
             -- text (String.fromInt hs.created)
             ]
@@ -998,8 +1002,8 @@ displayURL showdate hs =
         ]
 
 
-displayDate : Int -> String
-displayDate created_at =
+displayDate : Int -> Maybe String -> String
+displayDate created_at label =
     let
         yearInfo =
             toYear utc (millisToPosix created_at)
@@ -1045,7 +1049,12 @@ displayDate created_at =
         dateInfo =
             toDay utc (millisToPosix created_at)
     in
-    monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo
+    case created_at of
+        0 ->
+            " "
+
+        _ ->
+            Maybe.withDefault "" label ++ monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo
 
 
 {-| hayBackGround assigns the "matched" CSS attribute

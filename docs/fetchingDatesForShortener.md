@@ -1,5 +1,5 @@
 
-# Improving an Elm project in Glitch 
+# Improving Elm project in Glitch 
 _What seemed like a straightforward “itch to fetch”, ended up as a six hour marathon._
 
 Suddenly, I had this itch to fetch the date information of the [**bit.ly**](https://bit.ly) shorteners that I was displaying in my Elm App. So, I went about my urge, fully knowing that it is a very straightforward ask, and this time, I would document my progress as I go along. 
@@ -79,7 +79,7 @@ Now, I launch the full Console log within Glitch so that I can use the `elm-form
 
 ![format](https://files.gitter.im/kgashok/advik/l5dK/Screenshot-of-Glitch-Console.jpg)
 
-And then I run the `optimize.sh` script, which actually now updates the files which are actually used to control the app: 
+And then I run the `optmize.sh` script, which actually now updates the files which are actually used to control the app: 
 ```
 	public/elm.js  
 	public/elm.min.js  
@@ -168,19 +168,11 @@ And this is the most satisfying part of documenting an incremental improvement t
 
 ![resolved](https://files.gitter.im/kgashok/advik/0r3k/Screenshot-of-Add-timestamp-information-for-the-links-Issue-57-kgashok_elm-for-bitly-1-.jpg)
 
-## The refactor 
-
-It required the creation of a separate function **displayDate** which did all the grunt work.
-
-![https://files.gitter.im/kgashok/advik/59MX/image.png](https://files.gitter.im/kgashok/advik/59MX/image.png) 
-
 ## Two more Edits
 
 These are self-documented in the issue area itself. 
 
 - [Issue 60](https://github.com/kgashok/elm-for-bitly/issues/60)  
 - [Issue 61](https://github.com/kgashok/elm-for-bitly/issues/61)
-- [Issue 58](https://github.com/kgashok/elm-for-bitly/issues/58)
-	- [Issue 62](https://github.com/kgashok/elm-for-bitly/issues/62)
 
-are all well documented and easy to follow. 
+are both well documented and easy to follow. 

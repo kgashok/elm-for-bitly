@@ -4467,9 +4467,9 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$Main$HayString = F7(
-	function (hay, title, _short, tags, dump, match, created) {
-		return {created: created, dump: dump, hay: hay, match: match, _short: _short, tags: tags, title: title};
+var author$project$Main$HayString = F8(
+	function (hay, title, _short, tags, dump, match, created, modified) {
+		return {created: created, dump: dump, hay: hay, match: match, modified: modified, _short: _short, tags: tags, title: title};
 	});
 var author$project$Main$Production = {$: 'Production'};
 var author$project$Main$ShowMatched = {$: 'ShowMatched'};
@@ -5948,8 +5948,8 @@ var author$project$Main$init = function (_n0) {
 				errorStatus: false,
 				hay: _List_fromArray(
 					[
-						A7(author$project$Main$HayString, 'http://rawgit.com', '', elm$core$Maybe$Nothing, _List_Nil, 'http://rawgit.com', elm$core$Maybe$Nothing, 0),
-						A7(
+						A8(author$project$Main$HayString, 'http://rawgit.com', '', elm$core$Maybe$Nothing, _List_Nil, 'http://rawgit.com', elm$core$Maybe$Nothing, 0, 0),
+						A8(
 						author$project$Main$HayString,
 						'http://google.com',
 						'',
@@ -5958,8 +5958,9 @@ var author$project$Main$init = function (_n0) {
 							['search']),
 						'http://google.com',
 						elm$core$Maybe$Nothing,
+						0,
 						0),
-						A7(
+						A8(
 						author$project$Main$HayString,
 						'http://junk.com',
 						'',
@@ -5968,8 +5969,9 @@ var author$project$Main$init = function (_n0) {
 							['junk', 'archive']),
 						'http://junk.com',
 						elm$core$Maybe$Nothing,
+						0,
 						0),
-						A7(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing, 0)
+						A8(author$project$Main$HayString, 'http://abcde.org', '', elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', elm$core$Maybe$Nothing, 0, 0)
 					]),
 				linkcount: 5000,
 				needle: 'medium python',
@@ -6602,7 +6604,7 @@ var author$project$Main$makeHayFromNames = F3(
 			A2(
 				elm$core$List$map,
 				function (x) {
-					return A7(author$project$Main$HayString, x, '', elm$core$Maybe$Nothing, _List_Nil, x, elm$core$Maybe$Nothing, 0);
+					return A8(author$project$Main$HayString, x, '', elm$core$Maybe$Nothing, _List_Nil, x, elm$core$Maybe$Nothing, 0, 0);
 				},
 				names));
 	});
@@ -6645,7 +6647,7 @@ var author$project$Main$makeHayFromUrls = F3(
 						match: A3(author$project$Main$listMatch, viewmode, needle, hs.dump)
 					});
 			}(
-				A7(
+				A8(
 					author$project$Main$HayString,
 					l.long_url,
 					l.title,
@@ -6653,7 +6655,8 @@ var author$project$Main$makeHayFromUrls = F3(
 					l.tags,
 					makeHay(l),
 					elm$core$Maybe$Nothing,
-					l.created_at * 1000));
+					l.created_at * 1000,
+					l.modified_at * 1000));
 		};
 		return A2(elm$core$List$map, linkToHay, urls);
 	});
@@ -7648,49 +7651,54 @@ var elm$time$Time$Zone = F2(
 		return {$: 'Zone', a: a, b: b};
 	});
 var elm$time$Time$utc = A2(elm$time$Time$Zone, 0, _List_Nil);
-var author$project$Main$displayDate = function (created_at) {
-	var yearInfo = A2(
-		elm$time$Time$toYear,
-		elm$time$Time$utc,
-		elm$time$Time$millisToPosix(created_at));
-	var monthInfo = function () {
-		var _n0 = A2(
-			elm$time$Time$toMonth,
+var author$project$Main$displayDate = F2(
+	function (created_at, label) {
+		var yearInfo = A2(
+			elm$time$Time$toYear,
 			elm$time$Time$utc,
 			elm$time$Time$millisToPosix(created_at));
-		switch (_n0.$) {
-			case 'Jan':
-				return 'Jan';
-			case 'Feb':
-				return 'Feb';
-			case 'Mar':
-				return 'Mar';
-			case 'Apr':
-				return 'Apr';
-			case 'May':
-				return 'May';
-			case 'Jun':
-				return 'Jun';
-			case 'Jul':
-				return 'Jul';
-			case 'Aug':
-				return 'Aug';
-			case 'Sep':
-				return 'Sep';
-			case 'Oct':
-				return 'Oct';
-			case 'Nov':
-				return 'Nov';
-			default:
-				return 'Dec';
+		var monthInfo = function () {
+			var _n1 = A2(
+				elm$time$Time$toMonth,
+				elm$time$Time$utc,
+				elm$time$Time$millisToPosix(created_at));
+			switch (_n1.$) {
+				case 'Jan':
+					return 'Jan';
+				case 'Feb':
+					return 'Feb';
+				case 'Mar':
+					return 'Mar';
+				case 'Apr':
+					return 'Apr';
+				case 'May':
+					return 'May';
+				case 'Jun':
+					return 'Jun';
+				case 'Jul':
+					return 'Jul';
+				case 'Aug':
+					return 'Aug';
+				case 'Sep':
+					return 'Sep';
+				case 'Oct':
+					return 'Oct';
+				case 'Nov':
+					return 'Nov';
+				default:
+					return 'Dec';
+			}
+		}();
+		var dateInfo = A2(
+			elm$time$Time$toDay,
+			elm$time$Time$utc,
+			elm$time$Time$millisToPosix(created_at));
+		if (!created_at) {
+			return ' ';
+		} else {
+			return A2(elm$core$Maybe$withDefault, '', label) + (monthInfo + ('-' + (elm$core$String$fromInt(dateInfo) + (' ' + elm$core$String$fromInt(yearInfo)))));
 		}
-	}();
-	var dateInfo = A2(
-		elm$time$Time$toDay,
-		elm$time$Time$utc,
-		elm$time$Time$millisToPosix(created_at));
-	return monthInfo + ('-' + (elm$core$String$fromInt(dateInfo) + (' ' + elm$core$String$fromInt(yearInfo))));
-};
+	});
 var elm$core$List$isEmpty = function (xs) {
 	if (!xs.b) {
 		return true;
@@ -7750,7 +7758,15 @@ var author$project$Main$displayURL = F2(
 					_List_fromArray(
 						[
 							elm$html$Html$text(
-							author$project$Main$displayDate(hs.created))
+							_Utils_ap(
+								A2(
+									author$project$Main$displayDate,
+									hs.modified,
+									elm$core$Maybe$Just(' modified: ')),
+								A2(
+									author$project$Main$displayDate,
+									hs.created,
+									elm$core$Maybe$Just(''))))
 						])),
 					A2(
 					elm$html$Html$div,
