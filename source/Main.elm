@@ -6,8 +6,10 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Html.Lazy exposing (lazy3)
 import Http
-import Json.Decode exposing (Decoder, field, int, list, maybe, string)
+import Json.Decode exposing (Decoder, decodeString, field, int, list, map2, maybe, string)
 import Keyboard exposing (RawKey)
+import Process
+import Task
 import Time exposing (millisToPosix, toDay, toMonth, toYear, utc)
 
 
@@ -17,12 +19,12 @@ import Time exposing (millisToPosix, toDay, toMonth, toYear, utc)
 
 {-| apiKey needs to be hidden but it is okay for now
 -}
-apiKey : String
+apiKey : String 
 apiKey =
     "1ef1315a2efebd7557de137f776602276d833cb9"
 
 
-bitlyAPI : String
+bitlyAPI : String 
 bitlyAPI =
     "https://api-ssl.bitly.com/v3/user/link_history?access_token=" ++ apiKey
 
@@ -30,7 +32,6 @@ bitlyAPI =
 {-| pagesize defines the number of links to be retrieved in
 in one http request
 -}
-pagesize : String
 pagesize =
     String.fromInt 100
 
@@ -163,7 +164,7 @@ init _ =
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle [] })
     , Cmd.batch (bitlyBatchRequest bitlyAPI 2000)
-      -- , bitlyIncRequest bitlyAPI 0
+      -- , bitlyIncRequest bitlyAPI 1701 0
       --, Task.perform (always FetchLatest)
       -- , Cmd.none
     )
@@ -199,7 +200,7 @@ main =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions _ =
+subscriptions model =
     Sub.batch
         [ Sub.map KeyboardMsg Keyboard.subscriptions
         , Keyboard.downs KeyDown
@@ -246,7 +247,7 @@ update msg model =
                         , errorMessage = Just "Getting the latest 100 -> "
                     }
             in
-            ( model_, bitlyIncRequest model_.dataAPI model_.offset )
+            ( model_, bitlyIncRequest model_.dataAPI model_.linkcount model_.offset )
 
         SendHttpRequest ->
             let
@@ -271,12 +272,13 @@ update msg model =
                     }
 
                 dataRequestTask =
-                    if model_.linkcount > 5000 then
-                        -- bitlySeqRequest model_.dataAPI model_.linkcount
-                        bitlyIncRequest model_.dataAPI model_.offset
+                    case model_.linkcount > 5000 of
+                        True ->
+                            -- bitlySeqRequest model_.dataAPI model_.linkcount
+                            bitlyIncRequest model_.dataAPI model_.linkcount model_.offset
 
-                    else
-                        Cmd.batch (bitlyBatchRequest model_.dataAPI model_.linkcount)
+                        False ->
+                            Cmd.batch (bitlyBatchRequest model_.dataAPI model_.linkcount)
             in
             case model_.data of
                 Production ->
@@ -326,24 +328,25 @@ update msg model =
                     model.hay ++ makeHayFromUrls model.viewMode model.needle urls
 
                 incOffset =
-                    if model.offset < model.linkcount then
-                        model.offset + 100
+                    case model.offset < model.linkcount of
+                        True ->
+                            model.offset + 100
 
-                    else
-                        0
+                        False ->
+                            0
 
                 nextCmd =
-                    if incOffset < model.linkcount then
-                        bitlyIncRequest model.dataAPI incOffset
+                    case incOffset < model.linkcount of
+                        True ->
+                            bitlyIncRequest model.dataAPI model.linkcount incOffset
 
-                    else
-                        Cmd.none
+                        False ->
+                            Cmd.none
             in
             ( { model
                 | hay = updatedHays
                 , errorMessage =
-                    Maybe.withDefault "" model.errorMessage
-                        ++ " ."
+                    (++) (Maybe.withDefault "" model.errorMessage) " ."
                         |> flip (++) (String.fromInt model.offset)
                         -- |> (\message -> (++) message (String.fromInt model.offset))
                         |> Just
@@ -450,11 +453,12 @@ update msg model =
                 ctrlkey =
                     List.member Keyboard.Control model_.pressedKeys
             in
-            if ctrlkey == False then
-                ( model_, Cmd.none )
+            case ctrlkey of
+                False ->
+                    ( model_, Cmd.none )
 
-            else
-                ( handleControlKeyShortCuts model_, Cmd.none )
+                _ ->
+                    ( handleControlKeyShortCuts model_, Cmd.none )
 
         KeyDown code ->
             {--
@@ -553,11 +557,12 @@ handleControlKeyShortCuts model =
 
 sortHay : List HayString -> Bool -> List HayString
 sortHay haylist sorted =
-    if sorted then
-        List.sortBy .created haylist
+    case sorted of
+        False ->
+            List.sortBy .created haylist
 
-    else
-        List.reverse haylist
+        _ ->
+            List.reverse haylist
 
 
 {-| flip is now deprecated in Elm 0.19
@@ -567,8 +572,8 @@ flip func first second =
     func second first
 
 
-bitlyIncRequest : String -> Int -> Cmd Msg
-bitlyIncRequest dataURL offset =
+bitlyIncRequest : String -> Int -> Int -> Cmd Msg
+bitlyIncRequest dataURL count offset =
     let
         skipUrl url o =
             String.fromInt o
@@ -642,9 +647,6 @@ bitlyBatchRequest dataURL count =
         |> List.map httpCommand
 
 
-
-{--
-httpCommand2 : String -> Task 
 httpCommand2 dataURL =
     {--let
         _ =
@@ -654,9 +656,9 @@ httpCommand2 dataURL =
     urlsDecoder
         |> Http.get dataURL
         |> Http.toTask
---}
-{--
-bitlySeqRequest: String -> Int -> Task
+
+
+{--}
 bitlySeqRequest dataURL count =
     let
         skipUrl url offset =
@@ -704,22 +706,24 @@ isMatch needle hay =
             Debug.log "needle and hay: " (needle ++ ":" ++ hay)
     in
     --}
-    if String.isEmpty needle then
-        Nothing
+    case not (String.isEmpty needle) of
+        True ->
+            let
+                needle_ =
+                    String.toLower <| String.trim needle
 
-    else
-        let
-            needle_ =
-                String.toLower <| String.trim needle
+                hay_ =
+                    String.toLower hay
+            in
+            case String.contains needle_ hay_ of
+                True ->
+                    Just Yes
 
-            hay_ =
-                String.toLower hay
-        in
-        if String.contains needle_ hay_ then
-            Just Yes
+                _ ->
+                    Just No
 
-        else
-            Just No
+        False ->
+            Nothing
 
 
 {-| listMatch checks for match of any or all of tokens in a list
@@ -802,7 +806,7 @@ createErrorMessage httpError =
         Http.BadStatus response ->
             response.status.message
 
-        Http.BadPayload message _ ->
+        Http.BadPayload message response ->
             message
 
 
@@ -810,11 +814,12 @@ view : Model -> Html Msg
 view model =
     let
         themeButtonLabel =
-            if model.darkMode then
-                "dark"
+            case model.darkMode of
+                False ->
+                    "dark"
 
-            else
-                "light"
+                _ ->
+                    "light"
     in
     div [ classList [ ( "dark", model.darkMode == True ) ] ]
         [ div [ id "title" ] [ text "Bitly using Elm " ]
@@ -899,7 +904,6 @@ buttonDisplay model =
         ]
 
 
-gitRepo : String
 gitRepo =
     "https://github.com/kgashok/elm-for-bitly"
 
@@ -1052,11 +1056,12 @@ displayDate created_at label =
         dateInfo =
             toDay utc (millisToPosix created_at)
     in
-    if created_at == 0 then
-        " "
+    case created_at of
+        0 ->
+            " "
 
-    else
-        Maybe.withDefault "" label ++ monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo
+        _ ->
+            Maybe.withDefault "" label ++ monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo
 
 
 {-| hayBackGround assigns the "matched" CSS attribute
