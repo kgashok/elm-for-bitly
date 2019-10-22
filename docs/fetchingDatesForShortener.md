@@ -168,11 +168,19 @@ And this is the most satisfying part of documenting an incremental improvement t
 
 ![resolved](https://files.gitter.im/kgashok/advik/0r3k/Screenshot-of-Add-timestamp-information-for-the-links-Issue-57-kgashok_elm-for-bitly-1-.jpg)
 
+## The refactor 
+
+It required the creation of a separate function **displayDate** which did all the grunt work.
+
+![https://files.gitter.im/kgashok/advik/59MX/image.png](https://files.gitter.im/kgashok/advik/59MX/image.png) 
+
 ## Two more Edits
 
 These are self-documented in the issue area itself. 
 
 - [Issue 60](https://github.com/kgashok/elm-for-bitly/issues/60)  
 - [Issue 61](https://github.com/kgashok/elm-for-bitly/issues/61)
+- [Issue 58](https://github.com/kgashok/elm-for-bitly/issues/58)
+	- [Issue 62](https://github.com/kgashok/elm-for-bitly/issues/62)
 
-are both well documented and easy to follow. 
+are all well documented and easy to follow. 
