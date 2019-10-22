@@ -1,5 +1,5 @@
 
-# Improving Elm project in Glitch 
+# Improving an Elm project in Glitch 
 _What seemed like a straightforward “itch to fetch”, ended up as a six hour marathon._
 
 Suddenly, I had this itch to fetch the date information of the [**bit.ly**](https://bit.ly) shorteners that I was displaying in my Elm App. So, I went about my urge, fully knowing that it is a very straightforward ask, and this time, I would document my progress as I go along. 
