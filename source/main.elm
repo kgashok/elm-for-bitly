@@ -962,7 +962,8 @@ displayURL showdate hs =
             String.isEmpty shortener && String.isEmpty tagString
 
         dates =
-            displayDate hs.created (Just " ")
+            displayDate hs.created (Just "")
+                ++ " "
                 ++ displayDate hs.modified (Just "modified: ")
     in
     li [ classList [ ( "matched", hs.match == Just True ) ] ]

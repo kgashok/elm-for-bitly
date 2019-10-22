@@ -7728,15 +7728,13 @@ var author$project$Main$displayURL = F2(
 		var tagString = elm$core$List$isEmpty(hs.tags) ? '' : ('tags: ' + A2(elm$core$String$join, ', ', hs.tags));
 		var shortener = A2(elm$core$Maybe$withDefault, '', hs._short);
 		var hidekeyline = elm$core$String$isEmpty(shortener) && elm$core$String$isEmpty(tagString);
-		var dates = _Utils_ap(
-			A2(
-				author$project$Main$displayDate,
-				hs.created,
-				elm$core$Maybe$Just(' ')),
-			A2(
-				author$project$Main$displayDate,
-				hs.modified,
-				elm$core$Maybe$Just('modified: ')));
+		var dates = A2(
+			author$project$Main$displayDate,
+			hs.created,
+			elm$core$Maybe$Just('')) + (' ' + A2(
+			author$project$Main$displayDate,
+			hs.modified,
+			elm$core$Maybe$Just('modified: ')));
 		return A2(
 			elm$html$Html$li,
 			_List_fromArray(
