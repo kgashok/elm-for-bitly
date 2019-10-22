@@ -79,7 +79,7 @@ Now, I launch the full Console log within Glitch so that I can use the `elm-form
 
 ![format](https://files.gitter.im/kgashok/advik/l5dK/Screenshot-of-Glitch-Console.jpg)
 
-And then I run the `optmize.sh` script, which actually now updates the files which are actually used to control the app: 
+And then I run the `optimize.sh` script, which actually now updates the files which are actually used to control the app: 
 ```
 	public/elm.js  
 	public/elm.min.js  
