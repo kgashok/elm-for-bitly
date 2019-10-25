@@ -174,7 +174,7 @@ It required the creation of a separate function **displayDate** which did all th
 
 ![https://files.gitter.im/kgashok/advik/59MX/image.png](https://files.gitter.im/kgashok/advik/59MX/image.png) 
 
-## Two more Edits
+## Some more enhancements
 
 These are self-documented in the issue area itself. 
 
