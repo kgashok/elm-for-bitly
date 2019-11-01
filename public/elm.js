@@ -4467,6 +4467,52 @@ function _Http_multipart(parts)
 
 	return $elm$http$Http$Internal$FormDataBody(formData);
 }
+
+
+
+function _Time_now(millisToPosix)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		callback(_Scheduler_succeed(millisToPosix(Date.now())));
+	});
+}
+
+var _Time_setInterval = F2(function(interval, task)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		var id = setInterval(function() { _Scheduler_rawSpawn(task); }, interval);
+		return function() { clearInterval(id); };
+	});
+});
+
+function _Time_here()
+{
+	return _Scheduler_binding(function(callback)
+	{
+		callback(_Scheduler_succeed(
+			A2($elm$time$Time$customZone, -(new Date().getTimezoneOffset()), _List_Nil)
+		));
+	});
+}
+
+
+function _Time_getZoneName()
+{
+	return _Scheduler_binding(function(callback)
+	{
+		try
+		{
+			var name = $elm$time$Time$Name(Intl.DateTimeFormat().resolvedOptions().timeZone);
+		}
+		catch (e)
+		{
+			var name = $elm$time$Time$Offset(new Date().getTimezoneOffset());
+		}
+		callback(_Scheduler_succeed(name));
+	});
+}
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
 var $elm$core$Basics$LT = {$: 'LT'};
@@ -5256,6 +5302,9 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
+var $author$project$Main$AdjustTimeZone = function (a) {
+	return {$: 'AdjustTimeZone', a: a};
+};
 var $author$project$Main$HayString = F8(
 	function (hay, title, _short, tags, dump, match, created, modified) {
 		return {created: created, dump: dump, hay: hay, match: match, modified: modified, _short: _short, tags: tags, title: title};
@@ -6092,6 +6141,19 @@ var $author$project$Main$checkForMatches = F3(
 			},
 			haylist);
 	});
+var $elm$time$Time$Name = function (a) {
+	return {$: 'Name', a: a};
+};
+var $elm$time$Time$Offset = function (a) {
+	return {$: 'Offset', a: a};
+};
+var $elm$time$Time$Zone = F2(
+	function (a, b) {
+		return {$: 'Zone', a: a, b: b};
+	});
+var $elm$time$Time$customZone = $elm$time$Time$Zone;
+var $elm$time$Time$here = _Time_here(_Utils_Tuple0);
+var $elm$time$Time$utc = A2($elm$time$Time$Zone, 0, _List_Nil);
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
 		function (model) {
@@ -6141,10 +6203,16 @@ var $author$project$Main$init = function (_v0) {
 				pressedKeys: _List_Nil,
 				sorted: false,
 				val: 0,
-				viewMode: $author$project$Main$ShowMatched
+				viewMode: $author$project$Main$ShowMatched,
+				zone: $elm$time$Time$utc
 			}),
 		$elm$core$Platform$Cmd$batch(
-			A2($author$project$Main$bitlyBatchRequest, $author$project$Main$bitlyAPI, 2000)));
+			_Utils_ap(
+				_List_fromArray(
+					[
+						A2($elm$core$Task$perform, $author$project$Main$AdjustTimeZone, $elm$time$Time$here)
+					]),
+				A2($author$project$Main$bitlyBatchRequest, $author$project$Main$bitlyAPI, 2000))));
 };
 var $author$project$Main$KeyDown = function (a) {
 	return {$: 'KeyDown', a: a};
@@ -7439,6 +7507,13 @@ var $author$project$Main$update = F2(
 							sorted: !model.sorted
 						}),
 					$elm$core$Platform$Cmd$none);
+			case 'AdjustTimeZone':
+				var newZone = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{zone: newZone}),
+					$elm$core$Platform$Cmd$none);
 			case 'Increment':
 				return _Utils_Tuple2(
 					_Utils_update(
@@ -7543,6 +7618,14 @@ var $author$project$Main$footer = A2(
 					$elm$html$Html$text(' last checkin')
 				]))
 		]));
+var $elm$core$List$isEmpty = function (xs) {
+	if (!xs.b) {
+		return true;
+	} else {
+		return false;
+	}
+};
+var $elm$html$Html$li = _VirtualDom_node('li');
 var $elm$time$Time$Posix = function (a) {
 	return {$: 'Posix', a: a};
 };
@@ -7615,6 +7698,24 @@ var $elm$time$Time$toDay = F2(
 		return $elm$time$Time$toCivil(
 			A2($elm$time$Time$toAdjustedMinutes, zone, time)).day;
 	});
+var $elm$core$Basics$modBy = _Basics_modBy;
+var $elm$time$Time$toHour = F2(
+	function (zone, time) {
+		return A2(
+			$elm$core$Basics$modBy,
+			24,
+			A2(
+				$elm$time$Time$flooredDiv,
+				A2($elm$time$Time$toAdjustedMinutes, zone, time),
+				60));
+	});
+var $elm$time$Time$toMinute = F2(
+	function (zone, time) {
+		return A2(
+			$elm$core$Basics$modBy,
+			60,
+			A2($elm$time$Time$toAdjustedMinutes, zone, time));
+	});
 var $elm$time$Time$Apr = {$: 'Apr'};
 var $elm$time$Time$Aug = {$: 'Aug'};
 var $elm$time$Time$Dec = {$: 'Dec'};
@@ -7663,21 +7764,16 @@ var $elm$time$Time$toYear = F2(
 		return $elm$time$Time$toCivil(
 			A2($elm$time$Time$toAdjustedMinutes, zone, time)).year;
 	});
-var $elm$time$Time$Zone = F2(
-	function (a, b) {
-		return {$: 'Zone', a: a, b: b};
-	});
-var $elm$time$Time$utc = A2($elm$time$Time$Zone, 0, _List_Nil);
-var $author$project$Main$displayDate = F2(
-	function (created_at, label) {
+var $author$project$Main$displayDate = F3(
+	function (created_at, zone, label) {
 		var yearInfo = A2(
 			$elm$time$Time$toYear,
-			$elm$time$Time$utc,
+			zone,
 			$elm$time$Time$millisToPosix(created_at));
 		var monthInfo = function () {
 			var _v1 = A2(
 				$elm$time$Time$toMonth,
-				$elm$time$Time$utc,
+				zone,
 				$elm$time$Time$millisToPosix(created_at));
 			switch (_v1.$) {
 				case 'Jan':
@@ -7706,36 +7802,39 @@ var $author$project$Main$displayDate = F2(
 					return 'Dec';
 			}
 		}();
+		var minuteInfo = A2(
+			$elm$time$Time$toMinute,
+			zone,
+			$elm$time$Time$millisToPosix(created_at));
+		var hourInfo = A2(
+			$elm$time$Time$toHour,
+			zone,
+			$elm$time$Time$millisToPosix(created_at));
 		var dateInfo = A2(
 			$elm$time$Time$toDay,
-			$elm$time$Time$utc,
+			zone,
 			$elm$time$Time$millisToPosix(created_at));
 		if (!created_at) {
 			return ' ';
 		} else {
-			return A2($elm$core$Maybe$withDefault, '', label) + (monthInfo + ('-' + ($elm$core$String$fromInt(dateInfo) + (' ' + $elm$core$String$fromInt(yearInfo)))));
+			return A2($elm$core$Maybe$withDefault, ' ', label) + ($elm$core$String$fromInt(hourInfo) + (':' + ($elm$core$String$fromInt(minuteInfo) + (', ' + (monthInfo + ('-' + ($elm$core$String$fromInt(dateInfo) + (' ' + $elm$core$String$fromInt(yearInfo)))))))));
 		}
 	});
-var $elm$core$List$isEmpty = function (xs) {
-	if (!xs.b) {
-		return true;
-	} else {
-		return false;
-	}
-};
-var $elm$html$Html$li = _VirtualDom_node('li');
-var $author$project$Main$displayURL = F2(
-	function (showdate, hs) {
+var $author$project$Main$ourPrettyDate = $author$project$Main$displayDate;
+var $author$project$Main$displayURL = F3(
+	function (showdate, zone, hs) {
 		var title = (!$elm$core$String$length(hs.title)) ? '<NA>' : hs.title;
 		var tagString = $elm$core$List$isEmpty(hs.tags) ? '' : ('tags: ' + A2($elm$core$String$join, ', ', hs.tags));
 		var shortener = A2($elm$core$Maybe$withDefault, '', hs._short);
 		var hidekeyline = $elm$core$String$isEmpty(shortener) && $elm$core$String$isEmpty(tagString);
-		var dates = A2(
-			$author$project$Main$displayDate,
+		var dates = A3(
+			$author$project$Main$ourPrettyDate,
 			hs.created,
-			$elm$core$Maybe$Just('')) + (' ' + A2(
-			$author$project$Main$displayDate,
+			zone,
+			$elm$core$Maybe$Just('')) + (' ' + A3(
+			$author$project$Main$ourPrettyDate,
 			hs.modified,
+			zone,
 			$elm$core$Maybe$Just('modified: ')));
 		return A2(
 			$elm$html$Html$li,
@@ -7836,11 +7935,11 @@ var $author$project$Main$displayURL = F2(
 				]));
 	});
 var $elm$html$Html$ul = _VirtualDom_node('ul');
-var $author$project$Main$generateListView = F3(
-	function (viewmode, showdate, haylist) {
+var $author$project$Main$generateListView = F4(
+	function (viewmode, showdate, haylist, zone) {
 		var items = A2(
 			$elm$core$List$map,
-			$author$project$Main$displayURL(showdate),
+			A2($author$project$Main$displayURL, showdate, zone),
 			A2(
 				$elm$core$List$filter,
 				function (x) {
@@ -7859,8 +7958,8 @@ var $author$project$Main$generateListView = F3(
 	});
 var $elm$html$Html$hr = _VirtualDom_node('hr');
 var $elm$html$Html$input = _VirtualDom_node('input');
-var $elm$virtual_dom$VirtualDom$lazy3 = _VirtualDom_lazy3;
-var $elm$html$Html$Lazy$lazy3 = $elm$virtual_dom$VirtualDom$lazy3;
+var $elm$virtual_dom$VirtualDom$lazy4 = _VirtualDom_lazy4;
+var $elm$html$Html$Lazy$lazy4 = $elm$virtual_dom$VirtualDom$lazy4;
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -7953,7 +8052,7 @@ var $author$project$Main$view = function (model) {
 		if (!_v0) {
 			return 'dark';
 		} else {
-			return 'light';
+			return 'bright';
 		}
 	}();
 	return A2(
@@ -8148,7 +8247,7 @@ var $author$project$Main$view = function (model) {
 								_Utils_eq(model.viewMode, $author$project$Main$ShowAll),
 								$author$project$Main$ChangeViewTo($author$project$Main$ShowAll))
 							])),
-						A4($elm$html$Html$Lazy$lazy3, $author$project$Main$generateListView, model.viewMode, model.dateDisplay, model.hay)
+						A5($elm$html$Html$Lazy$lazy4, $author$project$Main$generateListView, model.viewMode, model.dateDisplay, model.hay, model.zone)
 					]))
 			]));
 };

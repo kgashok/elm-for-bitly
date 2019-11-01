@@ -1,16 +1,18 @@
 module Main exposing (Msg(..), main, update, view)
 
 import Browser
+import DateFormat
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
-import Html.Lazy exposing (lazy3)
+import Html.Lazy exposing (lazy4)
 import Http
 import Json.Decode exposing (Decoder, decodeString, field, int, list, map2, maybe, string)
 import Keyboard exposing (RawKey)
 import Process
 import Task
-import Time exposing (millisToPosix, toDay, toMonth, toYear, utc)
+import Time exposing (Posix, Zone, millisToPosix, toDay, toHour, toMinute, toMonth, toYear, utc)
+import TimeZone
 
 
 
@@ -19,12 +21,12 @@ import Time exposing (millisToPosix, toDay, toMonth, toYear, utc)
 
 {-| apiKey needs to be hidden but it is okay for now
 -}
-apiKey : String 
+apiKey : String
 apiKey =
     "1ef1315a2efebd7557de137f776602276d833cb9"
 
 
-bitlyAPI : String 
+bitlyAPI : String
 bitlyAPI =
     "https://api-ssl.bitly.com/v3/user/link_history?access_token=" ++ apiKey
 
@@ -137,6 +139,7 @@ type alias Model =
     , darkMode : Bool
     , dateDisplay : Bool
     , sorted : Bool
+    , zone : Time.Zone
     }
 
 
@@ -161,9 +164,10 @@ init _ =
       , darkMode = True
       , dateDisplay = True
       , sorted = False
+      , zone = utc
       }
         |> (\model -> { model | hay = checkForMatches model.viewMode model.needle [] })
-    , Cmd.batch (bitlyBatchRequest bitlyAPI 2000)
+    , Cmd.batch ([ Task.perform AdjustTimeZone Time.here ] ++ bitlyBatchRequest bitlyAPI 2000)
       -- , bitlyIncRequest bitlyAPI 1701 0
       --, Task.perform (always FetchLatest)
       -- , Cmd.none
@@ -226,6 +230,7 @@ type Msg
     | ToggleDarkMode
     | ToggleDateDisplay
     | SortLinks
+    | AdjustTimeZone Time.Zone
     | Increment -- not relevant; legacy
     | Decrement -- not relevant; legacy
 
@@ -499,6 +504,11 @@ update msg model =
                 | hay = sortHay model.hay model.sorted
                 , sorted = not model.sorted
               }
+            , Cmd.none
+            )
+
+        AdjustTimeZone newZone ->
+            ( { model | zone = newZone }
             , Cmd.none
             )
 
@@ -819,7 +829,7 @@ view model =
                     "dark"
 
                 _ ->
-                    "light"
+                    "bright"
     in
     div [ classList [ ( "dark", model.darkMode == True ) ] ]
         [ div [ id "title" ] [ text "Bitly using Elm " ]
@@ -867,7 +877,7 @@ view model =
                 , ( "Match Any", model.viewMode == ShowAny, ChangeViewTo ShowAny )
                 , ( "Show All", model.viewMode == ShowAll, ChangeViewTo ShowAll )
                 ]
-            , lazy3 generateListView model.viewMode model.dateDisplay model.hay
+            , lazy4 generateListView model.viewMode model.dateDisplay model.hay model.zone
             ]
         ]
 
@@ -929,13 +939,13 @@ footer =
 {-| generateListView presents the HayString object
 -- provided "ShowAll" is set or match attribute has been set
 -}
-generateListView : ViewMode -> Bool -> List HayString -> Html Msg
-generateListView viewmode showdate haylist =
+generateListView : ViewMode -> Bool -> List HayString -> Time.Zone -> Html Msg
+generateListView viewmode showdate haylist zone =
     let
         items =
             haylist
                 |> List.filter (\x -> viewmode == ShowAll || x.match == Just True)
-                |> List.map (displayURL showdate)
+                |> List.map (displayURL showdate zone)
     in
     div [] [ ul [] items ]
 
@@ -943,8 +953,8 @@ generateListView viewmode showdate haylist =
 {-| displayURL returns the HTML list item corresponding to a HayString
 -- defines how the attributes of a haystring is to be displayed in the view
 -}
-displayURL : Bool -> HayString -> Html msg
-displayURL showdate hs =
+displayURL : Bool -> Time.Zone -> HayString -> Html msg
+displayURL showdate zone hs =
     let
         shortener =
             Maybe.withDefault "" hs.short
@@ -967,9 +977,9 @@ displayURL showdate hs =
             String.isEmpty shortener && String.isEmpty tagString
 
         dates =
-            displayDate hs.created (Just "")
+            ourPrettyDate hs.created zone (Just "")
                 ++ " "
-                ++ displayDate hs.modified (Just "modified: ")
+                ++ ourPrettyDate hs.modified zone (Just "modified: ")
     in
     li [ classList [ ( "matched", hs.match == Just True ) ] ]
         [ div
@@ -1009,14 +1019,71 @@ displayURL showdate hs =
         ]
 
 
-displayDate : Int -> Maybe String -> String
-displayDate created_at label =
+
+-- Let's create a custom formatter we can use later:
+
+
+ourFormatter : Zone -> Posix -> String
+ourFormatter =
+    DateFormat.format
+        [ DateFormat.monthNameFull
+        , DateFormat.text " "
+        , DateFormat.dayOfMonthSuffix
+        , DateFormat.text ", "
+        , DateFormat.yearNumber
+        ]
+
+
+
+-- With our formatter, we can format any date as a string!
+
+
+ourTimezone : Zone
+ourTimezone =
+    utc
+
+
+
+-- 2018-05-20T19:18:24.911Z
+
+
+ourPosixTime : Int -> Posix
+ourPosixTime ts =
+    Time.millisToPosix ts
+
+
+
+{--
+Would make ourPrettyDate return:
+
+"May 20th, 2018" : String
+
+
+ourPrettyDate : Int -> Maybe String -> String
+ourPrettyDate created_at label =
+    -- ourFormatter ourTimezone ourPosixTime
+    ourFormatter ourTimezone (ourPosixTime created_at)
+--}
+
+
+ourPrettyDate =
+    displayDate
+
+
+displayDate : Int -> Time.Zone -> Maybe String -> String
+displayDate created_at zone label =
     let
+        hourInfo =
+            toHour zone (millisToPosix created_at)
+
+        minuteInfo =
+            toMinute zone (millisToPosix created_at)
+
         yearInfo =
-            toYear utc (millisToPosix created_at)
+            toYear zone (millisToPosix created_at)
 
         monthInfo =
-            case toMonth utc (millisToPosix created_at) of
+            case toMonth zone (millisToPosix created_at) of
                 Time.Jan ->
                     "Jan"
 
@@ -1054,14 +1121,23 @@ displayDate created_at label =
                     "Dec"
 
         dateInfo =
-            toDay utc (millisToPosix created_at)
+            toDay zone (millisToPosix created_at)
     in
     case created_at of
         0 ->
             " "
 
         _ ->
-            Maybe.withDefault "" label ++ monthInfo ++ "-" ++ String.fromInt dateInfo ++ " " ++ String.fromInt yearInfo
+            Maybe.withDefault " " label
+                ++ String.fromInt hourInfo
+                ++ ":"
+                ++ String.fromInt minuteInfo
+                ++ ", "
+                ++ monthInfo
+                ++ "-"
+                ++ String.fromInt dateInfo
+                ++ " "
+                ++ String.fromInt yearInfo
 
 
 {-| hayBackGround assigns the "matched" CSS attribute
