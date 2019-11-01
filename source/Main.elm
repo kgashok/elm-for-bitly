@@ -1020,21 +1020,6 @@ displayURL showdate zone hs =
 
 
 
--- Let's create a custom formatter we can use later:
-
-
-ourFormatter : Zone -> Posix -> String
-ourFormatter =
-    DateFormat.format
-        [ DateFormat.monthNameFull
-        , DateFormat.text " "
-        , DateFormat.dayOfMonthSuffix
-        , DateFormat.text ", "
-        , DateFormat.yearNumber
-        ]
-
-
-
 -- With our formatter, we can format any date as a string!
 
 
@@ -1053,21 +1038,48 @@ ourPosixTime ts =
 
 
 
+-- Let's create a custom formatter we can use later:
+
+
+ourFormatter : String -> Zone -> Posix -> String
+ourFormatter label =
+    DateFormat.format
+        [ DateFormat.text label
+        , DateFormat.hourMilitaryFixed
+        , DateFormat.text ":"
+        , DateFormat.minuteFixed
+        , DateFormat.text " "
+        , DateFormat.monthNameAbbreviated
+        , DateFormat.text " "
+        , DateFormat.dayOfMonthSuffix
+        , DateFormat.text ", "
+        , DateFormat.yearNumber
+        ]
+
+
+
 {--
 Would make ourPrettyDate return:
 
 "May 20th, 2018" : String
 
 
-ourPrettyDate : Int -> Maybe String -> String
-ourPrettyDate created_at label =
-    -- ourFormatter ourTimezone ourPosixTime
-    ourFormatter ourTimezone (ourPosixTime created_at)
+ourPrettyDate =
+    displayDate
 --}
 
 
-ourPrettyDate =
-    displayDate
+ourPrettyDate : Int -> Time.Zone -> Maybe String -> String
+ourPrettyDate created_at zone label =
+    -- ourFormatter ourTimezone ourPosixTime
+    -- ourFormatter ourTimezone (ourPosixTime created_at)
+    let
+        label_ =
+            Maybe.withDefault " " label
+    in
+    created_at
+        |> ourPosixTime
+        |> ourFormatter label_ zone
 
 
 displayDate : Int -> Time.Zone -> Maybe String -> String
