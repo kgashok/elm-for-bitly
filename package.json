@@ -17,7 +17,7 @@
     "express-http-proxy": "^1.6.0",
     "http-proxy": "^1.18.0",
     "json-server": "^0.15.1",
-    "uglify-js": "^3.6.4"
+    "uglify-js": "^3.6.8"
   },
   "engines": {
     "node": "8.x"

@@ -6197,7 +6197,7 @@ var $author$project$Main$init = function (_v0) {
 						0),
 						A8($author$project$Main$HayString, 'http://abcde.org', '', $elm$core$Maybe$Nothing, _List_Nil, 'http://abcde.org', $elm$core$Maybe$Nothing, 0, 0)
 					]),
-				linkcount: 5000,
+				linkcount: 7000,
 				needle: 'medium python',
 				offset: 0,
 				pressedKeys: _List_Nil,
@@ -7229,12 +7229,12 @@ var $author$project$Main$update = F2(
 					{
 						errorMessage: $elm$core$Maybe$Just('Launching requests...'),
 						hay: _List_Nil,
-						needle: needle_,
+						needle: model.needle,
 						offset: 0,
 						viewMode: $author$project$Main$ShowMatched
 					});
 				var dataRequestTask = function () {
-					var _v2 = model_.linkcount > 5000;
+					var _v2 = model_.linkcount > 7000;
 					if (_v2) {
 						return A3($author$project$Main$bitlyIncRequest, model_.dataAPI, model_.linkcount, model_.offset);
 					} else {

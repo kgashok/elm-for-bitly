@@ -1,0 +1,232 @@
+{
+  "name": "ryannhg/date-format",
+  "version": "2.3.0",
+  "interfaces": [
+    {
+      "key": [
+        "DateFormat"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Token",
+            "constructors": []
+          }
+        },
+        {
+          "type": "function",
+          "value": "amPmLowercase"
+        },
+        {
+          "type": "function",
+          "value": "amPmUppercase"
+        },
+        {
+          "type": "function",
+          "value": "dayOfMonthFixed"
+        },
+        {
+          "type": "function",
+          "value": "dayOfMonthNumber"
+        },
+        {
+          "type": "function",
+          "value": "dayOfMonthSuffix"
+        },
+        {
+          "type": "function",
+          "value": "dayOfWeekNameAbbreviated"
+        },
+        {
+          "type": "function",
+          "value": "dayOfWeekNameFull"
+        },
+        {
+          "type": "function",
+          "value": "dayOfWeekNumber"
+        },
+        {
+          "type": "function",
+          "value": "dayOfWeekSuffix"
+        },
+        {
+          "type": "function",
+          "value": "dayOfYearFixed"
+        },
+        {
+          "type": "function",
+          "value": "dayOfYearNumber"
+        },
+        {
+          "type": "function",
+          "value": "dayOfYearSuffix"
+        },
+        {
+          "type": "function",
+          "value": "format"
+        },
+        {
+          "type": "function",
+          "value": "formatWithLanguage"
+        },
+        {
+          "type": "function",
+          "value": "hourFixed"
+        },
+        {
+          "type": "function",
+          "value": "hourMilitaryFixed"
+        },
+        {
+          "type": "function",
+          "value": "hourMilitaryFromOneFixed"
+        },
+        {
+          "type": "function",
+          "value": "hourMilitaryFromOneNumber"
+        },
+        {
+          "type": "function",
+          "value": "hourMilitaryNumber"
+        },
+        {
+          "type": "function",
+          "value": "hourNumber"
+        },
+        {
+          "type": "function",
+          "value": "millisecondFixed"
+        },
+        {
+          "type": "function",
+          "value": "millisecondNumber"
+        },
+        {
+          "type": "function",
+          "value": "minuteFixed"
+        },
+        {
+          "type": "function",
+          "value": "minuteNumber"
+        },
+        {
+          "type": "function",
+          "value": "monthFixed"
+        },
+        {
+          "type": "function",
+          "value": "monthNameAbbreviated"
+        },
+        {
+          "type": "function",
+          "value": "monthNameFull"
+        },
+        {
+          "type": "function",
+          "value": "monthNumber"
+        },
+        {
+          "type": "function",
+          "value": "monthSuffix"
+        },
+        {
+          "type": "function",
+          "value": "quarterNumber"
+        },
+        {
+          "type": "function",
+          "value": "quarterSuffix"
+        },
+        {
+          "type": "function",
+          "value": "secondFixed"
+        },
+        {
+          "type": "function",
+          "value": "secondNumber"
+        },
+        {
+          "type": "function",
+          "value": "text"
+        },
+        {
+          "type": "function",
+          "value": "weekOfYearFixed"
+        },
+        {
+          "type": "function",
+          "value": "weekOfYearNumber"
+        },
+        {
+          "type": "function",
+          "value": "weekOfYearSuffix"
+        },
+        {
+          "type": "function",
+          "value": "yearNumber"
+        },
+        {
+          "type": "function",
+          "value": "yearNumberLastTwo"
+        }
+      ]
+    },
+    {
+      "key": [
+        "DateFormat",
+        "Language"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "Language"
+        },
+        {
+          "type": "function",
+          "value": "dutch"
+        },
+        {
+          "type": "function",
+          "value": "english"
+        },
+        {
+          "type": "function",
+          "value": "portuguese"
+        },
+        {
+          "type": "function",
+          "value": "spanish"
+        },
+        {
+          "type": "function",
+          "value": "swedish"
+        }
+      ]
+    },
+    {
+      "key": [
+        "DateFormat",
+        "Relative"
+      ],
+      "value": [
+        {
+          "type": "alias",
+          "value": "RelativeTimeOptions"
+        },
+        {
+          "type": "function",
+          "value": "defaultRelativeOptions"
+        },
+        {
+          "type": "function",
+          "value": "relativeTime"
+        },
+        {
+          "type": "function",
+          "value": "relativeTimeWithOptions"
+        }
+      ]
+    }
+  ]
+}

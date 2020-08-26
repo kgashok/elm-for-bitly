@@ -1,0 +1,1743 @@
+{
+  "name": "justinmimbs/timezone-data",
+  "version": "2.1.4",
+  "interfaces": [
+    {
+      "key": [
+        "TimeZone"
+      ],
+      "value": [
+        {
+          "type": "type_",
+          "value": {
+            "name": "Error",
+            "constructors": [
+              "NoZoneName",
+              "NoDataForZoneName"
+            ]
+          }
+        },
+        {
+          "type": "function",
+          "value": "africa__abidjan"
+        },
+        {
+          "type": "function",
+          "value": "africa__accra"
+        },
+        {
+          "type": "function",
+          "value": "africa__addis_ababa"
+        },
+        {
+          "type": "function",
+          "value": "africa__algiers"
+        },
+        {
+          "type": "function",
+          "value": "africa__asmara"
+        },
+        {
+          "type": "function",
+          "value": "africa__bamako"
+        },
+        {
+          "type": "function",
+          "value": "africa__bangui"
+        },
+        {
+          "type": "function",
+          "value": "africa__banjul"
+        },
+        {
+          "type": "function",
+          "value": "africa__bissau"
+        },
+        {
+          "type": "function",
+          "value": "africa__blantyre"
+        },
+        {
+          "type": "function",
+          "value": "africa__brazzaville"
+        },
+        {
+          "type": "function",
+          "value": "africa__bujumbura"
+        },
+        {
+          "type": "function",
+          "value": "africa__cairo"
+        },
+        {
+          "type": "function",
+          "value": "africa__casablanca"
+        },
+        {
+          "type": "function",
+          "value": "africa__ceuta"
+        },
+        {
+          "type": "function",
+          "value": "africa__conakry"
+        },
+        {
+          "type": "function",
+          "value": "africa__dakar"
+        },
+        {
+          "type": "function",
+          "value": "africa__dar_es_salaam"
+        },
+        {
+          "type": "function",
+          "value": "africa__djibouti"
+        },
+        {
+          "type": "function",
+          "value": "africa__douala"
+        },
+        {
+          "type": "function",
+          "value": "africa__el_aaiun"
+        },
+        {
+          "type": "function",
+          "value": "africa__freetown"
+        },
+        {
+          "type": "function",
+          "value": "africa__gaborone"
+        },
+        {
+          "type": "function",
+          "value": "africa__harare"
+        },
+        {
+          "type": "function",
+          "value": "africa__johannesburg"
+        },
+        {
+          "type": "function",
+          "value": "africa__juba"
+        },
+        {
+          "type": "function",
+          "value": "africa__kampala"
+        },
+        {
+          "type": "function",
+          "value": "africa__khartoum"
+        },
+        {
+          "type": "function",
+          "value": "africa__kigali"
+        },
+        {
+          "type": "function",
+          "value": "africa__kinshasa"
+        },
+        {
+          "type": "function",
+          "value": "africa__lagos"
+        },
+        {
+          "type": "function",
+          "value": "africa__libreville"
+        },
+        {
+          "type": "function",
+          "value": "africa__lome"
+        },
+        {
+          "type": "function",
+          "value": "africa__luanda"
+        },
+        {
+          "type": "function",
+          "value": "africa__lubumbashi"
+        },
+        {
+          "type": "function",
+          "value": "africa__lusaka"
+        },
+        {
+          "type": "function",
+          "value": "africa__malabo"
+        },
+        {
+          "type": "function",
+          "value": "africa__maputo"
+        },
+        {
+          "type": "function",
+          "value": "africa__maseru"
+        },
+        {
+          "type": "function",
+          "value": "africa__mbabane"
+        },
+        {
+          "type": "function",
+          "value": "africa__mogadishu"
+        },
+        {
+          "type": "function",
+          "value": "africa__monrovia"
+        },
+        {
+          "type": "function",
+          "value": "africa__nairobi"
+        },
+        {
+          "type": "function",
+          "value": "africa__ndjamena"
+        },
+        {
+          "type": "function",
+          "value": "africa__niamey"
+        },
+        {
+          "type": "function",
+          "value": "africa__nouakchott"
+        },
+        {
+          "type": "function",
+          "value": "africa__ouagadougou"
+        },
+        {
+          "type": "function",
+          "value": "africa__porto_novo"
+        },
+        {
+          "type": "function",
+          "value": "africa__sao_tome"
+        },
+        {
+          "type": "function",
+          "value": "africa__tripoli"
+        },
+        {
+          "type": "function",
+          "value": "africa__tunis"
+        },
+        {
+          "type": "function",
+          "value": "africa__windhoek"
+        },
+        {
+          "type": "function",
+          "value": "america__adak"
+        },
+        {
+          "type": "function",
+          "value": "america__anchorage"
+        },
+        {
+          "type": "function",
+          "value": "america__anguilla"
+        },
+        {
+          "type": "function",
+          "value": "america__antigua"
+        },
+        {
+          "type": "function",
+          "value": "america__araguaina"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__buenos_aires"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__catamarca"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__cordoba"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__jujuy"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__la_rioja"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__mendoza"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__rio_gallegos"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__salta"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__san_juan"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__san_luis"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__tucuman"
+        },
+        {
+          "type": "function",
+          "value": "america__argentina__ushuaia"
+        },
+        {
+          "type": "function",
+          "value": "america__aruba"
+        },
+        {
+          "type": "function",
+          "value": "america__asuncion"
+        },
+        {
+          "type": "function",
+          "value": "america__atikokan"
+        },
+        {
+          "type": "function",
+          "value": "america__bahia"
+        },
+        {
+          "type": "function",
+          "value": "america__bahia_banderas"
+        },
+        {
+          "type": "function",
+          "value": "america__barbados"
+        },
+        {
+          "type": "function",
+          "value": "america__belem"
+        },
+        {
+          "type": "function",
+          "value": "america__belize"
+        },
+        {
+          "type": "function",
+          "value": "america__blanc_sablon"
+        },
+        {
+          "type": "function",
+          "value": "america__boa_vista"
+        },
+        {
+          "type": "function",
+          "value": "america__bogota"
+        },
+        {
+          "type": "function",
+          "value": "america__boise"
+        },
+        {
+          "type": "function",
+          "value": "america__cambridge_bay"
+        },
+        {
+          "type": "function",
+          "value": "america__campo_grande"
+        },
+        {
+          "type": "function",
+          "value": "america__cancun"
+        },
+        {
+          "type": "function",
+          "value": "america__caracas"
+        },
+        {
+          "type": "function",
+          "value": "america__cayenne"
+        },
+        {
+          "type": "function",
+          "value": "america__cayman"
+        },
+        {
+          "type": "function",
+          "value": "america__chicago"
+        },
+        {
+          "type": "function",
+          "value": "america__chihuahua"
+        },
+        {
+          "type": "function",
+          "value": "america__costa_rica"
+        },
+        {
+          "type": "function",
+          "value": "america__creston"
+        },
+        {
+          "type": "function",
+          "value": "america__cuiaba"
+        },
+        {
+          "type": "function",
+          "value": "america__curacao"
+        },
+        {
+          "type": "function",
+          "value": "america__danmarkshavn"
+        },
+        {
+          "type": "function",
+          "value": "america__dawson"
+        },
+        {
+          "type": "function",
+          "value": "america__dawson_creek"
+        },
+        {
+          "type": "function",
+          "value": "america__denver"
+        },
+        {
+          "type": "function",
+          "value": "america__detroit"
+        },
+        {
+          "type": "function",
+          "value": "america__dominica"
+        },
+        {
+          "type": "function",
+          "value": "america__edmonton"
+        },
+        {
+          "type": "function",
+          "value": "america__eirunepe"
+        },
+        {
+          "type": "function",
+          "value": "america__el_salvador"
+        },
+        {
+          "type": "function",
+          "value": "america__fort_nelson"
+        },
+        {
+          "type": "function",
+          "value": "america__fortaleza"
+        },
+        {
+          "type": "function",
+          "value": "america__glace_bay"
+        },
+        {
+          "type": "function",
+          "value": "america__godthab"
+        },
+        {
+          "type": "function",
+          "value": "america__goose_bay"
+        },
+        {
+          "type": "function",
+          "value": "america__grand_turk"
+        },
+        {
+          "type": "function",
+          "value": "america__grenada"
+        },
+        {
+          "type": "function",
+          "value": "america__guadeloupe"
+        },
+        {
+          "type": "function",
+          "value": "america__guatemala"
+        },
+        {
+          "type": "function",
+          "value": "america__guayaquil"
+        },
+        {
+          "type": "function",
+          "value": "america__guyana"
+        },
+        {
+          "type": "function",
+          "value": "america__halifax"
+        },
+        {
+          "type": "function",
+          "value": "america__havana"
+        },
+        {
+          "type": "function",
+          "value": "america__hermosillo"
+        },
+        {
+          "type": "function",
+          "value": "america__indiana__indianapolis"
+        },
+        {
+          "type": "function",
+          "value": "america__indiana__knox"
+        },
+        {
+          "type": "function",
+          "value": "america__indiana__marengo"
+        },
+        {
+          "type": "function",
+          "value": "america__indiana__petersburg"
+        },
+        {
+          "type": "function",
+          "value": "america__indiana__tell_city"
+        },
+        {
+          "type": "function",
+          "value": "america__indiana__vevay"
+        },
+        {
+          "type": "function",
+          "value": "america__indiana__vincennes"
+        },
+        {
+          "type": "function",
+          "value": "america__indiana__winamac"
+        },
+        {
+          "type": "function",
+          "value": "america__inuvik"
+        },
+        {
+          "type": "function",
+          "value": "america__iqaluit"
+        },
+        {
+          "type": "function",
+          "value": "america__jamaica"
+        },
+        {
+          "type": "function",
+          "value": "america__juneau"
+        },
+        {
+          "type": "function",
+          "value": "america__kentucky__louisville"
+        },
+        {
+          "type": "function",
+          "value": "america__kentucky__monticello"
+        },
+        {
+          "type": "function",
+          "value": "america__kralendijk"
+        },
+        {
+          "type": "function",
+          "value": "america__la_paz"
+        },
+        {
+          "type": "function",
+          "value": "america__lima"
+        },
+        {
+          "type": "function",
+          "value": "america__los_angeles"
+        },
+        {
+          "type": "function",
+          "value": "america__lower_princes"
+        },
+        {
+          "type": "function",
+          "value": "america__maceio"
+        },
+        {
+          "type": "function",
+          "value": "america__managua"
+        },
+        {
+          "type": "function",
+          "value": "america__manaus"
+        },
+        {
+          "type": "function",
+          "value": "america__marigot"
+        },
+        {
+          "type": "function",
+          "value": "america__martinique"
+        },
+        {
+          "type": "function",
+          "value": "america__matamoros"
+        },
+        {
+          "type": "function",
+          "value": "america__mazatlan"
+        },
+        {
+          "type": "function",
+          "value": "america__menominee"
+        },
+        {
+          "type": "function",
+          "value": "america__merida"
+        },
+        {
+          "type": "function",
+          "value": "america__metlakatla"
+        },
+        {
+          "type": "function",
+          "value": "america__mexico_city"
+        },
+        {
+          "type": "function",
+          "value": "america__miquelon"
+        },
+        {
+          "type": "function",
+          "value": "america__moncton"
+        },
+        {
+          "type": "function",
+          "value": "america__monterrey"
+        },
+        {
+          "type": "function",
+          "value": "america__montevideo"
+        },
+        {
+          "type": "function",
+          "value": "america__montserrat"
+        },
+        {
+          "type": "function",
+          "value": "america__nassau"
+        },
+        {
+          "type": "function",
+          "value": "america__new_york"
+        },
+        {
+          "type": "function",
+          "value": "america__nipigon"
+        },
+        {
+          "type": "function",
+          "value": "america__nome"
+        },
+        {
+          "type": "function",
+          "value": "america__noronha"
+        },
+        {
+          "type": "function",
+          "value": "america__north_dakota__beulah"
+        },
+        {
+          "type": "function",
+          "value": "america__north_dakota__center"
+        },
+        {
+          "type": "function",
+          "value": "america__north_dakota__new_salem"
+        },
+        {
+          "type": "function",
+          "value": "america__ojinaga"
+        },
+        {
+          "type": "function",
+          "value": "america__panama"
+        },
+        {
+          "type": "function",
+          "value": "america__pangnirtung"
+        },
+        {
+          "type": "function",
+          "value": "america__paramaribo"
+        },
+        {
+          "type": "function",
+          "value": "america__phoenix"
+        },
+        {
+          "type": "function",
+          "value": "america__port_au_prince"
+        },
+        {
+          "type": "function",
+          "value": "america__port_of_spain"
+        },
+        {
+          "type": "function",
+          "value": "america__porto_velho"
+        },
+        {
+          "type": "function",
+          "value": "america__puerto_rico"
+        },
+        {
+          "type": "function",
+          "value": "america__punta_arenas"
+        },
+        {
+          "type": "function",
+          "value": "america__rainy_river"
+        },
+        {
+          "type": "function",
+          "value": "america__rankin_inlet"
+        },
+        {
+          "type": "function",
+          "value": "america__recife"
+        },
+        {
+          "type": "function",
+          "value": "america__regina"
+        },
+        {
+          "type": "function",
+          "value": "america__resolute"
+        },
+        {
+          "type": "function",
+          "value": "america__rio_branco"
+        },
+        {
+          "type": "function",
+          "value": "america__santarem"
+        },
+        {
+          "type": "function",
+          "value": "america__santiago"
+        },
+        {
+          "type": "function",
+          "value": "america__santo_domingo"
+        },
+        {
+          "type": "function",
+          "value": "america__sao_paulo"
+        },
+        {
+          "type": "function",
+          "value": "america__scoresbysund"
+        },
+        {
+          "type": "function",
+          "value": "america__sitka"
+        },
+        {
+          "type": "function",
+          "value": "america__st_barthelemy"
+        },
+        {
+          "type": "function",
+          "value": "america__st_johns"
+        },
+        {
+          "type": "function",
+          "value": "america__st_kitts"
+        },
+        {
+          "type": "function",
+          "value": "america__st_lucia"
+        },
+        {
+          "type": "function",
+          "value": "america__st_thomas"
+        },
+        {
+          "type": "function",
+          "value": "america__st_vincent"
+        },
+        {
+          "type": "function",
+          "value": "america__swift_current"
+        },
+        {
+          "type": "function",
+          "value": "america__tegucigalpa"
+        },
+        {
+          "type": "function",
+          "value": "america__thule"
+        },
+        {
+          "type": "function",
+          "value": "america__thunder_bay"
+        },
+        {
+          "type": "function",
+          "value": "america__tijuana"
+        },
+        {
+          "type": "function",
+          "value": "america__toronto"
+        },
+        {
+          "type": "function",
+          "value": "america__tortola"
+        },
+        {
+          "type": "function",
+          "value": "america__vancouver"
+        },
+        {
+          "type": "function",
+          "value": "america__whitehorse"
+        },
+        {
+          "type": "function",
+          "value": "america__winnipeg"
+        },
+        {
+          "type": "function",
+          "value": "america__yakutat"
+        },
+        {
+          "type": "function",
+          "value": "america__yellowknife"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__casey"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__davis"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__dumontdurville"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__macquarie"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__mawson"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__mcmurdo"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__palmer"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__rothera"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__syowa"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__troll"
+        },
+        {
+          "type": "function",
+          "value": "antarctica__vostok"
+        },
+        {
+          "type": "function",
+          "value": "arctic__longyearbyen"
+        },
+        {
+          "type": "function",
+          "value": "asia__aden"
+        },
+        {
+          "type": "function",
+          "value": "asia__almaty"
+        },
+        {
+          "type": "function",
+          "value": "asia__amman"
+        },
+        {
+          "type": "function",
+          "value": "asia__anadyr"
+        },
+        {
+          "type": "function",
+          "value": "asia__aqtau"
+        },
+        {
+          "type": "function",
+          "value": "asia__aqtobe"
+        },
+        {
+          "type": "function",
+          "value": "asia__ashgabat"
+        },
+        {
+          "type": "function",
+          "value": "asia__atyrau"
+        },
+        {
+          "type": "function",
+          "value": "asia__baghdad"
+        },
+        {
+          "type": "function",
+          "value": "asia__bahrain"
+        },
+        {
+          "type": "function",
+          "value": "asia__baku"
+        },
+        {
+          "type": "function",
+          "value": "asia__bangkok"
+        },
+        {
+          "type": "function",
+          "value": "asia__barnaul"
+        },
+        {
+          "type": "function",
+          "value": "asia__beirut"
+        },
+        {
+          "type": "function",
+          "value": "asia__bishkek"
+        },
+        {
+          "type": "function",
+          "value": "asia__brunei"
+        },
+        {
+          "type": "function",
+          "value": "asia__chita"
+        },
+        {
+          "type": "function",
+          "value": "asia__choibalsan"
+        },
+        {
+          "type": "function",
+          "value": "asia__colombo"
+        },
+        {
+          "type": "function",
+          "value": "asia__damascus"
+        },
+        {
+          "type": "function",
+          "value": "asia__dhaka"
+        },
+        {
+          "type": "function",
+          "value": "asia__dili"
+        },
+        {
+          "type": "function",
+          "value": "asia__dubai"
+        },
+        {
+          "type": "function",
+          "value": "asia__dushanbe"
+        },
+        {
+          "type": "function",
+          "value": "asia__famagusta"
+        },
+        {
+          "type": "function",
+          "value": "asia__gaza"
+        },
+        {
+          "type": "function",
+          "value": "asia__hebron"
+        },
+        {
+          "type": "function",
+          "value": "asia__ho_chi_minh"
+        },
+        {
+          "type": "function",
+          "value": "asia__hong_kong"
+        },
+        {
+          "type": "function",
+          "value": "asia__hovd"
+        },
+        {
+          "type": "function",
+          "value": "asia__irkutsk"
+        },
+        {
+          "type": "function",
+          "value": "asia__istanbul"
+        },
+        {
+          "type": "function",
+          "value": "asia__jakarta"
+        },
+        {
+          "type": "function",
+          "value": "asia__jayapura"
+        },
+        {
+          "type": "function",
+          "value": "asia__jerusalem"
+        },
+        {
+          "type": "function",
+          "value": "asia__kabul"
+        },
+        {
+          "type": "function",
+          "value": "asia__kamchatka"
+        },
+        {
+          "type": "function",
+          "value": "asia__karachi"
+        },
+        {
+          "type": "function",
+          "value": "asia__kathmandu"
+        },
+        {
+          "type": "function",
+          "value": "asia__khandyga"
+        },
+        {
+          "type": "function",
+          "value": "asia__kolkata"
+        },
+        {
+          "type": "function",
+          "value": "asia__krasnoyarsk"
+        },
+        {
+          "type": "function",
+          "value": "asia__kuala_lumpur"
+        },
+        {
+          "type": "function",
+          "value": "asia__kuching"
+        },
+        {
+          "type": "function",
+          "value": "asia__kuwait"
+        },
+        {
+          "type": "function",
+          "value": "asia__macau"
+        },
+        {
+          "type": "function",
+          "value": "asia__magadan"
+        },
+        {
+          "type": "function",
+          "value": "asia__makassar"
+        },
+        {
+          "type": "function",
+          "value": "asia__manila"
+        },
+        {
+          "type": "function",
+          "value": "asia__muscat"
+        },
+        {
+          "type": "function",
+          "value": "asia__nicosia"
+        },
+        {
+          "type": "function",
+          "value": "asia__novokuznetsk"
+        },
+        {
+          "type": "function",
+          "value": "asia__novosibirsk"
+        },
+        {
+          "type": "function",
+          "value": "asia__omsk"
+        },
+        {
+          "type": "function",
+          "value": "asia__oral"
+        },
+        {
+          "type": "function",
+          "value": "asia__phnom_penh"
+        },
+        {
+          "type": "function",
+          "value": "asia__pontianak"
+        },
+        {
+          "type": "function",
+          "value": "asia__pyongyang"
+        },
+        {
+          "type": "function",
+          "value": "asia__qatar"
+        },
+        {
+          "type": "function",
+          "value": "asia__qostanay"
+        },
+        {
+          "type": "function",
+          "value": "asia__qyzylorda"
+        },
+        {
+          "type": "function",
+          "value": "asia__riyadh"
+        },
+        {
+          "type": "function",
+          "value": "asia__sakhalin"
+        },
+        {
+          "type": "function",
+          "value": "asia__samarkand"
+        },
+        {
+          "type": "function",
+          "value": "asia__seoul"
+        },
+        {
+          "type": "function",
+          "value": "asia__shanghai"
+        },
+        {
+          "type": "function",
+          "value": "asia__singapore"
+        },
+        {
+          "type": "function",
+          "value": "asia__srednekolymsk"
+        },
+        {
+          "type": "function",
+          "value": "asia__taipei"
+        },
+        {
+          "type": "function",
+          "value": "asia__tashkent"
+        },
+        {
+          "type": "function",
+          "value": "asia__tbilisi"
+        },
+        {
+          "type": "function",
+          "value": "asia__tehran"
+        },
+        {
+          "type": "function",
+          "value": "asia__thimphu"
+        },
+        {
+          "type": "function",
+          "value": "asia__tokyo"
+        },
+        {
+          "type": "function",
+          "value": "asia__tomsk"
+        },
+        {
+          "type": "function",
+          "value": "asia__ulaanbaatar"
+        },
+        {
+          "type": "function",
+          "value": "asia__urumqi"
+        },
+        {
+          "type": "function",
+          "value": "asia__ust_nera"
+        },
+        {
+          "type": "function",
+          "value": "asia__vientiane"
+        },
+        {
+          "type": "function",
+          "value": "asia__vladivostok"
+        },
+        {
+          "type": "function",
+          "value": "asia__yakutsk"
+        },
+        {
+          "type": "function",
+          "value": "asia__yangon"
+        },
+        {
+          "type": "function",
+          "value": "asia__yekaterinburg"
+        },
+        {
+          "type": "function",
+          "value": "asia__yerevan"
+        },
+        {
+          "type": "function",
+          "value": "atlantic__azores"
+        },
+        {
+          "type": "function",
+          "value": "atlantic__bermuda"
+        },
+        {
+          "type": "function",
+          "value": "atlantic__canary"
+        },
+        {
+          "type": "function",
+          "value": "atlantic__cape_verde"
+        },
+        {
+          "type": "function",
+          "value": "atlantic__faroe"
+        },
+        {
+          "type": "function",
+          "value": "atlantic__madeira"
+        },
+        {
+          "type": "function",
+          "value": "atlantic__reykjavik"
+        },
+        {
+          "type": "function",
+          "value": "atlantic__south_georgia"
+        },
+        {
+          "type": "function",
+          "value": "atlantic__st_helena"
+        },
+        {
+          "type": "function",
+          "value": "atlantic__stanley"
+        },
+        {
+          "type": "function",
+          "value": "australia__adelaide"
+        },
+        {
+          "type": "function",
+          "value": "australia__brisbane"
+        },
+        {
+          "type": "function",
+          "value": "australia__broken_hill"
+        },
+        {
+          "type": "function",
+          "value": "australia__currie"
+        },
+        {
+          "type": "function",
+          "value": "australia__darwin"
+        },
+        {
+          "type": "function",
+          "value": "australia__eucla"
+        },
+        {
+          "type": "function",
+          "value": "australia__hobart"
+        },
+        {
+          "type": "function",
+          "value": "australia__lindeman"
+        },
+        {
+          "type": "function",
+          "value": "australia__lord_howe"
+        },
+        {
+          "type": "function",
+          "value": "australia__melbourne"
+        },
+        {
+          "type": "function",
+          "value": "australia__perth"
+        },
+        {
+          "type": "function",
+          "value": "australia__sydney"
+        },
+        {
+          "type": "function",
+          "value": "europe__amsterdam"
+        },
+        {
+          "type": "function",
+          "value": "europe__andorra"
+        },
+        {
+          "type": "function",
+          "value": "europe__astrakhan"
+        },
+        {
+          "type": "function",
+          "value": "europe__athens"
+        },
+        {
+          "type": "function",
+          "value": "europe__belgrade"
+        },
+        {
+          "type": "function",
+          "value": "europe__berlin"
+        },
+        {
+          "type": "function",
+          "value": "europe__bratislava"
+        },
+        {
+          "type": "function",
+          "value": "europe__brussels"
+        },
+        {
+          "type": "function",
+          "value": "europe__bucharest"
+        },
+        {
+          "type": "function",
+          "value": "europe__budapest"
+        },
+        {
+          "type": "function",
+          "value": "europe__busingen"
+        },
+        {
+          "type": "function",
+          "value": "europe__chisinau"
+        },
+        {
+          "type": "function",
+          "value": "europe__copenhagen"
+        },
+        {
+          "type": "function",
+          "value": "europe__dublin"
+        },
+        {
+          "type": "function",
+          "value": "europe__gibraltar"
+        },
+        {
+          "type": "function",
+          "value": "europe__guernsey"
+        },
+        {
+          "type": "function",
+          "value": "europe__helsinki"
+        },
+        {
+          "type": "function",
+          "value": "europe__isle_of_man"
+        },
+        {
+          "type": "function",
+          "value": "europe__istanbul"
+        },
+        {
+          "type": "function",
+          "value": "europe__jersey"
+        },
+        {
+          "type": "function",
+          "value": "europe__kaliningrad"
+        },
+        {
+          "type": "function",
+          "value": "europe__kiev"
+        },
+        {
+          "type": "function",
+          "value": "europe__kirov"
+        },
+        {
+          "type": "function",
+          "value": "europe__lisbon"
+        },
+        {
+          "type": "function",
+          "value": "europe__ljubljana"
+        },
+        {
+          "type": "function",
+          "value": "europe__london"
+        },
+        {
+          "type": "function",
+          "value": "europe__luxembourg"
+        },
+        {
+          "type": "function",
+          "value": "europe__madrid"
+        },
+        {
+          "type": "function",
+          "value": "europe__malta"
+        },
+        {
+          "type": "function",
+          "value": "europe__mariehamn"
+        },
+        {
+          "type": "function",
+          "value": "europe__minsk"
+        },
+        {
+          "type": "function",
+          "value": "europe__monaco"
+        },
+        {
+          "type": "function",
+          "value": "europe__moscow"
+        },
+        {
+          "type": "function",
+          "value": "europe__nicosia"
+        },
+        {
+          "type": "function",
+          "value": "europe__oslo"
+        },
+        {
+          "type": "function",
+          "value": "europe__paris"
+        },
+        {
+          "type": "function",
+          "value": "europe__podgorica"
+        },
+        {
+          "type": "function",
+          "value": "europe__prague"
+        },
+        {
+          "type": "function",
+          "value": "europe__riga"
+        },
+        {
+          "type": "function",
+          "value": "europe__rome"
+        },
+        {
+          "type": "function",
+          "value": "europe__samara"
+        },
+        {
+          "type": "function",
+          "value": "europe__san_marino"
+        },
+        {
+          "type": "function",
+          "value": "europe__sarajevo"
+        },
+        {
+          "type": "function",
+          "value": "europe__saratov"
+        },
+        {
+          "type": "function",
+          "value": "europe__simferopol"
+        },
+        {
+          "type": "function",
+          "value": "europe__skopje"
+        },
+        {
+          "type": "function",
+          "value": "europe__sofia"
+        },
+        {
+          "type": "function",
+          "value": "europe__stockholm"
+        },
+        {
+          "type": "function",
+          "value": "europe__tallinn"
+        },
+        {
+          "type": "function",
+          "value": "europe__tirane"
+        },
+        {
+          "type": "function",
+          "value": "europe__ulyanovsk"
+        },
+        {
+          "type": "function",
+          "value": "europe__uzhgorod"
+        },
+        {
+          "type": "function",
+          "value": "europe__vaduz"
+        },
+        {
+          "type": "function",
+          "value": "europe__vatican"
+        },
+        {
+          "type": "function",
+          "value": "europe__vienna"
+        },
+        {
+          "type": "function",
+          "value": "europe__vilnius"
+        },
+        {
+          "type": "function",
+          "value": "europe__volgograd"
+        },
+        {
+          "type": "function",
+          "value": "europe__warsaw"
+        },
+        {
+          "type": "function",
+          "value": "europe__zagreb"
+        },
+        {
+          "type": "function",
+          "value": "europe__zaporozhye"
+        },
+        {
+          "type": "function",
+          "value": "europe__zurich"
+        },
+        {
+          "type": "function",
+          "value": "getZone"
+        },
+        {
+          "type": "function",
+          "value": "indian__antananarivo"
+        },
+        {
+          "type": "function",
+          "value": "indian__chagos"
+        },
+        {
+          "type": "function",
+          "value": "indian__christmas"
+        },
+        {
+          "type": "function",
+          "value": "indian__cocos"
+        },
+        {
+          "type": "function",
+          "value": "indian__comoro"
+        },
+        {
+          "type": "function",
+          "value": "indian__kerguelen"
+        },
+        {
+          "type": "function",
+          "value": "indian__mahe"
+        },
+        {
+          "type": "function",
+          "value": "indian__maldives"
+        },
+        {
+          "type": "function",
+          "value": "indian__mauritius"
+        },
+        {
+          "type": "function",
+          "value": "indian__mayotte"
+        },
+        {
+          "type": "function",
+          "value": "indian__reunion"
+        },
+        {
+          "type": "function",
+          "value": "pacific__apia"
+        },
+        {
+          "type": "function",
+          "value": "pacific__auckland"
+        },
+        {
+          "type": "function",
+          "value": "pacific__bougainville"
+        },
+        {
+          "type": "function",
+          "value": "pacific__chatham"
+        },
+        {
+          "type": "function",
+          "value": "pacific__chuuk"
+        },
+        {
+          "type": "function",
+          "value": "pacific__easter"
+        },
+        {
+          "type": "function",
+          "value": "pacific__efate"
+        },
+        {
+          "type": "function",
+          "value": "pacific__enderbury"
+        },
+        {
+          "type": "function",
+          "value": "pacific__fakaofo"
+        },
+        {
+          "type": "function",
+          "value": "pacific__fiji"
+        },
+        {
+          "type": "function",
+          "value": "pacific__funafuti"
+        },
+        {
+          "type": "function",
+          "value": "pacific__galapagos"
+        },
+        {
+          "type": "function",
+          "value": "pacific__gambier"
+        },
+        {
+          "type": "function",
+          "value": "pacific__guadalcanal"
+        },
+        {
+          "type": "function",
+          "value": "pacific__guam"
+        },
+        {
+          "type": "function",
+          "value": "pacific__honolulu"
+        },
+        {
+          "type": "function",
+          "value": "pacific__kiritimati"
+        },
+        {
+          "type": "function",
+          "value": "pacific__kosrae"
+        },
+        {
+          "type": "function",
+          "value": "pacific__kwajalein"
+        },
+        {
+          "type": "function",
+          "value": "pacific__majuro"
+        },
+        {
+          "type": "function",
+          "value": "pacific__marquesas"
+        },
+        {
+          "type": "function",
+          "value": "pacific__midway"
+        },
+        {
+          "type": "function",
+          "value": "pacific__nauru"
+        },
+        {
+          "type": "function",
+          "value": "pacific__niue"
+        },
+        {
+          "type": "function",
+          "value": "pacific__norfolk"
+        },
+        {
+          "type": "function",
+          "value": "pacific__noumea"
+        },
+        {
+          "type": "function",
+          "value": "pacific__pago_pago"
+        },
+        {
+          "type": "function",
+          "value": "pacific__palau"
+        },
+        {
+          "type": "function",
+          "value": "pacific__pitcairn"
+        },
+        {
+          "type": "function",
+          "value": "pacific__pohnpei"
+        },
+        {
+          "type": "function",
+          "value": "pacific__port_moresby"
+        },
+        {
+          "type": "function",
+          "value": "pacific__rarotonga"
+        },
+        {
+          "type": "function",
+          "value": "pacific__saipan"
+        },
+        {
+          "type": "function",
+          "value": "pacific__tahiti"
+        },
+        {
+          "type": "function",
+          "value": "pacific__tarawa"
+        },
+        {
+          "type": "function",
+          "value": "pacific__tongatapu"
+        },
+        {
+          "type": "function",
+          "value": "pacific__wake"
+        },
+        {
+          "type": "function",
+          "value": "pacific__wallis"
+        },
+        {
+          "type": "function",
+          "value": "version"
+        },
+        {
+          "type": "function",
+          "value": "zones"
+        }
+      ]
+    }
+  ]
+}
